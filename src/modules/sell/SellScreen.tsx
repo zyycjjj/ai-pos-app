@@ -8,6 +8,8 @@ import { useCurrency } from '@/hooks/useCurrency';
 import { useCreateCheckoutOrder, useMarkOrderPaid, useTodaySummary } from '@/services/businessApi';
 import { useCartStore } from '@/stores/cartStore';
 
+import { getCheckoutTotals } from './checkoutMath';
+
 export function SellScreen() {
   const money = useCurrency();
   const productsQuery = useFindManyProduct({
@@ -19,9 +21,7 @@ export function SellScreen() {
   const markPaid = useMarkOrderPaid();
   const { addLine, clear, lines, removeLine } = useCartStore();
 
-  const subtotal = lines.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0);
-  const tax = Number((subtotal * 0.0825).toFixed(2));
-  const total = Number((subtotal + tax).toFixed(2));
+  const { subtotal, tax, total } = getCheckoutTotals(lines);
 
   const checkout = async () => {
     if (lines.length === 0) {
