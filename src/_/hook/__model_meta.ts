@@ -69,6 +69,10 @@ const metadata: ModelMeta = {
                     name: "status",
                     type: "OrderStatus",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, printStatus: {
+                    name: "printStatus",
+                    type: "PrintStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, currency: {
                     name: "currency",
                     type: "String",
@@ -89,6 +93,10 @@ const metadata: ModelMeta = {
                     type: "Decimal",
                 }, paidAt: {
                     name: "paidAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, printedAt: {
+                    name: "printedAt",
                     type: "DateTime",
                     isOptional: true,
                 }, items: {

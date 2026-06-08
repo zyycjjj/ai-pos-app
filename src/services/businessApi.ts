@@ -16,12 +16,14 @@ export type CheckoutOrder = {
   id: string;
   orderNumber: string;
   status: 'OPEN' | 'PAID' | 'CANCELLED';
+  printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
   currency: string;
   subtotal: number;
   tax: number;
   tip: number;
   total: number;
   paidAt: string | null;
+  printedAt: string | null;
   createdAt: string;
   items: CheckoutOrderItem[];
 };
@@ -53,7 +55,7 @@ export type AiMenuDraft = {
 export type ReceiptPayload = {
   format: string;
   store: { name: string };
-  order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'status' | 'createdAt' | 'paidAt'>;
+  order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'status' | 'printStatus' | 'createdAt' | 'paidAt' | 'printedAt'>;
   currency: string;
   items: Array<Pick<CheckoutOrderItem, 'name' | 'quantity' | 'unitPrice' | 'lineTotal'>>;
   totals: Pick<CheckoutOrder, 'subtotal' | 'tax' | 'tip' | 'total'>;
@@ -116,6 +118,21 @@ export function useMarkOrderPaid() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['checkout'] });
       void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useMarkOrderPrinted() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (orderId: string) => {
+      const { data } = await apiClient.patch<CheckoutOrder>(`/api/checkout/orders/${orderId}/mark-printed`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['receipts'] });
     },
   });
 }
