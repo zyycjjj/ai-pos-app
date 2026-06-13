@@ -1,11 +1,14 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Modal, Pressable, ScrollView, Text, View } from 'react-native';
-import { CheckCircle2, Minus, Plus, Printer, RotateCcw, Trash2, X } from 'lucide-react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { CheckCircle2, Minus, Plus, Printer, RotateCcw, Search, Trash2, X } from 'lucide-react-native';
 
-import { useFindManyProduct } from '@/_/hook';
-import { PrimaryButton } from '@/components/PrimaryButton';
-import { Screen } from '@/components/Screen';
+import { AppButton } from '@/components/AppButton';
+import { AppScreen } from '@/components/AppScreen';
+import { EmptyState } from '@/components/EmptyState';
+import { MetricCard } from '@/components/MetricCard';
+import { StatusPill } from '@/components/StatusPill';
+import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import {
   type CheckoutOrder,
@@ -15,10 +18,11 @@ import {
   useReceipt,
   useTodaySummary,
 } from '@/services/businessApi';
-import { colors } from '@/theme/colors';
+import { tokens } from '@/theme';
 import { useCartStore } from '@/stores/cartStore';
 
 import { getCheckoutTotals } from './checkoutMath';
+import { useActiveProducts } from '../products/useProducts';
 
 const TAX_RATE = 0.08;
 
@@ -27,12 +31,10 @@ type PrintFlowStatus = 'idle' | 'printing' | 'printed' | 'failed';
 export function SellScreen() {
   const money = useCurrency();
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [search, setSearch] = useState('');
   const [completedOrder, setCompletedOrder] = useState<CheckoutOrder | null>(null);
   const [printStatus, setPrintStatus] = useState<PrintFlowStatus>('idle');
-  const productsQuery = useFindManyProduct({
-    where: { isActive: true },
-    orderBy: [{ category: 'asc' }, { name: 'asc' }],
-  });
+  const productsQuery = useActiveProducts();
   const summaryQuery = useTodaySummary();
   const createOrder = useCreateCheckoutOrder();
   const markPaid = useMarkOrderPaid();
@@ -45,8 +47,18 @@ export function SellScreen() {
     const values = products.map((product) => product.category ?? 'Menu');
     return ['All', ...Array.from(new Set(values))];
   }, [products]);
-  const filteredProducts =
-    selectedCategory === 'All' ? products : products.filter((product) => (product.category ?? 'Menu') === selectedCategory);
+  const filteredProducts = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+    return products.filter((product) => {
+      const category = product.category ?? 'Menu';
+      const matchesCategory = selectedCategory === 'All' || category === selectedCategory;
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        product.name.toLowerCase().includes(normalizedSearch) ||
+        category.toLowerCase().includes(normalizedSearch);
+      return matchesCategory && matchesSearch;
+    });
+  }, [products, search, selectedCategory]);
   const { subtotal, tax, total } = getCheckoutTotals(lines, TAX_RATE);
   const isCheckingOut = createOrder.isPending || markPaid.isPending;
   const printerReady = true;
@@ -88,51 +100,49 @@ export function SellScreen() {
   };
 
   return (
-    <Screen>
-      <View className="mb-5 flex-row items-center justify-between">
-        <View>
-          <Text className="text-3xl font-semibold text-pos-ink">Sell</Text>
-          <Text className="mt-1 text-base text-pos-muted">Counter checkout for dual-screen Android POS terminals.</Text>
-        </View>
-        <View className="flex-row gap-3">
-          <StatusPill label="Main display" value="Cashier" />
-          <StatusPill label="Customer display" value="Ready" />
-          <StatusPill label="Printer" tone={printerReady ? 'ready' : 'danger'} value={printerReady ? 'Built-in ready' : 'Offline'} />
-        </View>
-      </View>
-
-      <View className="flex-1 flex-row gap-5">
-        <View className="flex-[2]">
-          <View className="mb-4 flex-row gap-3">
-            <Metric label="Today" value={money(summaryQuery.data?.salesTotal ?? 0)} />
-            <Metric label="Orders" value={String(summaryQuery.data?.orderCount ?? 0)} />
-            <Metric label="Avg ticket" value={money(summaryQuery.data?.averageTicket ?? 0)} />
+    <AppScreen>
+      <View style={styles.root}>
+        <View style={styles.workspace}>
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.eyebrow}>Counter terminal</Text>
+              <Text style={styles.title}>Products</Text>
+            </View>
+            <View style={styles.telemetry}>
+              <MetricCard label="Today Sales" value={money(summaryQuery.data?.salesTotal ?? 0)} tone="accent" />
+              <MetricCard label="Orders" value={String(summaryQuery.data?.orderCount ?? 0)} />
+              <MetricCard label="Avg Ticket" value={money(summaryQuery.data?.averageTicket ?? 0)} />
+            </View>
           </View>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4 max-h-12">
-            <View className="flex-row gap-2">
-              {categories.map((category) => {
-                const selected = selectedCategory === category;
-                return (
-                  <Pressable
-                    key={category}
-                    className={`h-11 justify-center rounded-pos border px-5 ${
-                      selected ? 'border-pos-accent bg-pos-accent' : 'border-pos-line bg-pos-surface'
-                    }`}
-                    onPress={() => setSelectedCategory(category)}
-                  >
-                    <Text className={`text-sm font-semibold ${selected ? 'text-white' : 'text-pos-ink'}`}>{category}</Text>
-                  </Pressable>
-                );
-              })}
+          <View style={styles.controls}>
+            <View style={styles.searchBox}>
+              <Search color={tokens.colors.muted} size={20} />
+              <TextInput
+                placeholder="Search products"
+                placeholderTextColor={tokens.colors.subtle}
+                style={styles.searchInput}
+                value={search}
+                onChangeText={setSearch}
+              />
             </View>
-          </ScrollView>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryList}>
+              {categories.map((category) => (
+                <CategoryChip
+                  key={category}
+                  label={category}
+                  selected={selectedCategory === category}
+                  onPress={() => setSelectedCategory(category)}
+                />
+              ))}
+            </ScrollView>
+          </View>
 
-          <ScrollView contentContainerClassName="flex-row flex-wrap gap-3 pb-8">
+          <ScrollView contentContainerStyle={styles.productGrid} showsVerticalScrollIndicator={false}>
             {filteredProducts.map((product) => (
               <Pressable
                 key={product.id}
-                className="h-36 w-44 justify-between rounded-pos border border-pos-line bg-pos-surface p-4 active:opacity-80"
+                android_ripple={{ color: tokens.colors.accentMuted }}
                 onPress={() =>
                   addLine({
                     productId: product.id,
@@ -141,154 +151,158 @@ export function SellScreen() {
                     unitPrice: Number(product.price),
                   })
                 }
+                style={styles.productTile}
               >
                 <View>
-                  <Text className="text-lg font-semibold text-pos-ink" numberOfLines={2}>
+                  <Text style={styles.productName} numberOfLines={2}>
                     {product.name}
                   </Text>
-                  <Text className="mt-1 text-sm text-pos-muted" numberOfLines={1}>
+                  <Text style={styles.productMeta} numberOfLines={1}>
                     {product.category ?? 'Menu'}
                   </Text>
                 </View>
-                <Text className="text-xl font-semibold text-pos-ink">{money(Number(product.price))}</Text>
+                <View style={styles.productFooter}>
+                  <View style={styles.categoryAccent} />
+                  <Text style={styles.productPrice}>{money(Number(product.price))}</Text>
+                </View>
               </Pressable>
             ))}
             {!productsQuery.isLoading && filteredProducts.length === 0 ? (
-              <Text className="text-base text-pos-muted">No active products in this category.</Text>
+              <Surface style={styles.emptyProducts}>
+                <EmptyState title="No matching products" description="Adjust the category or search to continue checkout." />
+              </Surface>
             ) : null}
           </ScrollView>
         </View>
 
-        <View className="w-[380px] rounded-pos border border-pos-line bg-pos-surface p-5">
-          <View className="flex-row items-center justify-between">
+        <Surface variant="elevated" shadow="soft" style={styles.orderRail}>
+          <View style={styles.orderHeader}>
             <View>
-              <Text className="text-xl font-semibold text-pos-ink">Current order</Text>
-              <Text className="mt-1 text-sm text-pos-muted">{lines.length} line items</Text>
+              <Text style={styles.orderTitle}>Current Order</Text>
+              <Text style={styles.orderSubtitle}>{lines.length} line items</Text>
             </View>
-            <Pressable className="h-10 w-10 items-center justify-center rounded-pos bg-pos-background" onPress={clear}>
-              <RotateCcw color={colors.muted} size={18} />
-            </Pressable>
+            <IconButton label="Clear order" onPress={clear}>
+              <RotateCcw color={tokens.colors.muted} size={20} />
+            </IconButton>
           </View>
 
-          <View className="my-5 h-px bg-pos-line" />
+          <View style={styles.statusRow}>
+            <StatusPill label="Printer" tone={printerReady ? 'success' : 'danger'} value={printerReady ? 'Ready' : 'Offline'} />
+            <StatusPill label="Display" tone="info" value="Synced" />
+            <StatusPill label="Order" tone={lines.length > 0 ? 'warning' : 'neutral'} value={lines.length > 0 ? 'Open' : 'Idle'} />
+          </View>
 
-          <ScrollView className="flex-1">
+          <View style={styles.divider} />
+
+          <ScrollView style={styles.cartScroll} contentContainerStyle={lines.length === 0 ? styles.emptyCartContent : styles.cartContent}>
             {lines.length === 0 ? (
-              <View className="mt-8 items-center">
-                <Text className="text-base font-medium text-pos-ink">Ready for the next sale</Text>
-                <Text className="mt-2 text-center text-sm text-pos-muted">Tap menu items to build the order shown on the customer screen.</Text>
-              </View>
+              <EmptyState title="Ready for the next sale" description="Tap product keys to build the order." />
             ) : (
-              <View className="gap-4">
-                {lines.map((line) => (
-                  <View key={line.productId} className="rounded-pos bg-pos-background p-3">
-                    <View className="flex-row justify-between gap-3">
-                      <Text className="flex-1 text-base font-semibold text-pos-ink" numberOfLines={2}>
-                        {line.name}
-                      </Text>
-                      <Text className="text-base font-semibold text-pos-ink">{money(line.unitPrice * line.quantity)}</Text>
-                    </View>
-                    <View className="mt-3 flex-row items-center justify-between">
-                      <View className="flex-row items-center gap-2">
-                        <IconButton onPress={() => setQuantity(line.productId, line.quantity - 1)}>
-                          <Minus color={colors.ink} size={16} />
-                        </IconButton>
-                        <Text className="w-8 text-center text-base font-semibold text-pos-ink">{line.quantity}</Text>
-                        <IconButton onPress={() => setQuantity(line.productId, line.quantity + 1)}>
-                          <Plus color={colors.ink} size={16} />
-                        </IconButton>
-                      </View>
-                      <Pressable className="h-9 w-9 items-center justify-center rounded-pos" onPress={() => removeLine(line.productId)}>
-                        <Trash2 color={colors.danger} size={17} />
-                      </Pressable>
-                    </View>
+              lines.map((line) => (
+                <View key={line.productId} style={styles.cartLine}>
+                  <View style={styles.cartLineTop}>
+                    <Text style={styles.cartItemName} numberOfLines={2}>
+                      {line.name}
+                    </Text>
+                    <Text style={styles.cartLineTotal}>{money(line.unitPrice * line.quantity)}</Text>
                   </View>
-                ))}
-              </View>
+                  <Text style={styles.cartItemMeta}>{money(line.unitPrice)} each</Text>
+                  <View style={styles.cartLineActions}>
+                    <View style={styles.quantityStepper}>
+                      <IconButton label="Decrease quantity" onPress={() => setQuantity(line.productId, line.quantity - 1)}>
+                        <Minus color={tokens.colors.ink} size={18} />
+                      </IconButton>
+                      <Text style={styles.quantity}>{line.quantity}</Text>
+                      <IconButton label="Increase quantity" onPress={() => setQuantity(line.productId, line.quantity + 1)}>
+                        <Plus color={tokens.colors.ink} size={18} />
+                      </IconButton>
+                    </View>
+                    <IconButton label="Remove item" onPress={() => removeLine(line.productId)}>
+                      <Trash2 color={tokens.colors.danger} size={19} />
+                    </IconButton>
+                  </View>
+                </View>
+              ))
             )}
           </ScrollView>
 
-          <View className="mt-5 gap-2">
+          <View style={styles.totalArea}>
             <TotalRow label="Subtotal" value={money(subtotal)} />
             <TotalRow label="Tax" value={money(tax)} />
-            <View className="my-2 h-px bg-pos-line" />
-            <View className="flex-row items-center justify-between">
-              <Text className="text-lg font-semibold text-pos-ink">Total</Text>
-              <Text className="text-3xl font-semibold text-pos-ink">{money(total)}</Text>
+            <View style={styles.totalDivider} />
+            <View style={styles.grandTotalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalValue}>{money(total)}</Text>
             </View>
-            <PrimaryButton disabled={lines.length === 0 || isCheckingOut} onPress={checkout}>
-              {isCheckingOut ? 'Processing' : 'Mark paid'}
-            </PrimaryButton>
+            <AppButton
+              disabled={lines.length === 0 || isCheckingOut}
+              loading={isCheckingOut}
+              onPress={checkout}
+              style={styles.markPaidButton}
+            >
+              Mark Paid
+            </AppButton>
           </View>
-        </View>
+        </Surface>
       </View>
 
       <Modal animationType="fade" transparent visible={Boolean(completedOrder)} onRequestClose={startNextOrder}>
-        <View className="flex-1 items-center justify-center bg-black/30 px-8">
-          <View className="w-[520px] rounded-pos bg-pos-surface p-6">
-            <View className="flex-row items-start justify-between">
-              <View className="flex-row items-center gap-3">
-                <CheckCircle2 color={colors.accent} size={28} />
+        <View style={styles.modalBackdrop}>
+          <Surface shadow="modal" style={styles.paymentModal}>
+            <View style={styles.modalHeader}>
+              <View style={styles.modalTitleRow}>
+                <CheckCircle2 color={tokens.colors.success} size={32} />
                 <View>
-                  <Text className="text-2xl font-semibold text-pos-ink">Payment complete</Text>
-                  <Text className="mt-1 text-sm text-pos-muted">{completedOrder?.orderNumber}</Text>
+                  <Text style={styles.modalTitle}>Payment complete</Text>
+                  <Text style={styles.modalSubtitle}>{completedOrder?.orderNumber}</Text>
                 </View>
               </View>
-              <Pressable className="h-9 w-9 items-center justify-center rounded-pos bg-pos-background" onPress={startNextOrder}>
-                <X color={colors.muted} size={18} />
-              </Pressable>
+              <IconButton label="Close payment modal" onPress={startNextOrder}>
+                <X color={tokens.colors.muted} size={20} />
+              </IconButton>
             </View>
 
-            <View className="my-5 h-px bg-pos-line" />
+            <View style={styles.divider} />
 
-            <View className="gap-2">
+            <View style={styles.receiptRows}>
               <TotalRow label="Receipt format" value={receiptQuery.data?.format ?? 'escpos-80mm'} />
               <TotalRow label="Total" value={completedOrder ? money(completedOrder.total) : money(0)} />
               <TotalRow label="Printer" value="Built-in thermal printer" />
               <TotalRow label="Status" value={printStatusLabel(printStatus)} />
             </View>
 
-            <View className="mt-6 flex-row gap-3">
-              <Pressable
-                className="h-12 flex-1 flex-row items-center justify-center gap-2 rounded-pos bg-pos-accent active:opacity-80"
+            <View style={styles.modalActions}>
+              <AppButton
                 disabled={printStatus === 'printing' || markPrinted.isPending}
+                icon={<Printer color={tokens.colors.inverse} size={20} />}
+                loading={printStatus === 'printing' || markPrinted.isPending}
                 onPress={printReceipt}
+                style={styles.modalActionButton}
               >
-                <Printer color="#FFFFFF" size={18} />
-                <Text className="text-base font-semibold text-white">{printStatus === 'printing' ? 'Printing' : 'Print receipt'}</Text>
-              </Pressable>
-              <Pressable className="h-12 flex-1 items-center justify-center rounded-pos bg-pos-background active:opacity-80" onPress={startNextOrder}>
-                <Text className="text-base font-semibold text-pos-ink">Next order</Text>
-              </Pressable>
+                Print receipt
+              </AppButton>
+              <AppButton variant="secondary" onPress={startNextOrder} style={styles.modalActionButton}>
+                Next order
+              </AppButton>
             </View>
-          </View>
+          </Surface>
         </View>
       </Modal>
-    </Screen>
+    </AppScreen>
   );
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
+function CategoryChip({ label, selected, onPress }: { label: string; selected: boolean; onPress: () => void }) {
   return (
-    <View className="h-20 flex-1 justify-center rounded-pos border border-pos-line bg-pos-surface px-4">
-      <Text className="text-sm text-pos-muted">{label}</Text>
-      <Text className="mt-1 text-xl font-semibold text-pos-ink">{value}</Text>
-    </View>
+    <Pressable android_ripple={{ color: tokens.colors.accentMuted }} onPress={onPress} style={[styles.categoryChip, selected ? styles.categoryChipSelected : null]}>
+      <Text style={[styles.categoryText, selected ? styles.categoryTextSelected : null]}>{label}</Text>
+    </Pressable>
   );
 }
 
-function StatusPill({ label, tone = 'ready', value }: { label: string; tone?: 'ready' | 'danger'; value: string }) {
+function IconButton({ children, label, onPress }: { children: ReactNode; label: string; onPress: () => void }) {
   return (
-    <View className="rounded-pos border border-pos-line bg-pos-surface px-4 py-2">
-      <Text className="text-xs text-pos-muted">{label}</Text>
-      <Text className={`mt-0.5 text-sm font-semibold ${tone === 'danger' ? 'text-pos-danger' : 'text-pos-accent'}`}>{value}</Text>
-    </View>
-  );
-}
-
-function IconButton({ children, onPress }: { children: ReactNode; onPress: () => void }) {
-  return (
-    <Pressable className="h-9 w-9 items-center justify-center rounded-pos border border-pos-line bg-pos-surface" onPress={onPress}>
+    <Pressable accessibilityLabel={label} accessibilityRole="button" android_ripple={{ color: tokens.colors.surfaceMuted }} onPress={onPress} style={styles.iconButton}>
       {children}
     </Pressable>
   );
@@ -296,9 +310,9 @@ function IconButton({ children, onPress }: { children: ReactNode; onPress: () =>
 
 function TotalRow({ label, value }: { label: string; value: string }) {
   return (
-    <View className="flex-row items-center justify-between">
-      <Text className="text-sm text-pos-muted">{label}</Text>
-      <Text className="text-sm font-semibold text-pos-ink">{value}</Text>
+    <View style={styles.totalRow}>
+      <Text style={styles.totalRowLabel}>{label}</Text>
+      <Text style={styles.totalRowValue}>{value}</Text>
     </View>
   );
 }
@@ -315,3 +329,306 @@ function printStatusLabel(status: PrintFlowStatus) {
       return 'Not printed';
   }
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: tokens.navigation.workspaceGap,
+  },
+  workspace: {
+    flex: 1,
+    minWidth: 0,
+  },
+  header: {
+    gap: tokens.spacing.md,
+    marginBottom: tokens.spacing.lg,
+  },
+  eyebrow: {
+    ...tokens.typography.label,
+    color: tokens.colors.accent,
+    textTransform: 'uppercase',
+  },
+  title: {
+    ...tokens.typography.display,
+    color: tokens.colors.ink,
+    marginTop: tokens.spacing.xs,
+  },
+  telemetry: {
+    flexDirection: 'row',
+    gap: tokens.spacing.sm,
+    width: '100%',
+  },
+  controls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.md,
+    marginBottom: tokens.spacing.lg,
+  },
+  searchBox: {
+    height: tokens.spacing.buttonHeight,
+    minWidth: 260,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.sm,
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.surface,
+    paddingHorizontal: tokens.spacing.lg,
+  },
+  searchInput: {
+    ...tokens.typography.body,
+    flex: 1,
+    color: tokens.colors.ink,
+    padding: 0,
+  },
+  categoryList: {
+    gap: tokens.spacing.sm,
+    paddingRight: tokens.spacing.md,
+    alignItems: 'center',
+  },
+  categoryChip: {
+    minHeight: tokens.spacing.buttonHeight,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.pill,
+    backgroundColor: tokens.colors.surface,
+    paddingHorizontal: tokens.spacing.xl,
+  },
+  categoryChipSelected: {
+    borderColor: tokens.colors.accent,
+    backgroundColor: tokens.colors.accentMuted,
+  },
+  categoryText: {
+    ...tokens.typography.label,
+    color: tokens.colors.ink,
+  },
+  categoryTextSelected: {
+    color: tokens.colors.accent,
+  },
+  productGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: tokens.spacing.sm,
+    paddingBottom: tokens.spacing['2xl'],
+  },
+  productTile: {
+    width: 160,
+    minHeight: 148,
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.lg,
+    backgroundColor: tokens.colors.surface,
+    padding: tokens.spacing.lg,
+    ...tokens.shadow.soft,
+  },
+  productName: {
+    ...tokens.typography.sectionTitle,
+    color: tokens.colors.ink,
+  },
+  productMeta: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+    marginTop: tokens.spacing.xs,
+  },
+  productFooter: {
+    gap: tokens.spacing.sm,
+  },
+  categoryAccent: {
+    width: 44,
+    height: 3,
+    borderRadius: tokens.radius.pill,
+    backgroundColor: tokens.colors.accent,
+  },
+  productPrice: {
+    ...tokens.typography.numeric,
+    color: tokens.colors.ink,
+  },
+  emptyProducts: {
+    flex: 1,
+    minWidth: 460,
+  },
+  orderRail: {
+    width: tokens.navigation.orderRailWidth,
+    alignSelf: 'stretch',
+  },
+  orderHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  orderTitle: {
+    ...tokens.typography.sectionTitle,
+    color: tokens.colors.ink,
+  },
+  orderSubtitle: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+    marginTop: tokens.spacing.xs,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: tokens.spacing.sm,
+    marginTop: tokens.spacing.lg,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: tokens.colors.line,
+    marginVertical: tokens.spacing.lg,
+  },
+  cartScroll: {
+    flex: 1,
+  },
+  emptyCartContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  cartContent: {
+    gap: tokens.spacing.md,
+    paddingBottom: tokens.spacing.lg,
+  },
+  cartLine: {
+    borderRadius: tokens.radius.lg,
+    backgroundColor: tokens.colors.background,
+    padding: tokens.spacing.lg,
+  },
+  cartLineTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.md,
+  },
+  cartItemName: {
+    ...tokens.typography.body,
+    flex: 1,
+    color: tokens.colors.ink,
+    fontWeight: '700',
+  },
+  cartLineTotal: {
+    ...tokens.typography.label,
+    color: tokens.colors.ink,
+  },
+  cartItemMeta: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+    marginTop: tokens.spacing.xs,
+  },
+  cartLineActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: tokens.spacing.md,
+  },
+  quantityStepper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.sm,
+  },
+  iconButton: {
+    width: tokens.spacing.touchTargetMin,
+    height: tokens.spacing.touchTargetMin,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.surface,
+  },
+  pressed: {
+    opacity: 0.75,
+  },
+  quantity: {
+    ...tokens.typography.body,
+    width: 34,
+    textAlign: 'center',
+    color: tokens.colors.ink,
+    fontWeight: '700',
+  },
+  totalArea: {
+    gap: tokens.spacing.sm,
+    paddingTop: tokens.spacing.lg,
+    borderTopWidth: 1,
+    borderTopColor: tokens.colors.line,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  totalRowLabel: {
+    ...tokens.typography.body,
+    color: tokens.colors.muted,
+  },
+  totalRowValue: {
+    ...tokens.typography.body,
+    color: tokens.colors.ink,
+    fontWeight: '700',
+  },
+  totalDivider: {
+    height: 1,
+    backgroundColor: tokens.colors.line,
+    marginVertical: tokens.spacing.sm,
+  },
+  grandTotalRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
+  totalLabel: {
+    ...tokens.typography.sectionTitle,
+    color: tokens.colors.ink,
+    marginBottom: tokens.spacing.xs,
+  },
+  totalValue: {
+    ...tokens.typography.numericLarge,
+    color: tokens.colors.ink,
+  },
+  markPaidButton: {
+    minHeight: tokens.spacing.primaryActionHeight,
+    marginTop: tokens.spacing.md,
+  },
+  modalBackdrop: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(23, 26, 31, 0.34)',
+    padding: tokens.spacing['2xl'],
+  },
+  paymentModal: {
+    width: 540,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.lg,
+  },
+  modalTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.md,
+  },
+  modalTitle: {
+    ...tokens.typography.sectionTitle,
+    color: tokens.colors.ink,
+  },
+  modalSubtitle: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+    marginTop: tokens.spacing.xs,
+  },
+  receiptRows: {
+    gap: tokens.spacing.sm,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    gap: tokens.spacing.md,
+    marginTop: tokens.spacing.xl,
+  },
+  modalActionButton: {
+    flex: 1,
+  },
+});

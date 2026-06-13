@@ -1,14 +1,13 @@
 import { Text, View } from 'react-native';
 
-import { useFindManyProduct } from '@/_/hook';
 import { Screen } from '@/components/Screen';
 import { useCurrency } from '@/hooks/useCurrency';
 
+import { useProducts } from './useProducts';
+
 export function ProductsScreen() {
   const money = useCurrency();
-  const productsQuery = useFindManyProduct({
-    orderBy: [{ isActive: 'desc' }, { category: 'asc' }, { name: 'asc' }],
-  });
+  const productsQuery = useProducts();
   const products = productsQuery.data ?? [];
 
   return (
