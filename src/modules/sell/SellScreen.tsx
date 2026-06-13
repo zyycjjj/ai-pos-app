@@ -10,6 +10,7 @@ import { MetricCard } from '@/components/MetricCard';
 import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
+import { useI18n } from '@/i18n/useI18n';
 import {
   type CheckoutOrder,
   useCreateCheckoutOrder,
@@ -25,12 +26,14 @@ import { getCheckoutTotals } from './checkoutMath';
 import { useActiveProducts } from '../products/useProducts';
 
 const TAX_RATE = 0.08;
+const ALL_CATEGORY = '__all__';
 
 type PrintFlowStatus = 'idle' | 'printing' | 'printed' | 'failed';
 
 export function SellScreen() {
   const money = useCurrency();
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const { t } = useI18n();
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
   const [search, setSearch] = useState('');
   const [completedOrder, setCompletedOrder] = useState<CheckoutOrder | null>(null);
   const [printStatus, setPrintStatus] = useState<PrintFlowStatus>('idle');
@@ -43,22 +46,26 @@ export function SellScreen() {
   const { addLine, clear, lines, removeLine, setQuantity } = useCartStore();
 
   const products = productsQuery.data ?? [];
+  const menuLabel = t('sell.category.menu');
   const categories = useMemo(() => {
-    const values = products.map((product) => product.category ?? 'Menu');
-    return ['All', ...Array.from(new Set(values))];
-  }, [products]);
+    const values = products.map((product) => product.category ?? menuLabel);
+    return [
+      { label: t('sell.category.all'), value: ALL_CATEGORY },
+      ...Array.from(new Set(values)).map((category) => ({ label: category, value: category })),
+    ];
+  }, [menuLabel, products, t]);
   const filteredProducts = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
     return products.filter((product) => {
-      const category = product.category ?? 'Menu';
-      const matchesCategory = selectedCategory === 'All' || category === selectedCategory;
+      const category = product.category ?? menuLabel;
+      const matchesCategory = selectedCategory === ALL_CATEGORY || category === selectedCategory;
       const matchesSearch =
         normalizedSearch.length === 0 ||
         product.name.toLowerCase().includes(normalizedSearch) ||
         category.toLowerCase().includes(normalizedSearch);
       return matchesCategory && matchesSearch;
     });
-  }, [products, search, selectedCategory]);
+  }, [menuLabel, products, search, selectedCategory]);
   const { subtotal, tax, total } = getCheckoutTotals(lines, TAX_RATE);
   const isCheckingOut = createOrder.isPending || markPaid.isPending;
   const printerReady = true;
@@ -105,13 +112,13 @@ export function SellScreen() {
         <View style={styles.workspace}>
           <View style={styles.header}>
             <View>
-              <Text style={styles.eyebrow}>Counter terminal</Text>
-              <Text style={styles.title}>Products</Text>
+              <Text style={styles.eyebrow}>{t('sell.eyebrow')}</Text>
+              <Text style={styles.title}>{t('sell.title')}</Text>
             </View>
             <View style={styles.telemetry}>
-              <MetricCard label="Today Sales" value={money(summaryQuery.data?.salesTotal ?? 0)} tone="accent" />
-              <MetricCard label="Orders" value={String(summaryQuery.data?.orderCount ?? 0)} />
-              <MetricCard label="Avg Ticket" value={money(summaryQuery.data?.averageTicket ?? 0)} />
+              <MetricCard label={t('sell.metrics.todaySales')} value={money(summaryQuery.data?.salesTotal ?? 0)} tone="accent" />
+              <MetricCard label={t('sell.metrics.orders')} value={String(summaryQuery.data?.orderCount ?? 0)} />
+              <MetricCard label={t('sell.metrics.avgTicket')} value={money(summaryQuery.data?.averageTicket ?? 0)} />
             </View>
           </View>
 
@@ -119,7 +126,7 @@ export function SellScreen() {
             <View style={styles.searchBox}>
               <Search color={tokens.colors.muted} size={20} />
               <TextInput
-                placeholder="Search products"
+                placeholder={t('sell.searchPlaceholder')}
                 placeholderTextColor={tokens.colors.subtle}
                 style={styles.searchInput}
                 value={search}
@@ -129,10 +136,10 @@ export function SellScreen() {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryList}>
               {categories.map((category) => (
                 <CategoryChip
-                  key={category}
-                  label={category}
-                  selected={selectedCategory === category}
-                  onPress={() => setSelectedCategory(category)}
+                  key={category.value}
+                  label={category.label}
+                  selected={selectedCategory === category.value}
+                  onPress={() => setSelectedCategory(category.value)}
                 />
               ))}
             </ScrollView>
@@ -158,7 +165,7 @@ export function SellScreen() {
                     {product.name}
                   </Text>
                   <Text style={styles.productMeta} numberOfLines={1}>
-                    {product.category ?? 'Menu'}
+                    {product.category ?? menuLabel}
                   </Text>
                 </View>
                 <View style={styles.productFooter}>
@@ -169,7 +176,7 @@ export function SellScreen() {
             ))}
             {!productsQuery.isLoading && filteredProducts.length === 0 ? (
               <Surface style={styles.emptyProducts}>
-                <EmptyState title="No matching products" description="Adjust the category or search to continue checkout." />
+                <EmptyState title={t('sell.emptyProducts.title')} description={t('sell.emptyProducts.description')} />
               </Surface>
             ) : null}
           </ScrollView>
@@ -178,25 +185,33 @@ export function SellScreen() {
         <Surface variant="elevated" shadow="soft" style={styles.orderRail}>
           <View style={styles.orderHeader}>
             <View>
-              <Text style={styles.orderTitle}>Current Order</Text>
-              <Text style={styles.orderSubtitle}>{lines.length} line items</Text>
+              <Text style={styles.orderTitle}>{t('sell.order.title')}</Text>
+              <Text style={styles.orderSubtitle}>{t('sell.order.lineItems', { count: lines.length })}</Text>
             </View>
-            <IconButton label="Clear order" onPress={clear}>
+            <IconButton label={t('sell.order.clear')} onPress={clear}>
               <RotateCcw color={tokens.colors.muted} size={20} />
             </IconButton>
           </View>
 
           <View style={styles.statusRow}>
-            <StatusPill label="Printer" tone={printerReady ? 'success' : 'danger'} value={printerReady ? 'Ready' : 'Offline'} />
-            <StatusPill label="Display" tone="info" value="Synced" />
-            <StatusPill label="Order" tone={lines.length > 0 ? 'warning' : 'neutral'} value={lines.length > 0 ? 'Open' : 'Idle'} />
+            <StatusPill
+              label={t('sell.order.printer')}
+              tone={printerReady ? 'success' : 'danger'}
+              value={printerReady ? t('sell.order.ready') : t('sell.order.offline')}
+            />
+            <StatusPill label={t('sell.order.display')} tone="info" value={t('sell.order.synced')} />
+            <StatusPill
+              label={t('sell.order.status')}
+              tone={lines.length > 0 ? 'warning' : 'neutral'}
+              value={lines.length > 0 ? t('sell.order.open') : t('sell.order.idle')}
+            />
           </View>
 
           <View style={styles.divider} />
 
           <ScrollView style={styles.cartScroll} contentContainerStyle={lines.length === 0 ? styles.emptyCartContent : styles.cartContent}>
             {lines.length === 0 ? (
-              <EmptyState title="Ready for the next sale" description="Tap product keys to build the order." />
+              <EmptyState title={t('sell.order.emptyTitle')} description={t('sell.order.emptyDescription')} />
             ) : (
               lines.map((line) => (
                 <View key={line.productId} style={styles.cartLine}>
@@ -206,18 +221,18 @@ export function SellScreen() {
                     </Text>
                     <Text style={styles.cartLineTotal}>{money(line.unitPrice * line.quantity)}</Text>
                   </View>
-                  <Text style={styles.cartItemMeta}>{money(line.unitPrice)} each</Text>
+                  <Text style={styles.cartItemMeta}>{t('sell.order.each', { price: money(line.unitPrice) })}</Text>
                   <View style={styles.cartLineActions}>
                     <View style={styles.quantityStepper}>
-                      <IconButton label="Decrease quantity" onPress={() => setQuantity(line.productId, line.quantity - 1)}>
+                      <IconButton label={t('sell.order.decreaseQuantity')} onPress={() => setQuantity(line.productId, line.quantity - 1)}>
                         <Minus color={tokens.colors.ink} size={18} />
                       </IconButton>
                       <Text style={styles.quantity}>{line.quantity}</Text>
-                      <IconButton label="Increase quantity" onPress={() => setQuantity(line.productId, line.quantity + 1)}>
+                      <IconButton label={t('sell.order.increaseQuantity')} onPress={() => setQuantity(line.productId, line.quantity + 1)}>
                         <Plus color={tokens.colors.ink} size={18} />
                       </IconButton>
                     </View>
-                    <IconButton label="Remove item" onPress={() => removeLine(line.productId)}>
+                    <IconButton label={t('sell.order.removeItem')} onPress={() => removeLine(line.productId)}>
                       <Trash2 color={tokens.colors.danger} size={19} />
                     </IconButton>
                   </View>
@@ -227,11 +242,11 @@ export function SellScreen() {
           </ScrollView>
 
           <View style={styles.totalArea}>
-            <TotalRow label="Subtotal" value={money(subtotal)} />
-            <TotalRow label="Tax" value={money(tax)} />
+            <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
+            <TotalRow label={t('sell.order.tax')} value={money(tax)} />
             <View style={styles.totalDivider} />
             <View style={styles.grandTotalRow}>
-              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalLabel}>{t('sell.order.total')}</Text>
               <Text style={styles.totalValue}>{money(total)}</Text>
             </View>
             <AppButton
@@ -240,7 +255,7 @@ export function SellScreen() {
               onPress={checkout}
               style={styles.markPaidButton}
             >
-              Mark Paid
+              {t('sell.order.markPaid')}
             </AppButton>
           </View>
         </Surface>
@@ -253,11 +268,11 @@ export function SellScreen() {
               <View style={styles.modalTitleRow}>
                 <CheckCircle2 color={tokens.colors.success} size={32} />
                 <View>
-                  <Text style={styles.modalTitle}>Payment complete</Text>
+                  <Text style={styles.modalTitle}>{t('sell.payment.complete')}</Text>
                   <Text style={styles.modalSubtitle}>{completedOrder?.orderNumber}</Text>
                 </View>
               </View>
-              <IconButton label="Close payment modal" onPress={startNextOrder}>
+              <IconButton label={t('sell.payment.close')} onPress={startNextOrder}>
                 <X color={tokens.colors.muted} size={20} />
               </IconButton>
             </View>
@@ -265,10 +280,10 @@ export function SellScreen() {
             <View style={styles.divider} />
 
             <View style={styles.receiptRows}>
-              <TotalRow label="Receipt format" value={receiptQuery.data?.format ?? 'escpos-80mm'} />
-              <TotalRow label="Total" value={completedOrder ? money(completedOrder.total) : money(0)} />
-              <TotalRow label="Printer" value="Built-in thermal printer" />
-              <TotalRow label="Status" value={printStatusLabel(printStatus)} />
+              <TotalRow label={t('sell.payment.receiptFormat')} value={receiptQuery.data?.format ?? 'escpos-80mm'} />
+              <TotalRow label={t('sell.order.total')} value={completedOrder ? money(completedOrder.total) : money(0)} />
+              <TotalRow label={t('sell.payment.printer')} value={t('sell.payment.printerName')} />
+              <TotalRow label={t('sell.payment.status')} value={printStatusLabel(printStatus, t)} />
             </View>
 
             <View style={styles.modalActions}>
@@ -279,10 +294,10 @@ export function SellScreen() {
                 onPress={printReceipt}
                 style={styles.modalActionButton}
               >
-                Print receipt
+                {t('sell.payment.printReceipt')}
               </AppButton>
               <AppButton variant="secondary" onPress={startNextOrder} style={styles.modalActionButton}>
-                Next order
+                {t('sell.payment.nextOrder')}
               </AppButton>
             </View>
           </Surface>
@@ -317,16 +332,16 @@ function TotalRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function printStatusLabel(status: PrintFlowStatus) {
+function printStatusLabel(status: PrintFlowStatus, t: (key: string) => string) {
   switch (status) {
     case 'printing':
-      return 'Printing';
+      return t('sell.payment.status.printing');
     case 'printed':
-      return 'Printed';
+      return t('sell.payment.status.printed');
     case 'failed':
-      return 'Failed, retry available';
+      return t('sell.payment.status.failed');
     default:
-      return 'Not printed';
+      return t('sell.payment.status.notPrinted');
   }
 }
 

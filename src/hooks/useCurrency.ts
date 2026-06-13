@@ -1,7 +1,8 @@
+import { formatCurrencyForLocale } from '@/i18n/format';
+import { useLocaleStore } from '@/stores/localeStore';
+
 export function useCurrency(currency = 'USD') {
-  return (amount: number) =>
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-    }).format(amount);
+  const locale = useLocaleStore((state) => state.locale);
+
+  return (amount: number) => formatCurrencyForLocale(locale, amount, { currency });
 }

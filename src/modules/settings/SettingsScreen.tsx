@@ -1,16 +1,43 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { ReactNode } from 'react';
 import { Bluetooth, Monitor, Printer, Usb } from 'lucide-react-native';
 
 import { Screen } from '@/components/Screen';
+import { useI18n } from '@/i18n/useI18n';
+import type { SupportedLocale } from '@/i18n';
 import { colors } from '@/theme/colors';
 
 export function SettingsScreen() {
+  const { locale, setLocale, t } = useI18n();
+
   return (
     <Screen>
       <View className="mb-6">
         <Text className="text-3xl font-semibold text-pos-ink">Device settings</Text>
         <Text className="mt-2 text-base text-pos-muted">Terminal, receipt printer, tax, and customer display setup.</Text>
+      </View>
+
+      <View style={styles.languagePanel}>
+        <View style={styles.languagePanelContent}>
+          <View style={styles.languageText}>
+            <Text style={styles.languageTitle}>{t('settings.language.title')}</Text>
+            <Text style={styles.languageDescription}>{t('settings.language.description')}</Text>
+          </View>
+          <View style={styles.languageActions}>
+            <LanguageButton
+              label={t('settings.language.english')}
+              locale="en"
+              selected={locale === 'en'}
+              onPress={setLocale}
+            />
+            <LanguageButton
+              label={t('settings.language.chineseSimplified')}
+              locale="zh-CN"
+              selected={locale === 'zh-CN'}
+              onPress={setLocale}
+            />
+          </View>
+        </View>
       </View>
 
       <View className="grid-cols-2 flex-row gap-5">
@@ -54,6 +81,27 @@ export function SettingsScreen() {
   );
 }
 
+function LanguageButton({
+  label,
+  locale,
+  selected,
+  onPress,
+}: {
+  label: string;
+  locale: SupportedLocale;
+  selected: boolean;
+  onPress: (locale: SupportedLocale) => void;
+}) {
+  return (
+    <Pressable
+      style={[styles.languageButton, selected ? styles.languageButtonSelected : null]}
+      onPress={() => onPress(locale)}
+    >
+      <Text style={[styles.languageButtonText, selected ? styles.languageButtonTextSelected : null]}>{label}</Text>
+    </Pressable>
+  );
+}
+
 function SettingPanel({
   children,
   icon,
@@ -94,3 +142,62 @@ function SettingRow({ label, value }: { label: string; value: string }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  languagePanel: {
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: colors.line,
+    borderRadius: 12,
+    backgroundColor: colors.surface,
+    padding: 20,
+  },
+  languagePanelContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 20,
+  },
+  languageText: {
+    flex: 1,
+  },
+  languageTitle: {
+    color: colors.ink,
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 26,
+  },
+  languageDescription: {
+    color: colors.muted,
+    fontSize: 14,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+  languageActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  languageButton: {
+    minWidth: 112,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.line,
+    borderRadius: 8,
+    backgroundColor: colors.surface,
+    paddingHorizontal: 16,
+  },
+  languageButtonSelected: {
+    borderColor: colors.accent,
+    backgroundColor: colors.background,
+  },
+  languageButtonText: {
+    color: colors.ink,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  languageButtonTextSelected: {
+    color: colors.accent,
+  },
+});

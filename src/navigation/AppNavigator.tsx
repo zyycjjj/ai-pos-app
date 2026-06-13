@@ -7,6 +7,7 @@ import { OrdersScreen } from '@/modules/orders/OrdersScreen';
 import { ProductsScreen } from '@/modules/products/ProductsScreen';
 import { SellScreen } from '@/modules/sell/SellScreen';
 import { SettingsScreen } from '@/modules/settings/SettingsScreen';
+import { useI18n } from '@/i18n/useI18n';
 import { colors } from '@/theme/colors';
 
 export type RootTabParamList = {
@@ -21,6 +22,8 @@ export type RootTabParamList = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function AppNavigator() {
+  const { t } = useI18n();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -42,12 +45,12 @@ export function AppNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Sell" component={SellScreen} options={{ tabBarIcon: icon(Store) }} />
-      <Tab.Screen name="AI" component={AiCreateScreen} options={{ tabBarIcon: icon(Sparkles) }} />
-      <Tab.Screen name="Products" component={ProductsScreen} options={{ tabBarIcon: icon(ShoppingBag) }} />
-      <Tab.Screen name="Orders" component={OrdersScreen} options={{ tabBarIcon: icon(ReceiptText) }} />
-      <Tab.Screen name="Display" component={CustomerDisplayScreen} options={{ tabBarIcon: icon(Monitor) }} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarIcon: icon(Settings) }} />
+      <Tab.Screen name="Sell" component={SellScreen} options={{ tabBarIcon: icon(Store), tabBarLabel: t('nav.sell') }} />
+      <Tab.Screen name="AI" component={AiCreateScreen} options={{ tabBarIcon: icon(Sparkles), tabBarLabel: t('nav.ai') }} />
+      <Tab.Screen name="Products" component={ProductsScreen} options={{ tabBarIcon: icon(ShoppingBag), tabBarLabel: t('nav.products') }} />
+      <Tab.Screen name="Orders" component={OrdersScreen} options={{ tabBarIcon: icon(ReceiptText), tabBarLabel: t('nav.orders') }} />
+      <Tab.Screen name="Display" component={CustomerDisplayScreen} options={{ tabBarIcon: icon(Monitor), tabBarLabel: t('nav.display') }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarIcon: icon(Settings), tabBarLabel: t('nav.settings') }} />
     </Tab.Navigator>
   );
 }
