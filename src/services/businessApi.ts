@@ -210,10 +210,10 @@ async function waitForAiJob<Result>(jobPath: string) {
 export type ReceiptPayload = {
   format: string;
   store: { name: string };
-  order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'status' | 'printStatus' | 'createdAt' | 'paidAt' | 'printedAt'>;
+  order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'pickupNumber' | 'status' | 'printStatus' | 'createdAt' | 'paidAt' | 'printedAt'>;
   currency: string;
-  items: Array<Pick<CheckoutOrderItem, 'name' | 'quantity' | 'unitPrice' | 'lineTotal'>>;
-  totals: Pick<CheckoutOrder, 'subtotal' | 'tax' | 'tip' | 'total'>;
+  items: Array<Pick<CheckoutOrderItem, 'name' | 'quantity' | 'unitPrice' | 'lineTotal' | 'modifiers'>>;
+  totals: Pick<CheckoutOrder, 'subtotal' | 'adjustment' | 'tax' | 'tip' | 'total'>;
   payments: CheckoutPaymentLine[];
   footer: {
     message: string;
