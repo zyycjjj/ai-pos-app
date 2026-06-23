@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AppButton } from '@/components/AppButton';
 import { Screen } from '@/components/Screen';
 import { useCurrency } from '@/hooks/useCurrency';
+import { printerModule } from '@/native/printer/PrinterModule';
 import { useCartStore } from '@/stores/cartStore';
 import { tokens } from '@/theme';
 
@@ -13,6 +16,21 @@ export function CustomerDisplayScreen() {
   const money = useCurrency();
   const lines = useCartStore((state) => state.lines);
   const { subtotal, tax, total } = getCheckoutTotals(lines, TAX_RATE);
+  const [printerState, setPrinterState] = useState<'idle' | 'printing' | 'sent' | 'failed'>('idle');
+  const [printerMessage, setPrinterMessage] = useState('Built-in printer test is ready.');
+
+  const printTestReceipt = async () => {
+    setPrinterState('printing');
+    setPrinterMessage('Connecting to built-in printer...');
+    try {
+      const result = await printerModule.printTestReceipt();
+      setPrinterState('sent');
+      setPrinterMessage(`Test receipt sent via ${result.connection.type || 'printer'}.`);
+    } catch (error) {
+      setPrinterState('failed');
+      setPrinterMessage(error instanceof Error ? error.message : 'Printer test failed.');
+    }
+  };
 
   return (
     <Screen padded={false}>
@@ -23,6 +41,13 @@ export function CustomerDisplayScreen() {
           <Text style={styles.heroDescription}>
             {lines.length === 0 ? 'Your order will appear here as the cashier adds items.' : 'Please confirm the items and total.'}
           </Text>
+          <View style={styles.printerTestPanel}>
+            <Text style={styles.printerTestTitle}>Built-in printer</Text>
+            <Text style={[styles.printerTestMessage, printerState === 'failed' && styles.printerTestError]}>{printerMessage}</Text>
+            <AppButton loading={printerState === 'printing'} onPress={printTestReceipt} style={styles.printerTestButton}>
+              Print Test Receipt
+            </AppButton>
+          </View>
         </View>
 
         <View style={styles.orderPanel}>
@@ -103,6 +128,34 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontWeight: '500',
     marginTop: tokens.spacing.lg,
+  },
+  printerTestPanel: {
+    width: 360,
+    gap: tokens.spacing.sm,
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.surface,
+    padding: tokens.spacing.lg,
+    marginTop: tokens.spacing['2xl'],
+  },
+  printerTestTitle: {
+    color: tokens.colors.ink,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '800',
+  },
+  printerTestMessage: {
+    color: tokens.colors.muted,
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '600',
+  },
+  printerTestError: {
+    color: tokens.colors.danger,
+  },
+  printerTestButton: {
+    marginTop: tokens.spacing.sm,
   },
   orderPanel: {
     width: 420,
