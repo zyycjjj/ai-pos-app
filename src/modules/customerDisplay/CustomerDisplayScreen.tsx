@@ -1,8 +1,9 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Screen } from '@/components/Screen';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useCartStore } from '@/stores/cartStore';
+import { tokens } from '@/theme';
 
 import { getCheckoutTotals } from '../sell/checkoutMath';
 
@@ -14,47 +15,45 @@ export function CustomerDisplayScreen() {
   const { subtotal, tax, total } = getCheckoutTotals(lines, TAX_RATE);
 
   return (
-    <Screen>
-      <View className="flex-1 flex-row gap-8">
-        <View className="flex-1 justify-center">
-          <Text className="text-lg font-semibold text-pos-accent">AI POS Store</Text>
-          <Text className="mt-4 text-5xl font-semibold text-pos-ink">
-            {lines.length === 0 ? 'Welcome' : 'Review your order'}
-          </Text>
-          <Text className="mt-4 max-w-xl text-xl text-pos-muted">
+    <Screen padded={false}>
+      <View style={styles.root}>
+        <View style={styles.hero}>
+          <Text style={styles.storeName}>AI POS Store</Text>
+          <Text style={styles.heroTitle}>{lines.length === 0 ? 'Welcome' : 'Review your order'}</Text>
+          <Text style={styles.heroDescription}>
             {lines.length === 0 ? 'Your order will appear here as the cashier adds items.' : 'Please confirm the items and total.'}
           </Text>
         </View>
 
-        <View className="w-[420px] rounded-pos border border-pos-line bg-pos-surface p-6">
-          <Text className="text-2xl font-semibold text-pos-ink">Order</Text>
-          <View className="my-5 h-px bg-pos-line" />
+        <View style={styles.orderPanel}>
+          <Text style={styles.orderTitle}>Order</Text>
+          <View style={styles.divider} />
           {lines.length === 0 ? (
-            <View className="flex-1 justify-center">
-              <Text className="text-center text-base text-pos-muted">No items yet</Text>
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyText}>No items yet</Text>
             </View>
           ) : (
-            <ScrollView className="flex-1">
-              <View className="gap-4">
+            <ScrollView style={styles.orderList} contentContainerStyle={styles.orderListContent}>
+              <View style={styles.lineStack}>
                 {lines.map((line) => (
-                  <View key={line.productId} className="flex-row justify-between gap-4">
-                    <View className="flex-1">
-                      <Text className="text-lg font-semibold text-pos-ink">{line.name}</Text>
-                      <Text className="mt-1 text-base text-pos-muted">Qty {line.quantity}</Text>
+                  <View key={line.lineId} style={styles.orderLine}>
+                    <View style={styles.lineText}>
+                      <Text style={styles.lineName}>{line.name}</Text>
+                      <Text style={styles.lineQuantity}>Qty {line.quantity}</Text>
                     </View>
-                    <Text className="text-lg font-semibold text-pos-ink">{money(line.unitPrice * line.quantity)}</Text>
+                    <Text style={styles.lineTotal}>{money(line.unitPrice * line.quantity)}</Text>
                   </View>
                 ))}
               </View>
             </ScrollView>
           )}
-          <View className="mt-5 gap-2">
+          <View style={styles.summary}>
             <SummaryRow label="Subtotal" value={money(subtotal)} />
             <SummaryRow label="Tax" value={money(tax)} />
-            <View className="my-2 h-px bg-pos-line" />
-            <View className="flex-row items-center justify-between">
-              <Text className="text-xl font-semibold text-pos-ink">Total</Text>
-              <Text className="text-4xl font-semibold text-pos-ink">{money(total)}</Text>
+            <View style={styles.dividerCompact} />
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalValue}>{money(total)}</Text>
             </View>
           </View>
         </View>
@@ -65,9 +64,157 @@ export function CustomerDisplayScreen() {
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
-    <View className="flex-row items-center justify-between">
-      <Text className="text-base text-pos-muted">{label}</Text>
-      <Text className="text-base font-semibold text-pos-ink">{value}</Text>
+    <View style={styles.summaryRow}>
+      <Text style={styles.summaryLabel}>{label}</Text>
+      <Text style={styles.summaryValue}>{value}</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: tokens.spacing['2xl'],
+    paddingHorizontal: tokens.navigation.contentPadding,
+    paddingVertical: tokens.spacing.xl,
+  },
+  hero: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  storeName: {
+    color: tokens.colors.accent,
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: '800',
+  },
+  heroTitle: {
+    color: tokens.colors.ink,
+    fontSize: 48,
+    lineHeight: 56,
+    fontWeight: '800',
+    marginTop: tokens.spacing.lg,
+  },
+  heroDescription: {
+    maxWidth: 560,
+    color: tokens.colors.muted,
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '500',
+    marginTop: tokens.spacing.lg,
+  },
+  orderPanel: {
+    width: 420,
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.lg,
+    backgroundColor: tokens.colors.surface,
+    padding: tokens.spacing.xl,
+    ...tokens.shadow.soft,
+  },
+  orderTitle: {
+    color: tokens.colors.ink,
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: '800',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: tokens.colors.line,
+    marginVertical: tokens.spacing.xl,
+  },
+  dividerCompact: {
+    height: 1,
+    backgroundColor: tokens.colors.line,
+    marginVertical: tokens.spacing.sm,
+  },
+  emptyState: {
+    flex: 1,
+    minHeight: 240,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    color: tokens.colors.muted,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  orderList: {
+    flex: 1,
+    maxHeight: 360,
+  },
+  orderListContent: {
+    paddingBottom: tokens.spacing.sm,
+  },
+  lineStack: {
+    gap: tokens.spacing.lg,
+  },
+  orderLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.lg,
+  },
+  lineText: {
+    flex: 1,
+  },
+  lineName: {
+    color: tokens.colors.ink,
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: '800',
+  },
+  lineQuantity: {
+    color: tokens.colors.muted,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '500',
+    marginTop: 4,
+  },
+  lineTotal: {
+    color: tokens.colors.ink,
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: '800',
+  },
+  summary: {
+    gap: tokens.spacing.sm,
+    marginTop: tokens.spacing.xl,
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  summaryLabel: {
+    color: tokens.colors.muted,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '500',
+  },
+  summaryValue: {
+    color: tokens.colors.ink,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '800',
+  },
+  totalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  totalLabel: {
+    color: tokens.colors.ink,
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '800',
+  },
+  totalValue: {
+    color: tokens.colors.ink,
+    fontSize: 40,
+    lineHeight: 46,
+    fontWeight: '800',
+  },
+});

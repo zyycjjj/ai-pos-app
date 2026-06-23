@@ -48,6 +48,7 @@ export function SellScreen() {
   const [paymentVisible, setPaymentVisible] = useState(false);
   const [paymentLines, setPaymentLines] = useState<PaymentLineDraft[]>([]);
   const [paymentValidationVisible, setPaymentValidationVisible] = useState(false);
+  const [paymentSubmitError, setPaymentSubmitError] = useState(false);
   const [adjustmentVisible, setAdjustmentVisible] = useState(false);
   const [adjustmentType, setAdjustmentType] = useState<AdjustmentType>('discount');
   const [adjustmentValueText, setAdjustmentValueText] = useState('');
@@ -117,6 +118,7 @@ export function SellScreen() {
     }
     setPaymentVisible(true);
     setPaymentValidationVisible(false);
+    setPaymentSubmitError(false);
     setPaymentLines([createPaymentLine('CASH', total, Math.ceil(total))]);
   };
 
@@ -129,29 +131,34 @@ export function SellScreen() {
       return;
     }
 
-    const paidOrder = await createOrder.mutateAsync({
-      items: lines.map((line) => ({
-        productId: line.productId,
-        quantity: line.quantity,
-        modifiers: toCheckoutModifierSelections(line.modifiers),
-      })),
-      adjustment: adjustment ?? undefined,
-      payments: paymentLines.map((line) => ({
-        method: line.method,
-        amount: Number(line.amountText) || 0,
-        amountReceived: line.method === 'CASH' ? Number(line.amountReceivedText) || 0 : undefined,
-      })),
-      tax,
-      currency: 'USD',
-    });
-    setCompletedOrder(paidOrder);
-    setPaymentVisible(false);
-    setPaymentValidationVisible(false);
-    setPaymentLines([]);
-    setAdjustment(null);
-    setAdjustmentValueText('');
-    setPrintStatus('idle');
-    clear();
+    setPaymentSubmitError(false);
+    try {
+      const paidOrder = await createOrder.mutateAsync({
+        items: lines.map((line) => ({
+          productId: line.productId,
+          quantity: line.quantity,
+          modifiers: toCheckoutModifierSelections(line.modifiers),
+        })),
+        adjustment: adjustment ?? undefined,
+        payments: paymentLines.map((line) => ({
+          method: line.method,
+          amount: Number(line.amountText) || 0,
+          amountReceived: line.method === 'CASH' ? Number(line.amountReceivedText) || 0 : undefined,
+        })),
+        tax,
+        currency: 'USD',
+      });
+      setCompletedOrder(paidOrder);
+      setPaymentVisible(false);
+      setPaymentValidationVisible(false);
+      setPaymentLines([]);
+      setAdjustment(null);
+      setAdjustmentValueText('');
+      setPrintStatus('idle');
+      clear();
+    } catch {
+      setPaymentSubmitError(true);
+    }
   };
 
   const addPaymentLine = () => {
@@ -161,6 +168,7 @@ export function SellScreen() {
 
   const updatePaymentLine = (id: string, patch: Partial<PaymentLineDraft>) => {
     setPaymentValidationVisible(false);
+    setPaymentSubmitError(false);
     setPaymentLines((current) => current.map((line) => (line.id === id ? { ...line, ...patch } : line)));
   };
 
@@ -473,7 +481,7 @@ export function SellScreen() {
 
       <Modal animationType="fade" transparent visible={paymentVisible} onRequestClose={() => setPaymentVisible(false)}>
         <View style={styles.modalBackdrop}>
-          <Surface shadow="modal" style={styles.paymentModal}>
+          <Surface shadow="modal" style={[styles.paymentModal, styles.checkoutPaymentModal]}>
             <View style={styles.modalHeader}>
               <View>
                 <Text style={styles.modalTitle}>{t('payment.title')}</Text>
@@ -484,64 +492,83 @@ export function SellScreen() {
               </IconButton>
             </View>
 
-            <View style={styles.paymentDueBlock}>
-              <Text style={styles.paymentDue}>{money(total)}</Text>
-              <View style={styles.receiptRows}>
-                <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
-                {adjustment ? <TotalRow label={t('payment.adjustment')} value={`-${money(adjustmentAmount)}`} /> : null}
-                <TotalRow label={t('sell.order.tax')} value={money(tax)} />
+            <ScrollView style={styles.paymentModalScroll} contentContainerStyle={styles.paymentModalScrollContent} showsVerticalScrollIndicator>
+              <View style={styles.paymentDueBlock}>
+                <Text style={styles.paymentDue}>{money(total)}</Text>
+                <View style={styles.receiptRows}>
+                  <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
+                  {adjustment ? <TotalRow label={t('payment.adjustment')} value={`-${money(adjustmentAmount)}`} /> : null}
+                  <TotalRow label={t('sell.order.tax')} value={money(tax)} />
+                </View>
               </View>
-            </View>
 
-            <View style={styles.paymentLines}>
-              {paymentLines.map((line, index) => {
-                const lineAmount = Number(line.amountText) || 0;
-                const lineReceived = Number(line.amountReceivedText) || 0;
-                const lineChange = Math.max(roundMoney(lineReceived - lineAmount), 0);
-                return (
-                  <View key={line.id} style={styles.paymentLine}>
-                    <View style={styles.modifierGroupHeader}>
-                      <Text style={styles.cashLabel}>{t('payment.paymentLine', { count: index + 1 })}</Text>
-                      {paymentLines.length > 1 ? (
-                        <Pressable onPress={() => removePaymentLine(line.id)} style={styles.removePaymentButton}>
-                          <Text style={styles.removePaymentText}>{t('payment.removePayment')}</Text>
-                        </Pressable>
+              <View style={styles.paymentLines}>
+                {paymentLines.map((line, index) => {
+                  const lineAmount = Number(line.amountText) || 0;
+                  const lineReceived = Number(line.amountReceivedText) || 0;
+                  const lineChange = Math.max(roundMoney(lineReceived - lineAmount), 0);
+                  return (
+                    <View key={line.id} style={styles.paymentLine}>
+                      <View style={styles.modifierGroupHeader}>
+                        <Text style={styles.cashLabel}>{t('payment.paymentLine', { count: index + 1 })}</Text>
+                        {paymentLines.length > 1 ? (
+                          <Pressable onPress={() => removePaymentLine(line.id)} style={styles.removePaymentButton}>
+                            <Text style={styles.removePaymentText}>{t('payment.removePayment')}</Text>
+                          </Pressable>
+                        ) : null}
+                      </View>
+                      <View style={styles.paymentMethodRow}>
+                        <PaymentMethodChip
+                          label={t('payment.cash')}
+                          selected={line.method === 'CASH'}
+                          onPress={() => updatePaymentLine(line.id, { method: 'CASH', amountReceivedText: line.amountReceivedText || line.amountText })}
+                        />
+                        <PaymentMethodChip
+                          label={t('payment.card')}
+                          selected={line.method === 'CARD'}
+                          onPress={() => updatePaymentLine(line.id, { method: 'CARD' })}
+                        />
+                        <PaymentMethodChip
+                          label={t('payment.manual')}
+                          selected={line.method === 'MANUAL'}
+                          onPress={() => updatePaymentLine(line.id, { method: 'MANUAL' })}
+                        />
+                      </View>
+                      <TextInput
+                        keyboardType="numeric"
+                        placeholder="0"
+                        placeholderTextColor={tokens.colors.subtle}
+                        style={styles.cashInput}
+                        value={line.amountText}
+                        onChangeText={(value) =>
+                          updatePaymentLine(line.id, { amountText: value, amountReceivedText: line.method === 'CASH' ? value : line.amountReceivedText })
+                        }
+                      />
+                      {line.method === 'CASH' ? (
+                        <>
+                          <Text style={styles.cashLabel}>{t('payment.cashReceived')}</Text>
+                          <TextInput
+                            keyboardType="numeric"
+                            placeholder="0"
+                            placeholderTextColor={tokens.colors.subtle}
+                            style={styles.cashInput}
+                            value={line.amountReceivedText}
+                            onChangeText={(value) => updatePaymentLine(line.id, { amountReceivedText: value })}
+                          />
+                          <TotalRow label={t('payment.changeDue')} value={money(lineChange)} />
+                        </>
                       ) : null}
                     </View>
-                    <View style={styles.paymentMethodRow}>
-                      <PaymentMethodChip label={t('payment.cash')} selected={line.method === 'CASH'} onPress={() => updatePaymentLine(line.id, { method: 'CASH', amountReceivedText: line.amountReceivedText || line.amountText })} />
-                      <PaymentMethodChip label={t('payment.card')} selected={line.method === 'CARD'} onPress={() => updatePaymentLine(line.id, { method: 'CARD' })} />
-                      <PaymentMethodChip label={t('payment.manual')} selected={line.method === 'MANUAL'} onPress={() => updatePaymentLine(line.id, { method: 'MANUAL' })} />
-                    </View>
-                    <TextInput
-                      keyboardType="numeric"
-                      placeholder="0"
-                      placeholderTextColor={tokens.colors.subtle}
-                      style={styles.cashInput}
-                      value={line.amountText}
-                      onChangeText={(value) => updatePaymentLine(line.id, { amountText: value, amountReceivedText: line.method === 'CASH' ? value : line.amountReceivedText })}
-                    />
-                    {line.method === 'CASH' ? (
-                      <>
-                        <Text style={styles.cashLabel}>{t('payment.cashReceived')}</Text>
-                        <TextInput
-                          keyboardType="numeric"
-                          placeholder="0"
-                          placeholderTextColor={tokens.colors.subtle}
-                          style={styles.cashInput}
-                          value={line.amountReceivedText}
-                          onChangeText={(value) => updatePaymentLine(line.id, { amountReceivedText: value })}
-                        />
-                        <TotalRow label={t('payment.changeDue')} value={money(lineChange)} />
-                      </>
-                    ) : null}
-                  </View>
-                );
-              })}
-            </View>
+                  );
+                })}
+              </View>
 
-            <TotalRow label={t('payment.remaining')} value={money(Math.max(remainingBalance, 0))} />
-            {paymentValidationVisible ? <Text style={styles.modifierValidation}>{t(paymentsBalanced ? 'payment.validation.insufficient' : 'payment.validation.unbalanced')}</Text> : null}
+              <TotalRow label={t('payment.remaining')} value={money(Math.max(remainingBalance, 0))} />
+              {paymentValidationVisible ? (
+                <Text style={styles.modifierValidation}>{t(paymentsBalanced ? 'payment.validation.insufficient' : 'payment.validation.unbalanced')}</Text>
+              ) : null}
+              {paymentSubmitError ? <Text style={styles.modifierValidation}>{t('payment.validation.submitFailed')}</Text> : null}
+            </ScrollView>
 
             <View style={styles.modalActions}>
               <AppButton variant="secondary" onPress={addPaymentLine} style={styles.modalActionButton}>
@@ -1086,6 +1113,15 @@ const styles = StyleSheet.create({
   },
   paymentModal: {
     width: 540,
+  },
+  checkoutPaymentModal: {
+    maxHeight: 680,
+  },
+  paymentModalScroll: {
+    flexShrink: 1,
+  },
+  paymentModalScrollContent: {
+    paddingBottom: tokens.spacing.sm,
   },
   modifierModal: {
     width: 620,

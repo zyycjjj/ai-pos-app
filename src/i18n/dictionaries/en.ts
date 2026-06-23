@@ -166,4 +166,5 @@ export const en = {
   'payment.remaining': 'Remaining',
   'payment.paymentLine': 'Payment {count}',
   'payment.validation.unbalanced': 'Payment lines must equal the amount due.',
+  'payment.validation.submitFailed': 'Payment could not be submitted. Check the connection and try again.',
 } as const;

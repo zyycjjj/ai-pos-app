@@ -168,4 +168,5 @@ export const zhCN = {
   'payment.remaining': '剩余金额',
   'payment.paymentLine': '支付 {count}',
   'payment.validation.unbalanced': '支付金额合计必须等于应付金额。',
+  'payment.validation.submitFailed': '支付提交失败，请检查连接后重试。',
 } satisfies TranslationDictionary;
