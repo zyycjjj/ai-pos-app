@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Printer } from 'lucide-react-native';
 
-import { Screen } from '@/components/Screen';
+import { AppScreen } from '@/components/AppScreen';
+import { EmptyState } from '@/components/EmptyState';
+import { StatusPill } from '@/components/StatusPill';
+import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
+import { useI18n } from '@/i18n/useI18n';
 import { type CheckoutOrder, useCheckoutOrders, useMarkOrderPrinted } from '@/services/businessApi';
-import { colors } from '@/theme/colors';
+import { tokens } from '@/theme';
 
 export function OrdersScreen() {
+  const { t } = useI18n();
   const money = useCurrency();
   const [printingOrderId, setPrintingOrderId] = useState<string | null>(null);
   const ordersQuery = useCheckoutOrders();
@@ -23,90 +28,204 @@ export function OrdersScreen() {
     }
   };
 
+  const paidOrdersCount = orders.filter((order) => order.status === 'PAID').length;
+
   return (
-    <Screen>
-      <View className="mb-6 flex-row items-end justify-between">
+    <AppScreen>
+      {/* Header */}
+      <View style={styles.header}>
         <View>
-          <Text className="text-3xl font-semibold text-pos-ink">Orders</Text>
-          <Text className="mt-2 text-base text-pos-muted">Order history with receipt print status for the terminal.</Text>
+          <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>{t('orders.eyebrow')}</Text>
+          <Text style={[tokens.typography.screenTitle, { color: tokens.colors.ink, marginTop: tokens.spacing.xs }]}>{t('orders.title')}</Text>
         </View>
-        <View className="rounded-pos border border-pos-line bg-pos-surface px-4 py-3">
-          <Text className="text-xs text-pos-muted">Paid orders</Text>
-          <Text className="mt-1 text-xl font-semibold text-pos-ink">
-            {orders.filter((order) => order.status === 'PAID').length}
-          </Text>
-        </View>
+        <Surface variant="muted" padding="lg" style={{ minWidth: 160 }}>
+          <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>{t('orders.metrics.paidOrders')}</Text>
+          <Text style={[tokens.typography.numeric, { color: tokens.colors.ink, marginTop: tokens.spacing.xs }]}>{paidOrdersCount}</Text>
+        </Surface>
       </View>
 
-      <View className="flex-1 rounded-pos border border-pos-line bg-pos-surface">
-        {orders.length === 0 ? (
-          <View className="px-5 py-8">
-            <Text className="text-base text-pos-muted">Paid order history will live here.</Text>
+      {/* Orders List */}
+      {orders.length === 0 ? (
+        <Surface style={{ flex: 1, justifyContent: 'center' }}>
+          <EmptyState title={t('orders.empty.title')} description={t('orders.empty.description')} />
+        </Surface>
+      ) : (
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ gap: tokens.spacing.md }}>
+          {orders.map((order) => (
+            <OrderCard key={order.id} order={order} money={money} t={t} onReprint={reprint} isPrinting={printingOrderId === order.id} />
+          ))}
+        </ScrollView>
+      )}
+    </AppScreen>
+  );
+}
+
+type OrderCardProps = {
+  order: CheckoutOrder;
+  money: (value: number) => string;
+  t: (key: string, params?: Record<string, string | number>) => string;
+  onReprint: (order: CheckoutOrder) => void;
+  isPrinting: boolean;
+};
+
+function OrderCard({ order, money, t, onReprint, isPrinting }: OrderCardProps) {
+  const itemsLabel = order.items.length === 1 ? t('orders.list.item', { count: order.items.length }) : t('orders.list.items', { count: order.items.length });
+
+  return (
+    <Surface padding="xl">
+      <View style={styles.cardRow}>
+        {/* Left: Order info */}
+        <View style={{ flex: 1, gap: tokens.spacing.md }}>
+          {/* Order number and badges */}
+          <View style={styles.badgeRow}>
+            <Text style={[tokens.typography.label, { color: tokens.colors.ink }]}>{order.orderNumber}</Text>
+            {order.pickupNumber ? <StatusPill value={t('orders.list.pickupNumber', { number: order.pickupNumber })} tone="info" /> : null}
+            <StatusPill value={getStatusLabel(order.status, t)} tone={getStatusTone(order.status)} />
+            <StatusPill value={getPrintStatusLabel(order.printStatus, t)} tone={getPrintStatusTone(order.printStatus)} />
           </View>
-        ) : (
-          <ScrollView>
-            {orders.map((order) => (
-              <View key={order.id} className="flex-row items-center justify-between border-b border-pos-line px-5 py-4 last:border-b-0">
-                <View className="flex-1">
-                  <View className="flex-row items-center gap-3">
-                    <Text className="text-base font-semibold text-pos-ink">{order.orderNumber}</Text>
-                    <StatusBadge value={order.status} />
-                    <PrintBadge value={order.printStatus} />
-                  </View>
-                  <Text className="mt-2 text-sm text-pos-muted">{new Date(order.createdAt).toLocaleString()}</Text>
-                  <Text className="mt-1 text-sm text-pos-muted">{order.items.length} items</Text>
-                </View>
-                <View className="items-end gap-3">
-                  <Text className="text-xl font-semibold text-pos-ink">{money(order.total)}</Text>
-                  <Pressable
-                    className="h-10 flex-row items-center gap-2 rounded-pos bg-pos-background px-4 active:opacity-80"
-                    disabled={order.status !== 'PAID' || printingOrderId === order.id}
-                    onPress={() => reprint(order)}
-                  >
-                    <Printer color={colors.ink} size={16} />
-                    <Text className="text-sm font-semibold text-pos-ink">
-                      {printingOrderId === order.id ? 'Printing' : order.printStatus === 'PRINTED' ? 'Reprint' : 'Print'}
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-        )}
+
+          {/* Date and items */}
+          <View style={{ gap: tokens.spacing.xs }}>
+            <Text style={[tokens.typography.body, { color: tokens.colors.muted }]}>{formatDate(order.createdAt)}</Text>
+            <Text style={[tokens.typography.body, { color: tokens.colors.muted }]}>{itemsLabel}</Text>
+            {order.payments?.length ? (
+              <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>{formatPaymentSummary(order, money, t)}</Text>
+            ) : null}
+          </View>
+        </View>
+
+        {/* Right: Amount and print button */}
+        <View style={styles.rightColumn}>
+          <Text style={[tokens.typography.numeric, { color: tokens.colors.ink }]}>{money(order.total)}</Text>
+          <Pressable
+            style={styles.printButton}
+            disabled={order.status !== 'PAID' || isPrinting}
+            onPress={() => onReprint(order)}
+            android_ripple={{ color: tokens.colors.line }}
+          >
+            <Printer color={tokens.colors.ink} size={16} />
+            <Text style={[tokens.typography.label, { color: tokens.colors.ink }]}>{getPrintButtonLabel(order.printStatus, isPrinting, t)}</Text>
+          </Pressable>
+        </View>
       </View>
-    </Screen>
+    </Surface>
   );
 }
 
-function StatusBadge({ value }: { value: CheckoutOrder['status'] }) {
-  const tone = value === 'PAID' ? 'text-pos-accent' : value === 'CANCELLED' ? 'text-pos-danger' : 'text-pos-muted';
-
-  return (
-    <View className="rounded-pos bg-pos-background px-2 py-1">
-      <Text className={`text-xs font-semibold ${tone}`}>{value}</Text>
-    </View>
-  );
-}
-
-function PrintBadge({ value }: { value: CheckoutOrder['printStatus'] }) {
-  const tone = value === 'PRINTED' ? 'text-pos-accent' : value === 'FAILED' ? 'text-pos-danger' : 'text-pos-muted';
-
-  return (
-    <View className="rounded-pos bg-pos-background px-2 py-1">
-      <Text className={`text-xs font-semibold ${tone}`}>{printLabel(value)}</Text>
-    </View>
-  );
-}
-
-function printLabel(value: CheckoutOrder['printStatus']) {
-  switch (value) {
-    case 'PRINTED':
-      return 'Printed';
-    case 'PRINTING':
-      return 'Printing';
-    case 'FAILED':
-      return 'Print failed';
+// Helpers
+function getStatusLabel(status: CheckoutOrder['status'], t: (key: string) => string): string {
+  switch (status) {
+    case 'PAID':
+      return t('orders.status.paid');
+    case 'CANCELLED':
+      return t('orders.status.cancelled');
     default:
-      return 'Not printed';
+      return status;
   }
 }
+
+function getStatusTone(status: CheckoutOrder['status']): 'success' | 'danger' | 'neutral' {
+  switch (status) {
+    case 'PAID':
+      return 'success';
+    case 'CANCELLED':
+      return 'danger';
+    default:
+      return 'neutral';
+  }
+}
+
+function getPrintStatusLabel(printStatus: CheckoutOrder['printStatus'], t: (key: string) => string): string {
+  switch (printStatus) {
+    case 'PRINTED':
+      return t('orders.printStatus.printed');
+    case 'PRINTING':
+      return t('orders.printStatus.printing');
+    case 'FAILED':
+      return t('orders.printStatus.failed');
+    default:
+      return t('orders.printStatus.notPrinted');
+  }
+}
+
+function getPrintStatusTone(printStatus: CheckoutOrder['printStatus']): 'success' | 'warning' | 'danger' | 'neutral' {
+  switch (printStatus) {
+    case 'PRINTED':
+      return 'success';
+    case 'PRINTING':
+      return 'warning';
+    case 'FAILED':
+      return 'danger';
+    default:
+      return 'neutral';
+  }
+}
+
+function getPrintButtonLabel(printStatus: CheckoutOrder['printStatus'], isPrinting: boolean, t: (key: string) => string): string {
+  if (isPrinting) {
+    return t('orders.print.printing');
+  }
+  if (printStatus === 'PRINTED') {
+    return t('orders.print.reprint');
+  }
+  return t('orders.print.print');
+}
+
+function formatPaymentSummary(order: CheckoutOrder, money: (value: number) => string, t: (key: string) => string) {
+  if (order.payments.length > 1) {
+    return order.payments.map((payment) => `${getPaymentMethodLabel(payment.method, t)} ${money(payment.amount)}`).join(' / ');
+  }
+  return order.paymentMethod ? getPaymentMethodLabel(order.paymentMethod, t) : '';
+}
+
+function getPaymentMethodLabel(method: NonNullable<CheckoutOrder['paymentMethod']>, t: (key: string) => string) {
+  switch (method) {
+    case 'CASH':
+      return t('payment.cash');
+    case 'CARD':
+      return t('payment.card');
+    case 'MANUAL':
+      return t('payment.manual');
+    default:
+      return method;
+  }
+}
+
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleString();
+}
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    marginBottom: tokens.spacing['2xl'],
+  },
+  cardRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.xl,
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.md,
+    flexWrap: 'wrap',
+  },
+  rightColumn: {
+    alignItems: 'flex-end',
+    gap: tokens.spacing.md,
+  },
+  printButton: {
+    minHeight: tokens.spacing.touchTargetMin,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.sm,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.background,
+    paddingHorizontal: tokens.spacing.lg,
+    paddingVertical: tokens.spacing.md,
+  },
+});

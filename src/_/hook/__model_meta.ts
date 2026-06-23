@@ -33,12 +33,120 @@ const metadata: ModelMeta = {
                     name: "isActive",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, modifierGroups: {
+                    name: "modifierGroups",
+                    type: "ProductModifierGroup",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'product',
                 }, orderItems: {
                     name: "orderItems",
                     type: "OrderItem",
                     isDataModel: true,
                     isArray: true,
                     backLink: 'product',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        productModifierGroup: {
+            name: 'ProductModifierGroup', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, productId: {
+                    name: "productId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'product',
+                }, product: {
+                    name: "product",
+                    type: "Product",
+                    isDataModel: true,
+                    backLink: 'modifierGroups',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "productId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, required: {
+                    name: "required",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, multiSelect: {
+                    name: "multiSelect",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, displayOrder: {
+                    name: "displayOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, options: {
+                    name: "options",
+                    type: "ProductModifierOption",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'group',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        productModifierOption: {
+            name: 'ProductModifierOption', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, groupId: {
+                    name: "groupId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'group',
+                }, group: {
+                    name: "group",
+                    type: "ProductModifierGroup",
+                    isDataModel: true,
+                    backLink: 'options',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "groupId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, priceDelta: {
+                    name: "priceDelta",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, displayOrder: {
+                    name: "displayOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -65,6 +173,10 @@ const metadata: ModelMeta = {
                 }, orderNumber: {
                     name: "orderNumber",
                     type: "String",
+                }, pickupNumber: {
+                    name: "pickupNumber",
+                    type: "String",
+                    isOptional: true,
                 }, status: {
                     name: "status",
                     type: "OrderStatus",
@@ -73,6 +185,10 @@ const metadata: ModelMeta = {
                     name: "printStatus",
                     type: "PrintStatus",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, paymentMethod: {
+                    name: "paymentMethod",
+                    type: "PaymentMethod",
+                    isOptional: true,
                 }, currency: {
                     name: "currency",
                     type: "String",
@@ -80,6 +196,18 @@ const metadata: ModelMeta = {
                 }, subtotal: {
                     name: "subtotal",
                     type: "Decimal",
+                }, adjustment: {
+                    name: "adjustment",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, adjustmentType: {
+                    name: "adjustmentType",
+                    type: "String",
+                    isOptional: true,
+                }, adjustmentValue: {
+                    name: "adjustmentValue",
+                    type: "Decimal",
+                    isOptional: true,
                 }, tax: {
                     name: "tax",
                     type: "Decimal",
@@ -91,6 +219,14 @@ const metadata: ModelMeta = {
                 }, total: {
                     name: "total",
                     type: "Decimal",
+                }, cashReceived: {
+                    name: "cashReceived",
+                    type: "Decimal",
+                    isOptional: true,
+                }, changeDue: {
+                    name: "changeDue",
+                    type: "Decimal",
+                    isOptional: true,
                 }, paidAt: {
                     name: "paidAt",
                     type: "DateTime",
@@ -102,6 +238,12 @@ const metadata: ModelMeta = {
                 }, items: {
                     name: "items",
                     type: "OrderItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'order',
+                }, payments: {
+                    name: "payments",
+                    type: "OrderPayment",
                     isDataModel: true,
                     isArray: true,
                     backLink: 'order',
@@ -121,6 +263,51 @@ const metadata: ModelMeta = {
                 }, orderNumber: {
                     name: "orderNumber",
                     fields: ["orderNumber"]
+                },
+            },
+        },
+        orderPayment: {
+            name: 'OrderPayment', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, orderId: {
+                    name: "orderId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'order',
+                }, order: {
+                    name: "order",
+                    type: "Order",
+                    isDataModel: true,
+                    backLink: 'payments',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderId" },
+                }, method: {
+                    name: "method",
+                    type: "PaymentMethod",
+                }, amount: {
+                    name: "amount",
+                    type: "Decimal",
+                }, amountReceived: {
+                    name: "amountReceived",
+                    type: "Decimal",
+                    isOptional: true,
+                }, changeDue: {
+                    name: "changeDue",
+                    type: "Decimal",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
                 },
             },
         },
@@ -164,6 +351,10 @@ const metadata: ModelMeta = {
                 }, lineTotal: {
                     name: "lineTotal",
                     type: "Decimal",
+                }, modifiers: {
+                    name: "modifiers",
+                    type: "Json",
+                    isOptional: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

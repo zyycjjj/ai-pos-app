@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { apiClient } from './apiClient';
+import type { SelectedModifier } from '@/types/modifiers';
 
 export type CheckoutOrderItem = {
   id: string;
@@ -10,21 +11,38 @@ export type CheckoutOrderItem = {
   quantity: number;
   unitPrice: number;
   lineTotal: number;
+  modifiers: SelectedModifier[];
+};
+
+export type CheckoutPaymentLine = {
+  id?: string;
+  method: 'CASH' | 'CARD' | 'MANUAL';
+  amount: number;
+  amountReceived: number | null;
+  changeDue: number | null;
 };
 
 export type CheckoutOrder = {
   id: string;
   orderNumber: string;
+  pickupNumber: string | null;
   status: 'OPEN' | 'PAID' | 'CANCELLED';
   printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
+  paymentMethod: 'CASH' | 'CARD' | 'MANUAL' | null;
   currency: string;
   subtotal: number;
+  adjustment: number;
+  adjustmentType: 'discount' | 'fixed_reduction' | 'price_override' | null;
+  adjustmentValue: number | null;
   tax: number;
   tip: number;
   total: number;
+  cashReceived: number | null;
+  changeDue: number | null;
   paidAt: string | null;
   printedAt: string | null;
   createdAt: string;
+  payments: CheckoutPaymentLine[];
   items: CheckoutOrderItem[];
 };
 
@@ -59,6 +77,7 @@ export type ReceiptPayload = {
   currency: string;
   items: Array<Pick<CheckoutOrderItem, 'name' | 'quantity' | 'unitPrice' | 'lineTotal'>>;
   totals: Pick<CheckoutOrder, 'subtotal' | 'tax' | 'tip' | 'total'>;
+  payments: CheckoutPaymentLine[];
   footer: {
     message: string;
     qrPayload: string;
@@ -92,7 +111,20 @@ export function useCreateCheckoutOrder() {
 
   return useMutation({
     mutationFn: async (payload: {
-      items: Array<{ productId: string; quantity: number }>;
+      items: Array<{
+        productId: string;
+        quantity: number;
+        modifiers?: Array<{ groupId: string; optionIds: string[] }>;
+      }>;
+      adjustment?: {
+        type: 'discount' | 'fixed_reduction' | 'price_override';
+        value: number;
+      };
+      payments: Array<{
+        method: 'CASH' | 'CARD' | 'MANUAL';
+        amount: number;
+        amountReceived?: number;
+      }>;
       tax?: number;
       tip?: number;
       currency?: string;
