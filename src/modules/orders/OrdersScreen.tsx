@@ -10,6 +10,7 @@ import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
 import { type CheckoutOrder, useCheckoutOrders, useMarkOrderPrinted } from '@/services/businessApi';
 import { tokens } from '@/theme';
+import { printOrderReceipt } from '../receipts/receiptPrinter.service';
 
 export function OrdersScreen() {
   const { t } = useI18n();
@@ -22,6 +23,7 @@ export function OrdersScreen() {
   const reprint = async (order: CheckoutOrder) => {
     setPrintingOrderId(order.id);
     try {
+      await printOrderReceipt(order.id);
       await markPrinted.mutateAsync(order.id);
     } finally {
       setPrintingOrderId(null);

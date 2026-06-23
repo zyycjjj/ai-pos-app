@@ -25,6 +25,7 @@ import type { ProductModifierGroup, SelectedModifier } from '@/types/modifiers';
 import { getCheckoutTotals, type AdjustmentType, type OrderAdjustment } from './checkoutMath';
 import type { ProductDto } from '../products/products.service';
 import { useActiveProducts } from '../products/useProducts';
+import { printReceiptPayload } from '../receipts/receiptPrinter.service';
 
 const TAX_RATE = 0.08;
 const ALL_CATEGORY = '__all__';
@@ -198,8 +199,14 @@ export function SellScreen() {
 
     setPrintStatus('printing');
     try {
-      await markPrinted.mutateAsync(completedOrder.id);
-      setCompletedOrder({ ...completedOrder, printStatus: 'PRINTED', printedAt: new Date().toISOString() });
+      const receipt = receiptQuery.data ?? (await receiptQuery.refetch()).data;
+      if (!receipt) {
+        throw new Error('Receipt payload is not ready.');
+      }
+
+      await printReceiptPayload(receipt);
+      const printedOrder = await markPrinted.mutateAsync(completedOrder.id);
+      setCompletedOrder(printedOrder);
       setPrintStatus('printed');
     } catch {
       setPrintStatus('failed');
