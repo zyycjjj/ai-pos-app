@@ -123,6 +123,51 @@ export type AiMenuImportResponse = {
   }>;
 };
 
+export type AiGeneratedCampaign = {
+  campaignName: string;
+  goal: string;
+  targetProducts: string[];
+  discountType: 'percentage' | 'fixed_amount' | 'bundle' | 'staff_prompt';
+  discountValue: number;
+  timeWindow: string;
+  bannerCopy: string;
+  staffMessage: string;
+  executionNotes: string[];
+  salesSummary: {
+    totalOrders: number;
+    totalRevenue: number;
+    topProducts: Array<{
+      name: string;
+      quantity: number;
+      revenue: number;
+    }>;
+    lowPerformingProducts: Array<{
+      name: string;
+      quantity: number;
+      revenue: number;
+    }>;
+    paymentBreakdown: Array<{
+      method: string;
+      amount: number;
+    }>;
+  };
+  provider: 'deepseek' | 'mock';
+  model: string;
+};
+
+export type AiCampaignGeneratePayload = {
+  goal?: string;
+  timeWindow?: string;
+  focusCategory?: string;
+  notes?: string;
+};
+
+export type AiCampaignGenerateResponse = {
+  draftId: string;
+  campaign: AiGeneratedCampaign;
+  source: 'deepseek' | 'mock';
+};
+
 export type ReceiptPayload = {
   format: string;
   store: { name: string };
@@ -277,6 +322,20 @@ export function useImportAiMenu() {
       void queryClient.invalidateQueries({ queryKey: ['products'] });
       void queryClient.invalidateQueries({ queryKey: ['products', 'active'] });
       void queryClient.invalidateQueries({ queryKey: ['zenstack'] });
+    },
+  });
+}
+
+export function useGenerateAiCampaign() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: AiCampaignGeneratePayload) => {
+      const { data } = await apiClient.post<AiCampaignGenerateResponse>('/api/ai/campaign/generate', payload);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['ai', 'menu-drafts'] });
     },
   });
 }
