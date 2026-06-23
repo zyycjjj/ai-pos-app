@@ -70,6 +70,59 @@ export type AiMenuDraft = {
   createdAt: string;
 };
 
+export type AiGeneratedMenu = {
+  categories: Array<{ name: string }>;
+  products: Array<{
+    name: string;
+    category: string;
+    price: number;
+    description?: string;
+    active: boolean;
+    modifierGroups: Array<{
+      name: string;
+      required: boolean;
+      multiSelect: boolean;
+      displayOrder: number;
+      options: Array<{
+        name: string;
+        priceDelta: number;
+        displayOrder: number;
+      }>;
+    }>;
+  }>;
+  provider: 'deepseek' | 'mock';
+  model: string;
+};
+
+export type AiMenuGeneratePayload = {
+  businessType?: string;
+  cuisine?: string;
+  priceRange?: string;
+  brandTone?: string;
+  notes?: string;
+};
+
+export type AiMenuGenerateResponse = {
+  draftId: string;
+  menu: AiGeneratedMenu;
+  source: 'deepseek' | 'mock';
+};
+
+export type AiMenuImportResponse = {
+  summary: {
+    created: number;
+    skipped: number;
+  };
+  products: Array<{
+    id: string;
+    name: string;
+    category: string | null;
+    price: number;
+    currency: string;
+    isActive: boolean;
+  }>;
+};
+
 export type ReceiptPayload = {
   format: string;
   store: { name: string };
@@ -193,6 +246,36 @@ export function useConfirmMenuDraft() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['ai', 'menu-drafts'] });
+      void queryClient.invalidateQueries({ queryKey: ['zenstack'] });
+    },
+  });
+}
+
+export function useGenerateAiMenu() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: AiMenuGeneratePayload) => {
+      const { data } = await apiClient.post<AiMenuGenerateResponse>('/api/ai/menu/generate', payload);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['ai', 'menu-drafts'] });
+    },
+  });
+}
+
+export function useImportAiMenu() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (menu: AiGeneratedMenu) => {
+      const { data } = await apiClient.post<AiMenuImportResponse>('/api/ai/menu/import', { menu });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['products'] });
+      void queryClient.invalidateQueries({ queryKey: ['products', 'active'] });
       void queryClient.invalidateQueries({ queryKey: ['zenstack'] });
     },
   });
