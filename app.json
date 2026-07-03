@@ -14,7 +14,8 @@
       "bundleIdentifier": "com.aipos.app"
     },
     "android": {
-      "package": "com.aipos.app"
+      "package": "com.aipos.app",
+      "usesCleartextTraffic": true
     }
   }
 }
