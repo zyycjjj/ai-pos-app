@@ -5,10 +5,15 @@ import { Bluetooth, Monitor, Printer, Usb } from 'lucide-react-native';
 import { Screen } from '@/components/Screen';
 import { useI18n } from '@/i18n/useI18n';
 import type { SupportedLocale } from '@/i18n';
+import { useAuthStore } from '@/stores/authStore';
+import type { StoreRole } from '@/stores/authStore';
 import { tokens } from '@/theme';
 
 export function SettingsScreen() {
   const { locale, setLocale, t } = useI18n();
+  const { activeStoreId, clearSession, role, stores, user } = useAuthStore();
+  const activeStore = stores.find((store) => store.storeId === activeStoreId);
+  const roleLabel = role ? t(getRoleLabelKey(role)) : '';
 
   return (
     <Screen padded={false}>
@@ -34,6 +39,20 @@ export function SettingsScreen() {
                 onPress={setLocale}
               />
             </View>
+          </View>
+        </View>
+
+        <View style={styles.languagePanel}>
+          <View style={styles.languagePanelContent}>
+            <View style={styles.languageText}>
+              <Text style={styles.languageTitle}>{user?.name ?? user?.email}</Text>
+              <Text style={styles.languageDescription}>
+                {activeStore?.storeName ?? t('auth.store.current')} · {roleLabel}
+              </Text>
+            </View>
+            <Pressable style={styles.logoutButton} onPress={clearSession}>
+              <Text style={styles.logoutButtonText}>{t('auth.logout')}</Text>
+            </Pressable>
           </View>
         </View>
 
@@ -77,6 +96,16 @@ export function SettingsScreen() {
       </ScrollView>
     </Screen>
   );
+}
+
+function getRoleLabelKey(role: StoreRole) {
+  const keyByRole = {
+    OWNER: 'auth.role.owner',
+    MANAGER: 'auth.role.manager',
+    CASHIER: 'auth.role.cashier',
+    STAFF: 'auth.role.staff',
+  } as const;
+  return keyByRole[role];
 }
 
 function LanguageButton({
@@ -225,6 +254,22 @@ const styles = StyleSheet.create({
   },
   languageButtonTextSelected: {
     color: tokens.colors.accent,
+  },
+  logoutButton: {
+    minWidth: 112,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: tokens.colors.lineStrong,
+    borderRadius: 8,
+    backgroundColor: tokens.colors.surface,
+    paddingHorizontal: 16,
+  },
+  logoutButtonText: {
+    color: tokens.colors.ink,
+    fontSize: 14,
+    fontWeight: '800',
   },
   panelGrid: {
     flexDirection: 'row',

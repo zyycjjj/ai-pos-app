@@ -8,6 +8,184 @@ import type { ModelMeta } from "@zenstackhq/runtime";
 
 const metadata: ModelMeta = {
     models: {
+        store: {
+            name: 'Store', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, code: {
+                    name: "code",
+                    type: "String",
+                    isOptional: true,
+                }, timezone: {
+                    name: "timezone",
+                    type: "String",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "Asia/Shanghai" }] }],
+                }, currency: {
+                    name: "currency",
+                    type: "String",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "USD" }] }],
+                }, active: {
+                    name: "active",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, users: {
+                    name: "users",
+                    type: "StoreUser",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, products: {
+                    name: "products",
+                    type: "Product",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, orders: {
+                    name: "orders",
+                    type: "Order",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, aiDrafts: {
+                    name: "aiDrafts",
+                    type: "AiDraft",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, campaigns: {
+                    name: "campaigns",
+                    type: "Campaign",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, code: {
+                    name: "code",
+                    fields: ["code"]
+                },
+            },
+        },
+        user: {
+            name: 'User', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, email: {
+                    name: "email",
+                    type: "String",
+                }, name: {
+                    name: "name",
+                    type: "String",
+                    isOptional: true,
+                }, passwordHash: {
+                    name: "passwordHash",
+                    type: "String",
+                }, active: {
+                    name: "active",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, stores: {
+                    name: "stores",
+                    type: "StoreUser",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'user',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, email: {
+                    name: "email",
+                    fields: ["email"]
+                },
+            },
+        },
+        storeUser: {
+            name: 'StoreUser', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'users',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, userId: {
+                    name: "userId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'user',
+                }, user: {
+                    name: "user",
+                    type: "User",
+                    isDataModel: true,
+                    backLink: 'stores',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "userId" },
+                }, role: {
+                    name: "role",
+                    type: "StoreRole",
+                }, active: {
+                    name: "active",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_userId: {
+                    name: "storeId_userId",
+                    fields: ["storeId", "userId"]
+                },
+            },
+        },
         product: {
             name: 'Product', fields: {
                 id: {
@@ -15,6 +193,20 @@ const metadata: ModelMeta = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'products',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
                 }, name: {
                     name: "name",
                     type: "String",
@@ -170,6 +362,20 @@ const metadata: ModelMeta = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'orders',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
                 }, orderNumber: {
                     name: "orderNumber",
                     type: "String",
@@ -374,6 +580,20 @@ const metadata: ModelMeta = {
                     type: "String",
                     isId: true,
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'aiDrafts',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
                 }, prompt: {
                     name: "prompt",
                     type: "String",
@@ -404,11 +624,86 @@ const metadata: ModelMeta = {
                 },
             },
         },
+        campaign: {
+            name: 'Campaign', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'campaigns',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, goal: {
+                    name: "goal",
+                    type: "String",
+                    isOptional: true,
+                }, status: {
+                    name: "status",
+                    type: "CampaignStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, discountType: {
+                    name: "discountType",
+                    type: "String",
+                    isOptional: true,
+                }, discountValue: {
+                    name: "discountValue",
+                    type: "Float",
+                    isOptional: true,
+                }, timeWindow: {
+                    name: "timeWindow",
+                    type: "String",
+                    isOptional: true,
+                }, bannerCopy: {
+                    name: "bannerCopy",
+                    type: "String",
+                    isOptional: true,
+                }, staffMessage: {
+                    name: "staffMessage",
+                    type: "String",
+                    isOptional: true,
+                }, structuredJson: {
+                    name: "structuredJson",
+                    type: "Json",
+                    isOptional: true,
+                }, createdById: {
+                    name: "createdById",
+                    type: "String",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
 
     },
     deleteCascade: {
 
     },
+    authModel: 'User'
 
 };
 export default metadata;

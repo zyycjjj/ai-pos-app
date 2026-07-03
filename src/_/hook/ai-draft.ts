@@ -328,7 +328,7 @@ export function useSuspenseCountAiDraft<TArgs extends Prisma.AiDraftCountArgs, T
 }
 import type { AiDraftStatus } from './__types';
 
-export function useCheckAiDraft<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; prompt?: string; status?: AiDraftStatus }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckAiDraft<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; prompt?: string; status?: AiDraftStatus }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('AiDraft', `${endpoint}/aiDraft/check`, args, options, fetch);
 }

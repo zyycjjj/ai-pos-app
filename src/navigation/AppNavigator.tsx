@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import { LoginScreen } from '@/modules/auth/LoginScreen';
 import { AiCreateScreen } from '@/modules/ai/AiCreateScreen';
 import { CustomerDisplayScreen } from '@/modules/customerDisplay/CustomerDisplayScreen';
 import { OrdersScreen } from '@/modules/orders/OrdersScreen';
 import { ProductsScreen } from '@/modules/products/ProductsScreen';
 import { SellScreen } from '@/modules/sell/SellScreen';
 import { SettingsScreen } from '@/modules/settings/SettingsScreen';
+import { useAuthStore } from '@/stores/authStore';
 
 import { TerminalRail } from './TerminalRail';
 
@@ -21,6 +23,12 @@ export type RootTabParamList = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function AppNavigator() {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
+  if (!accessToken) {
+    return <LoginScreen />;
+  }
+
   return (
     <Tab.Navigator
       tabBar={(props) => <TerminalRail {...props} />}

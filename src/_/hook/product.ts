@@ -327,7 +327,7 @@ export function useSuspenseCountProduct<TArgs extends Prisma.ProductCountArgs, T
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Product', `${endpoint}/product/count`, args, options, fetch);
 }
 
-export function useCheckProduct<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; category?: string; currency?: string; isActive?: boolean }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckProduct<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; category?: string; currency?: string; isActive?: boolean }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Product', `${endpoint}/product/check`, args, options, fetch);
 }
