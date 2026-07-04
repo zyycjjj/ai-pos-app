@@ -7,8 +7,12 @@ export function getApiBaseUrl(platform: ApiPlatform, envValue = process.env.EXPO
   const override = envValue?.trim();
 
   if (override) {
-    return override;
+    return normalizeApiBaseUrl(override);
   }
 
   return platform === 'web' ? LOCAL_API_BASE_URL : ONLINE_API_BASE_URL;
+}
+
+function normalizeApiBaseUrl(value: string) {
+  return value.replace(/\/+$/, '').replace(/\/api$/, '');
 }

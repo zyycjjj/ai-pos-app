@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import axios from 'axios';
 import { LogIn } from 'lucide-react-native';
 
 import { AppButton } from '@/components/AppButton';
@@ -15,7 +16,7 @@ export function LoginScreen() {
   const [email, setEmail] = useState('owner@aipos.test');
   const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
-  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const submit = async () => {
     if (loading) {
@@ -23,12 +24,19 @@ export function LoginScreen() {
     }
 
     setLoading(true);
-    setErrorVisible(false);
+    setErrorMessage(null);
     try {
       const session = await loginWithPassword({ email: email.trim(), password });
       setSession(session);
-    } catch {
-      setErrorVisible(true);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const responseMessage = getResponseMessage(error.response?.data);
+        setErrorMessage(
+          `${t('auth.login.error')} (${error.response?.status ?? 'network'}${responseMessage ? `: ${responseMessage}` : ''})`,
+        );
+      } else {
+        setErrorMessage(t('auth.login.error'));
+      }
     } finally {
       setLoading(false);
     }
@@ -60,7 +68,7 @@ export function LoginScreen() {
             <Text style={styles.label}>{t('auth.login.password')}</Text>
             <TextInput onChangeText={setPassword} secureTextEntry style={styles.input} value={password} />
           </View>
-          {errorVisible ? <Text style={styles.error}>{t('auth.login.error')}</Text> : null}
+          {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
           <AppButton
             icon={<LogIn color={tokens.colors.inverse} size={18} />}
             loading={loading}
@@ -76,6 +84,18 @@ export function LoginScreen() {
       </View>
     </KeyboardAvoidingView>
   );
+}
+
+function getResponseMessage(data: unknown) {
+  if (!data || typeof data !== 'object') {
+    return undefined;
+  }
+
+  const message = (data as { message?: unknown }).message;
+  if (Array.isArray(message)) {
+    return message.join(', ');
+  }
+  return typeof message === 'string' ? message : undefined;
 }
 
 const styles = StyleSheet.create({

@@ -20,6 +20,10 @@ describe('API base URL configuration', () => {
     assert.equal(getApiBaseUrl('android', override), override);
   });
 
+  it('normalizes an environment override with the API path', () => {
+    assert.equal(getApiBaseUrl('android', 'http://192.168.32.246:4100/api'), 'http://192.168.32.246:4100');
+  });
+
   it('ignores an empty environment override', () => {
     assert.equal(getApiBaseUrl('web', '   '), LOCAL_API_BASE_URL);
     assert.equal(getApiBaseUrl('android', ''), ONLINE_API_BASE_URL);
