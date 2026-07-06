@@ -326,8 +326,9 @@ export function useSuspenseCountProductModifierGroup<TArgs extends Prisma.Produc
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('ProductModifierGroup', `${endpoint}/productModifierGroup/count`, args, options, fetch);
 }
+import type { CatalogStatus } from './__types';
 
-export function useCheckProductModifierGroup<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; productId?: string; name?: string; required?: boolean; multiSelect?: boolean; displayOrder?: number }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckProductModifierGroup<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; productId?: string; name?: string; required?: boolean; multiSelect?: boolean; minSelect?: number; maxSelect?: number; status?: CatalogStatus; displayOrder?: number }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('ProductModifierGroup', `${endpoint}/productModifierGroup/check`, args, options, fetch);
 }

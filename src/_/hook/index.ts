@@ -7,6 +7,7 @@
 export * from './store';
 export * from './user';
 export * from './store-user';
+export * from './category';
 export * from './product';
 export * from './product-modifier-group';
 export * from './product-modifier-option';

@@ -5,9 +5,12 @@ export type ProductDto = {
   id: string;
   name: string;
   category: string | null;
+  categoryId?: string | null;
+  description?: string | null;
   price: number;
   currency: string;
   isActive: boolean;
+  availabilityStatus?: 'AVAILABLE' | 'SOLD_OUT';
   modifierGroups: ProductModifierGroup[];
 };
 

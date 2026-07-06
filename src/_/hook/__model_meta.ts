@@ -40,6 +40,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, categories: {
+                    name: "categories",
+                    type: "Category",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, products: {
                     name: "products",
                     type: "Product",
@@ -186,6 +192,61 @@ const metadata: ModelMeta = {
                 },
             },
         },
+        category: {
+            name: 'Category', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'categories',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "CatalogStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, sortOrder: {
+                    name: "sortOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, products: {
+                    name: "products",
+                    type: "Product",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'categoryRef',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_name: {
+                    name: "storeId_name",
+                    fields: ["storeId", "name"]
+                },
+            },
+        },
         product: {
             name: 'Product', fields: {
                 id: {
@@ -210,6 +271,24 @@ const metadata: ModelMeta = {
                 }, name: {
                     name: "name",
                     type: "String",
+                }, description: {
+                    name: "description",
+                    type: "String",
+                    isOptional: true,
+                }, categoryId: {
+                    name: "categoryId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'categoryRef',
+                }, categoryRef: {
+                    name: "categoryRef",
+                    type: "Category",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'products',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "categoryId" },
                 }, category: {
                     name: "category",
                     type: "String",
@@ -225,6 +304,10 @@ const metadata: ModelMeta = {
                     name: "isActive",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, availabilityStatus: {
+                    name: "availabilityStatus",
+                    type: "ProductAvailabilityStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, modifierGroups: {
                     name: "modifierGroups",
                     type: "ProductModifierGroup",
@@ -283,6 +366,18 @@ const metadata: ModelMeta = {
                     name: "multiSelect",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, minSelect: {
+                    name: "minSelect",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, maxSelect: {
+                    name: "maxSelect",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 1 }] }],
+                }, status: {
+                    name: "status",
+                    type: "CatalogStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, displayOrder: {
                     name: "displayOrder",
                     type: "Int",
@@ -335,6 +430,10 @@ const metadata: ModelMeta = {
                     name: "priceDelta",
                     type: "Decimal",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, status: {
+                    name: "status",
+                    type: "ModifierOptionStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, displayOrder: {
                     name: "displayOrder",
                     type: "Int",
@@ -548,6 +647,14 @@ const metadata: ModelMeta = {
                     backLink: 'orderItems',
                     isRelationOwner: true,
                     foreignKeyMapping: { "id": "productId" },
+                }, productNameSnapshot: {
+                    name: "productNameSnapshot",
+                    type: "String",
+                    isOptional: true,
+                }, productCategorySnapshot: {
+                    name: "productCategorySnapshot",
+                    type: "String",
+                    isOptional: true,
                 }, quantity: {
                     name: "quantity",
                     type: "Int",

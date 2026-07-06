@@ -98,6 +98,9 @@ export function SellScreen() {
   const modifierRequiredComplete = modifierProduct ? isModifierSelectionComplete(modifierProduct.modifierGroups, modifierSelections) : true;
 
   const addProductToCart = (product: ProductDto) => {
+    if (isProductSoldOut(product)) {
+      return;
+    }
     if (product.modifierGroups.length === 0) {
       addLine({
         productId: product.id,
@@ -223,7 +226,7 @@ export function SellScreen() {
     setModifierSelections((current) => {
       const selected = current[group.id] ?? [];
       if (group.multiSelect) {
-        const next = selected.includes(optionId) ? selected.filter((id) => id !== optionId) : [...selected, optionId];
+        const next = selected.includes(optionId) ? selected.filter((id) => id !== optionId) : [...selected, optionId].slice(0, group.maxSelect ?? Number.MAX_SAFE_INTEGER);
         return { ...current, [group.id]: next };
       }
 
@@ -298,8 +301,9 @@ export function SellScreen() {
               <Pressable
                 key={product.id}
                 android_ripple={{ color: tokens.colors.accentMuted }}
+                disabled={isProductSoldOut(product)}
                 onPress={() => addProductToCart(product)}
-                style={styles.productTile}
+                style={[styles.productTile, isProductSoldOut(product) && styles.productTileDisabled]}
               >
                 <View>
                   <Text style={styles.productName} numberOfLines={2}>
@@ -313,6 +317,7 @@ export function SellScreen() {
                       {t('modifier.groups', { count: product.modifierGroups.length })}
                     </Text>
                   ) : null}
+                  {isProductSoldOut(product) ? <Text style={styles.soldOutText}>Sold Out</Text> : null}
                 </View>
                 <View style={styles.productFooter}>
                   <View style={styles.categoryAccent} />
@@ -664,16 +669,19 @@ export function SellScreen() {
                       <View style={styles.modifierOptions}>
                         {group.options.map((option) => {
                           const selected = (modifierSelections[group.id] ?? []).includes(option.id);
+                          const optionSoldOut = option.status === 'SOLD_OUT';
                           return (
                             <Pressable
                               key={option.id}
                               android_ripple={{ color: tokens.colors.accentMuted }}
+                              disabled={optionSoldOut}
                               onPress={() => toggleModifierOption(group, option.id)}
-                              style={[styles.modifierOption, selected && styles.modifierOptionSelected]}
+                              style={[styles.modifierOption, selected && styles.modifierOptionSelected, optionSoldOut && styles.modifierOptionDisabled]}
                             >
-                              <Text style={[styles.modifierOptionText, selected && styles.modifierOptionTextSelected]}>
+                              <Text style={[styles.modifierOptionText, selected && styles.modifierOptionTextSelected, optionSoldOut && styles.modifierOptionTextDisabled]}>
                                 {option.name}
                                 {option.priceDelta > 0 ? ` +${money(option.priceDelta)}` : ''}
+                                {optionSoldOut ? ' · Sold Out' : ''}
                               </Text>
                             </Pressable>
                           );
@@ -707,14 +715,21 @@ function getModifierTotal(product: ProductDto, selections: ModifierSelections) {
 }
 
 function isModifierSelectionComplete(groups: ProductModifierGroup[], selections: ModifierSelections) {
-  return groups.every((group) => !group.required || (selections[group.id] ?? []).length > 0);
+  return groups.every((group) => {
+    const count = (selections[group.id] ?? []).length;
+    return count >= (group.minSelect ?? (group.required ? 1 : 0)) && count <= (group.maxSelect ?? (group.multiSelect ? Number.MAX_SAFE_INTEGER : 1));
+  });
+}
+
+function isProductSoldOut(product: ProductDto) {
+  return product.availabilityStatus === 'SOLD_OUT';
 }
 
 function getSelectedModifiers(groups: ProductModifierGroup[], selections: ModifierSelections): SelectedModifier[] {
   return groups.flatMap((group) => {
     const optionIds = selections[group.id] ?? [];
     return group.options
-      .filter((option) => optionIds.includes(option.id))
+      .filter((option) => optionIds.includes(option.id) && option.status !== 'SOLD_OUT')
       .map((option) => ({
         groupId: group.id,
         groupName: group.name,
@@ -911,6 +926,11 @@ const styles = StyleSheet.create({
     padding: tokens.spacing.lg,
     ...tokens.shadow.soft,
   },
+  productTileDisabled: {
+    borderColor: tokens.colors.warning,
+    backgroundColor: tokens.colors.surfaceMuted,
+    opacity: 0.72,
+  },
   productName: {
     ...tokens.typography.sectionTitle,
     color: tokens.colors.ink,
@@ -923,6 +943,11 @@ const styles = StyleSheet.create({
   productModifierHint: {
     ...tokens.typography.caption,
     color: tokens.colors.accent,
+    marginTop: tokens.spacing.xs,
+  },
+  soldOutText: {
+    ...tokens.typography.caption,
+    color: tokens.colors.warning,
     marginTop: tokens.spacing.xs,
   },
   productFooter: {
@@ -1300,12 +1325,20 @@ const styles = StyleSheet.create({
     borderColor: tokens.colors.accent,
     backgroundColor: tokens.colors.accentMuted,
   },
+  modifierOptionDisabled: {
+    borderColor: tokens.colors.warning,
+    backgroundColor: tokens.colors.surfaceMuted,
+    opacity: 0.7,
+  },
   modifierOptionText: {
     ...tokens.typography.label,
     color: tokens.colors.ink,
   },
   modifierOptionTextSelected: {
     color: tokens.colors.accent,
+  },
+  modifierOptionTextDisabled: {
+    color: tokens.colors.warning,
   },
   modifierValidation: {
     ...tokens.typography.caption,

@@ -326,8 +326,9 @@ export function useSuspenseCountProductModifierOption<TArgs extends Prisma.Produ
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('ProductModifierOption', `${endpoint}/productModifierOption/count`, args, options, fetch);
 }
+import type { ModifierOptionStatus } from './__types';
 
-export function useCheckProductModifierOption<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; groupId?: string; name?: string; displayOrder?: number }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckProductModifierOption<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; groupId?: string; name?: string; status?: ModifierOptionStatus; displayOrder?: number }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('ProductModifierOption', `${endpoint}/productModifierOption/check`, args, options, fetch);
 }
