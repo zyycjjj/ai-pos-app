@@ -17,6 +17,8 @@ export * from './order-item';
 export * from './refund';
 export * from './refund-item';
 export * from './order-audit-log';
+export * from './shift';
+export * from './cash-movement';
 export * from './ai-draft';
 export * from './campaign';
 export { getQueryKey } from '@zenstackhq/tanstack-query/runtime-v5';

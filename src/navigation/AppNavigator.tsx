@@ -7,6 +7,7 @@ import { OrdersScreen } from '@/modules/orders/OrdersScreen';
 import { ProductsScreen } from '@/modules/products/ProductsScreen';
 import { SellScreen } from '@/modules/sell/SellScreen';
 import { SettingsScreen } from '@/modules/settings/SettingsScreen';
+import { ShiftScreen } from '@/modules/shifts/ShiftScreen';
 import { useAuthStore } from '@/stores/authStore';
 
 import { TerminalRail } from './TerminalRail';
@@ -17,6 +18,7 @@ export type RootTabParamList = {
   Products: undefined;
   Orders: undefined;
   Display: undefined;
+  Shift: undefined;
   Settings: undefined;
 };
 
@@ -41,6 +43,7 @@ export function AppNavigator() {
       <Tab.Screen name="Orders" component={OrdersScreen} />
       <Tab.Screen name="Products" component={ProductsScreen} />
       <Tab.Screen name="Display" component={CustomerDisplayScreen} />
+      <Tab.Screen name="Shift" component={ShiftScreen} />
       <Tab.Screen name="AI" component={AiCreateScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>

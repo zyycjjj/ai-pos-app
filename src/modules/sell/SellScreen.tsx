@@ -14,6 +14,7 @@ import { useI18n } from '@/i18n/useI18n';
 import {
   type CheckoutOrder,
   useCreateCheckoutOrder,
+  useActiveShift,
   useMarkOrderPrinted,
   useReceipt,
   useTodaySummary,
@@ -49,6 +50,7 @@ export function SellScreen() {
   const [paymentVisible, setPaymentVisible] = useState(false);
   const [paymentLines, setPaymentLines] = useState<PaymentLineDraft[]>([]);
   const [paymentValidationVisible, setPaymentValidationVisible] = useState(false);
+  const [shiftRequiredVisible, setShiftRequiredVisible] = useState(false);
   const [paymentSubmitError, setPaymentSubmitError] = useState(false);
   const [adjustmentVisible, setAdjustmentVisible] = useState(false);
   const [adjustmentType, setAdjustmentType] = useState<AdjustmentType>('discount');
@@ -60,6 +62,7 @@ export function SellScreen() {
   const [printStatus, setPrintStatus] = useState<PrintFlowStatus>('idle');
   const productsQuery = useActiveProducts();
   const summaryQuery = useTodaySummary();
+  const activeShiftQuery = useActiveShift();
   const createOrder = useCreateCheckoutOrder();
   const markPrinted = useMarkOrderPrinted();
   const receiptQuery = useReceipt(completedOrder?.id);
@@ -120,6 +123,11 @@ export function SellScreen() {
     if (lines.length === 0) {
       return;
     }
+    if (!activeShiftQuery.data) {
+      setShiftRequiredVisible(true);
+      return;
+    }
+    setShiftRequiredVisible(false);
     setPaymentVisible(true);
     setPaymentValidationVisible(false);
     setPaymentSubmitError(false);
@@ -434,6 +442,7 @@ export function SellScreen() {
             >
               {t('sell.order.markPaid')}
             </AppButton>
+            {shiftRequiredVisible ? <Text style={styles.modifierValidation}>{t('sell.shiftRequired')}</Text> : null}
           </View>
         </Surface>
       </View>

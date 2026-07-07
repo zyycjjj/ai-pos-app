@@ -70,6 +70,18 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, shifts: {
+                    name: "shifts",
+                    type: "Shift",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, cashMovements: {
+                    name: "cashMovements",
+                    type: "CashMovement",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, aiDrafts: {
                     name: "aiDrafts",
                     type: "AiDraft",
@@ -152,6 +164,30 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'approvedBy',
+                }, shifts: {
+                    name: "shifts",
+                    type: "Shift",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'user',
+                }, openedShifts: {
+                    name: "openedShifts",
+                    type: "Shift",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'openedBy',
+                }, closedShifts: {
+                    name: "closedShifts",
+                    type: "Shift",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'closedBy',
+                }, cashMovements: {
+                    name: "cashMovements",
+                    type: "CashMovement",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'createdBy',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -971,6 +1007,196 @@ const metadata: ModelMeta = {
                 id: {
                     name: "id",
                     fields: ["id"]
+                },
+            },
+        },
+        shift: {
+            name: 'Shift', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'shifts',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, userId: {
+                    name: "userId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'user',
+                }, user: {
+                    name: "user",
+                    type: "User",
+                    isDataModel: true,
+                    backLink: 'shifts',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "userId" },
+                }, status: {
+                    name: "status",
+                    type: "ShiftStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, openedAt: {
+                    name: "openedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, closedAt: {
+                    name: "closedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, openingCash: {
+                    name: "openingCash",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, expectedCash: {
+                    name: "expectedCash",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, actualCash: {
+                    name: "actualCash",
+                    type: "Decimal",
+                    isOptional: true,
+                }, variance: {
+                    name: "variance",
+                    type: "Decimal",
+                    isOptional: true,
+                }, openedByUserId: {
+                    name: "openedByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'openedBy',
+                }, openedBy: {
+                    name: "openedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'openedShifts',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "openedByUserId" },
+                }, closedByUserId: {
+                    name: "closedByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'closedBy',
+                }, closedBy: {
+                    name: "closedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'closedShifts',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "closedByUserId" },
+                }, notes: {
+                    name: "notes",
+                    type: "String",
+                    isOptional: true,
+                }, movements: {
+                    name: "movements",
+                    type: "CashMovement",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'shift',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        cashMovement: {
+            name: 'CashMovement', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'cashMovements',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, shiftId: {
+                    name: "shiftId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'shift',
+                }, shift: {
+                    name: "shift",
+                    type: "Shift",
+                    isDataModel: true,
+                    backLink: 'movements',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "shiftId" },
+                }, type: {
+                    name: "type",
+                    type: "CashMovementType",
+                }, amount: {
+                    name: "amount",
+                    type: "Decimal",
+                }, reason: {
+                    name: "reason",
+                    type: "String",
+                }, referenceType: {
+                    name: "referenceType",
+                    type: "CashMovementReferenceType",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, referenceId: {
+                    name: "referenceId",
+                    type: "String",
+                    isOptional: true,
+                }, createdByUserId: {
+                    name: "createdByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'createdBy',
+                }, createdBy: {
+                    name: "createdBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'cashMovements',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "createdByUserId" },
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_type_referenceType_referenceId: {
+                    name: "storeId_type_referenceType_referenceId",
+                    fields: ["storeId", "type", "referenceType", "referenceId"]
                 },
             },
         },

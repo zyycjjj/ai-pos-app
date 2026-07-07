@@ -93,6 +93,42 @@ export type TodaySummary = {
   recentOrders: Array<Pick<CheckoutOrder, 'id' | 'orderNumber' | 'status' | 'total' | 'createdAt'>>;
 };
 
+export type CashMovement = {
+  id: string;
+  shiftId: string;
+  type: 'OPENING' | 'SALE' | 'REFUND' | 'CASH_IN' | 'CASH_OUT' | 'ADJUSTMENT';
+  amount: number;
+  reason: string;
+  referenceType: 'ORDER_PAYMENT' | 'REFUND' | 'MANUAL';
+  referenceId: string | null;
+  createdByUserId: string | null;
+  createdByName: string | null;
+  createdAt: string;
+};
+
+export type Shift = {
+  id: string;
+  storeId: string;
+  userId: string;
+  staffName: string;
+  status: 'OPEN' | 'CLOSED';
+  openedAt: string;
+  closedAt: string | null;
+  openingCash: number;
+  cashSales: number;
+  cashRefunds: number;
+  cashIn: number;
+  cashOut: number;
+  adjustments: number;
+  expectedCash: number;
+  actualCash: number | null;
+  variance: number | null;
+  notes: string | null;
+  movements: CashMovement[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type AiMenuDraft = {
   id: string;
   prompt: string;
@@ -284,6 +320,85 @@ export function useTodaySummary() {
     queryFn: async () => {
       const { data } = await apiClient.get<TodaySummary>('/api/metrics/today');
       return data;
+    },
+  });
+}
+
+export function useActiveShift() {
+  return useQuery({
+    queryKey: ['shifts', 'active'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<Shift | null>('/api/shifts/active');
+      return data;
+    },
+  });
+}
+
+export function useShifts() {
+  return useQuery({
+    queryKey: ['shifts', 'list'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<Shift[]>('/api/shifts');
+      return data;
+    },
+  });
+}
+
+export function useOpenShift() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { openingCash: number; notes?: string }) => {
+      const { data } = await apiClient.post<Shift>('/api/shifts/open', payload);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['shifts'] });
+    },
+  });
+}
+
+export function useCashIn() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { shiftId: string; amount: number; reason: string }) => {
+      const { shiftId, ...body } = payload;
+      const { data } = await apiClient.post<Shift>(`/api/shifts/${shiftId}/cash-in`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['shifts'] });
+    },
+  });
+}
+
+export function useCashOut() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { shiftId: string; amount: number; reason: string }) => {
+      const { shiftId, ...body } = payload;
+      const { data } = await apiClient.post<Shift>(`/api/shifts/${shiftId}/cash-out`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['shifts'] });
+    },
+  });
+}
+
+export function useCloseShift() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { shiftId: string; actualCash: number; notes?: string }) => {
+      const { shiftId, ...body } = payload;
+      const { data } = await apiClient.post<Shift>(`/api/shifts/${shiftId}/close`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['shifts'] });
     },
   });
 }

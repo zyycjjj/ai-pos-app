@@ -80,6 +80,16 @@ export type RefundItem = $Result.DefaultSelection<Prisma.$RefundItemPayload>
  */
 export type OrderAuditLog = $Result.DefaultSelection<Prisma.$OrderAuditLogPayload>
 /**
+ * Model Shift
+ * 
+ */
+export type Shift = $Result.DefaultSelection<Prisma.$ShiftPayload>
+/**
+ * Model CashMovement
+ * 
+ */
+export type CashMovement = $Result.DefaultSelection<Prisma.$CashMovementPayload>
+/**
  * Model AiDraft
  * 
  */
@@ -139,6 +149,35 @@ export namespace $Enums {
     };
 
     export type OrderAuditAction = (typeof OrderAuditAction)[keyof typeof OrderAuditAction]
+
+
+    export const ShiftStatus: {
+        OPEN: 'OPEN',
+        CLOSED: 'CLOSED'
+    };
+
+    export type ShiftStatus = (typeof ShiftStatus)[keyof typeof ShiftStatus]
+
+
+    export const CashMovementType: {
+        OPENING: 'OPENING',
+        SALE: 'SALE',
+        REFUND: 'REFUND',
+        CASH_IN: 'CASH_IN',
+        CASH_OUT: 'CASH_OUT',
+        ADJUSTMENT: 'ADJUSTMENT'
+    };
+
+    export type CashMovementType = (typeof CashMovementType)[keyof typeof CashMovementType]
+
+
+    export const CashMovementReferenceType: {
+        ORDER_PAYMENT: 'ORDER_PAYMENT',
+        REFUND: 'REFUND',
+        MANUAL: 'MANUAL'
+    };
+
+    export type CashMovementReferenceType = (typeof CashMovementReferenceType)[keyof typeof CashMovementReferenceType]
 
 
     export const AiDraftStatus: {
@@ -215,6 +254,18 @@ export const RefundStatus: typeof $Enums.RefundStatus
 export type OrderAuditAction = $Enums.OrderAuditAction
 
 export const OrderAuditAction: typeof $Enums.OrderAuditAction
+
+export type ShiftStatus = $Enums.ShiftStatus
+
+export const ShiftStatus: typeof $Enums.ShiftStatus
+
+export type CashMovementType = $Enums.CashMovementType
+
+export const CashMovementType: typeof $Enums.CashMovementType
+
+export type CashMovementReferenceType = $Enums.CashMovementReferenceType
+
+export const CashMovementReferenceType: typeof $Enums.CashMovementReferenceType
 
 export type AiDraftStatus = $Enums.AiDraftStatus
 
@@ -494,6 +545,26 @@ export class PrismaClient<
       * ```
       */
     get orderAuditLog(): Prisma.OrderAuditLogDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.shift`: Exposes CRUD operations for the **Shift** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Shifts
+      * const shifts = await prisma.shift.findMany()
+      * ```
+      */
+    get shift(): Prisma.ShiftDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.cashMovement`: Exposes CRUD operations for the **CashMovement** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more CashMovements
+      * const cashMovements = await prisma.cashMovement.findMany()
+      * ```
+      */
+    get cashMovement(): Prisma.CashMovementDelegate<ExtArgs, ClientOptions>;
 
     /**
      * `prisma.aiDraft`: Exposes CRUD operations for the **AiDraft** model.
@@ -967,6 +1038,8 @@ export namespace Prisma {
         Refund: 'Refund',
         RefundItem: 'RefundItem',
         OrderAuditLog: 'OrderAuditLog',
+        Shift: 'Shift',
+        CashMovement: 'CashMovement',
         AiDraft: 'AiDraft',
         Campaign: 'Campaign'
     };
@@ -987,7 +1060,7 @@ export namespace Prisma {
             omit: GlobalOmitOptions
         }
         meta: {
-            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "aiDraft" | "campaign"
+            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "aiDraft" | "campaign"
             txIsolationLevel: Prisma.TransactionIsolationLevel
         }
         model: {
@@ -1849,6 +1922,138 @@ export namespace Prisma {
                     }
                 }
             }
+            Shift: {
+                payload: Prisma.$ShiftPayload<ExtArgs>
+                fields: Prisma.ShiftFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.ShiftFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.ShiftFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.ShiftFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.ShiftFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    findMany: {
+                        args: Prisma.ShiftFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>[]
+                    }
+                    create: {
+                        args: Prisma.ShiftCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    createMany: {
+                        args: Prisma.ShiftCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.ShiftDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    update: {
+                        args: Prisma.ShiftUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.ShiftDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.ShiftUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.ShiftUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.ShiftAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateShift>
+                    }
+                    groupBy: {
+                        args: Prisma.ShiftGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<ShiftGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.ShiftCountArgs<ExtArgs>
+                        result: $Utils.Optional<ShiftCountAggregateOutputType> | number
+                    }
+                }
+            }
+            CashMovement: {
+                payload: Prisma.$CashMovementPayload<ExtArgs>
+                fields: Prisma.CashMovementFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.CashMovementFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.CashMovementFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.CashMovementFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.CashMovementFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    findMany: {
+                        args: Prisma.CashMovementFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>[]
+                    }
+                    create: {
+                        args: Prisma.CashMovementCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    createMany: {
+                        args: Prisma.CashMovementCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.CashMovementDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    update: {
+                        args: Prisma.CashMovementUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.CashMovementDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.CashMovementUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.CashMovementUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$CashMovementPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.CashMovementAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateCashMovement>
+                    }
+                    groupBy: {
+                        args: Prisma.CashMovementGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<CashMovementGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.CashMovementCountArgs<ExtArgs>
+                        result: $Utils.Optional<CashMovementCountAggregateOutputType> | number
+                    }
+                }
+            }
             AiDraft: {
                 payload: Prisma.$AiDraftPayload<ExtArgs>
                 fields: Prisma.AiDraftFieldRefs
@@ -2078,6 +2283,8 @@ export namespace Prisma {
         refund?: RefundOmit
         refundItem?: RefundItemOmit
         orderAuditLog?: OrderAuditLogOmit
+        shift?: ShiftOmit
+        cashMovement?: CashMovementOmit
         aiDraft?: AiDraftOmit
         campaign?: CampaignOmit
     }
@@ -2180,6 +2387,8 @@ export namespace Prisma {
         orders: number
         refunds: number
         auditLogs: number
+        shifts: number
+        cashMovements: number
         aiDrafts: number
         campaigns: number
     }
@@ -2191,6 +2400,8 @@ export namespace Prisma {
         orders?: boolean | StoreCountOutputTypeCountOrdersArgs
         refunds?: boolean | StoreCountOutputTypeCountRefundsArgs
         auditLogs?: boolean | StoreCountOutputTypeCountAuditLogsArgs
+        shifts?: boolean | StoreCountOutputTypeCountShiftsArgs
+        cashMovements?: boolean | StoreCountOutputTypeCountCashMovementsArgs
         aiDrafts?: boolean | StoreCountOutputTypeCountAiDraftsArgs
         campaigns?: boolean | StoreCountOutputTypeCountCampaignsArgs
     }
@@ -2251,6 +2462,20 @@ export namespace Prisma {
     /**
      * StoreCountOutputType without action
      */
+    export type StoreCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ShiftWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountCashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: CashMovementWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
     export type StoreCountOutputTypeCountAiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: AiDraftWhereInput
     }
@@ -2273,6 +2498,10 @@ export namespace Prisma {
         approvedRefunds: number
         operatedOrderAuditLogs: number
         approvedOrderAuditLogs: number
+        shifts: number
+        openedShifts: number
+        closedShifts: number
+        cashMovements: number
     }
 
     export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2281,6 +2510,10 @@ export namespace Prisma {
         approvedRefunds?: boolean | UserCountOutputTypeCountApprovedRefundsArgs
         operatedOrderAuditLogs?: boolean | UserCountOutputTypeCountOperatedOrderAuditLogsArgs
         approvedOrderAuditLogs?: boolean | UserCountOutputTypeCountApprovedOrderAuditLogsArgs
+        shifts?: boolean | UserCountOutputTypeCountShiftsArgs
+        openedShifts?: boolean | UserCountOutputTypeCountOpenedShiftsArgs
+        closedShifts?: boolean | UserCountOutputTypeCountClosedShiftsArgs
+        cashMovements?: boolean | UserCountOutputTypeCountCashMovementsArgs
     }
 
     // Custom InputTypes
@@ -2327,6 +2560,34 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeCountApprovedOrderAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: OrderAuditLogWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ShiftWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountOpenedShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ShiftWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountClosedShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ShiftWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountCashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: CashMovementWhereInput
     }
 
 
@@ -2553,6 +2814,37 @@ export namespace Prisma {
 
 
     /**
+     * Count Type ShiftCountOutputType
+     */
+
+    export type ShiftCountOutputType = {
+        movements: number
+    }
+
+    export type ShiftCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        movements?: boolean | ShiftCountOutputTypeCountMovementsArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * ShiftCountOutputType without action
+     */
+    export type ShiftCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the ShiftCountOutputType
+         */
+        select?: ShiftCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * ShiftCountOutputType without action
+     */
+    export type ShiftCountOutputTypeCountMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: CashMovementWhereInput
+    }
+
+
+    /**
      * Models
      */
 
@@ -2750,6 +3042,8 @@ export namespace Prisma {
         orders?: boolean | Store$ordersArgs<ExtArgs>
         refunds?: boolean | Store$refundsArgs<ExtArgs>
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
+        shifts?: boolean | Store$shiftsArgs<ExtArgs>
+        cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -2776,6 +3070,8 @@ export namespace Prisma {
         orders?: boolean | Store$ordersArgs<ExtArgs>
         refunds?: boolean | Store$refundsArgs<ExtArgs>
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
+        shifts?: boolean | Store$shiftsArgs<ExtArgs>
+        cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -2790,6 +3086,8 @@ export namespace Prisma {
             orders: Prisma.$OrderPayload<ExtArgs>[]
             refunds: Prisma.$RefundPayload<ExtArgs>[]
             auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
+            shifts: Prisma.$ShiftPayload<ExtArgs>[]
+            cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
             aiDrafts: Prisma.$AiDraftPayload<ExtArgs>[]
             campaigns: Prisma.$CampaignPayload<ExtArgs>[]
         }
@@ -3148,6 +3446,8 @@ export namespace Prisma {
         orders<T extends Store$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Store$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         refunds<T extends Store$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Store$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         auditLogs<T extends Store$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Store$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        shifts<T extends Store$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        cashMovements<T extends Store$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Store$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         aiDrafts<T extends Store$aiDraftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$aiDraftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDraftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         campaigns<T extends Store$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Store$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
@@ -3674,6 +3974,54 @@ export namespace Prisma {
     }
 
     /**
+     * Store.shifts
+     */
+    export type Store$shiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        where?: ShiftWhereInput
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        cursor?: ShiftWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * Store.cashMovements
+     */
+    export type Store$cashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        where?: CashMovementWhereInput
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        cursor?: CashMovementWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
      * Store.aiDrafts
      */
     export type Store$aiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3925,6 +4273,10 @@ export namespace Prisma {
         approvedRefunds?: boolean | User$approvedRefundsArgs<ExtArgs>
         operatedOrderAuditLogs?: boolean | User$operatedOrderAuditLogsArgs<ExtArgs>
         approvedOrderAuditLogs?: boolean | User$approvedOrderAuditLogsArgs<ExtArgs>
+        shifts?: boolean | User$shiftsArgs<ExtArgs>
+        openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
+        closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
+        cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["user"]>
 
@@ -3947,6 +4299,10 @@ export namespace Prisma {
         approvedRefunds?: boolean | User$approvedRefundsArgs<ExtArgs>
         operatedOrderAuditLogs?: boolean | User$operatedOrderAuditLogsArgs<ExtArgs>
         approvedOrderAuditLogs?: boolean | User$approvedOrderAuditLogsArgs<ExtArgs>
+        shifts?: boolean | User$shiftsArgs<ExtArgs>
+        openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
+        closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
+        cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -3958,6 +4314,10 @@ export namespace Prisma {
             approvedRefunds: Prisma.$RefundPayload<ExtArgs>[]
             operatedOrderAuditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
             approvedOrderAuditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
+            shifts: Prisma.$ShiftPayload<ExtArgs>[]
+            openedShifts: Prisma.$ShiftPayload<ExtArgs>[]
+            closedShifts: Prisma.$ShiftPayload<ExtArgs>[]
+            cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -4312,6 +4672,10 @@ export namespace Prisma {
         approvedRefunds<T extends User$approvedRefundsArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedRefundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         operatedOrderAuditLogs<T extends User$operatedOrderAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$operatedOrderAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         approvedOrderAuditLogs<T extends User$approvedOrderAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedOrderAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        shifts<T extends User$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        openedShifts<T extends User$openedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$openedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        closedShifts<T extends User$closedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$closedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        cashMovements<T extends User$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, User$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4808,6 +5172,102 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * User.shifts
+     */
+    export type User$shiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        where?: ShiftWhereInput
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        cursor?: ShiftWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * User.openedShifts
+     */
+    export type User$openedShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        where?: ShiftWhereInput
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        cursor?: ShiftWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * User.closedShifts
+     */
+    export type User$closedShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        where?: ShiftWhereInput
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        cursor?: ShiftWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * User.cashMovements
+     */
+    export type User$cashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        where?: CashMovementWhereInput
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        cursor?: CashMovementWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
     }
 
     /**
@@ -16537,6 +16997,2216 @@ export namespace Prisma {
 
 
     /**
+     * Model Shift
+     */
+
+    export type AggregateShift = {
+        _count: ShiftCountAggregateOutputType | null
+        _avg: ShiftAvgAggregateOutputType | null
+        _sum: ShiftSumAggregateOutputType | null
+        _min: ShiftMinAggregateOutputType | null
+        _max: ShiftMaxAggregateOutputType | null
+    }
+
+    export type ShiftAvgAggregateOutputType = {
+        openingCash: Decimal | null
+        expectedCash: Decimal | null
+        actualCash: Decimal | null
+        variance: Decimal | null
+    }
+
+    export type ShiftSumAggregateOutputType = {
+        openingCash: Decimal | null
+        expectedCash: Decimal | null
+        actualCash: Decimal | null
+        variance: Decimal | null
+    }
+
+    export type ShiftMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        userId: string | null
+        status: $Enums.ShiftStatus | null
+        openedAt: Date | null
+        closedAt: Date | null
+        openingCash: Decimal | null
+        expectedCash: Decimal | null
+        actualCash: Decimal | null
+        variance: Decimal | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        notes: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type ShiftMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        userId: string | null
+        status: $Enums.ShiftStatus | null
+        openedAt: Date | null
+        closedAt: Date | null
+        openingCash: Decimal | null
+        expectedCash: Decimal | null
+        actualCash: Decimal | null
+        variance: Decimal | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        notes: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type ShiftCountAggregateOutputType = {
+        id: number
+        storeId: number
+        userId: number
+        status: number
+        openedAt: number
+        closedAt: number
+        openingCash: number
+        expectedCash: number
+        actualCash: number
+        variance: number
+        openedByUserId: number
+        closedByUserId: number
+        notes: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type ShiftAvgAggregateInputType = {
+        openingCash?: true
+        expectedCash?: true
+        actualCash?: true
+        variance?: true
+    }
+
+    export type ShiftSumAggregateInputType = {
+        openingCash?: true
+        expectedCash?: true
+        actualCash?: true
+        variance?: true
+    }
+
+    export type ShiftMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        userId?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openingCash?: true
+        expectedCash?: true
+        actualCash?: true
+        variance?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type ShiftMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        userId?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openingCash?: true
+        expectedCash?: true
+        actualCash?: true
+        variance?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type ShiftCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        userId?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openingCash?: true
+        expectedCash?: true
+        actualCash?: true
+        variance?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type ShiftAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which Shift to aggregate.
+         */
+        where?: ShiftWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Shifts to fetch.
+         */
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: ShiftWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Shifts from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Shifts.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned Shifts
+        **/
+        _count?: true | ShiftCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: ShiftAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: ShiftSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: ShiftMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: ShiftMaxAggregateInputType
+    }
+
+    export type GetShiftAggregateType<T extends ShiftAggregateArgs> = {
+        [P in keyof T & keyof AggregateShift]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateShift[P]>
+        : GetScalarType<T[P], AggregateShift[P]>
+    }
+
+
+
+
+    export type ShiftGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ShiftWhereInput
+        orderBy?: ShiftOrderByWithAggregationInput | ShiftOrderByWithAggregationInput[]
+        by: ShiftScalarFieldEnum[] | ShiftScalarFieldEnum
+        having?: ShiftScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: ShiftCountAggregateInputType | true
+        _avg?: ShiftAvgAggregateInputType
+        _sum?: ShiftSumAggregateInputType
+        _min?: ShiftMinAggregateInputType
+        _max?: ShiftMaxAggregateInputType
+    }
+
+    export type ShiftGroupByOutputType = {
+        id: string
+        storeId: string
+        userId: string
+        status: $Enums.ShiftStatus
+        openedAt: Date
+        closedAt: Date | null
+        openingCash: Decimal
+        expectedCash: Decimal
+        actualCash: Decimal | null
+        variance: Decimal | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        notes: string | null
+        createdAt: Date
+        updatedAt: Date
+        _count: ShiftCountAggregateOutputType | null
+        _avg: ShiftAvgAggregateOutputType | null
+        _sum: ShiftSumAggregateOutputType | null
+        _min: ShiftMinAggregateOutputType | null
+        _max: ShiftMaxAggregateOutputType | null
+    }
+
+    type GetShiftGroupByPayload<T extends ShiftGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<ShiftGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof ShiftGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], ShiftGroupByOutputType[P]>
+                : GetScalarType<T[P], ShiftGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type ShiftSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        userId?: boolean
+        status?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
+        openingCash?: boolean
+        expectedCash?: boolean
+        actualCash?: boolean
+        variance?: boolean
+        openedByUserId?: boolean
+        closedByUserId?: boolean
+        notes?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        user?: boolean | UserDefaultArgs<ExtArgs>
+        openedBy?: boolean | Shift$openedByArgs<ExtArgs>
+        closedBy?: boolean | Shift$closedByArgs<ExtArgs>
+        movements?: boolean | Shift$movementsArgs<ExtArgs>
+        _count?: boolean | ShiftCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["shift"]>
+
+
+
+    export type ShiftSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        userId?: boolean
+        status?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
+        openingCash?: boolean
+        expectedCash?: boolean
+        actualCash?: boolean
+        variance?: boolean
+        openedByUserId?: boolean
+        closedByUserId?: boolean
+        notes?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type ShiftOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "userId" | "status" | "openedAt" | "closedAt" | "openingCash" | "expectedCash" | "actualCash" | "variance" | "openedByUserId" | "closedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["shift"]>
+    export type ShiftInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        user?: boolean | UserDefaultArgs<ExtArgs>
+        openedBy?: boolean | Shift$openedByArgs<ExtArgs>
+        closedBy?: boolean | Shift$closedByArgs<ExtArgs>
+        movements?: boolean | Shift$movementsArgs<ExtArgs>
+        _count?: boolean | ShiftCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $ShiftPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "Shift"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            user: Prisma.$UserPayload<ExtArgs>
+            openedBy: Prisma.$UserPayload<ExtArgs> | null
+            closedBy: Prisma.$UserPayload<ExtArgs> | null
+            movements: Prisma.$CashMovementPayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            userId: string
+            status: $Enums.ShiftStatus
+            openedAt: Date
+            closedAt: Date | null
+            openingCash: Prisma.Decimal
+            expectedCash: Prisma.Decimal
+            actualCash: Prisma.Decimal | null
+            variance: Prisma.Decimal | null
+            openedByUserId: string | null
+            closedByUserId: string | null
+            notes: string | null
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["shift"]>
+        composites: {}
+    }
+
+    type ShiftGetPayload<S extends boolean | null | undefined | ShiftDefaultArgs> = $Result.GetResult<Prisma.$ShiftPayload, S>
+
+    type ShiftCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<ShiftFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: ShiftCountAggregateInputType | true
+        }
+
+    export interface ShiftDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Shift'], meta: { name: 'Shift' } }
+        /**
+         * Find zero or one Shift that matches the filter.
+         * @param {ShiftFindUniqueArgs} args - Arguments to find a Shift
+         * @example
+         * // Get one Shift
+         * const shift = await prisma.shift.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends ShiftFindUniqueArgs>(args: SelectSubset<T, ShiftFindUniqueArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one Shift that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {ShiftFindUniqueOrThrowArgs} args - Arguments to find a Shift
+         * @example
+         * // Get one Shift
+         * const shift = await prisma.shift.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends ShiftFindUniqueOrThrowArgs>(args: SelectSubset<T, ShiftFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first Shift that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftFindFirstArgs} args - Arguments to find a Shift
+         * @example
+         * // Get one Shift
+         * const shift = await prisma.shift.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends ShiftFindFirstArgs>(args?: SelectSubset<T, ShiftFindFirstArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first Shift that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftFindFirstOrThrowArgs} args - Arguments to find a Shift
+         * @example
+         * // Get one Shift
+         * const shift = await prisma.shift.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends ShiftFindFirstOrThrowArgs>(args?: SelectSubset<T, ShiftFindFirstOrThrowArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more Shifts that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all Shifts
+         * const shifts = await prisma.shift.findMany()
+         * 
+         * // Get first 10 Shifts
+         * const shifts = await prisma.shift.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const shiftWithIdOnly = await prisma.shift.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends ShiftFindManyArgs>(args?: SelectSubset<T, ShiftFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a Shift.
+         * @param {ShiftCreateArgs} args - Arguments to create a Shift.
+         * @example
+         * // Create one Shift
+         * const Shift = await prisma.shift.create({
+         *   data: {
+         *     // ... data to create a Shift
+         *   }
+         * })
+         * 
+         */
+        create<T extends ShiftCreateArgs>(args: SelectSubset<T, ShiftCreateArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many Shifts.
+         * @param {ShiftCreateManyArgs} args - Arguments to create many Shifts.
+         * @example
+         * // Create many Shifts
+         * const shift = await prisma.shift.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends ShiftCreateManyArgs>(args?: SelectSubset<T, ShiftCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a Shift.
+         * @param {ShiftDeleteArgs} args - Arguments to delete one Shift.
+         * @example
+         * // Delete one Shift
+         * const Shift = await prisma.shift.delete({
+         *   where: {
+         *     // ... filter to delete one Shift
+         *   }
+         * })
+         * 
+         */
+        delete<T extends ShiftDeleteArgs>(args: SelectSubset<T, ShiftDeleteArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one Shift.
+         * @param {ShiftUpdateArgs} args - Arguments to update one Shift.
+         * @example
+         * // Update one Shift
+         * const shift = await prisma.shift.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends ShiftUpdateArgs>(args: SelectSubset<T, ShiftUpdateArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more Shifts.
+         * @param {ShiftDeleteManyArgs} args - Arguments to filter Shifts to delete.
+         * @example
+         * // Delete a few Shifts
+         * const { count } = await prisma.shift.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends ShiftDeleteManyArgs>(args?: SelectSubset<T, ShiftDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more Shifts.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many Shifts
+         * const shift = await prisma.shift.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends ShiftUpdateManyArgs>(args: SelectSubset<T, ShiftUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one Shift.
+         * @param {ShiftUpsertArgs} args - Arguments to update or create a Shift.
+         * @example
+         * // Update or create a Shift
+         * const shift = await prisma.shift.upsert({
+         *   create: {
+         *     // ... data to create a Shift
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the Shift we want to update
+         *   }
+         * })
+         */
+        upsert<T extends ShiftUpsertArgs>(args: SelectSubset<T, ShiftUpsertArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of Shifts.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftCountArgs} args - Arguments to filter Shifts to count.
+         * @example
+         * // Count the number of Shifts
+         * const count = await prisma.shift.count({
+         *   where: {
+         *     // ... the filter for the Shifts we want to count
+         *   }
+         * })
+        **/
+        count<T extends ShiftCountArgs>(
+            args?: Subset<T, ShiftCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], ShiftCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a Shift.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends ShiftAggregateArgs>(args: Subset<T, ShiftAggregateArgs>): Prisma.PrismaPromise<GetShiftAggregateType<T>>
+
+        /**
+         * Group by Shift.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {ShiftGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends ShiftGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: ShiftGroupByArgs['orderBy'] }
+            : { orderBy?: ShiftGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, ShiftGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetShiftGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the Shift model
+         */
+        readonly fields: ShiftFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for Shift.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__ShiftClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        openedBy<T extends Shift$openedByArgs<ExtArgs> = {}>(args?: Subset<T, Shift$openedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        closedBy<T extends Shift$closedByArgs<ExtArgs> = {}>(args?: Subset<T, Shift$closedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        movements<T extends Shift$movementsArgs<ExtArgs> = {}>(args?: Subset<T, Shift$movementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the Shift model
+     */
+    interface ShiftFieldRefs {
+        readonly id: FieldRef<"Shift", 'String'>
+        readonly storeId: FieldRef<"Shift", 'String'>
+        readonly userId: FieldRef<"Shift", 'String'>
+        readonly status: FieldRef<"Shift", 'ShiftStatus'>
+        readonly openedAt: FieldRef<"Shift", 'DateTime'>
+        readonly closedAt: FieldRef<"Shift", 'DateTime'>
+        readonly openingCash: FieldRef<"Shift", 'Decimal'>
+        readonly expectedCash: FieldRef<"Shift", 'Decimal'>
+        readonly actualCash: FieldRef<"Shift", 'Decimal'>
+        readonly variance: FieldRef<"Shift", 'Decimal'>
+        readonly openedByUserId: FieldRef<"Shift", 'String'>
+        readonly closedByUserId: FieldRef<"Shift", 'String'>
+        readonly notes: FieldRef<"Shift", 'String'>
+        readonly createdAt: FieldRef<"Shift", 'DateTime'>
+        readonly updatedAt: FieldRef<"Shift", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * Shift findUnique
+     */
+    export type ShiftFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter, which Shift to fetch.
+         */
+        where: ShiftWhereUniqueInput
+    }
+
+    /**
+     * Shift findUniqueOrThrow
+     */
+    export type ShiftFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter, which Shift to fetch.
+         */
+        where: ShiftWhereUniqueInput
+    }
+
+    /**
+     * Shift findFirst
+     */
+    export type ShiftFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter, which Shift to fetch.
+         */
+        where?: ShiftWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Shifts to fetch.
+         */
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for Shifts.
+         */
+        cursor?: ShiftWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Shifts from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Shifts.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of Shifts.
+         */
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * Shift findFirstOrThrow
+     */
+    export type ShiftFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter, which Shift to fetch.
+         */
+        where?: ShiftWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Shifts to fetch.
+         */
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for Shifts.
+         */
+        cursor?: ShiftWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Shifts from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Shifts.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of Shifts.
+         */
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * Shift findMany
+     */
+    export type ShiftFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter, which Shifts to fetch.
+         */
+        where?: ShiftWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Shifts to fetch.
+         */
+        orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing Shifts.
+         */
+        cursor?: ShiftWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Shifts from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Shifts.
+         */
+        skip?: number
+        distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * Shift create
+     */
+    export type ShiftCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * The data needed to create a Shift.
+         */
+        data: XOR<ShiftCreateInput, ShiftUncheckedCreateInput>
+    }
+
+    /**
+     * Shift createMany
+     */
+    export type ShiftCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many Shifts.
+         */
+        data: ShiftCreateManyInput | ShiftCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * Shift update
+     */
+    export type ShiftUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * The data needed to update a Shift.
+         */
+        data: XOR<ShiftUpdateInput, ShiftUncheckedUpdateInput>
+        /**
+         * Choose, which Shift to update.
+         */
+        where: ShiftWhereUniqueInput
+    }
+
+    /**
+     * Shift updateMany
+     */
+    export type ShiftUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update Shifts.
+         */
+        data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyInput>
+        /**
+         * Filter which Shifts to update
+         */
+        where?: ShiftWhereInput
+        /**
+         * Limit how many Shifts to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * Shift upsert
+     */
+    export type ShiftUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * The filter to search for the Shift to update in case it exists.
+         */
+        where: ShiftWhereUniqueInput
+        /**
+         * In case the Shift found by the `where` argument doesn't exist, create a new Shift with this data.
+         */
+        create: XOR<ShiftCreateInput, ShiftUncheckedCreateInput>
+        /**
+         * In case the Shift was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<ShiftUpdateInput, ShiftUncheckedUpdateInput>
+    }
+
+    /**
+     * Shift delete
+     */
+    export type ShiftDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+        /**
+         * Filter which Shift to delete.
+         */
+        where: ShiftWhereUniqueInput
+    }
+
+    /**
+     * Shift deleteMany
+     */
+    export type ShiftDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which Shifts to delete
+         */
+        where?: ShiftWhereInput
+        /**
+         * Limit how many Shifts to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * Shift.openedBy
+     */
+    export type Shift$openedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * Shift.closedBy
+     */
+    export type Shift$closedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * Shift.movements
+     */
+    export type Shift$movementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        where?: CashMovementWhereInput
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        cursor?: CashMovementWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
+     * Shift without action
+     */
+    export type ShiftDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Shift
+         */
+        select?: ShiftSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Shift
+         */
+        omit?: ShiftOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ShiftInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model CashMovement
+     */
+
+    export type AggregateCashMovement = {
+        _count: CashMovementCountAggregateOutputType | null
+        _avg: CashMovementAvgAggregateOutputType | null
+        _sum: CashMovementSumAggregateOutputType | null
+        _min: CashMovementMinAggregateOutputType | null
+        _max: CashMovementMaxAggregateOutputType | null
+    }
+
+    export type CashMovementAvgAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type CashMovementSumAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type CashMovementMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        shiftId: string | null
+        type: $Enums.CashMovementType | null
+        amount: Decimal | null
+        reason: string | null
+        referenceType: $Enums.CashMovementReferenceType | null
+        referenceId: string | null
+        createdByUserId: string | null
+        createdAt: Date | null
+    }
+
+    export type CashMovementMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        shiftId: string | null
+        type: $Enums.CashMovementType | null
+        amount: Decimal | null
+        reason: string | null
+        referenceType: $Enums.CashMovementReferenceType | null
+        referenceId: string | null
+        createdByUserId: string | null
+        createdAt: Date | null
+    }
+
+    export type CashMovementCountAggregateOutputType = {
+        id: number
+        storeId: number
+        shiftId: number
+        type: number
+        amount: number
+        reason: number
+        referenceType: number
+        referenceId: number
+        createdByUserId: number
+        createdAt: number
+        _all: number
+    }
+
+
+    export type CashMovementAvgAggregateInputType = {
+        amount?: true
+    }
+
+    export type CashMovementSumAggregateInputType = {
+        amount?: true
+    }
+
+    export type CashMovementMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        shiftId?: true
+        type?: true
+        amount?: true
+        reason?: true
+        referenceType?: true
+        referenceId?: true
+        createdByUserId?: true
+        createdAt?: true
+    }
+
+    export type CashMovementMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        shiftId?: true
+        type?: true
+        amount?: true
+        reason?: true
+        referenceType?: true
+        referenceId?: true
+        createdByUserId?: true
+        createdAt?: true
+    }
+
+    export type CashMovementCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        shiftId?: true
+        type?: true
+        amount?: true
+        reason?: true
+        referenceType?: true
+        referenceId?: true
+        createdByUserId?: true
+        createdAt?: true
+        _all?: true
+    }
+
+    export type CashMovementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which CashMovement to aggregate.
+         */
+        where?: CashMovementWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of CashMovements to fetch.
+         */
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: CashMovementWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` CashMovements from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` CashMovements.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned CashMovements
+        **/
+        _count?: true | CashMovementCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: CashMovementAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: CashMovementSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: CashMovementMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: CashMovementMaxAggregateInputType
+    }
+
+    export type GetCashMovementAggregateType<T extends CashMovementAggregateArgs> = {
+        [P in keyof T & keyof AggregateCashMovement]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCashMovement[P]>
+        : GetScalarType<T[P], AggregateCashMovement[P]>
+    }
+
+
+
+
+    export type CashMovementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: CashMovementWhereInput
+        orderBy?: CashMovementOrderByWithAggregationInput | CashMovementOrderByWithAggregationInput[]
+        by: CashMovementScalarFieldEnum[] | CashMovementScalarFieldEnum
+        having?: CashMovementScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: CashMovementCountAggregateInputType | true
+        _avg?: CashMovementAvgAggregateInputType
+        _sum?: CashMovementSumAggregateInputType
+        _min?: CashMovementMinAggregateInputType
+        _max?: CashMovementMaxAggregateInputType
+    }
+
+    export type CashMovementGroupByOutputType = {
+        id: string
+        storeId: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal
+        reason: string
+        referenceType: $Enums.CashMovementReferenceType
+        referenceId: string | null
+        createdByUserId: string | null
+        createdAt: Date
+        _count: CashMovementCountAggregateOutputType | null
+        _avg: CashMovementAvgAggregateOutputType | null
+        _sum: CashMovementSumAggregateOutputType | null
+        _min: CashMovementMinAggregateOutputType | null
+        _max: CashMovementMaxAggregateOutputType | null
+    }
+
+    type GetCashMovementGroupByPayload<T extends CashMovementGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<CashMovementGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof CashMovementGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], CashMovementGroupByOutputType[P]>
+                : GetScalarType<T[P], CashMovementGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type CashMovementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        shiftId?: boolean
+        type?: boolean
+        amount?: boolean
+        reason?: boolean
+        referenceType?: boolean
+        referenceId?: boolean
+        createdByUserId?: boolean
+        createdAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        shift?: boolean | ShiftDefaultArgs<ExtArgs>
+        createdBy?: boolean | CashMovement$createdByArgs<ExtArgs>
+    }, ExtArgs["result"]["cashMovement"]>
+
+
+
+    export type CashMovementSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        shiftId?: boolean
+        type?: boolean
+        amount?: boolean
+        reason?: boolean
+        referenceType?: boolean
+        referenceId?: boolean
+        createdByUserId?: boolean
+        createdAt?: boolean
+    }
+
+    export type CashMovementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "shiftId" | "type" | "amount" | "reason" | "referenceType" | "referenceId" | "createdByUserId" | "createdAt", ExtArgs["result"]["cashMovement"]>
+    export type CashMovementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        shift?: boolean | ShiftDefaultArgs<ExtArgs>
+        createdBy?: boolean | CashMovement$createdByArgs<ExtArgs>
+    }
+
+    export type $CashMovementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "CashMovement"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            shift: Prisma.$ShiftPayload<ExtArgs>
+            createdBy: Prisma.$UserPayload<ExtArgs> | null
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            shiftId: string
+            type: $Enums.CashMovementType
+            amount: Prisma.Decimal
+            reason: string
+            referenceType: $Enums.CashMovementReferenceType
+            referenceId: string | null
+            createdByUserId: string | null
+            createdAt: Date
+        }, ExtArgs["result"]["cashMovement"]>
+        composites: {}
+    }
+
+    type CashMovementGetPayload<S extends boolean | null | undefined | CashMovementDefaultArgs> = $Result.GetResult<Prisma.$CashMovementPayload, S>
+
+    type CashMovementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<CashMovementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: CashMovementCountAggregateInputType | true
+        }
+
+    export interface CashMovementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CashMovement'], meta: { name: 'CashMovement' } }
+        /**
+         * Find zero or one CashMovement that matches the filter.
+         * @param {CashMovementFindUniqueArgs} args - Arguments to find a CashMovement
+         * @example
+         * // Get one CashMovement
+         * const cashMovement = await prisma.cashMovement.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends CashMovementFindUniqueArgs>(args: SelectSubset<T, CashMovementFindUniqueArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one CashMovement that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {CashMovementFindUniqueOrThrowArgs} args - Arguments to find a CashMovement
+         * @example
+         * // Get one CashMovement
+         * const cashMovement = await prisma.cashMovement.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends CashMovementFindUniqueOrThrowArgs>(args: SelectSubset<T, CashMovementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first CashMovement that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementFindFirstArgs} args - Arguments to find a CashMovement
+         * @example
+         * // Get one CashMovement
+         * const cashMovement = await prisma.cashMovement.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends CashMovementFindFirstArgs>(args?: SelectSubset<T, CashMovementFindFirstArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first CashMovement that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementFindFirstOrThrowArgs} args - Arguments to find a CashMovement
+         * @example
+         * // Get one CashMovement
+         * const cashMovement = await prisma.cashMovement.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends CashMovementFindFirstOrThrowArgs>(args?: SelectSubset<T, CashMovementFindFirstOrThrowArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more CashMovements that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all CashMovements
+         * const cashMovements = await prisma.cashMovement.findMany()
+         * 
+         * // Get first 10 CashMovements
+         * const cashMovements = await prisma.cashMovement.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const cashMovementWithIdOnly = await prisma.cashMovement.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends CashMovementFindManyArgs>(args?: SelectSubset<T, CashMovementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a CashMovement.
+         * @param {CashMovementCreateArgs} args - Arguments to create a CashMovement.
+         * @example
+         * // Create one CashMovement
+         * const CashMovement = await prisma.cashMovement.create({
+         *   data: {
+         *     // ... data to create a CashMovement
+         *   }
+         * })
+         * 
+         */
+        create<T extends CashMovementCreateArgs>(args: SelectSubset<T, CashMovementCreateArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many CashMovements.
+         * @param {CashMovementCreateManyArgs} args - Arguments to create many CashMovements.
+         * @example
+         * // Create many CashMovements
+         * const cashMovement = await prisma.cashMovement.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends CashMovementCreateManyArgs>(args?: SelectSubset<T, CashMovementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a CashMovement.
+         * @param {CashMovementDeleteArgs} args - Arguments to delete one CashMovement.
+         * @example
+         * // Delete one CashMovement
+         * const CashMovement = await prisma.cashMovement.delete({
+         *   where: {
+         *     // ... filter to delete one CashMovement
+         *   }
+         * })
+         * 
+         */
+        delete<T extends CashMovementDeleteArgs>(args: SelectSubset<T, CashMovementDeleteArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one CashMovement.
+         * @param {CashMovementUpdateArgs} args - Arguments to update one CashMovement.
+         * @example
+         * // Update one CashMovement
+         * const cashMovement = await prisma.cashMovement.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends CashMovementUpdateArgs>(args: SelectSubset<T, CashMovementUpdateArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more CashMovements.
+         * @param {CashMovementDeleteManyArgs} args - Arguments to filter CashMovements to delete.
+         * @example
+         * // Delete a few CashMovements
+         * const { count } = await prisma.cashMovement.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends CashMovementDeleteManyArgs>(args?: SelectSubset<T, CashMovementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more CashMovements.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many CashMovements
+         * const cashMovement = await prisma.cashMovement.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends CashMovementUpdateManyArgs>(args: SelectSubset<T, CashMovementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one CashMovement.
+         * @param {CashMovementUpsertArgs} args - Arguments to update or create a CashMovement.
+         * @example
+         * // Update or create a CashMovement
+         * const cashMovement = await prisma.cashMovement.upsert({
+         *   create: {
+         *     // ... data to create a CashMovement
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the CashMovement we want to update
+         *   }
+         * })
+         */
+        upsert<T extends CashMovementUpsertArgs>(args: SelectSubset<T, CashMovementUpsertArgs<ExtArgs>>): Prisma__CashMovementClient<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of CashMovements.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementCountArgs} args - Arguments to filter CashMovements to count.
+         * @example
+         * // Count the number of CashMovements
+         * const count = await prisma.cashMovement.count({
+         *   where: {
+         *     // ... the filter for the CashMovements we want to count
+         *   }
+         * })
+        **/
+        count<T extends CashMovementCountArgs>(
+            args?: Subset<T, CashMovementCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], CashMovementCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a CashMovement.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends CashMovementAggregateArgs>(args: Subset<T, CashMovementAggregateArgs>): Prisma.PrismaPromise<GetCashMovementAggregateType<T>>
+
+        /**
+         * Group by CashMovement.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {CashMovementGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends CashMovementGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: CashMovementGroupByArgs['orderBy'] }
+            : { orderBy?: CashMovementGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, CashMovementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCashMovementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the CashMovement model
+         */
+        readonly fields: CashMovementFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for CashMovement.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__CashMovementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        shift<T extends ShiftDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ShiftDefaultArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        createdBy<T extends CashMovement$createdByArgs<ExtArgs> = {}>(args?: Subset<T, CashMovement$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the CashMovement model
+     */
+    interface CashMovementFieldRefs {
+        readonly id: FieldRef<"CashMovement", 'String'>
+        readonly storeId: FieldRef<"CashMovement", 'String'>
+        readonly shiftId: FieldRef<"CashMovement", 'String'>
+        readonly type: FieldRef<"CashMovement", 'CashMovementType'>
+        readonly amount: FieldRef<"CashMovement", 'Decimal'>
+        readonly reason: FieldRef<"CashMovement", 'String'>
+        readonly referenceType: FieldRef<"CashMovement", 'CashMovementReferenceType'>
+        readonly referenceId: FieldRef<"CashMovement", 'String'>
+        readonly createdByUserId: FieldRef<"CashMovement", 'String'>
+        readonly createdAt: FieldRef<"CashMovement", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * CashMovement findUnique
+     */
+    export type CashMovementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter, which CashMovement to fetch.
+         */
+        where: CashMovementWhereUniqueInput
+    }
+
+    /**
+     * CashMovement findUniqueOrThrow
+     */
+    export type CashMovementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter, which CashMovement to fetch.
+         */
+        where: CashMovementWhereUniqueInput
+    }
+
+    /**
+     * CashMovement findFirst
+     */
+    export type CashMovementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter, which CashMovement to fetch.
+         */
+        where?: CashMovementWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of CashMovements to fetch.
+         */
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for CashMovements.
+         */
+        cursor?: CashMovementWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` CashMovements from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` CashMovements.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of CashMovements.
+         */
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
+     * CashMovement findFirstOrThrow
+     */
+    export type CashMovementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter, which CashMovement to fetch.
+         */
+        where?: CashMovementWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of CashMovements to fetch.
+         */
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for CashMovements.
+         */
+        cursor?: CashMovementWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` CashMovements from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` CashMovements.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of CashMovements.
+         */
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
+     * CashMovement findMany
+     */
+    export type CashMovementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter, which CashMovements to fetch.
+         */
+        where?: CashMovementWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of CashMovements to fetch.
+         */
+        orderBy?: CashMovementOrderByWithRelationInput | CashMovementOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing CashMovements.
+         */
+        cursor?: CashMovementWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` CashMovements from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` CashMovements.
+         */
+        skip?: number
+        distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
+     * CashMovement create
+     */
+    export type CashMovementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * The data needed to create a CashMovement.
+         */
+        data: XOR<CashMovementCreateInput, CashMovementUncheckedCreateInput>
+    }
+
+    /**
+     * CashMovement createMany
+     */
+    export type CashMovementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many CashMovements.
+         */
+        data: CashMovementCreateManyInput | CashMovementCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * CashMovement update
+     */
+    export type CashMovementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * The data needed to update a CashMovement.
+         */
+        data: XOR<CashMovementUpdateInput, CashMovementUncheckedUpdateInput>
+        /**
+         * Choose, which CashMovement to update.
+         */
+        where: CashMovementWhereUniqueInput
+    }
+
+    /**
+     * CashMovement updateMany
+     */
+    export type CashMovementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update CashMovements.
+         */
+        data: XOR<CashMovementUpdateManyMutationInput, CashMovementUncheckedUpdateManyInput>
+        /**
+         * Filter which CashMovements to update
+         */
+        where?: CashMovementWhereInput
+        /**
+         * Limit how many CashMovements to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * CashMovement upsert
+     */
+    export type CashMovementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * The filter to search for the CashMovement to update in case it exists.
+         */
+        where: CashMovementWhereUniqueInput
+        /**
+         * In case the CashMovement found by the `where` argument doesn't exist, create a new CashMovement with this data.
+         */
+        create: XOR<CashMovementCreateInput, CashMovementUncheckedCreateInput>
+        /**
+         * In case the CashMovement was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<CashMovementUpdateInput, CashMovementUncheckedUpdateInput>
+    }
+
+    /**
+     * CashMovement delete
+     */
+    export type CashMovementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+        /**
+         * Filter which CashMovement to delete.
+         */
+        where: CashMovementWhereUniqueInput
+    }
+
+    /**
+     * CashMovement deleteMany
+     */
+    export type CashMovementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which CashMovements to delete
+         */
+        where?: CashMovementWhereInput
+        /**
+         * Limit how many CashMovements to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * CashMovement.createdBy
+     */
+    export type CashMovement$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * CashMovement without action
+     */
+    export type CashMovementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the CashMovement
+         */
+        select?: CashMovementSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the CashMovement
+         */
+        omit?: CashMovementOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CashMovementInclude<ExtArgs> | null
+    }
+
+
+    /**
      * Model AiDraft
      */
 
@@ -18790,6 +21460,43 @@ export namespace Prisma {
     export type OrderAuditLogScalarFieldEnum = (typeof OrderAuditLogScalarFieldEnum)[keyof typeof OrderAuditLogScalarFieldEnum]
 
 
+    export const ShiftScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        userId: 'userId',
+        status: 'status',
+        openedAt: 'openedAt',
+        closedAt: 'closedAt',
+        openingCash: 'openingCash',
+        expectedCash: 'expectedCash',
+        actualCash: 'actualCash',
+        variance: 'variance',
+        openedByUserId: 'openedByUserId',
+        closedByUserId: 'closedByUserId',
+        notes: 'notes',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
+
+
+    export const CashMovementScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        shiftId: 'shiftId',
+        type: 'type',
+        amount: 'amount',
+        reason: 'reason',
+        referenceType: 'referenceType',
+        referenceId: 'referenceId',
+        createdByUserId: 'createdByUserId',
+        createdAt: 'createdAt'
+    };
+
+    export type CashMovementScalarFieldEnum = (typeof CashMovementScalarFieldEnum)[keyof typeof CashMovementScalarFieldEnum]
+
+
     export const AiDraftScalarFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -19008,6 +21715,30 @@ export namespace Prisma {
     export type OrderAuditLogOrderByRelevanceFieldEnum = (typeof OrderAuditLogOrderByRelevanceFieldEnum)[keyof typeof OrderAuditLogOrderByRelevanceFieldEnum]
 
 
+    export const ShiftOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        userId: 'userId',
+        openedByUserId: 'openedByUserId',
+        closedByUserId: 'closedByUserId',
+        notes: 'notes'
+    };
+
+    export type ShiftOrderByRelevanceFieldEnum = (typeof ShiftOrderByRelevanceFieldEnum)[keyof typeof ShiftOrderByRelevanceFieldEnum]
+
+
+    export const CashMovementOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        shiftId: 'shiftId',
+        reason: 'reason',
+        referenceId: 'referenceId',
+        createdByUserId: 'createdByUserId'
+    };
+
+    export type CashMovementOrderByRelevanceFieldEnum = (typeof CashMovementOrderByRelevanceFieldEnum)[keyof typeof CashMovementOrderByRelevanceFieldEnum]
+
+
     export const AiDraftOrderByRelevanceFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -19150,6 +21881,27 @@ export namespace Prisma {
 
 
     /**
+     * Reference to a field of type 'ShiftStatus'
+     */
+    export type EnumShiftStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShiftStatus'>
+
+
+
+    /**
+     * Reference to a field of type 'CashMovementType'
+     */
+    export type EnumCashMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashMovementType'>
+
+
+
+    /**
+     * Reference to a field of type 'CashMovementReferenceType'
+     */
+    export type EnumCashMovementReferenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashMovementReferenceType'>
+
+
+
+    /**
      * Reference to a field of type 'AiDraftStatus'
      */
     export type EnumAiDraftStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiDraftStatus'>
@@ -19191,6 +21943,8 @@ export namespace Prisma {
         orders?: OrderListRelationFilter
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
+        shifts?: ShiftListRelationFilter
+        cashMovements?: CashMovementListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }
@@ -19210,6 +21964,8 @@ export namespace Prisma {
         orders?: OrderOrderByRelationAggregateInput
         refunds?: RefundOrderByRelationAggregateInput
         auditLogs?: OrderAuditLogOrderByRelationAggregateInput
+        shifts?: ShiftOrderByRelationAggregateInput
+        cashMovements?: CashMovementOrderByRelationAggregateInput
         aiDrafts?: AiDraftOrderByRelationAggregateInput
         campaigns?: CampaignOrderByRelationAggregateInput
         _relevance?: StoreOrderByRelevanceInput
@@ -19233,6 +21989,8 @@ export namespace Prisma {
         orders?: OrderListRelationFilter
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
+        shifts?: ShiftListRelationFilter
+        cashMovements?: CashMovementListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }, "id" | "code">
@@ -19281,6 +22039,10 @@ export namespace Prisma {
         approvedRefunds?: RefundListRelationFilter
         operatedOrderAuditLogs?: OrderAuditLogListRelationFilter
         approvedOrderAuditLogs?: OrderAuditLogListRelationFilter
+        shifts?: ShiftListRelationFilter
+        openedShifts?: ShiftListRelationFilter
+        closedShifts?: ShiftListRelationFilter
+        cashMovements?: CashMovementListRelationFilter
     }
 
     export type UserOrderByWithRelationInput = {
@@ -19296,6 +22058,10 @@ export namespace Prisma {
         approvedRefunds?: RefundOrderByRelationAggregateInput
         operatedOrderAuditLogs?: OrderAuditLogOrderByRelationAggregateInput
         approvedOrderAuditLogs?: OrderAuditLogOrderByRelationAggregateInput
+        shifts?: ShiftOrderByRelationAggregateInput
+        openedShifts?: ShiftOrderByRelationAggregateInput
+        closedShifts?: ShiftOrderByRelationAggregateInput
+        cashMovements?: CashMovementOrderByRelationAggregateInput
         _relevance?: UserOrderByRelevanceInput
     }
 
@@ -19315,6 +22081,10 @@ export namespace Prisma {
         approvedRefunds?: RefundListRelationFilter
         operatedOrderAuditLogs?: OrderAuditLogListRelationFilter
         approvedOrderAuditLogs?: OrderAuditLogListRelationFilter
+        shifts?: ShiftListRelationFilter
+        openedShifts?: ShiftListRelationFilter
+        closedShifts?: ShiftListRelationFilter
+        cashMovements?: CashMovementListRelationFilter
     }, "id" | "email">
 
     export type UserOrderByWithAggregationInput = {
@@ -20327,6 +23097,216 @@ export namespace Prisma {
         createdAt?: DateTimeWithAggregatesFilter<"OrderAuditLog"> | Date | string
     }
 
+    export type ShiftWhereInput = {
+        AND?: ShiftWhereInput | ShiftWhereInput[]
+        OR?: ShiftWhereInput[]
+        NOT?: ShiftWhereInput | ShiftWhereInput[]
+        id?: StringFilter<"Shift"> | string
+        storeId?: StringFilter<"Shift"> | string
+        userId?: StringFilter<"Shift"> | string
+        status?: EnumShiftStatusFilter<"Shift"> | $Enums.ShiftStatus
+        openedAt?: DateTimeFilter<"Shift"> | Date | string
+        closedAt?: DateTimeNullableFilter<"Shift"> | Date | string | null
+        openingCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        actualCash?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        variance?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: StringNullableFilter<"Shift"> | string | null
+        closedByUserId?: StringNullableFilter<"Shift"> | string | null
+        notes?: StringNullableFilter<"Shift"> | string | null
+        createdAt?: DateTimeFilter<"Shift"> | Date | string
+        updatedAt?: DateTimeFilter<"Shift"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        user?: XOR<UserScalarRelationFilter, UserWhereInput>
+        openedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        closedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        movements?: CashMovementListRelationFilter
+    }
+
+    export type ShiftOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        userId?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrderInput | SortOrder
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrderInput | SortOrder
+        variance?: SortOrderInput | SortOrder
+        openedByUserId?: SortOrderInput | SortOrder
+        closedByUserId?: SortOrderInput | SortOrder
+        notes?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        user?: UserOrderByWithRelationInput
+        openedBy?: UserOrderByWithRelationInput
+        closedBy?: UserOrderByWithRelationInput
+        movements?: CashMovementOrderByRelationAggregateInput
+        _relevance?: ShiftOrderByRelevanceInput
+    }
+
+    export type ShiftWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        AND?: ShiftWhereInput | ShiftWhereInput[]
+        OR?: ShiftWhereInput[]
+        NOT?: ShiftWhereInput | ShiftWhereInput[]
+        storeId?: StringFilter<"Shift"> | string
+        userId?: StringFilter<"Shift"> | string
+        status?: EnumShiftStatusFilter<"Shift"> | $Enums.ShiftStatus
+        openedAt?: DateTimeFilter<"Shift"> | Date | string
+        closedAt?: DateTimeNullableFilter<"Shift"> | Date | string | null
+        openingCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        actualCash?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        variance?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: StringNullableFilter<"Shift"> | string | null
+        closedByUserId?: StringNullableFilter<"Shift"> | string | null
+        notes?: StringNullableFilter<"Shift"> | string | null
+        createdAt?: DateTimeFilter<"Shift"> | Date | string
+        updatedAt?: DateTimeFilter<"Shift"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        user?: XOR<UserScalarRelationFilter, UserWhereInput>
+        openedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        closedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        movements?: CashMovementListRelationFilter
+    }, "id">
+
+    export type ShiftOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        userId?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrderInput | SortOrder
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrderInput | SortOrder
+        variance?: SortOrderInput | SortOrder
+        openedByUserId?: SortOrderInput | SortOrder
+        closedByUserId?: SortOrderInput | SortOrder
+        notes?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: ShiftCountOrderByAggregateInput
+        _avg?: ShiftAvgOrderByAggregateInput
+        _max?: ShiftMaxOrderByAggregateInput
+        _min?: ShiftMinOrderByAggregateInput
+        _sum?: ShiftSumOrderByAggregateInput
+    }
+
+    export type ShiftScalarWhereWithAggregatesInput = {
+        AND?: ShiftScalarWhereWithAggregatesInput | ShiftScalarWhereWithAggregatesInput[]
+        OR?: ShiftScalarWhereWithAggregatesInput[]
+        NOT?: ShiftScalarWhereWithAggregatesInput | ShiftScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"Shift"> | string
+        storeId?: StringWithAggregatesFilter<"Shift"> | string
+        userId?: StringWithAggregatesFilter<"Shift"> | string
+        status?: EnumShiftStatusWithAggregatesFilter<"Shift"> | $Enums.ShiftStatus
+        openedAt?: DateTimeWithAggregatesFilter<"Shift"> | Date | string
+        closedAt?: DateTimeNullableWithAggregatesFilter<"Shift"> | Date | string | null
+        openingCash?: DecimalWithAggregatesFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalWithAggregatesFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        actualCash?: DecimalNullableWithAggregatesFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        variance?: DecimalNullableWithAggregatesFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: StringNullableWithAggregatesFilter<"Shift"> | string | null
+        closedByUserId?: StringNullableWithAggregatesFilter<"Shift"> | string | null
+        notes?: StringNullableWithAggregatesFilter<"Shift"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"Shift"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"Shift"> | Date | string
+    }
+
+    export type CashMovementWhereInput = {
+        AND?: CashMovementWhereInput | CashMovementWhereInput[]
+        OR?: CashMovementWhereInput[]
+        NOT?: CashMovementWhereInput | CashMovementWhereInput[]
+        id?: StringFilter<"CashMovement"> | string
+        storeId?: StringFilter<"CashMovement"> | string
+        shiftId?: StringFilter<"CashMovement"> | string
+        type?: EnumCashMovementTypeFilter<"CashMovement"> | $Enums.CashMovementType
+        amount?: DecimalFilter<"CashMovement"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"CashMovement"> | string
+        referenceType?: EnumCashMovementReferenceTypeFilter<"CashMovement"> | $Enums.CashMovementReferenceType
+        referenceId?: StringNullableFilter<"CashMovement"> | string | null
+        createdByUserId?: StringNullableFilter<"CashMovement"> | string | null
+        createdAt?: DateTimeFilter<"CashMovement"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        shift?: XOR<ShiftScalarRelationFilter, ShiftWhereInput>
+        createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }
+
+    export type CashMovementOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        shiftId?: SortOrder
+        type?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        referenceType?: SortOrder
+        referenceId?: SortOrderInput | SortOrder
+        createdByUserId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        shift?: ShiftOrderByWithRelationInput
+        createdBy?: UserOrderByWithRelationInput
+        _relevance?: CashMovementOrderByRelevanceInput
+    }
+
+    export type CashMovementWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        storeId_type_referenceType_referenceId?: CashMovementStoreIdTypeReferenceTypeReferenceIdCompoundUniqueInput
+        AND?: CashMovementWhereInput | CashMovementWhereInput[]
+        OR?: CashMovementWhereInput[]
+        NOT?: CashMovementWhereInput | CashMovementWhereInput[]
+        storeId?: StringFilter<"CashMovement"> | string
+        shiftId?: StringFilter<"CashMovement"> | string
+        type?: EnumCashMovementTypeFilter<"CashMovement"> | $Enums.CashMovementType
+        amount?: DecimalFilter<"CashMovement"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"CashMovement"> | string
+        referenceType?: EnumCashMovementReferenceTypeFilter<"CashMovement"> | $Enums.CashMovementReferenceType
+        referenceId?: StringNullableFilter<"CashMovement"> | string | null
+        createdByUserId?: StringNullableFilter<"CashMovement"> | string | null
+        createdAt?: DateTimeFilter<"CashMovement"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        shift?: XOR<ShiftScalarRelationFilter, ShiftWhereInput>
+        createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }, "id" | "storeId_type_referenceType_referenceId">
+
+    export type CashMovementOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        shiftId?: SortOrder
+        type?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        referenceType?: SortOrder
+        referenceId?: SortOrderInput | SortOrder
+        createdByUserId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        _count?: CashMovementCountOrderByAggregateInput
+        _avg?: CashMovementAvgOrderByAggregateInput
+        _max?: CashMovementMaxOrderByAggregateInput
+        _min?: CashMovementMinOrderByAggregateInput
+        _sum?: CashMovementSumOrderByAggregateInput
+    }
+
+    export type CashMovementScalarWhereWithAggregatesInput = {
+        AND?: CashMovementScalarWhereWithAggregatesInput | CashMovementScalarWhereWithAggregatesInput[]
+        OR?: CashMovementScalarWhereWithAggregatesInput[]
+        NOT?: CashMovementScalarWhereWithAggregatesInput | CashMovementScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"CashMovement"> | string
+        storeId?: StringWithAggregatesFilter<"CashMovement"> | string
+        shiftId?: StringWithAggregatesFilter<"CashMovement"> | string
+        type?: EnumCashMovementTypeWithAggregatesFilter<"CashMovement"> | $Enums.CashMovementType
+        amount?: DecimalWithAggregatesFilter<"CashMovement"> | Decimal | DecimalJsLike | number | string
+        reason?: StringWithAggregatesFilter<"CashMovement"> | string
+        referenceType?: EnumCashMovementReferenceTypeWithAggregatesFilter<"CashMovement"> | $Enums.CashMovementReferenceType
+        referenceId?: StringNullableWithAggregatesFilter<"CashMovement"> | string | null
+        createdByUserId?: StringNullableWithAggregatesFilter<"CashMovement"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"CashMovement"> | Date | string
+    }
+
     export type AiDraftWhereInput = {
         AND?: AiDraftWhereInput | AiDraftWhereInput[]
         OR?: AiDraftWhereInput[]
@@ -20516,6 +23496,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -20535,6 +23517,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -20554,6 +23538,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -20573,6 +23559,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -20623,6 +23611,10 @@ export namespace Prisma {
         approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateInput = {
@@ -20638,6 +23630,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUpdateInput = {
@@ -20653,6 +23649,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateInput = {
@@ -20668,6 +23668,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserCreateManyInput = {
@@ -21734,6 +24738,220 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type ShiftCreateInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutShiftsInput
+        user: UserCreateNestedOneWithoutShiftsInput
+        openedBy?: UserCreateNestedOneWithoutOpenedShiftsInput
+        closedBy?: UserCreateNestedOneWithoutClosedShiftsInput
+        movements?: CashMovementCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        movements?: CashMovementUncheckedCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutShiftsNestedInput
+        user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedShiftsNestedInput
+        closedBy?: UserUpdateOneWithoutClosedShiftsNestedInput
+        movements?: CashMovementUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        movements?: CashMovementUncheckedUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftCreateManyInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type ShiftUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type ShiftUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementCreateInput = {
+        id?: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutCashMovementsInput
+        shift: ShiftCreateNestedOneWithoutMovementsInput
+        createdBy?: UserCreateNestedOneWithoutCashMovementsInput
+    }
+
+    export type CashMovementUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutCashMovementsNestedInput
+        shift?: ShiftUpdateOneRequiredWithoutMovementsNestedInput
+        createdBy?: UserUpdateOneWithoutCashMovementsNestedInput
+    }
+
+    export type CashMovementUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementCreateManyInput = {
+        id?: string
+        storeId: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type AiDraftCreateInput = {
         id?: string
         prompt: string
@@ -22010,6 +25228,18 @@ export namespace Prisma {
         none?: OrderAuditLogWhereInput
     }
 
+    export type ShiftListRelationFilter = {
+        every?: ShiftWhereInput
+        some?: ShiftWhereInput
+        none?: ShiftWhereInput
+    }
+
+    export type CashMovementListRelationFilter = {
+        every?: CashMovementWhereInput
+        some?: CashMovementWhereInput
+        none?: CashMovementWhereInput
+    }
+
     export type AiDraftListRelationFilter = {
         every?: AiDraftWhereInput
         some?: AiDraftWhereInput
@@ -22048,6 +25278,14 @@ export namespace Prisma {
     }
 
     export type OrderAuditLogOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type ShiftOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type CashMovementOrderByRelationAggregateInput = {
         _count?: SortOrder
     }
 
@@ -23257,6 +26495,196 @@ export namespace Prisma {
         _min?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
         _max?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
     }
+
+    export type EnumShiftStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.ShiftStatus | EnumShiftStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.ShiftStatus[]
+        notIn?: $Enums.ShiftStatus[]
+        not?: NestedEnumShiftStatusFilter<$PrismaModel> | $Enums.ShiftStatus
+    }
+
+    export type ShiftOrderByRelevanceInput = {
+        fields: ShiftOrderByRelevanceFieldEnum | ShiftOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type ShiftCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        userId?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrder
+        variance?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type ShiftAvgOrderByAggregateInput = {
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrder
+        variance?: SortOrder
+    }
+
+    export type ShiftMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        userId?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrder
+        variance?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type ShiftMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        userId?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrder
+        variance?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type ShiftSumOrderByAggregateInput = {
+        openingCash?: SortOrder
+        expectedCash?: SortOrder
+        actualCash?: SortOrder
+        variance?: SortOrder
+    }
+
+    export type EnumShiftStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.ShiftStatus | EnumShiftStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.ShiftStatus[]
+        notIn?: $Enums.ShiftStatus[]
+        not?: NestedEnumShiftStatusWithAggregatesFilter<$PrismaModel> | $Enums.ShiftStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumShiftStatusFilter<$PrismaModel>
+        _max?: NestedEnumShiftStatusFilter<$PrismaModel>
+    }
+
+    export type EnumCashMovementTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementType | EnumCashMovementTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementType[]
+        notIn?: $Enums.CashMovementType[]
+        not?: NestedEnumCashMovementTypeFilter<$PrismaModel> | $Enums.CashMovementType
+    }
+
+    export type EnumCashMovementReferenceTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementReferenceType | EnumCashMovementReferenceTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementReferenceType[]
+        notIn?: $Enums.CashMovementReferenceType[]
+        not?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel> | $Enums.CashMovementReferenceType
+    }
+
+    export type ShiftScalarRelationFilter = {
+        is?: ShiftWhereInput
+        isNot?: ShiftWhereInput
+    }
+
+    export type CashMovementOrderByRelevanceInput = {
+        fields: CashMovementOrderByRelevanceFieldEnum | CashMovementOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type CashMovementStoreIdTypeReferenceTypeReferenceIdCompoundUniqueInput = {
+        storeId: string
+        type: $Enums.CashMovementType
+        referenceType: $Enums.CashMovementReferenceType
+        referenceId: string
+    }
+
+    export type CashMovementCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        shiftId?: SortOrder
+        type?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        referenceType?: SortOrder
+        referenceId?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type CashMovementAvgOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type CashMovementMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        shiftId?: SortOrder
+        type?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        referenceType?: SortOrder
+        referenceId?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type CashMovementMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        shiftId?: SortOrder
+        type?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        referenceType?: SortOrder
+        referenceId?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type CashMovementSumOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type EnumCashMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementType | EnumCashMovementTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementType[]
+        notIn?: $Enums.CashMovementType[]
+        not?: NestedEnumCashMovementTypeWithAggregatesFilter<$PrismaModel> | $Enums.CashMovementType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCashMovementTypeFilter<$PrismaModel>
+        _max?: NestedEnumCashMovementTypeFilter<$PrismaModel>
+    }
+
+    export type EnumCashMovementReferenceTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementReferenceType | EnumCashMovementReferenceTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementReferenceType[]
+        notIn?: $Enums.CashMovementReferenceType[]
+        not?: NestedEnumCashMovementReferenceTypeWithAggregatesFilter<$PrismaModel> | $Enums.CashMovementReferenceType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
+        _max?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
+    }
     export type JsonFilter<$PrismaModel = never> =
         | PatchUndefined<
             Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -23510,6 +26938,20 @@ export namespace Prisma {
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
+    export type ShiftCreateNestedManyWithoutStoreInput = {
+        create?: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput> | ShiftCreateWithoutStoreInput[] | ShiftUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutStoreInput | ShiftCreateOrConnectWithoutStoreInput[]
+        createMany?: ShiftCreateManyStoreInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type CashMovementCreateNestedManyWithoutStoreInput = {
+        create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
+        createMany?: CashMovementCreateManyStoreInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
     export type AiDraftCreateNestedManyWithoutStoreInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -23564,6 +27006,20 @@ export namespace Prisma {
         connectOrCreate?: OrderAuditLogCreateOrConnectWithoutStoreInput | OrderAuditLogCreateOrConnectWithoutStoreInput[]
         createMany?: OrderAuditLogCreateManyStoreInputEnvelope
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
+    export type ShiftUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput> | ShiftCreateWithoutStoreInput[] | ShiftUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutStoreInput | ShiftCreateOrConnectWithoutStoreInput[]
+        createMany?: ShiftCreateManyStoreInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type CashMovementUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
+        createMany?: CashMovementCreateManyStoreInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
     }
 
     export type AiDraftUncheckedCreateNestedManyWithoutStoreInput = {
@@ -23680,6 +27136,34 @@ export namespace Prisma {
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
+    export type ShiftUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput> | ShiftCreateWithoutStoreInput[] | ShiftUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutStoreInput | ShiftCreateOrConnectWithoutStoreInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutStoreInput | ShiftUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: ShiftCreateManyStoreInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutStoreInput | ShiftUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutStoreInput | ShiftUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type CashMovementUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutStoreInput | CashMovementUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: CashMovementCreateManyStoreInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutStoreInput | CashMovementUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutStoreInput | CashMovementUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+    }
+
     export type AiDraftUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -23792,6 +27276,34 @@ export namespace Prisma {
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
+    export type ShiftUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput> | ShiftCreateWithoutStoreInput[] | ShiftUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutStoreInput | ShiftCreateOrConnectWithoutStoreInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutStoreInput | ShiftUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: ShiftCreateManyStoreInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutStoreInput | ShiftUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutStoreInput | ShiftUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutStoreInput | CashMovementUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: CashMovementCreateManyStoreInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutStoreInput | CashMovementUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutStoreInput | CashMovementUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+    }
+
     export type AiDraftUncheckedUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -23855,6 +27367,34 @@ export namespace Prisma {
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
+    export type ShiftCreateNestedManyWithoutUserInput = {
+        create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+        createMany?: ShiftCreateManyUserInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type ShiftCreateNestedManyWithoutOpenedByInput = {
+        create?: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput> | ShiftCreateWithoutOpenedByInput[] | ShiftUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutOpenedByInput | ShiftCreateOrConnectWithoutOpenedByInput[]
+        createMany?: ShiftCreateManyOpenedByInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type ShiftCreateNestedManyWithoutClosedByInput = {
+        create?: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput> | ShiftCreateWithoutClosedByInput[] | ShiftUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutClosedByInput | ShiftCreateOrConnectWithoutClosedByInput[]
+        createMany?: ShiftCreateManyClosedByInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type CashMovementCreateNestedManyWithoutCreatedByInput = {
+        create?: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput> | CashMovementCreateWithoutCreatedByInput[] | CashMovementUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
+        createMany?: CashMovementCreateManyCreatedByInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
     export type StoreUserUncheckedCreateNestedManyWithoutUserInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
@@ -23888,6 +27428,34 @@ export namespace Prisma {
         connectOrCreate?: OrderAuditLogCreateOrConnectWithoutApprovedByInput | OrderAuditLogCreateOrConnectWithoutApprovedByInput[]
         createMany?: OrderAuditLogCreateManyApprovedByInputEnvelope
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
+    export type ShiftUncheckedCreateNestedManyWithoutUserInput = {
+        create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+        createMany?: ShiftCreateManyUserInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type ShiftUncheckedCreateNestedManyWithoutOpenedByInput = {
+        create?: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput> | ShiftCreateWithoutOpenedByInput[] | ShiftUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutOpenedByInput | ShiftCreateOrConnectWithoutOpenedByInput[]
+        createMany?: ShiftCreateManyOpenedByInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type ShiftUncheckedCreateNestedManyWithoutClosedByInput = {
+        create?: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput> | ShiftCreateWithoutClosedByInput[] | ShiftUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutClosedByInput | ShiftCreateOrConnectWithoutClosedByInput[]
+        createMany?: ShiftCreateManyClosedByInputEnvelope
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type CashMovementUncheckedCreateNestedManyWithoutCreatedByInput = {
+        create?: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput> | CashMovementCreateWithoutCreatedByInput[] | CashMovementUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
+        createMany?: CashMovementCreateManyCreatedByInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
     }
 
     export type StoreUserUpdateManyWithoutUserNestedInput = {
@@ -23960,6 +27528,62 @@ export namespace Prisma {
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
+    export type ShiftUpdateManyWithoutUserNestedInput = {
+        create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutUserInput | ShiftUpsertWithWhereUniqueWithoutUserInput[]
+        createMany?: ShiftCreateManyUserInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutUserInput | ShiftUpdateWithWhereUniqueWithoutUserInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutUserInput | ShiftUpdateManyWithWhereWithoutUserInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type ShiftUpdateManyWithoutOpenedByNestedInput = {
+        create?: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput> | ShiftCreateWithoutOpenedByInput[] | ShiftUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutOpenedByInput | ShiftCreateOrConnectWithoutOpenedByInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutOpenedByInput | ShiftUpsertWithWhereUniqueWithoutOpenedByInput[]
+        createMany?: ShiftCreateManyOpenedByInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutOpenedByInput | ShiftUpdateWithWhereUniqueWithoutOpenedByInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutOpenedByInput | ShiftUpdateManyWithWhereWithoutOpenedByInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type ShiftUpdateManyWithoutClosedByNestedInput = {
+        create?: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput> | ShiftCreateWithoutClosedByInput[] | ShiftUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutClosedByInput | ShiftCreateOrConnectWithoutClosedByInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutClosedByInput | ShiftUpsertWithWhereUniqueWithoutClosedByInput[]
+        createMany?: ShiftCreateManyClosedByInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutClosedByInput | ShiftUpdateWithWhereUniqueWithoutClosedByInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutClosedByInput | ShiftUpdateManyWithWhereWithoutClosedByInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type CashMovementUpdateManyWithoutCreatedByNestedInput = {
+        create?: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput> | CashMovementCreateWithoutCreatedByInput[] | CashMovementUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutCreatedByInput | CashMovementUpsertWithWhereUniqueWithoutCreatedByInput[]
+        createMany?: CashMovementCreateManyCreatedByInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutCreatedByInput | CashMovementUpdateWithWhereUniqueWithoutCreatedByInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutCreatedByInput | CashMovementUpdateManyWithWhereWithoutCreatedByInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+    }
+
     export type StoreUserUncheckedUpdateManyWithoutUserNestedInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
@@ -24028,6 +27652,62 @@ export namespace Prisma {
         update?: OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput | OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput[]
         updateMany?: OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput | OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput[]
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutUserNestedInput = {
+        create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutUserInput | ShiftUpsertWithWhereUniqueWithoutUserInput[]
+        createMany?: ShiftCreateManyUserInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutUserInput | ShiftUpdateWithWhereUniqueWithoutUserInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutUserInput | ShiftUpdateManyWithWhereWithoutUserInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutOpenedByNestedInput = {
+        create?: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput> | ShiftCreateWithoutOpenedByInput[] | ShiftUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutOpenedByInput | ShiftCreateOrConnectWithoutOpenedByInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutOpenedByInput | ShiftUpsertWithWhereUniqueWithoutOpenedByInput[]
+        createMany?: ShiftCreateManyOpenedByInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutOpenedByInput | ShiftUpdateWithWhereUniqueWithoutOpenedByInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutOpenedByInput | ShiftUpdateManyWithWhereWithoutOpenedByInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutClosedByNestedInput = {
+        create?: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput> | ShiftCreateWithoutClosedByInput[] | ShiftUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: ShiftCreateOrConnectWithoutClosedByInput | ShiftCreateOrConnectWithoutClosedByInput[]
+        upsert?: ShiftUpsertWithWhereUniqueWithoutClosedByInput | ShiftUpsertWithWhereUniqueWithoutClosedByInput[]
+        createMany?: ShiftCreateManyClosedByInputEnvelope
+        set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+        update?: ShiftUpdateWithWhereUniqueWithoutClosedByInput | ShiftUpdateWithWhereUniqueWithoutClosedByInput[]
+        updateMany?: ShiftUpdateManyWithWhereWithoutClosedByInput | ShiftUpdateManyWithWhereWithoutClosedByInput[]
+        deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput = {
+        create?: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput> | CashMovementCreateWithoutCreatedByInput[] | CashMovementUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutCreatedByInput | CashMovementUpsertWithWhereUniqueWithoutCreatedByInput[]
+        createMany?: CashMovementCreateManyCreatedByInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutCreatedByInput | CashMovementUpdateWithWhereUniqueWithoutCreatedByInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutCreatedByInput | CashMovementUpdateManyWithWhereWithoutCreatedByInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
     }
 
     export type StoreCreateNestedOneWithoutUsersInput = {
@@ -24830,6 +28510,164 @@ export namespace Prisma {
         update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApprovedOrderAuditLogsInput, UserUpdateWithoutApprovedOrderAuditLogsInput>, UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput>
     }
 
+    export type StoreCreateNestedOneWithoutShiftsInput = {
+        create?: XOR<StoreCreateWithoutShiftsInput, StoreUncheckedCreateWithoutShiftsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutShiftsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutShiftsInput = {
+        create?: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutShiftsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutOpenedShiftsInput = {
+        create?: XOR<UserCreateWithoutOpenedShiftsInput, UserUncheckedCreateWithoutOpenedShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOpenedShiftsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutClosedShiftsInput = {
+        create?: XOR<UserCreateWithoutClosedShiftsInput, UserUncheckedCreateWithoutClosedShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutClosedShiftsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type CashMovementCreateNestedManyWithoutShiftInput = {
+        create?: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput> | CashMovementCreateWithoutShiftInput[] | CashMovementUncheckedCreateWithoutShiftInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutShiftInput | CashMovementCreateOrConnectWithoutShiftInput[]
+        createMany?: CashMovementCreateManyShiftInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
+    export type CashMovementUncheckedCreateNestedManyWithoutShiftInput = {
+        create?: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput> | CashMovementCreateWithoutShiftInput[] | CashMovementUncheckedCreateWithoutShiftInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutShiftInput | CashMovementCreateOrConnectWithoutShiftInput[]
+        createMany?: CashMovementCreateManyShiftInputEnvelope
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
+    export type EnumShiftStatusFieldUpdateOperationsInput = {
+        set?: $Enums.ShiftStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutShiftsNestedInput = {
+        create?: XOR<StoreCreateWithoutShiftsInput, StoreUncheckedCreateWithoutShiftsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutShiftsInput
+        upsert?: StoreUpsertWithoutShiftsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutShiftsInput, StoreUpdateWithoutShiftsInput>, StoreUncheckedUpdateWithoutShiftsInput>
+    }
+
+    export type UserUpdateOneRequiredWithoutShiftsNestedInput = {
+        create?: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutShiftsInput
+        upsert?: UserUpsertWithoutShiftsInput
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutShiftsInput, UserUpdateWithoutShiftsInput>, UserUncheckedUpdateWithoutShiftsInput>
+    }
+
+    export type UserUpdateOneWithoutOpenedShiftsNestedInput = {
+        create?: XOR<UserCreateWithoutOpenedShiftsInput, UserUncheckedCreateWithoutOpenedShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOpenedShiftsInput
+        upsert?: UserUpsertWithoutOpenedShiftsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOpenedShiftsInput, UserUpdateWithoutOpenedShiftsInput>, UserUncheckedUpdateWithoutOpenedShiftsInput>
+    }
+
+    export type UserUpdateOneWithoutClosedShiftsNestedInput = {
+        create?: XOR<UserCreateWithoutClosedShiftsInput, UserUncheckedCreateWithoutClosedShiftsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutClosedShiftsInput
+        upsert?: UserUpsertWithoutClosedShiftsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClosedShiftsInput, UserUpdateWithoutClosedShiftsInput>, UserUncheckedUpdateWithoutClosedShiftsInput>
+    }
+
+    export type CashMovementUpdateManyWithoutShiftNestedInput = {
+        create?: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput> | CashMovementCreateWithoutShiftInput[] | CashMovementUncheckedCreateWithoutShiftInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutShiftInput | CashMovementCreateOrConnectWithoutShiftInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutShiftInput | CashMovementUpsertWithWhereUniqueWithoutShiftInput[]
+        createMany?: CashMovementCreateManyShiftInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutShiftInput | CashMovementUpdateWithWhereUniqueWithoutShiftInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutShiftInput | CashMovementUpdateManyWithWhereWithoutShiftInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutShiftNestedInput = {
+        create?: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput> | CashMovementCreateWithoutShiftInput[] | CashMovementUncheckedCreateWithoutShiftInput[]
+        connectOrCreate?: CashMovementCreateOrConnectWithoutShiftInput | CashMovementCreateOrConnectWithoutShiftInput[]
+        upsert?: CashMovementUpsertWithWhereUniqueWithoutShiftInput | CashMovementUpsertWithWhereUniqueWithoutShiftInput[]
+        createMany?: CashMovementCreateManyShiftInputEnvelope
+        set?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        disconnect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        delete?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+        update?: CashMovementUpdateWithWhereUniqueWithoutShiftInput | CashMovementUpdateWithWhereUniqueWithoutShiftInput[]
+        updateMany?: CashMovementUpdateManyWithWhereWithoutShiftInput | CashMovementUpdateManyWithWhereWithoutShiftInput[]
+        deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutCashMovementsInput = {
+        create?: XOR<StoreCreateWithoutCashMovementsInput, StoreUncheckedCreateWithoutCashMovementsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutCashMovementsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type ShiftCreateNestedOneWithoutMovementsInput = {
+        create?: XOR<ShiftCreateWithoutMovementsInput, ShiftUncheckedCreateWithoutMovementsInput>
+        connectOrCreate?: ShiftCreateOrConnectWithoutMovementsInput
+        connect?: ShiftWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutCashMovementsInput = {
+        create?: XOR<UserCreateWithoutCashMovementsInput, UserUncheckedCreateWithoutCashMovementsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutCashMovementsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type EnumCashMovementTypeFieldUpdateOperationsInput = {
+        set?: $Enums.CashMovementType
+    }
+
+    export type EnumCashMovementReferenceTypeFieldUpdateOperationsInput = {
+        set?: $Enums.CashMovementReferenceType
+    }
+
+    export type StoreUpdateOneRequiredWithoutCashMovementsNestedInput = {
+        create?: XOR<StoreCreateWithoutCashMovementsInput, StoreUncheckedCreateWithoutCashMovementsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutCashMovementsInput
+        upsert?: StoreUpsertWithoutCashMovementsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutCashMovementsInput, StoreUpdateWithoutCashMovementsInput>, StoreUncheckedUpdateWithoutCashMovementsInput>
+    }
+
+    export type ShiftUpdateOneRequiredWithoutMovementsNestedInput = {
+        create?: XOR<ShiftCreateWithoutMovementsInput, ShiftUncheckedCreateWithoutMovementsInput>
+        connectOrCreate?: ShiftCreateOrConnectWithoutMovementsInput
+        upsert?: ShiftUpsertWithoutMovementsInput
+        connect?: ShiftWhereUniqueInput
+        update?: XOR<XOR<ShiftUpdateToOneWithWhereWithoutMovementsInput, ShiftUpdateWithoutMovementsInput>, ShiftUncheckedUpdateWithoutMovementsInput>
+    }
+
+    export type UserUpdateOneWithoutCashMovementsNestedInput = {
+        create?: XOR<UserCreateWithoutCashMovementsInput, UserUncheckedCreateWithoutCashMovementsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutCashMovementsInput
+        upsert?: UserUpsertWithoutCashMovementsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCashMovementsInput, UserUpdateWithoutCashMovementsInput>, UserUncheckedUpdateWithoutCashMovementsInput>
+    }
+
     export type StoreCreateNestedOneWithoutAiDraftsInput = {
         create?: XOR<StoreCreateWithoutAiDraftsInput, StoreUncheckedCreateWithoutAiDraftsInput>
         connectOrCreate?: StoreCreateOrConnectWithoutAiDraftsInput
@@ -25318,6 +29156,57 @@ export namespace Prisma {
         _max?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
     }
 
+    export type NestedEnumShiftStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.ShiftStatus | EnumShiftStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.ShiftStatus[]
+        notIn?: $Enums.ShiftStatus[]
+        not?: NestedEnumShiftStatusFilter<$PrismaModel> | $Enums.ShiftStatus
+    }
+
+    export type NestedEnumShiftStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.ShiftStatus | EnumShiftStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.ShiftStatus[]
+        notIn?: $Enums.ShiftStatus[]
+        not?: NestedEnumShiftStatusWithAggregatesFilter<$PrismaModel> | $Enums.ShiftStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumShiftStatusFilter<$PrismaModel>
+        _max?: NestedEnumShiftStatusFilter<$PrismaModel>
+    }
+
+    export type NestedEnumCashMovementTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementType | EnumCashMovementTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementType[]
+        notIn?: $Enums.CashMovementType[]
+        not?: NestedEnumCashMovementTypeFilter<$PrismaModel> | $Enums.CashMovementType
+    }
+
+    export type NestedEnumCashMovementReferenceTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementReferenceType | EnumCashMovementReferenceTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementReferenceType[]
+        notIn?: $Enums.CashMovementReferenceType[]
+        not?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel> | $Enums.CashMovementReferenceType
+    }
+
+    export type NestedEnumCashMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementType | EnumCashMovementTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementType[]
+        notIn?: $Enums.CashMovementType[]
+        not?: NestedEnumCashMovementTypeWithAggregatesFilter<$PrismaModel> | $Enums.CashMovementType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCashMovementTypeFilter<$PrismaModel>
+        _max?: NestedEnumCashMovementTypeFilter<$PrismaModel>
+    }
+
+    export type NestedEnumCashMovementReferenceTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CashMovementReferenceType | EnumCashMovementReferenceTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CashMovementReferenceType[]
+        notIn?: $Enums.CashMovementReferenceType[]
+        not?: NestedEnumCashMovementReferenceTypeWithAggregatesFilter<$PrismaModel> | $Enums.CashMovementReferenceType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
+        _max?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
+    }
+
     export type NestedEnumAiDraftStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.AiDraftStatus | EnumAiDraftStatusFieldRefInput<$PrismaModel>
         in?: $Enums.AiDraftStatus[]
@@ -25642,6 +29531,86 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type ShiftCreateWithoutStoreInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        user: UserCreateNestedOneWithoutShiftsInput
+        openedBy?: UserCreateNestedOneWithoutOpenedShiftsInput
+        closedBy?: UserCreateNestedOneWithoutClosedShiftsInput
+        movements?: CashMovementCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUncheckedCreateWithoutStoreInput = {
+        id?: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        movements?: CashMovementUncheckedCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftCreateOrConnectWithoutStoreInput = {
+        where: ShiftWhereUniqueInput
+        create: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput>
+    }
+
+    export type ShiftCreateManyStoreInputEnvelope = {
+        data: ShiftCreateManyStoreInput | ShiftCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type CashMovementCreateWithoutStoreInput = {
+        id?: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdAt?: Date | string
+        shift: ShiftCreateNestedOneWithoutMovementsInput
+        createdBy?: UserCreateNestedOneWithoutCashMovementsInput
+    }
+
+    export type CashMovementUncheckedCreateWithoutStoreInput = {
+        id?: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementCreateOrConnectWithoutStoreInput = {
+        where: CashMovementWhereUniqueInput
+        create: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput>
+    }
+
+    export type CashMovementCreateManyStoreInputEnvelope = {
+        data: CashMovementCreateManyStoreInput | CashMovementCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
     export type AiDraftCreateWithoutStoreInput = {
         id?: string
         prompt: string
@@ -25916,6 +29885,75 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"OrderAuditLog"> | Date | string
     }
 
+    export type ShiftUpsertWithWhereUniqueWithoutStoreInput = {
+        where: ShiftWhereUniqueInput
+        update: XOR<ShiftUpdateWithoutStoreInput, ShiftUncheckedUpdateWithoutStoreInput>
+        create: XOR<ShiftCreateWithoutStoreInput, ShiftUncheckedCreateWithoutStoreInput>
+    }
+
+    export type ShiftUpdateWithWhereUniqueWithoutStoreInput = {
+        where: ShiftWhereUniqueInput
+        data: XOR<ShiftUpdateWithoutStoreInput, ShiftUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type ShiftUpdateManyWithWhereWithoutStoreInput = {
+        where: ShiftScalarWhereInput
+        data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type ShiftScalarWhereInput = {
+        AND?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+        OR?: ShiftScalarWhereInput[]
+        NOT?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+        id?: StringFilter<"Shift"> | string
+        storeId?: StringFilter<"Shift"> | string
+        userId?: StringFilter<"Shift"> | string
+        status?: EnumShiftStatusFilter<"Shift"> | $Enums.ShiftStatus
+        openedAt?: DateTimeFilter<"Shift"> | Date | string
+        closedAt?: DateTimeNullableFilter<"Shift"> | Date | string | null
+        openingCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFilter<"Shift"> | Decimal | DecimalJsLike | number | string
+        actualCash?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        variance?: DecimalNullableFilter<"Shift"> | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: StringNullableFilter<"Shift"> | string | null
+        closedByUserId?: StringNullableFilter<"Shift"> | string | null
+        notes?: StringNullableFilter<"Shift"> | string | null
+        createdAt?: DateTimeFilter<"Shift"> | Date | string
+        updatedAt?: DateTimeFilter<"Shift"> | Date | string
+    }
+
+    export type CashMovementUpsertWithWhereUniqueWithoutStoreInput = {
+        where: CashMovementWhereUniqueInput
+        update: XOR<CashMovementUpdateWithoutStoreInput, CashMovementUncheckedUpdateWithoutStoreInput>
+        create: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput>
+    }
+
+    export type CashMovementUpdateWithWhereUniqueWithoutStoreInput = {
+        where: CashMovementWhereUniqueInput
+        data: XOR<CashMovementUpdateWithoutStoreInput, CashMovementUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type CashMovementUpdateManyWithWhereWithoutStoreInput = {
+        where: CashMovementScalarWhereInput
+        data: XOR<CashMovementUpdateManyMutationInput, CashMovementUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type CashMovementScalarWhereInput = {
+        AND?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+        OR?: CashMovementScalarWhereInput[]
+        NOT?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
+        id?: StringFilter<"CashMovement"> | string
+        storeId?: StringFilter<"CashMovement"> | string
+        shiftId?: StringFilter<"CashMovement"> | string
+        type?: EnumCashMovementTypeFilter<"CashMovement"> | $Enums.CashMovementType
+        amount?: DecimalFilter<"CashMovement"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"CashMovement"> | string
+        referenceType?: EnumCashMovementReferenceTypeFilter<"CashMovement"> | $Enums.CashMovementReferenceType
+        referenceId?: StringNullableFilter<"CashMovement"> | string | null
+        createdByUserId?: StringNullableFilter<"CashMovement"> | string | null
+        createdAt?: DateTimeFilter<"CashMovement"> | Date | string
+    }
+
     export type AiDraftUpsertWithWhereUniqueWithoutStoreInput = {
         where: AiDraftWhereUniqueInput
         update: XOR<AiDraftUpdateWithoutStoreInput, AiDraftUncheckedUpdateWithoutStoreInput>
@@ -26162,6 +30200,178 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type ShiftCreateWithoutUserInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutShiftsInput
+        openedBy?: UserCreateNestedOneWithoutOpenedShiftsInput
+        closedBy?: UserCreateNestedOneWithoutClosedShiftsInput
+        movements?: CashMovementCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUncheckedCreateWithoutUserInput = {
+        id?: string
+        storeId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        movements?: CashMovementUncheckedCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftCreateOrConnectWithoutUserInput = {
+        where: ShiftWhereUniqueInput
+        create: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput>
+    }
+
+    export type ShiftCreateManyUserInputEnvelope = {
+        data: ShiftCreateManyUserInput | ShiftCreateManyUserInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type ShiftCreateWithoutOpenedByInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutShiftsInput
+        user: UserCreateNestedOneWithoutShiftsInput
+        closedBy?: UserCreateNestedOneWithoutClosedShiftsInput
+        movements?: CashMovementCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUncheckedCreateWithoutOpenedByInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        movements?: CashMovementUncheckedCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftCreateOrConnectWithoutOpenedByInput = {
+        where: ShiftWhereUniqueInput
+        create: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput>
+    }
+
+    export type ShiftCreateManyOpenedByInputEnvelope = {
+        data: ShiftCreateManyOpenedByInput | ShiftCreateManyOpenedByInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type ShiftCreateWithoutClosedByInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutShiftsInput
+        user: UserCreateNestedOneWithoutShiftsInput
+        openedBy?: UserCreateNestedOneWithoutOpenedShiftsInput
+        movements?: CashMovementCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftUncheckedCreateWithoutClosedByInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        movements?: CashMovementUncheckedCreateNestedManyWithoutShiftInput
+    }
+
+    export type ShiftCreateOrConnectWithoutClosedByInput = {
+        where: ShiftWhereUniqueInput
+        create: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput>
+    }
+
+    export type ShiftCreateManyClosedByInputEnvelope = {
+        data: ShiftCreateManyClosedByInput | ShiftCreateManyClosedByInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type CashMovementCreateWithoutCreatedByInput = {
+        id?: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutCashMovementsInput
+        shift: ShiftCreateNestedOneWithoutMovementsInput
+    }
+
+    export type CashMovementUncheckedCreateWithoutCreatedByInput = {
+        id?: string
+        storeId: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementCreateOrConnectWithoutCreatedByInput = {
+        where: CashMovementWhereUniqueInput
+        create: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput>
+    }
+
+    export type CashMovementCreateManyCreatedByInputEnvelope = {
+        data: CashMovementCreateManyCreatedByInput | CashMovementCreateManyCreatedByInput[]
+        skipDuplicates?: boolean
+    }
+
     export type StoreUserUpsertWithWhereUniqueWithoutUserInput = {
         where: StoreUserWhereUniqueInput
         update: XOR<StoreUserUpdateWithoutUserInput, StoreUserUncheckedUpdateWithoutUserInput>
@@ -26242,6 +30452,70 @@ export namespace Prisma {
         data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutApprovedByInput>
     }
 
+    export type ShiftUpsertWithWhereUniqueWithoutUserInput = {
+        where: ShiftWhereUniqueInput
+        update: XOR<ShiftUpdateWithoutUserInput, ShiftUncheckedUpdateWithoutUserInput>
+        create: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput>
+    }
+
+    export type ShiftUpdateWithWhereUniqueWithoutUserInput = {
+        where: ShiftWhereUniqueInput
+        data: XOR<ShiftUpdateWithoutUserInput, ShiftUncheckedUpdateWithoutUserInput>
+    }
+
+    export type ShiftUpdateManyWithWhereWithoutUserInput = {
+        where: ShiftScalarWhereInput
+        data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutUserInput>
+    }
+
+    export type ShiftUpsertWithWhereUniqueWithoutOpenedByInput = {
+        where: ShiftWhereUniqueInput
+        update: XOR<ShiftUpdateWithoutOpenedByInput, ShiftUncheckedUpdateWithoutOpenedByInput>
+        create: XOR<ShiftCreateWithoutOpenedByInput, ShiftUncheckedCreateWithoutOpenedByInput>
+    }
+
+    export type ShiftUpdateWithWhereUniqueWithoutOpenedByInput = {
+        where: ShiftWhereUniqueInput
+        data: XOR<ShiftUpdateWithoutOpenedByInput, ShiftUncheckedUpdateWithoutOpenedByInput>
+    }
+
+    export type ShiftUpdateManyWithWhereWithoutOpenedByInput = {
+        where: ShiftScalarWhereInput
+        data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutOpenedByInput>
+    }
+
+    export type ShiftUpsertWithWhereUniqueWithoutClosedByInput = {
+        where: ShiftWhereUniqueInput
+        update: XOR<ShiftUpdateWithoutClosedByInput, ShiftUncheckedUpdateWithoutClosedByInput>
+        create: XOR<ShiftCreateWithoutClosedByInput, ShiftUncheckedCreateWithoutClosedByInput>
+    }
+
+    export type ShiftUpdateWithWhereUniqueWithoutClosedByInput = {
+        where: ShiftWhereUniqueInput
+        data: XOR<ShiftUpdateWithoutClosedByInput, ShiftUncheckedUpdateWithoutClosedByInput>
+    }
+
+    export type ShiftUpdateManyWithWhereWithoutClosedByInput = {
+        where: ShiftScalarWhereInput
+        data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutClosedByInput>
+    }
+
+    export type CashMovementUpsertWithWhereUniqueWithoutCreatedByInput = {
+        where: CashMovementWhereUniqueInput
+        update: XOR<CashMovementUpdateWithoutCreatedByInput, CashMovementUncheckedUpdateWithoutCreatedByInput>
+        create: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput>
+    }
+
+    export type CashMovementUpdateWithWhereUniqueWithoutCreatedByInput = {
+        where: CashMovementWhereUniqueInput
+        data: XOR<CashMovementUpdateWithoutCreatedByInput, CashMovementUncheckedUpdateWithoutCreatedByInput>
+    }
+
+    export type CashMovementUpdateManyWithWhereWithoutCreatedByInput = {
+        where: CashMovementScalarWhereInput
+        data: XOR<CashMovementUpdateManyMutationInput, CashMovementUncheckedUpdateManyWithoutCreatedByInput>
+    }
+
     export type StoreCreateWithoutUsersInput = {
         id?: string
         name: string
@@ -26256,6 +30530,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -26274,6 +30550,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -26295,6 +30573,10 @@ export namespace Prisma {
         approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutStoresInput = {
@@ -26309,6 +30591,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutStoresInput = {
@@ -26341,6 +30627,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -26359,6 +30647,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -26386,6 +30676,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutStoresInput = {
@@ -26400,6 +30694,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type StoreCreateWithoutCategoriesInput = {
@@ -26416,6 +30714,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -26434,6 +30734,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -26510,6 +30812,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -26528,6 +30832,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -26562,6 +30868,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -26580,6 +30888,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -26713,6 +31023,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -26731,6 +31043,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -27057,6 +31371,8 @@ export namespace Prisma {
         products?: ProductCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -27075,6 +31391,8 @@ export namespace Prisma {
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -27249,6 +31567,8 @@ export namespace Prisma {
         products?: ProductUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -27267,6 +31587,8 @@ export namespace Prisma {
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -27744,6 +32066,8 @@ export namespace Prisma {
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -27762,6 +32086,8 @@ export namespace Prisma {
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -27842,6 +32168,10 @@ export namespace Prisma {
         approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutOperatedRefundsInput = {
@@ -27856,6 +32186,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutOperatedRefundsInput = {
@@ -27875,6 +32209,10 @@ export namespace Prisma {
         operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
         operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutApprovedRefundsInput = {
@@ -27889,6 +32227,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutApprovedRefundsInput = {
@@ -27947,6 +32289,8 @@ export namespace Prisma {
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -27965,6 +32309,8 @@ export namespace Prisma {
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -28057,6 +32403,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutOperatedRefundsInput = {
@@ -28071,6 +32421,10 @@ export namespace Prisma {
         approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutApprovedRefundsInput = {
@@ -28096,6 +32450,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutApprovedRefundsInput = {
@@ -28110,6 +32468,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type RefundItemUpsertWithWhereUniqueWithoutRefundInput = {
@@ -28286,6 +32648,8 @@ export namespace Prisma {
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -28304,6 +32668,8 @@ export namespace Prisma {
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -28384,6 +32750,10 @@ export namespace Prisma {
         operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
         approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutOperatedOrderAuditLogsInput = {
@@ -28398,6 +32768,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
         approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutOperatedOrderAuditLogsInput = {
@@ -28417,6 +32791,10 @@ export namespace Prisma {
         operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
         approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutApprovedOrderAuditLogsInput = {
@@ -28431,6 +32809,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
         approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutApprovedOrderAuditLogsInput = {
@@ -28463,6 +32845,8 @@ export namespace Prisma {
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -28481,6 +32865,8 @@ export namespace Prisma {
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -28573,6 +32959,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
         approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput = {
@@ -28587,6 +32977,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
         approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutApprovedOrderAuditLogsInput = {
@@ -28612,6 +33006,10 @@ export namespace Prisma {
         operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
         approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput = {
@@ -28626,6 +33024,692 @@ export namespace Prisma {
         operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
         approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
         operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type StoreCreateWithoutShiftsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutShiftsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutShiftsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutShiftsInput, StoreUncheckedCreateWithoutShiftsInput>
+    }
+
+    export type UserCreateWithoutShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserUncheckedCreateWithoutShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserCreateOrConnectWithoutShiftsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+    }
+
+    export type UserCreateWithoutOpenedShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserUncheckedCreateWithoutOpenedShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserCreateOrConnectWithoutOpenedShiftsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutOpenedShiftsInput, UserUncheckedCreateWithoutOpenedShiftsInput>
+    }
+
+    export type UserCreateWithoutClosedShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserUncheckedCreateWithoutClosedShiftsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserCreateOrConnectWithoutClosedShiftsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutClosedShiftsInput, UserUncheckedCreateWithoutClosedShiftsInput>
+    }
+
+    export type CashMovementCreateWithoutShiftInput = {
+        id?: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutCashMovementsInput
+        createdBy?: UserCreateNestedOneWithoutCashMovementsInput
+    }
+
+    export type CashMovementUncheckedCreateWithoutShiftInput = {
+        id?: string
+        storeId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementCreateOrConnectWithoutShiftInput = {
+        where: CashMovementWhereUniqueInput
+        create: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput>
+    }
+
+    export type CashMovementCreateManyShiftInputEnvelope = {
+        data: CashMovementCreateManyShiftInput | CashMovementCreateManyShiftInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutShiftsInput = {
+        update: XOR<StoreUpdateWithoutShiftsInput, StoreUncheckedUpdateWithoutShiftsInput>
+        create: XOR<StoreCreateWithoutShiftsInput, StoreUncheckedCreateWithoutShiftsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutShiftsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutShiftsInput, StoreUncheckedUpdateWithoutShiftsInput>
+    }
+
+    export type StoreUpdateWithoutShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type UserUpsertWithoutShiftsInput = {
+        update: XOR<UserUpdateWithoutShiftsInput, UserUncheckedUpdateWithoutShiftsInput>
+        create: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutShiftsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutShiftsInput, UserUncheckedUpdateWithoutShiftsInput>
+    }
+
+    export type UserUpdateWithoutShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUpsertWithoutOpenedShiftsInput = {
+        update: XOR<UserUpdateWithoutOpenedShiftsInput, UserUncheckedUpdateWithoutOpenedShiftsInput>
+        create: XOR<UserCreateWithoutOpenedShiftsInput, UserUncheckedCreateWithoutOpenedShiftsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutOpenedShiftsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutOpenedShiftsInput, UserUncheckedUpdateWithoutOpenedShiftsInput>
+    }
+
+    export type UserUpdateWithoutOpenedShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutOpenedShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUpsertWithoutClosedShiftsInput = {
+        update: XOR<UserUpdateWithoutClosedShiftsInput, UserUncheckedUpdateWithoutClosedShiftsInput>
+        create: XOR<UserCreateWithoutClosedShiftsInput, UserUncheckedCreateWithoutClosedShiftsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutClosedShiftsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutClosedShiftsInput, UserUncheckedUpdateWithoutClosedShiftsInput>
+    }
+
+    export type UserUpdateWithoutClosedShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutClosedShiftsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type CashMovementUpsertWithWhereUniqueWithoutShiftInput = {
+        where: CashMovementWhereUniqueInput
+        update: XOR<CashMovementUpdateWithoutShiftInput, CashMovementUncheckedUpdateWithoutShiftInput>
+        create: XOR<CashMovementCreateWithoutShiftInput, CashMovementUncheckedCreateWithoutShiftInput>
+    }
+
+    export type CashMovementUpdateWithWhereUniqueWithoutShiftInput = {
+        where: CashMovementWhereUniqueInput
+        data: XOR<CashMovementUpdateWithoutShiftInput, CashMovementUncheckedUpdateWithoutShiftInput>
+    }
+
+    export type CashMovementUpdateManyWithWhereWithoutShiftInput = {
+        where: CashMovementScalarWhereInput
+        data: XOR<CashMovementUpdateManyMutationInput, CashMovementUncheckedUpdateManyWithoutShiftInput>
+    }
+
+    export type StoreCreateWithoutCashMovementsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutCashMovementsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutCashMovementsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutCashMovementsInput, StoreUncheckedCreateWithoutCashMovementsInput>
+    }
+
+    export type ShiftCreateWithoutMovementsInput = {
+        id?: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutShiftsInput
+        user: UserCreateNestedOneWithoutShiftsInput
+        openedBy?: UserCreateNestedOneWithoutOpenedShiftsInput
+        closedBy?: UserCreateNestedOneWithoutClosedShiftsInput
+    }
+
+    export type ShiftUncheckedCreateWithoutMovementsInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type ShiftCreateOrConnectWithoutMovementsInput = {
+        where: ShiftWhereUniqueInput
+        create: XOR<ShiftCreateWithoutMovementsInput, ShiftUncheckedCreateWithoutMovementsInput>
+    }
+
+    export type UserCreateWithoutCashMovementsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+    }
+
+    export type UserUncheckedCreateWithoutCashMovementsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+    }
+
+    export type UserCreateOrConnectWithoutCashMovementsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutCashMovementsInput, UserUncheckedCreateWithoutCashMovementsInput>
+    }
+
+    export type StoreUpsertWithoutCashMovementsInput = {
+        update: XOR<StoreUpdateWithoutCashMovementsInput, StoreUncheckedUpdateWithoutCashMovementsInput>
+        create: XOR<StoreCreateWithoutCashMovementsInput, StoreUncheckedCreateWithoutCashMovementsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutCashMovementsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutCashMovementsInput, StoreUncheckedUpdateWithoutCashMovementsInput>
+    }
+
+    export type StoreUpdateWithoutCashMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutCashMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type ShiftUpsertWithoutMovementsInput = {
+        update: XOR<ShiftUpdateWithoutMovementsInput, ShiftUncheckedUpdateWithoutMovementsInput>
+        create: XOR<ShiftCreateWithoutMovementsInput, ShiftUncheckedCreateWithoutMovementsInput>
+        where?: ShiftWhereInput
+    }
+
+    export type ShiftUpdateToOneWithWhereWithoutMovementsInput = {
+        where?: ShiftWhereInput
+        data: XOR<ShiftUpdateWithoutMovementsInput, ShiftUncheckedUpdateWithoutMovementsInput>
+    }
+
+    export type ShiftUpdateWithoutMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutShiftsNestedInput
+        user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedShiftsNestedInput
+        closedBy?: UserUpdateOneWithoutClosedShiftsNestedInput
+    }
+
+    export type ShiftUncheckedUpdateWithoutMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type UserUpsertWithoutCashMovementsInput = {
+        update: XOR<UserUpdateWithoutCashMovementsInput, UserUncheckedUpdateWithoutCashMovementsInput>
+        create: XOR<UserCreateWithoutCashMovementsInput, UserUncheckedCreateWithoutCashMovementsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutCashMovementsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutCashMovementsInput, UserUncheckedUpdateWithoutCashMovementsInput>
+    }
+
+    export type UserUpdateWithoutCashMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutCashMovementsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
     }
 
     export type StoreCreateWithoutAiDraftsInput = {
@@ -28643,6 +33727,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
 
@@ -28661,6 +33747,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -28695,6 +33783,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
 
@@ -28713,6 +33803,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -28731,6 +33823,8 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
     }
 
@@ -28749,6 +33843,8 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -28783,6 +33879,8 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
     }
 
@@ -28801,6 +33899,8 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -28883,6 +33983,35 @@ export namespace Prisma {
         reason: string
         operatorId?: string | null
         approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type ShiftCreateManyStoreInput = {
+        id?: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type CashMovementCreateManyStoreInput = {
+        id?: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
         createdAt?: Date | string
     }
 
@@ -29174,6 +34303,95 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type ShiftUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedShiftsNestedInput
+        closedBy?: UserUpdateOneWithoutClosedShiftsNestedInput
+        movements?: CashMovementUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        movements?: CashMovementUncheckedUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        shift?: ShiftUpdateOneRequiredWithoutMovementsNestedInput
+        createdBy?: UserUpdateOneWithoutCashMovementsNestedInput
+    }
+
+    export type CashMovementUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type AiDraftUpdateWithoutStoreInput = {
         id?: StringFieldUpdateOperationsInput | string
         prompt?: StringFieldUpdateOperationsInput | string
@@ -29312,6 +34530,69 @@ export namespace Prisma {
         amount?: Decimal | DecimalJsLike | number | string | null
         reason: string
         operatorId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type ShiftCreateManyUserInput = {
+        id?: string
+        storeId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type ShiftCreateManyOpenedByInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type ShiftCreateManyClosedByInput = {
+        id?: string
+        storeId: string
+        userId: string
+        status?: $Enums.ShiftStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openingCash?: Decimal | DecimalJsLike | number | string
+        expectedCash?: Decimal | DecimalJsLike | number | string
+        actualCash?: Decimal | DecimalJsLike | number | string | null
+        variance?: Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type CashMovementCreateManyCreatedByInput = {
+        id?: string
+        storeId: string
+        shiftId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
         createdAt?: Date | string
     }
 
@@ -29505,6 +34786,201 @@ export namespace Prisma {
         amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         reason?: StringFieldUpdateOperationsInput | string
         operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type ShiftUpdateWithoutUserInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutShiftsNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedShiftsNestedInput
+        closedBy?: UserUpdateOneWithoutClosedShiftsNestedInput
+        movements?: CashMovementUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateWithoutUserInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        movements?: CashMovementUncheckedUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutUserInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type ShiftUpdateWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutShiftsNestedInput
+        user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+        closedBy?: UserUpdateOneWithoutClosedShiftsNestedInput
+        movements?: CashMovementUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        movements?: CashMovementUncheckedUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type ShiftUpdateWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutShiftsNestedInput
+        user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedShiftsNestedInput
+        movements?: CashMovementUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        movements?: CashMovementUncheckedUpdateManyWithoutShiftNestedInput
+    }
+
+    export type ShiftUncheckedUpdateManyWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        userId?: StringFieldUpdateOperationsInput | string
+        status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openingCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        expectedCash?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUpdateWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutCashMovementsNestedInput
+        shift?: ShiftUpdateOneRequiredWithoutMovementsNestedInput
+    }
+
+    export type CashMovementUncheckedUpdateWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        shiftId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
@@ -29969,6 +35445,54 @@ export namespace Prisma {
         orderItemId?: StringFieldUpdateOperationsInput | string
         quantity?: IntFieldUpdateOperationsInput | number
         amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementCreateManyShiftInput = {
+        id?: string
+        storeId: string
+        type: $Enums.CashMovementType
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        referenceType?: $Enums.CashMovementReferenceType
+        referenceId?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type CashMovementUpdateWithoutShiftInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutCashMovementsNestedInput
+        createdBy?: UserUpdateOneWithoutCashMovementsNestedInput
+    }
+
+    export type CashMovementUncheckedUpdateWithoutShiftInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CashMovementUncheckedUpdateManyWithoutShiftInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        type?: EnumCashMovementTypeFieldUpdateOperationsInput | $Enums.CashMovementType
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        referenceType?: EnumCashMovementReferenceTypeFieldUpdateOperationsInput | $Enums.CashMovementReferenceType
+        referenceId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
