@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Printer } from 'lucide-react-native';
+import { Ban, Printer, RotateCcw } from 'lucide-react-native';
 
 import { AppScreen } from '@/components/AppScreen';
 import { EmptyState } from '@/components/EmptyState';
@@ -8,7 +8,7 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type CheckoutOrder, useCheckoutOrders, useMarkOrderPrinted } from '@/services/businessApi';
+import { type CheckoutOrder, useCheckoutOrders, useMarkOrderPrinted, useRefundOrder, useVoidOrder } from '@/services/businessApi';
 import { tokens } from '@/theme';
 import { printOrderReceipt } from '../receipts/receiptPrinter.service';
 
@@ -16,8 +16,11 @@ export function OrdersScreen() {
   const { t } = useI18n();
   const money = useCurrency();
   const [printingOrderId, setPrintingOrderId] = useState<string | null>(null);
+  const [actionOrderId, setActionOrderId] = useState<string | null>(null);
   const ordersQuery = useCheckoutOrders();
   const markPrinted = useMarkOrderPrinted();
+  const refundOrder = useRefundOrder();
+  const voidOrder = useVoidOrder();
   const orders = ordersQuery.data ?? [];
 
   const reprint = async (order: CheckoutOrder) => {
@@ -27,6 +30,32 @@ export function OrdersScreen() {
       await markPrinted.mutateAsync(order.id);
     } finally {
       setPrintingOrderId(null);
+    }
+  };
+
+  const refund = async (order: CheckoutOrder) => {
+    setActionOrderId(order.id);
+    try {
+      await refundOrder.mutateAsync({
+        orderId: order.id,
+        idempotencyKey: `pos-full-refund-${order.id}-${Date.now()}`,
+        reason: t('orders.refund.defaultReason'),
+        method: order.paymentMethod ?? 'MANUAL',
+      });
+    } finally {
+      setActionOrderId(null);
+    }
+  };
+
+  const voidPaidOrder = async (order: CheckoutOrder) => {
+    setActionOrderId(order.id);
+    try {
+      await voidOrder.mutateAsync({
+        orderId: order.id,
+        reason: t('orders.void.defaultReason'),
+      });
+    } finally {
+      setActionOrderId(null);
     }
   };
 
@@ -54,7 +83,17 @@ export function OrdersScreen() {
       ) : (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ gap: tokens.spacing.md }}>
           {orders.map((order) => (
-            <OrderCard key={order.id} order={order} money={money} t={t} onReprint={reprint} isPrinting={printingOrderId === order.id} />
+            <OrderCard
+              key={order.id}
+              order={order}
+              money={money}
+              t={t}
+              onReprint={reprint}
+              onRefund={refund}
+              onVoid={voidPaidOrder}
+              isPrinting={printingOrderId === order.id}
+              isActing={actionOrderId === order.id}
+            />
           ))}
         </ScrollView>
       )}
@@ -67,10 +106,13 @@ type OrderCardProps = {
   money: (value: number) => string;
   t: (key: string, params?: Record<string, string | number>) => string;
   onReprint: (order: CheckoutOrder) => void;
+  onRefund: (order: CheckoutOrder) => void;
+  onVoid: (order: CheckoutOrder) => void;
   isPrinting: boolean;
+  isActing: boolean;
 };
 
-function OrderCard({ order, money, t, onReprint, isPrinting }: OrderCardProps) {
+function OrderCard({ order, money, t, onReprint, onRefund, onVoid, isPrinting, isActing }: OrderCardProps) {
   const itemsLabel = order.items.length === 1 ? t('orders.list.item', { count: order.items.length }) : t('orders.list.items', { count: order.items.length });
 
   return (
@@ -99,15 +141,40 @@ function OrderCard({ order, money, t, onReprint, isPrinting }: OrderCardProps) {
         {/* Right: Amount and print button */}
         <View style={styles.rightColumn}>
           <Text style={[tokens.typography.numeric, { color: tokens.colors.ink }]}>{money(order.total)}</Text>
+          {order.refundedTotal ? (
+            <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>
+              {t('orders.list.refunded', { amount: money(order.refundedTotal) })}
+            </Text>
+          ) : null}
           <Pressable
             style={styles.printButton}
-            disabled={order.status !== 'PAID' || isPrinting}
+            disabled={!canPrint(order.status) || isPrinting}
             onPress={() => onReprint(order)}
             android_ripple={{ color: tokens.colors.line }}
           >
             <Printer color={tokens.colors.ink} size={16} />
             <Text style={[tokens.typography.label, { color: tokens.colors.ink }]}>{getPrintButtonLabel(order.printStatus, isPrinting, t)}</Text>
           </Pressable>
+          <View style={styles.actionRow}>
+            <Pressable
+              style={[styles.iconButton, !canRefund(order.status) || isActing ? styles.disabledButton : null]}
+              disabled={!canRefund(order.status) || isActing}
+              onPress={() => onRefund(order)}
+              android_ripple={{ color: tokens.colors.line }}
+            >
+              <RotateCcw color={tokens.colors.ink} size={16} />
+              <Text style={[tokens.typography.label, { color: tokens.colors.ink }]}>{t('orders.actions.refund')}</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.iconButton, !canVoid(order.status, order.refundedTotal ?? 0) || isActing ? styles.disabledButton : null]}
+              disabled={!canVoid(order.status, order.refundedTotal ?? 0) || isActing}
+              onPress={() => onVoid(order)}
+              android_ripple={{ color: tokens.colors.line }}
+            >
+              <Ban color={tokens.colors.ink} size={16} />
+              <Text style={[tokens.typography.label, { color: tokens.colors.ink }]}>{t('orders.actions.void')}</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Surface>
@@ -121,6 +188,12 @@ function getStatusLabel(status: CheckoutOrder['status'], t: (key: string) => str
       return t('orders.status.paid');
     case 'CANCELLED':
       return t('orders.status.cancelled');
+    case 'VOIDED':
+      return t('orders.status.voided');
+    case 'PARTIALLY_REFUNDED':
+      return t('orders.status.partiallyRefunded');
+    case 'REFUNDED':
+      return t('orders.status.refunded');
     default:
       return status;
   }
@@ -132,9 +205,27 @@ function getStatusTone(status: CheckoutOrder['status']): 'success' | 'danger' | 
       return 'success';
     case 'CANCELLED':
       return 'danger';
+    case 'VOIDED':
+      return 'danger';
+    case 'PARTIALLY_REFUNDED':
+      return 'neutral';
+    case 'REFUNDED':
+      return 'neutral';
     default:
       return 'neutral';
   }
+}
+
+function canPrint(status: CheckoutOrder['status']) {
+  return ['PAID', 'PARTIALLY_REFUNDED', 'REFUNDED'].includes(status);
+}
+
+function canRefund(status: CheckoutOrder['status']) {
+  return ['PAID', 'PARTIALLY_REFUNDED'].includes(status);
+}
+
+function canVoid(status: CheckoutOrder['status'], refundedTotal: number) {
+  return ['OPEN', 'PAID'].includes(status) && refundedTotal === 0;
 }
 
 function getPrintStatusLabel(printStatus: CheckoutOrder['printStatus'], t: (key: string) => string): string {
@@ -229,5 +320,22 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.colors.background,
     paddingHorizontal: tokens.spacing.lg,
     paddingVertical: tokens.spacing.md,
+  },
+  actionRow: {
+    flexDirection: 'row',
+    gap: tokens.spacing.sm,
+  },
+  iconButton: {
+    minHeight: tokens.spacing.touchTargetMin,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: tokens.spacing.sm,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.background,
+    paddingHorizontal: tokens.spacing.md,
+    paddingVertical: tokens.spacing.sm,
+  },
+  disabledButton: {
+    opacity: 0.5,
   },
 });

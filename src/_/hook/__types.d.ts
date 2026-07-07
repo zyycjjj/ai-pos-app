@@ -65,6 +65,21 @@ export type OrderPayment = $Result.DefaultSelection<Prisma.$OrderPaymentPayload>
  */
 export type OrderItem = $Result.DefaultSelection<Prisma.$OrderItemPayload>
 /**
+ * Model Refund
+ * 
+ */
+export type Refund = $Result.DefaultSelection<Prisma.$RefundPayload>
+/**
+ * Model RefundItem
+ * 
+ */
+export type RefundItem = $Result.DefaultSelection<Prisma.$RefundItemPayload>
+/**
+ * Model OrderAuditLog
+ * 
+ */
+export type OrderAuditLog = $Result.DefaultSelection<Prisma.$OrderAuditLogPayload>
+/**
  * Model AiDraft
  * 
  */
@@ -82,7 +97,10 @@ export namespace $Enums {
     export const OrderStatus: {
         OPEN: 'OPEN',
         PAID: 'PAID',
-        CANCELLED: 'CANCELLED'
+        CANCELLED: 'CANCELLED',
+        VOIDED: 'VOIDED',
+        PARTIALLY_REFUNDED: 'PARTIALLY_REFUNDED',
+        REFUNDED: 'REFUNDED'
     };
 
     export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
@@ -105,6 +123,22 @@ export namespace $Enums {
     };
 
     export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+    export const RefundStatus: {
+        COMPLETED: 'COMPLETED'
+    };
+
+    export type RefundStatus = (typeof RefundStatus)[keyof typeof RefundStatus]
+
+
+    export const OrderAuditAction: {
+        CANCELLED: 'CANCELLED',
+        VOIDED: 'VOIDED',
+        REFUNDED: 'REFUNDED'
+    };
+
+    export type OrderAuditAction = (typeof OrderAuditAction)[keyof typeof OrderAuditAction]
 
 
     export const AiDraftStatus: {
@@ -173,6 +207,14 @@ export const PrintStatus: typeof $Enums.PrintStatus
 export type PaymentMethod = $Enums.PaymentMethod
 
 export const PaymentMethod: typeof $Enums.PaymentMethod
+
+export type RefundStatus = $Enums.RefundStatus
+
+export const RefundStatus: typeof $Enums.RefundStatus
+
+export type OrderAuditAction = $Enums.OrderAuditAction
+
+export const OrderAuditAction: typeof $Enums.OrderAuditAction
 
 export type AiDraftStatus = $Enums.AiDraftStatus
 
@@ -422,6 +464,36 @@ export class PrismaClient<
       * ```
       */
     get orderItem(): Prisma.OrderItemDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.refund`: Exposes CRUD operations for the **Refund** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Refunds
+      * const refunds = await prisma.refund.findMany()
+      * ```
+      */
+    get refund(): Prisma.RefundDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.refundItem`: Exposes CRUD operations for the **RefundItem** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more RefundItems
+      * const refundItems = await prisma.refundItem.findMany()
+      * ```
+      */
+    get refundItem(): Prisma.RefundItemDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.orderAuditLog`: Exposes CRUD operations for the **OrderAuditLog** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more OrderAuditLogs
+      * const orderAuditLogs = await prisma.orderAuditLog.findMany()
+      * ```
+      */
+    get orderAuditLog(): Prisma.OrderAuditLogDelegate<ExtArgs, ClientOptions>;
 
     /**
      * `prisma.aiDraft`: Exposes CRUD operations for the **AiDraft** model.
@@ -892,6 +964,9 @@ export namespace Prisma {
         Order: 'Order',
         OrderPayment: 'OrderPayment',
         OrderItem: 'OrderItem',
+        Refund: 'Refund',
+        RefundItem: 'RefundItem',
+        OrderAuditLog: 'OrderAuditLog',
         AiDraft: 'AiDraft',
         Campaign: 'Campaign'
     };
@@ -912,7 +987,7 @@ export namespace Prisma {
             omit: GlobalOmitOptions
         }
         meta: {
-            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "aiDraft" | "campaign"
+            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "aiDraft" | "campaign"
             txIsolationLevel: Prisma.TransactionIsolationLevel
         }
         model: {
@@ -1576,6 +1651,204 @@ export namespace Prisma {
                     }
                 }
             }
+            Refund: {
+                payload: Prisma.$RefundPayload<ExtArgs>
+                fields: Prisma.RefundFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.RefundFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.RefundFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.RefundFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.RefundFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    findMany: {
+                        args: Prisma.RefundFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>[]
+                    }
+                    create: {
+                        args: Prisma.RefundCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    createMany: {
+                        args: Prisma.RefundCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.RefundDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    update: {
+                        args: Prisma.RefundUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.RefundDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.RefundUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.RefundUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.RefundAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateRefund>
+                    }
+                    groupBy: {
+                        args: Prisma.RefundGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<RefundGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.RefundCountArgs<ExtArgs>
+                        result: $Utils.Optional<RefundCountAggregateOutputType> | number
+                    }
+                }
+            }
+            RefundItem: {
+                payload: Prisma.$RefundItemPayload<ExtArgs>
+                fields: Prisma.RefundItemFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.RefundItemFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.RefundItemFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.RefundItemFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.RefundItemFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    findMany: {
+                        args: Prisma.RefundItemFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>[]
+                    }
+                    create: {
+                        args: Prisma.RefundItemCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    createMany: {
+                        args: Prisma.RefundItemCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.RefundItemDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    update: {
+                        args: Prisma.RefundItemUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.RefundItemDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.RefundItemUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.RefundItemUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$RefundItemPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.RefundItemAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateRefundItem>
+                    }
+                    groupBy: {
+                        args: Prisma.RefundItemGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<RefundItemGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.RefundItemCountArgs<ExtArgs>
+                        result: $Utils.Optional<RefundItemCountAggregateOutputType> | number
+                    }
+                }
+            }
+            OrderAuditLog: {
+                payload: Prisma.$OrderAuditLogPayload<ExtArgs>
+                fields: Prisma.OrderAuditLogFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.OrderAuditLogFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.OrderAuditLogFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.OrderAuditLogFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.OrderAuditLogFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    findMany: {
+                        args: Prisma.OrderAuditLogFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>[]
+                    }
+                    create: {
+                        args: Prisma.OrderAuditLogCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    createMany: {
+                        args: Prisma.OrderAuditLogCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.OrderAuditLogDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    update: {
+                        args: Prisma.OrderAuditLogUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.OrderAuditLogDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.OrderAuditLogUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.OrderAuditLogUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$OrderAuditLogPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.OrderAuditLogAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateOrderAuditLog>
+                    }
+                    groupBy: {
+                        args: Prisma.OrderAuditLogGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<OrderAuditLogGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.OrderAuditLogCountArgs<ExtArgs>
+                        result: $Utils.Optional<OrderAuditLogCountAggregateOutputType> | number
+                    }
+                }
+            }
             AiDraft: {
                 payload: Prisma.$AiDraftPayload<ExtArgs>
                 fields: Prisma.AiDraftFieldRefs
@@ -1802,6 +2075,9 @@ export namespace Prisma {
         order?: OrderOmit
         orderPayment?: OrderPaymentOmit
         orderItem?: OrderItemOmit
+        refund?: RefundOmit
+        refundItem?: RefundItemOmit
+        orderAuditLog?: OrderAuditLogOmit
         aiDraft?: AiDraftOmit
         campaign?: CampaignOmit
     }
@@ -1902,6 +2178,8 @@ export namespace Prisma {
         categories: number
         products: number
         orders: number
+        refunds: number
+        auditLogs: number
         aiDrafts: number
         campaigns: number
     }
@@ -1911,6 +2189,8 @@ export namespace Prisma {
         categories?: boolean | StoreCountOutputTypeCountCategoriesArgs
         products?: boolean | StoreCountOutputTypeCountProductsArgs
         orders?: boolean | StoreCountOutputTypeCountOrdersArgs
+        refunds?: boolean | StoreCountOutputTypeCountRefundsArgs
+        auditLogs?: boolean | StoreCountOutputTypeCountAuditLogsArgs
         aiDrafts?: boolean | StoreCountOutputTypeCountAiDraftsArgs
         campaigns?: boolean | StoreCountOutputTypeCountCampaignsArgs
     }
@@ -1957,6 +2237,20 @@ export namespace Prisma {
     /**
      * StoreCountOutputType without action
      */
+    export type StoreCountOutputTypeCountRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderAuditLogWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
     export type StoreCountOutputTypeCountAiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: AiDraftWhereInput
     }
@@ -1975,10 +2269,18 @@ export namespace Prisma {
 
     export type UserCountOutputType = {
         stores: number
+        operatedRefunds: number
+        approvedRefunds: number
+        operatedOrderAuditLogs: number
+        approvedOrderAuditLogs: number
     }
 
     export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         stores?: boolean | UserCountOutputTypeCountStoresArgs
+        operatedRefunds?: boolean | UserCountOutputTypeCountOperatedRefundsArgs
+        approvedRefunds?: boolean | UserCountOutputTypeCountApprovedRefundsArgs
+        operatedOrderAuditLogs?: boolean | UserCountOutputTypeCountOperatedOrderAuditLogsArgs
+        approvedOrderAuditLogs?: boolean | UserCountOutputTypeCountApprovedOrderAuditLogsArgs
     }
 
     // Custom InputTypes
@@ -1997,6 +2299,34 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeCountStoresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: StoreUserWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountOperatedRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountApprovedRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountOperatedOrderAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderAuditLogWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountApprovedOrderAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderAuditLogWhereInput
     }
 
 
@@ -2109,11 +2439,15 @@ export namespace Prisma {
     export type OrderCountOutputType = {
         items: number
         payments: number
+        refunds: number
+        auditLogs: number
     }
 
     export type OrderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         items?: boolean | OrderCountOutputTypeCountItemsArgs
         payments?: boolean | OrderCountOutputTypeCountPaymentsArgs
+        refunds?: boolean | OrderCountOutputTypeCountRefundsArgs
+        auditLogs?: boolean | OrderCountOutputTypeCountAuditLogsArgs
     }
 
     // Custom InputTypes
@@ -2139,6 +2473,82 @@ export namespace Prisma {
      */
     export type OrderCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: OrderPaymentWhereInput
+    }
+
+    /**
+     * OrderCountOutputType without action
+     */
+    export type OrderCountOutputTypeCountRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundWhereInput
+    }
+
+    /**
+     * OrderCountOutputType without action
+     */
+    export type OrderCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderAuditLogWhereInput
+    }
+
+
+    /**
+     * Count Type OrderItemCountOutputType
+     */
+
+    export type OrderItemCountOutputType = {
+        refundItems: number
+    }
+
+    export type OrderItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        refundItems?: boolean | OrderItemCountOutputTypeCountRefundItemsArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * OrderItemCountOutputType without action
+     */
+    export type OrderItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderItemCountOutputType
+         */
+        select?: OrderItemCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * OrderItemCountOutputType without action
+     */
+    export type OrderItemCountOutputTypeCountRefundItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundItemWhereInput
+    }
+
+
+    /**
+     * Count Type RefundCountOutputType
+     */
+
+    export type RefundCountOutputType = {
+        items: number
+    }
+
+    export type RefundCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        items?: boolean | RefundCountOutputTypeCountItemsArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * RefundCountOutputType without action
+     */
+    export type RefundCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundCountOutputType
+         */
+        select?: RefundCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * RefundCountOutputType without action
+     */
+    export type RefundCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundItemWhereInput
     }
 
 
@@ -2338,6 +2748,8 @@ export namespace Prisma {
         categories?: boolean | Store$categoriesArgs<ExtArgs>
         products?: boolean | Store$productsArgs<ExtArgs>
         orders?: boolean | Store$ordersArgs<ExtArgs>
+        refunds?: boolean | Store$refundsArgs<ExtArgs>
+        auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -2362,6 +2774,8 @@ export namespace Prisma {
         categories?: boolean | Store$categoriesArgs<ExtArgs>
         products?: boolean | Store$productsArgs<ExtArgs>
         orders?: boolean | Store$ordersArgs<ExtArgs>
+        refunds?: boolean | Store$refundsArgs<ExtArgs>
+        auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -2374,6 +2788,8 @@ export namespace Prisma {
             categories: Prisma.$CategoryPayload<ExtArgs>[]
             products: Prisma.$ProductPayload<ExtArgs>[]
             orders: Prisma.$OrderPayload<ExtArgs>[]
+            refunds: Prisma.$RefundPayload<ExtArgs>[]
+            auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
             aiDrafts: Prisma.$AiDraftPayload<ExtArgs>[]
             campaigns: Prisma.$CampaignPayload<ExtArgs>[]
         }
@@ -2730,6 +3146,8 @@ export namespace Prisma {
         categories<T extends Store$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, Store$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         products<T extends Store$productsArgs<ExtArgs> = {}>(args?: Subset<T, Store$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         orders<T extends Store$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Store$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        refunds<T extends Store$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Store$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        auditLogs<T extends Store$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Store$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         aiDrafts<T extends Store$aiDraftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$aiDraftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDraftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         campaigns<T extends Store$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Store$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
@@ -3208,6 +3626,54 @@ export namespace Prisma {
     }
 
     /**
+     * Store.refunds
+     */
+    export type Store$refundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        where?: RefundWhereInput
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        cursor?: RefundWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * Store.auditLogs
+     */
+    export type Store$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        where?: OrderAuditLogWhereInput
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        cursor?: OrderAuditLogWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
      * Store.aiDrafts
      */
     export type Store$aiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3455,6 +3921,10 @@ export namespace Prisma {
         createdAt?: boolean
         updatedAt?: boolean
         stores?: boolean | User$storesArgs<ExtArgs>
+        operatedRefunds?: boolean | User$operatedRefundsArgs<ExtArgs>
+        approvedRefunds?: boolean | User$approvedRefundsArgs<ExtArgs>
+        operatedOrderAuditLogs?: boolean | User$operatedOrderAuditLogsArgs<ExtArgs>
+        approvedOrderAuditLogs?: boolean | User$approvedOrderAuditLogsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["user"]>
 
@@ -3473,6 +3943,10 @@ export namespace Prisma {
     export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
     export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         stores?: boolean | User$storesArgs<ExtArgs>
+        operatedRefunds?: boolean | User$operatedRefundsArgs<ExtArgs>
+        approvedRefunds?: boolean | User$approvedRefundsArgs<ExtArgs>
+        operatedOrderAuditLogs?: boolean | User$operatedOrderAuditLogsArgs<ExtArgs>
+        approvedOrderAuditLogs?: boolean | User$approvedOrderAuditLogsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -3480,6 +3954,10 @@ export namespace Prisma {
         name: "User"
         objects: {
             stores: Prisma.$StoreUserPayload<ExtArgs>[]
+            operatedRefunds: Prisma.$RefundPayload<ExtArgs>[]
+            approvedRefunds: Prisma.$RefundPayload<ExtArgs>[]
+            operatedOrderAuditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
+            approvedOrderAuditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -3830,6 +4308,10 @@ export namespace Prisma {
     export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         stores<T extends User$storesArgs<ExtArgs> = {}>(args?: Subset<T, User$storesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        operatedRefunds<T extends User$operatedRefundsArgs<ExtArgs> = {}>(args?: Subset<T, User$operatedRefundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        approvedRefunds<T extends User$approvedRefundsArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedRefundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        operatedOrderAuditLogs<T extends User$operatedOrderAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$operatedOrderAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        approvedOrderAuditLogs<T extends User$approvedOrderAuditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedOrderAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4230,6 +4712,102 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: StoreUserScalarFieldEnum | StoreUserScalarFieldEnum[]
+    }
+
+    /**
+     * User.operatedRefunds
+     */
+    export type User$operatedRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        where?: RefundWhereInput
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        cursor?: RefundWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * User.approvedRefunds
+     */
+    export type User$approvedRefundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        where?: RefundWhereInput
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        cursor?: RefundWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * User.operatedOrderAuditLogs
+     */
+    export type User$operatedOrderAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        where?: OrderAuditLogWhereInput
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        cursor?: OrderAuditLogWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * User.approvedOrderAuditLogs
+     */
+    export type User$approvedOrderAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        where?: OrderAuditLogWhereInput
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        cursor?: OrderAuditLogWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
     }
 
     /**
@@ -9785,6 +10363,8 @@ export namespace Prisma {
         store?: boolean | Order$storeArgs<ExtArgs>
         items?: boolean | Order$itemsArgs<ExtArgs>
         payments?: boolean | Order$paymentsArgs<ExtArgs>
+        refunds?: boolean | Order$refundsArgs<ExtArgs>
+        auditLogs?: boolean | Order$auditLogsArgs<ExtArgs>
         _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["order"]>
 
@@ -9819,6 +10399,8 @@ export namespace Prisma {
         store?: boolean | Order$storeArgs<ExtArgs>
         items?: boolean | Order$itemsArgs<ExtArgs>
         payments?: boolean | Order$paymentsArgs<ExtArgs>
+        refunds?: boolean | Order$refundsArgs<ExtArgs>
+        auditLogs?: boolean | Order$auditLogsArgs<ExtArgs>
         _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -9828,6 +10410,8 @@ export namespace Prisma {
             store: Prisma.$StorePayload<ExtArgs> | null
             items: Prisma.$OrderItemPayload<ExtArgs>[]
             payments: Prisma.$OrderPaymentPayload<ExtArgs>[]
+            refunds: Prisma.$RefundPayload<ExtArgs>[]
+            auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -10194,6 +10778,8 @@ export namespace Prisma {
         store<T extends Order$storeArgs<ExtArgs> = {}>(args?: Subset<T, Order$storeArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
         items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         payments<T extends Order$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        refunds<T extends Order$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Order$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        auditLogs<T extends Order$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Order$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10651,6 +11237,54 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: OrderPaymentScalarFieldEnum | OrderPaymentScalarFieldEnum[]
+    }
+
+    /**
+     * Order.refunds
+     */
+    export type Order$refundsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        where?: RefundWhereInput
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        cursor?: RefundWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * Order.auditLogs
+     */
+    export type Order$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        where?: OrderAuditLogWhereInput
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        cursor?: OrderAuditLogWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
     }
 
     /**
@@ -11909,6 +12543,8 @@ export namespace Prisma {
         createdAt?: boolean
         order?: boolean | OrderDefaultArgs<ExtArgs>
         product?: boolean | ProductDefaultArgs<ExtArgs>
+        refundItems?: boolean | OrderItem$refundItemsArgs<ExtArgs>
+        _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["orderItem"]>
 
 
@@ -11930,6 +12566,8 @@ export namespace Prisma {
     export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         order?: boolean | OrderDefaultArgs<ExtArgs>
         product?: boolean | ProductDefaultArgs<ExtArgs>
+        refundItems?: boolean | OrderItem$refundItemsArgs<ExtArgs>
+        _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
     }
 
     export type $OrderItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11937,6 +12575,7 @@ export namespace Prisma {
         objects: {
             order: Prisma.$OrderPayload<ExtArgs>
             product: Prisma.$ProductPayload<ExtArgs>
+            refundItems: Prisma.$RefundItemPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -12291,6 +12930,7 @@ export namespace Prisma {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
         product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        refundItems<T extends OrderItem$refundItemsArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$refundItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12673,6 +13313,30 @@ export namespace Prisma {
     }
 
     /**
+     * OrderItem.refundItems
+     */
+    export type OrderItem$refundItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        where?: RefundItemWhereInput
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        cursor?: RefundItemWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
      * OrderItem without action
      */
     export type OrderItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12688,6 +13352,3187 @@ export namespace Prisma {
          * Choose, which related nodes to fetch as well
          */
         include?: OrderItemInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model Refund
+     */
+
+    export type AggregateRefund = {
+        _count: RefundCountAggregateOutputType | null
+        _avg: RefundAvgAggregateOutputType | null
+        _sum: RefundSumAggregateOutputType | null
+        _min: RefundMinAggregateOutputType | null
+        _max: RefundMaxAggregateOutputType | null
+    }
+
+    export type RefundAvgAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type RefundSumAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type RefundMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        refundNumber: string | null
+        idempotencyKey: string | null
+        status: $Enums.RefundStatus | null
+        method: $Enums.PaymentMethod | null
+        amount: Decimal | null
+        reason: string | null
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date | null
+    }
+
+    export type RefundMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        refundNumber: string | null
+        idempotencyKey: string | null
+        status: $Enums.RefundStatus | null
+        method: $Enums.PaymentMethod | null
+        amount: Decimal | null
+        reason: string | null
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date | null
+    }
+
+    export type RefundCountAggregateOutputType = {
+        id: number
+        storeId: number
+        orderId: number
+        refundNumber: number
+        idempotencyKey: number
+        status: number
+        method: number
+        amount: number
+        reason: number
+        operatorId: number
+        approvedById: number
+        createdAt: number
+        _all: number
+    }
+
+
+    export type RefundAvgAggregateInputType = {
+        amount?: true
+    }
+
+    export type RefundSumAggregateInputType = {
+        amount?: true
+    }
+
+    export type RefundMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        refundNumber?: true
+        idempotencyKey?: true
+        status?: true
+        method?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+    }
+
+    export type RefundMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        refundNumber?: true
+        idempotencyKey?: true
+        status?: true
+        method?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+    }
+
+    export type RefundCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        refundNumber?: true
+        idempotencyKey?: true
+        status?: true
+        method?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+        _all?: true
+    }
+
+    export type RefundAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which Refund to aggregate.
+         */
+        where?: RefundWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Refunds to fetch.
+         */
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: RefundWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Refunds from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Refunds.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned Refunds
+        **/
+        _count?: true | RefundCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: RefundAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: RefundSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: RefundMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: RefundMaxAggregateInputType
+    }
+
+    export type GetRefundAggregateType<T extends RefundAggregateArgs> = {
+        [P in keyof T & keyof AggregateRefund]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRefund[P]>
+        : GetScalarType<T[P], AggregateRefund[P]>
+    }
+
+
+
+
+    export type RefundGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundWhereInput
+        orderBy?: RefundOrderByWithAggregationInput | RefundOrderByWithAggregationInput[]
+        by: RefundScalarFieldEnum[] | RefundScalarFieldEnum
+        having?: RefundScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: RefundCountAggregateInputType | true
+        _avg?: RefundAvgAggregateInputType
+        _sum?: RefundSumAggregateInputType
+        _min?: RefundMinAggregateInputType
+        _max?: RefundMaxAggregateInputType
+    }
+
+    export type RefundGroupByOutputType = {
+        id: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal
+        reason: string
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date
+        _count: RefundCountAggregateOutputType | null
+        _avg: RefundAvgAggregateOutputType | null
+        _sum: RefundSumAggregateOutputType | null
+        _min: RefundMinAggregateOutputType | null
+        _max: RefundMaxAggregateOutputType | null
+    }
+
+    type GetRefundGroupByPayload<T extends RefundGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<RefundGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof RefundGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], RefundGroupByOutputType[P]>
+                : GetScalarType<T[P], RefundGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type RefundSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        refundNumber?: boolean
+        idempotencyKey?: boolean
+        status?: boolean
+        method?: boolean
+        amount?: boolean
+        reason?: boolean
+        operatorId?: boolean
+        approvedById?: boolean
+        createdAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        operator?: boolean | Refund$operatorArgs<ExtArgs>
+        approvedBy?: boolean | Refund$approvedByArgs<ExtArgs>
+        items?: boolean | Refund$itemsArgs<ExtArgs>
+        _count?: boolean | RefundCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["refund"]>
+
+
+
+    export type RefundSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        refundNumber?: boolean
+        idempotencyKey?: boolean
+        status?: boolean
+        method?: boolean
+        amount?: boolean
+        reason?: boolean
+        operatorId?: boolean
+        approvedById?: boolean
+        createdAt?: boolean
+    }
+
+    export type RefundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderId" | "refundNumber" | "idempotencyKey" | "status" | "method" | "amount" | "reason" | "operatorId" | "approvedById" | "createdAt", ExtArgs["result"]["refund"]>
+    export type RefundInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        operator?: boolean | Refund$operatorArgs<ExtArgs>
+        approvedBy?: boolean | Refund$approvedByArgs<ExtArgs>
+        items?: boolean | Refund$itemsArgs<ExtArgs>
+        _count?: boolean | RefundCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $RefundPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "Refund"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            order: Prisma.$OrderPayload<ExtArgs>
+            operator: Prisma.$UserPayload<ExtArgs> | null
+            approvedBy: Prisma.$UserPayload<ExtArgs> | null
+            items: Prisma.$RefundItemPayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            orderId: string
+            refundNumber: string
+            idempotencyKey: string
+            status: $Enums.RefundStatus
+            method: $Enums.PaymentMethod
+            amount: Prisma.Decimal
+            reason: string
+            operatorId: string | null
+            approvedById: string | null
+            createdAt: Date
+        }, ExtArgs["result"]["refund"]>
+        composites: {}
+    }
+
+    type RefundGetPayload<S extends boolean | null | undefined | RefundDefaultArgs> = $Result.GetResult<Prisma.$RefundPayload, S>
+
+    type RefundCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<RefundFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: RefundCountAggregateInputType | true
+        }
+
+    export interface RefundDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Refund'], meta: { name: 'Refund' } }
+        /**
+         * Find zero or one Refund that matches the filter.
+         * @param {RefundFindUniqueArgs} args - Arguments to find a Refund
+         * @example
+         * // Get one Refund
+         * const refund = await prisma.refund.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends RefundFindUniqueArgs>(args: SelectSubset<T, RefundFindUniqueArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one Refund that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {RefundFindUniqueOrThrowArgs} args - Arguments to find a Refund
+         * @example
+         * // Get one Refund
+         * const refund = await prisma.refund.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends RefundFindUniqueOrThrowArgs>(args: SelectSubset<T, RefundFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first Refund that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundFindFirstArgs} args - Arguments to find a Refund
+         * @example
+         * // Get one Refund
+         * const refund = await prisma.refund.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends RefundFindFirstArgs>(args?: SelectSubset<T, RefundFindFirstArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first Refund that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundFindFirstOrThrowArgs} args - Arguments to find a Refund
+         * @example
+         * // Get one Refund
+         * const refund = await prisma.refund.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends RefundFindFirstOrThrowArgs>(args?: SelectSubset<T, RefundFindFirstOrThrowArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more Refunds that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all Refunds
+         * const refunds = await prisma.refund.findMany()
+         * 
+         * // Get first 10 Refunds
+         * const refunds = await prisma.refund.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const refundWithIdOnly = await prisma.refund.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends RefundFindManyArgs>(args?: SelectSubset<T, RefundFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a Refund.
+         * @param {RefundCreateArgs} args - Arguments to create a Refund.
+         * @example
+         * // Create one Refund
+         * const Refund = await prisma.refund.create({
+         *   data: {
+         *     // ... data to create a Refund
+         *   }
+         * })
+         * 
+         */
+        create<T extends RefundCreateArgs>(args: SelectSubset<T, RefundCreateArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many Refunds.
+         * @param {RefundCreateManyArgs} args - Arguments to create many Refunds.
+         * @example
+         * // Create many Refunds
+         * const refund = await prisma.refund.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends RefundCreateManyArgs>(args?: SelectSubset<T, RefundCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a Refund.
+         * @param {RefundDeleteArgs} args - Arguments to delete one Refund.
+         * @example
+         * // Delete one Refund
+         * const Refund = await prisma.refund.delete({
+         *   where: {
+         *     // ... filter to delete one Refund
+         *   }
+         * })
+         * 
+         */
+        delete<T extends RefundDeleteArgs>(args: SelectSubset<T, RefundDeleteArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one Refund.
+         * @param {RefundUpdateArgs} args - Arguments to update one Refund.
+         * @example
+         * // Update one Refund
+         * const refund = await prisma.refund.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends RefundUpdateArgs>(args: SelectSubset<T, RefundUpdateArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more Refunds.
+         * @param {RefundDeleteManyArgs} args - Arguments to filter Refunds to delete.
+         * @example
+         * // Delete a few Refunds
+         * const { count } = await prisma.refund.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends RefundDeleteManyArgs>(args?: SelectSubset<T, RefundDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more Refunds.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many Refunds
+         * const refund = await prisma.refund.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends RefundUpdateManyArgs>(args: SelectSubset<T, RefundUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one Refund.
+         * @param {RefundUpsertArgs} args - Arguments to update or create a Refund.
+         * @example
+         * // Update or create a Refund
+         * const refund = await prisma.refund.upsert({
+         *   create: {
+         *     // ... data to create a Refund
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the Refund we want to update
+         *   }
+         * })
+         */
+        upsert<T extends RefundUpsertArgs>(args: SelectSubset<T, RefundUpsertArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of Refunds.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundCountArgs} args - Arguments to filter Refunds to count.
+         * @example
+         * // Count the number of Refunds
+         * const count = await prisma.refund.count({
+         *   where: {
+         *     // ... the filter for the Refunds we want to count
+         *   }
+         * })
+        **/
+        count<T extends RefundCountArgs>(
+            args?: Subset<T, RefundCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], RefundCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a Refund.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends RefundAggregateArgs>(args: Subset<T, RefundAggregateArgs>): Prisma.PrismaPromise<GetRefundAggregateType<T>>
+
+        /**
+         * Group by Refund.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends RefundGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: RefundGroupByArgs['orderBy'] }
+            : { orderBy?: RefundGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, RefundGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRefundGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the Refund model
+         */
+        readonly fields: RefundFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for Refund.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__RefundClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        operator<T extends Refund$operatorArgs<ExtArgs> = {}>(args?: Subset<T, Refund$operatorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        approvedBy<T extends Refund$approvedByArgs<ExtArgs> = {}>(args?: Subset<T, Refund$approvedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        items<T extends Refund$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Refund$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the Refund model
+     */
+    interface RefundFieldRefs {
+        readonly id: FieldRef<"Refund", 'String'>
+        readonly storeId: FieldRef<"Refund", 'String'>
+        readonly orderId: FieldRef<"Refund", 'String'>
+        readonly refundNumber: FieldRef<"Refund", 'String'>
+        readonly idempotencyKey: FieldRef<"Refund", 'String'>
+        readonly status: FieldRef<"Refund", 'RefundStatus'>
+        readonly method: FieldRef<"Refund", 'PaymentMethod'>
+        readonly amount: FieldRef<"Refund", 'Decimal'>
+        readonly reason: FieldRef<"Refund", 'String'>
+        readonly operatorId: FieldRef<"Refund", 'String'>
+        readonly approvedById: FieldRef<"Refund", 'String'>
+        readonly createdAt: FieldRef<"Refund", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * Refund findUnique
+     */
+    export type RefundFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter, which Refund to fetch.
+         */
+        where: RefundWhereUniqueInput
+    }
+
+    /**
+     * Refund findUniqueOrThrow
+     */
+    export type RefundFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter, which Refund to fetch.
+         */
+        where: RefundWhereUniqueInput
+    }
+
+    /**
+     * Refund findFirst
+     */
+    export type RefundFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter, which Refund to fetch.
+         */
+        where?: RefundWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Refunds to fetch.
+         */
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for Refunds.
+         */
+        cursor?: RefundWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Refunds from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Refunds.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of Refunds.
+         */
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * Refund findFirstOrThrow
+     */
+    export type RefundFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter, which Refund to fetch.
+         */
+        where?: RefundWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Refunds to fetch.
+         */
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for Refunds.
+         */
+        cursor?: RefundWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Refunds from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Refunds.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of Refunds.
+         */
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * Refund findMany
+     */
+    export type RefundFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter, which Refunds to fetch.
+         */
+        where?: RefundWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of Refunds to fetch.
+         */
+        orderBy?: RefundOrderByWithRelationInput | RefundOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing Refunds.
+         */
+        cursor?: RefundWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` Refunds from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` Refunds.
+         */
+        skip?: number
+        distinct?: RefundScalarFieldEnum | RefundScalarFieldEnum[]
+    }
+
+    /**
+     * Refund create
+     */
+    export type RefundCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * The data needed to create a Refund.
+         */
+        data: XOR<RefundCreateInput, RefundUncheckedCreateInput>
+    }
+
+    /**
+     * Refund createMany
+     */
+    export type RefundCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many Refunds.
+         */
+        data: RefundCreateManyInput | RefundCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * Refund update
+     */
+    export type RefundUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * The data needed to update a Refund.
+         */
+        data: XOR<RefundUpdateInput, RefundUncheckedUpdateInput>
+        /**
+         * Choose, which Refund to update.
+         */
+        where: RefundWhereUniqueInput
+    }
+
+    /**
+     * Refund updateMany
+     */
+    export type RefundUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update Refunds.
+         */
+        data: XOR<RefundUpdateManyMutationInput, RefundUncheckedUpdateManyInput>
+        /**
+         * Filter which Refunds to update
+         */
+        where?: RefundWhereInput
+        /**
+         * Limit how many Refunds to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * Refund upsert
+     */
+    export type RefundUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * The filter to search for the Refund to update in case it exists.
+         */
+        where: RefundWhereUniqueInput
+        /**
+         * In case the Refund found by the `where` argument doesn't exist, create a new Refund with this data.
+         */
+        create: XOR<RefundCreateInput, RefundUncheckedCreateInput>
+        /**
+         * In case the Refund was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<RefundUpdateInput, RefundUncheckedUpdateInput>
+    }
+
+    /**
+     * Refund delete
+     */
+    export type RefundDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+        /**
+         * Filter which Refund to delete.
+         */
+        where: RefundWhereUniqueInput
+    }
+
+    /**
+     * Refund deleteMany
+     */
+    export type RefundDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which Refunds to delete
+         */
+        where?: RefundWhereInput
+        /**
+         * Limit how many Refunds to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * Refund.operator
+     */
+    export type Refund$operatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * Refund.approvedBy
+     */
+    export type Refund$approvedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * Refund.items
+     */
+    export type Refund$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        where?: RefundItemWhereInput
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        cursor?: RefundItemWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
+     * Refund without action
+     */
+    export type RefundDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Refund
+         */
+        select?: RefundSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Refund
+         */
+        omit?: RefundOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model RefundItem
+     */
+
+    export type AggregateRefundItem = {
+        _count: RefundItemCountAggregateOutputType | null
+        _avg: RefundItemAvgAggregateOutputType | null
+        _sum: RefundItemSumAggregateOutputType | null
+        _min: RefundItemMinAggregateOutputType | null
+        _max: RefundItemMaxAggregateOutputType | null
+    }
+
+    export type RefundItemAvgAggregateOutputType = {
+        quantity: number | null
+        amount: Decimal | null
+    }
+
+    export type RefundItemSumAggregateOutputType = {
+        quantity: number | null
+        amount: Decimal | null
+    }
+
+    export type RefundItemMinAggregateOutputType = {
+        id: string | null
+        refundId: string | null
+        orderItemId: string | null
+        quantity: number | null
+        amount: Decimal | null
+        createdAt: Date | null
+    }
+
+    export type RefundItemMaxAggregateOutputType = {
+        id: string | null
+        refundId: string | null
+        orderItemId: string | null
+        quantity: number | null
+        amount: Decimal | null
+        createdAt: Date | null
+    }
+
+    export type RefundItemCountAggregateOutputType = {
+        id: number
+        refundId: number
+        orderItemId: number
+        quantity: number
+        amount: number
+        createdAt: number
+        _all: number
+    }
+
+
+    export type RefundItemAvgAggregateInputType = {
+        quantity?: true
+        amount?: true
+    }
+
+    export type RefundItemSumAggregateInputType = {
+        quantity?: true
+        amount?: true
+    }
+
+    export type RefundItemMinAggregateInputType = {
+        id?: true
+        refundId?: true
+        orderItemId?: true
+        quantity?: true
+        amount?: true
+        createdAt?: true
+    }
+
+    export type RefundItemMaxAggregateInputType = {
+        id?: true
+        refundId?: true
+        orderItemId?: true
+        quantity?: true
+        amount?: true
+        createdAt?: true
+    }
+
+    export type RefundItemCountAggregateInputType = {
+        id?: true
+        refundId?: true
+        orderItemId?: true
+        quantity?: true
+        amount?: true
+        createdAt?: true
+        _all?: true
+    }
+
+    export type RefundItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which RefundItem to aggregate.
+         */
+        where?: RefundItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of RefundItems to fetch.
+         */
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: RefundItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` RefundItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` RefundItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned RefundItems
+        **/
+        _count?: true | RefundItemCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: RefundItemAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: RefundItemSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: RefundItemMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: RefundItemMaxAggregateInputType
+    }
+
+    export type GetRefundItemAggregateType<T extends RefundItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateRefundItem]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRefundItem[P]>
+        : GetScalarType<T[P], AggregateRefundItem[P]>
+    }
+
+
+
+
+    export type RefundItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: RefundItemWhereInput
+        orderBy?: RefundItemOrderByWithAggregationInput | RefundItemOrderByWithAggregationInput[]
+        by: RefundItemScalarFieldEnum[] | RefundItemScalarFieldEnum
+        having?: RefundItemScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: RefundItemCountAggregateInputType | true
+        _avg?: RefundItemAvgAggregateInputType
+        _sum?: RefundItemSumAggregateInputType
+        _min?: RefundItemMinAggregateInputType
+        _max?: RefundItemMaxAggregateInputType
+    }
+
+    export type RefundItemGroupByOutputType = {
+        id: string
+        refundId: string
+        orderItemId: string
+        quantity: number
+        amount: Decimal
+        createdAt: Date
+        _count: RefundItemCountAggregateOutputType | null
+        _avg: RefundItemAvgAggregateOutputType | null
+        _sum: RefundItemSumAggregateOutputType | null
+        _min: RefundItemMinAggregateOutputType | null
+        _max: RefundItemMaxAggregateOutputType | null
+    }
+
+    type GetRefundItemGroupByPayload<T extends RefundItemGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<RefundItemGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof RefundItemGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], RefundItemGroupByOutputType[P]>
+                : GetScalarType<T[P], RefundItemGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type RefundItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        refundId?: boolean
+        orderItemId?: boolean
+        quantity?: boolean
+        amount?: boolean
+        createdAt?: boolean
+        refund?: boolean | RefundDefaultArgs<ExtArgs>
+        orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["refundItem"]>
+
+
+
+    export type RefundItemSelectScalar = {
+        id?: boolean
+        refundId?: boolean
+        orderItemId?: boolean
+        quantity?: boolean
+        amount?: boolean
+        createdAt?: boolean
+    }
+
+    export type RefundItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "refundId" | "orderItemId" | "quantity" | "amount" | "createdAt", ExtArgs["result"]["refundItem"]>
+    export type RefundItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        refund?: boolean | RefundDefaultArgs<ExtArgs>
+        orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    }
+
+    export type $RefundItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "RefundItem"
+        objects: {
+            refund: Prisma.$RefundPayload<ExtArgs>
+            orderItem: Prisma.$OrderItemPayload<ExtArgs>
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            refundId: string
+            orderItemId: string
+            quantity: number
+            amount: Prisma.Decimal
+            createdAt: Date
+        }, ExtArgs["result"]["refundItem"]>
+        composites: {}
+    }
+
+    type RefundItemGetPayload<S extends boolean | null | undefined | RefundItemDefaultArgs> = $Result.GetResult<Prisma.$RefundItemPayload, S>
+
+    type RefundItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<RefundItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: RefundItemCountAggregateInputType | true
+        }
+
+    export interface RefundItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RefundItem'], meta: { name: 'RefundItem' } }
+        /**
+         * Find zero or one RefundItem that matches the filter.
+         * @param {RefundItemFindUniqueArgs} args - Arguments to find a RefundItem
+         * @example
+         * // Get one RefundItem
+         * const refundItem = await prisma.refundItem.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends RefundItemFindUniqueArgs>(args: SelectSubset<T, RefundItemFindUniqueArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one RefundItem that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {RefundItemFindUniqueOrThrowArgs} args - Arguments to find a RefundItem
+         * @example
+         * // Get one RefundItem
+         * const refundItem = await prisma.refundItem.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends RefundItemFindUniqueOrThrowArgs>(args: SelectSubset<T, RefundItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first RefundItem that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemFindFirstArgs} args - Arguments to find a RefundItem
+         * @example
+         * // Get one RefundItem
+         * const refundItem = await prisma.refundItem.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends RefundItemFindFirstArgs>(args?: SelectSubset<T, RefundItemFindFirstArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first RefundItem that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemFindFirstOrThrowArgs} args - Arguments to find a RefundItem
+         * @example
+         * // Get one RefundItem
+         * const refundItem = await prisma.refundItem.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends RefundItemFindFirstOrThrowArgs>(args?: SelectSubset<T, RefundItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more RefundItems that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all RefundItems
+         * const refundItems = await prisma.refundItem.findMany()
+         * 
+         * // Get first 10 RefundItems
+         * const refundItems = await prisma.refundItem.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const refundItemWithIdOnly = await prisma.refundItem.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends RefundItemFindManyArgs>(args?: SelectSubset<T, RefundItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a RefundItem.
+         * @param {RefundItemCreateArgs} args - Arguments to create a RefundItem.
+         * @example
+         * // Create one RefundItem
+         * const RefundItem = await prisma.refundItem.create({
+         *   data: {
+         *     // ... data to create a RefundItem
+         *   }
+         * })
+         * 
+         */
+        create<T extends RefundItemCreateArgs>(args: SelectSubset<T, RefundItemCreateArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many RefundItems.
+         * @param {RefundItemCreateManyArgs} args - Arguments to create many RefundItems.
+         * @example
+         * // Create many RefundItems
+         * const refundItem = await prisma.refundItem.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends RefundItemCreateManyArgs>(args?: SelectSubset<T, RefundItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a RefundItem.
+         * @param {RefundItemDeleteArgs} args - Arguments to delete one RefundItem.
+         * @example
+         * // Delete one RefundItem
+         * const RefundItem = await prisma.refundItem.delete({
+         *   where: {
+         *     // ... filter to delete one RefundItem
+         *   }
+         * })
+         * 
+         */
+        delete<T extends RefundItemDeleteArgs>(args: SelectSubset<T, RefundItemDeleteArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one RefundItem.
+         * @param {RefundItemUpdateArgs} args - Arguments to update one RefundItem.
+         * @example
+         * // Update one RefundItem
+         * const refundItem = await prisma.refundItem.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends RefundItemUpdateArgs>(args: SelectSubset<T, RefundItemUpdateArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more RefundItems.
+         * @param {RefundItemDeleteManyArgs} args - Arguments to filter RefundItems to delete.
+         * @example
+         * // Delete a few RefundItems
+         * const { count } = await prisma.refundItem.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends RefundItemDeleteManyArgs>(args?: SelectSubset<T, RefundItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more RefundItems.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many RefundItems
+         * const refundItem = await prisma.refundItem.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends RefundItemUpdateManyArgs>(args: SelectSubset<T, RefundItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one RefundItem.
+         * @param {RefundItemUpsertArgs} args - Arguments to update or create a RefundItem.
+         * @example
+         * // Update or create a RefundItem
+         * const refundItem = await prisma.refundItem.upsert({
+         *   create: {
+         *     // ... data to create a RefundItem
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the RefundItem we want to update
+         *   }
+         * })
+         */
+        upsert<T extends RefundItemUpsertArgs>(args: SelectSubset<T, RefundItemUpsertArgs<ExtArgs>>): Prisma__RefundItemClient<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of RefundItems.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemCountArgs} args - Arguments to filter RefundItems to count.
+         * @example
+         * // Count the number of RefundItems
+         * const count = await prisma.refundItem.count({
+         *   where: {
+         *     // ... the filter for the RefundItems we want to count
+         *   }
+         * })
+        **/
+        count<T extends RefundItemCountArgs>(
+            args?: Subset<T, RefundItemCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], RefundItemCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a RefundItem.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends RefundItemAggregateArgs>(args: Subset<T, RefundItemAggregateArgs>): Prisma.PrismaPromise<GetRefundItemAggregateType<T>>
+
+        /**
+         * Group by RefundItem.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {RefundItemGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends RefundItemGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: RefundItemGroupByArgs['orderBy'] }
+            : { orderBy?: RefundItemGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, RefundItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRefundItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the RefundItem model
+         */
+        readonly fields: RefundItemFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for RefundItem.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__RefundItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        refund<T extends RefundDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RefundDefaultArgs<ExtArgs>>): Prisma__RefundClient<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        orderItem<T extends OrderItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderItemDefaultArgs<ExtArgs>>): Prisma__OrderItemClient<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the RefundItem model
+     */
+    interface RefundItemFieldRefs {
+        readonly id: FieldRef<"RefundItem", 'String'>
+        readonly refundId: FieldRef<"RefundItem", 'String'>
+        readonly orderItemId: FieldRef<"RefundItem", 'String'>
+        readonly quantity: FieldRef<"RefundItem", 'Int'>
+        readonly amount: FieldRef<"RefundItem", 'Decimal'>
+        readonly createdAt: FieldRef<"RefundItem", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * RefundItem findUnique
+     */
+    export type RefundItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter, which RefundItem to fetch.
+         */
+        where: RefundItemWhereUniqueInput
+    }
+
+    /**
+     * RefundItem findUniqueOrThrow
+     */
+    export type RefundItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter, which RefundItem to fetch.
+         */
+        where: RefundItemWhereUniqueInput
+    }
+
+    /**
+     * RefundItem findFirst
+     */
+    export type RefundItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter, which RefundItem to fetch.
+         */
+        where?: RefundItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of RefundItems to fetch.
+         */
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for RefundItems.
+         */
+        cursor?: RefundItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` RefundItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` RefundItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of RefundItems.
+         */
+        distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
+     * RefundItem findFirstOrThrow
+     */
+    export type RefundItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter, which RefundItem to fetch.
+         */
+        where?: RefundItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of RefundItems to fetch.
+         */
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for RefundItems.
+         */
+        cursor?: RefundItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` RefundItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` RefundItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of RefundItems.
+         */
+        distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
+     * RefundItem findMany
+     */
+    export type RefundItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter, which RefundItems to fetch.
+         */
+        where?: RefundItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of RefundItems to fetch.
+         */
+        orderBy?: RefundItemOrderByWithRelationInput | RefundItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing RefundItems.
+         */
+        cursor?: RefundItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` RefundItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` RefundItems.
+         */
+        skip?: number
+        distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
+     * RefundItem create
+     */
+    export type RefundItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * The data needed to create a RefundItem.
+         */
+        data: XOR<RefundItemCreateInput, RefundItemUncheckedCreateInput>
+    }
+
+    /**
+     * RefundItem createMany
+     */
+    export type RefundItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many RefundItems.
+         */
+        data: RefundItemCreateManyInput | RefundItemCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * RefundItem update
+     */
+    export type RefundItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * The data needed to update a RefundItem.
+         */
+        data: XOR<RefundItemUpdateInput, RefundItemUncheckedUpdateInput>
+        /**
+         * Choose, which RefundItem to update.
+         */
+        where: RefundItemWhereUniqueInput
+    }
+
+    /**
+     * RefundItem updateMany
+     */
+    export type RefundItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update RefundItems.
+         */
+        data: XOR<RefundItemUpdateManyMutationInput, RefundItemUncheckedUpdateManyInput>
+        /**
+         * Filter which RefundItems to update
+         */
+        where?: RefundItemWhereInput
+        /**
+         * Limit how many RefundItems to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * RefundItem upsert
+     */
+    export type RefundItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * The filter to search for the RefundItem to update in case it exists.
+         */
+        where: RefundItemWhereUniqueInput
+        /**
+         * In case the RefundItem found by the `where` argument doesn't exist, create a new RefundItem with this data.
+         */
+        create: XOR<RefundItemCreateInput, RefundItemUncheckedCreateInput>
+        /**
+         * In case the RefundItem was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<RefundItemUpdateInput, RefundItemUncheckedUpdateInput>
+    }
+
+    /**
+     * RefundItem delete
+     */
+    export type RefundItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+        /**
+         * Filter which RefundItem to delete.
+         */
+        where: RefundItemWhereUniqueInput
+    }
+
+    /**
+     * RefundItem deleteMany
+     */
+    export type RefundItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which RefundItems to delete
+         */
+        where?: RefundItemWhereInput
+        /**
+         * Limit how many RefundItems to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * RefundItem without action
+     */
+    export type RefundItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the RefundItem
+         */
+        select?: RefundItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the RefundItem
+         */
+        omit?: RefundItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: RefundItemInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model OrderAuditLog
+     */
+
+    export type AggregateOrderAuditLog = {
+        _count: OrderAuditLogCountAggregateOutputType | null
+        _avg: OrderAuditLogAvgAggregateOutputType | null
+        _sum: OrderAuditLogSumAggregateOutputType | null
+        _min: OrderAuditLogMinAggregateOutputType | null
+        _max: OrderAuditLogMaxAggregateOutputType | null
+    }
+
+    export type OrderAuditLogAvgAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type OrderAuditLogSumAggregateOutputType = {
+        amount: Decimal | null
+    }
+
+    export type OrderAuditLogMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        action: $Enums.OrderAuditAction | null
+        fromStatus: $Enums.OrderStatus | null
+        toStatus: $Enums.OrderStatus | null
+        amount: Decimal | null
+        reason: string | null
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date | null
+    }
+
+    export type OrderAuditLogMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        action: $Enums.OrderAuditAction | null
+        fromStatus: $Enums.OrderStatus | null
+        toStatus: $Enums.OrderStatus | null
+        amount: Decimal | null
+        reason: string | null
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date | null
+    }
+
+    export type OrderAuditLogCountAggregateOutputType = {
+        id: number
+        storeId: number
+        orderId: number
+        action: number
+        fromStatus: number
+        toStatus: number
+        amount: number
+        reason: number
+        operatorId: number
+        approvedById: number
+        createdAt: number
+        _all: number
+    }
+
+
+    export type OrderAuditLogAvgAggregateInputType = {
+        amount?: true
+    }
+
+    export type OrderAuditLogSumAggregateInputType = {
+        amount?: true
+    }
+
+    export type OrderAuditLogMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        action?: true
+        fromStatus?: true
+        toStatus?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+    }
+
+    export type OrderAuditLogMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        action?: true
+        fromStatus?: true
+        toStatus?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+    }
+
+    export type OrderAuditLogCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        action?: true
+        fromStatus?: true
+        toStatus?: true
+        amount?: true
+        reason?: true
+        operatorId?: true
+        approvedById?: true
+        createdAt?: true
+        _all?: true
+    }
+
+    export type OrderAuditLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which OrderAuditLog to aggregate.
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of OrderAuditLogs to fetch.
+         */
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: OrderAuditLogWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` OrderAuditLogs from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` OrderAuditLogs.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned OrderAuditLogs
+        **/
+        _count?: true | OrderAuditLogCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: OrderAuditLogAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: OrderAuditLogSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: OrderAuditLogMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: OrderAuditLogMaxAggregateInputType
+    }
+
+    export type GetOrderAuditLogAggregateType<T extends OrderAuditLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrderAuditLog]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrderAuditLog[P]>
+        : GetScalarType<T[P], AggregateOrderAuditLog[P]>
+    }
+
+
+
+
+    export type OrderAuditLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderAuditLogWhereInput
+        orderBy?: OrderAuditLogOrderByWithAggregationInput | OrderAuditLogOrderByWithAggregationInput[]
+        by: OrderAuditLogScalarFieldEnum[] | OrderAuditLogScalarFieldEnum
+        having?: OrderAuditLogScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: OrderAuditLogCountAggregateInputType | true
+        _avg?: OrderAuditLogAvgAggregateInputType
+        _sum?: OrderAuditLogSumAggregateInputType
+        _min?: OrderAuditLogMinAggregateInputType
+        _max?: OrderAuditLogMaxAggregateInputType
+    }
+
+    export type OrderAuditLogGroupByOutputType = {
+        id: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus: $Enums.OrderStatus | null
+        toStatus: $Enums.OrderStatus | null
+        amount: Decimal | null
+        reason: string
+        operatorId: string | null
+        approvedById: string | null
+        createdAt: Date
+        _count: OrderAuditLogCountAggregateOutputType | null
+        _avg: OrderAuditLogAvgAggregateOutputType | null
+        _sum: OrderAuditLogSumAggregateOutputType | null
+        _min: OrderAuditLogMinAggregateOutputType | null
+        _max: OrderAuditLogMaxAggregateOutputType | null
+    }
+
+    type GetOrderAuditLogGroupByPayload<T extends OrderAuditLogGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<OrderAuditLogGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof OrderAuditLogGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], OrderAuditLogGroupByOutputType[P]>
+                : GetScalarType<T[P], OrderAuditLogGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type OrderAuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        action?: boolean
+        fromStatus?: boolean
+        toStatus?: boolean
+        amount?: boolean
+        reason?: boolean
+        operatorId?: boolean
+        approvedById?: boolean
+        createdAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        operator?: boolean | OrderAuditLog$operatorArgs<ExtArgs>
+        approvedBy?: boolean | OrderAuditLog$approvedByArgs<ExtArgs>
+    }, ExtArgs["result"]["orderAuditLog"]>
+
+
+
+    export type OrderAuditLogSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        action?: boolean
+        fromStatus?: boolean
+        toStatus?: boolean
+        amount?: boolean
+        reason?: boolean
+        operatorId?: boolean
+        approvedById?: boolean
+        createdAt?: boolean
+    }
+
+    export type OrderAuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderId" | "action" | "fromStatus" | "toStatus" | "amount" | "reason" | "operatorId" | "approvedById" | "createdAt", ExtArgs["result"]["orderAuditLog"]>
+    export type OrderAuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        operator?: boolean | OrderAuditLog$operatorArgs<ExtArgs>
+        approvedBy?: boolean | OrderAuditLog$approvedByArgs<ExtArgs>
+    }
+
+    export type $OrderAuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "OrderAuditLog"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            order: Prisma.$OrderPayload<ExtArgs>
+            operator: Prisma.$UserPayload<ExtArgs> | null
+            approvedBy: Prisma.$UserPayload<ExtArgs> | null
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            orderId: string
+            action: $Enums.OrderAuditAction
+            fromStatus: $Enums.OrderStatus | null
+            toStatus: $Enums.OrderStatus | null
+            amount: Prisma.Decimal | null
+            reason: string
+            operatorId: string | null
+            approvedById: string | null
+            createdAt: Date
+        }, ExtArgs["result"]["orderAuditLog"]>
+        composites: {}
+    }
+
+    type OrderAuditLogGetPayload<S extends boolean | null | undefined | OrderAuditLogDefaultArgs> = $Result.GetResult<Prisma.$OrderAuditLogPayload, S>
+
+    type OrderAuditLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<OrderAuditLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: OrderAuditLogCountAggregateInputType | true
+        }
+
+    export interface OrderAuditLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrderAuditLog'], meta: { name: 'OrderAuditLog' } }
+        /**
+         * Find zero or one OrderAuditLog that matches the filter.
+         * @param {OrderAuditLogFindUniqueArgs} args - Arguments to find a OrderAuditLog
+         * @example
+         * // Get one OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends OrderAuditLogFindUniqueArgs>(args: SelectSubset<T, OrderAuditLogFindUniqueArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one OrderAuditLog that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {OrderAuditLogFindUniqueOrThrowArgs} args - Arguments to find a OrderAuditLog
+         * @example
+         * // Get one OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends OrderAuditLogFindUniqueOrThrowArgs>(args: SelectSubset<T, OrderAuditLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first OrderAuditLog that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogFindFirstArgs} args - Arguments to find a OrderAuditLog
+         * @example
+         * // Get one OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends OrderAuditLogFindFirstArgs>(args?: SelectSubset<T, OrderAuditLogFindFirstArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first OrderAuditLog that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogFindFirstOrThrowArgs} args - Arguments to find a OrderAuditLog
+         * @example
+         * // Get one OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends OrderAuditLogFindFirstOrThrowArgs>(args?: SelectSubset<T, OrderAuditLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more OrderAuditLogs that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all OrderAuditLogs
+         * const orderAuditLogs = await prisma.orderAuditLog.findMany()
+         * 
+         * // Get first 10 OrderAuditLogs
+         * const orderAuditLogs = await prisma.orderAuditLog.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const orderAuditLogWithIdOnly = await prisma.orderAuditLog.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends OrderAuditLogFindManyArgs>(args?: SelectSubset<T, OrderAuditLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a OrderAuditLog.
+         * @param {OrderAuditLogCreateArgs} args - Arguments to create a OrderAuditLog.
+         * @example
+         * // Create one OrderAuditLog
+         * const OrderAuditLog = await prisma.orderAuditLog.create({
+         *   data: {
+         *     // ... data to create a OrderAuditLog
+         *   }
+         * })
+         * 
+         */
+        create<T extends OrderAuditLogCreateArgs>(args: SelectSubset<T, OrderAuditLogCreateArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many OrderAuditLogs.
+         * @param {OrderAuditLogCreateManyArgs} args - Arguments to create many OrderAuditLogs.
+         * @example
+         * // Create many OrderAuditLogs
+         * const orderAuditLog = await prisma.orderAuditLog.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends OrderAuditLogCreateManyArgs>(args?: SelectSubset<T, OrderAuditLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a OrderAuditLog.
+         * @param {OrderAuditLogDeleteArgs} args - Arguments to delete one OrderAuditLog.
+         * @example
+         * // Delete one OrderAuditLog
+         * const OrderAuditLog = await prisma.orderAuditLog.delete({
+         *   where: {
+         *     // ... filter to delete one OrderAuditLog
+         *   }
+         * })
+         * 
+         */
+        delete<T extends OrderAuditLogDeleteArgs>(args: SelectSubset<T, OrderAuditLogDeleteArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one OrderAuditLog.
+         * @param {OrderAuditLogUpdateArgs} args - Arguments to update one OrderAuditLog.
+         * @example
+         * // Update one OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends OrderAuditLogUpdateArgs>(args: SelectSubset<T, OrderAuditLogUpdateArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more OrderAuditLogs.
+         * @param {OrderAuditLogDeleteManyArgs} args - Arguments to filter OrderAuditLogs to delete.
+         * @example
+         * // Delete a few OrderAuditLogs
+         * const { count } = await prisma.orderAuditLog.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends OrderAuditLogDeleteManyArgs>(args?: SelectSubset<T, OrderAuditLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more OrderAuditLogs.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many OrderAuditLogs
+         * const orderAuditLog = await prisma.orderAuditLog.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends OrderAuditLogUpdateManyArgs>(args: SelectSubset<T, OrderAuditLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one OrderAuditLog.
+         * @param {OrderAuditLogUpsertArgs} args - Arguments to update or create a OrderAuditLog.
+         * @example
+         * // Update or create a OrderAuditLog
+         * const orderAuditLog = await prisma.orderAuditLog.upsert({
+         *   create: {
+         *     // ... data to create a OrderAuditLog
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the OrderAuditLog we want to update
+         *   }
+         * })
+         */
+        upsert<T extends OrderAuditLogUpsertArgs>(args: SelectSubset<T, OrderAuditLogUpsertArgs<ExtArgs>>): Prisma__OrderAuditLogClient<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of OrderAuditLogs.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogCountArgs} args - Arguments to filter OrderAuditLogs to count.
+         * @example
+         * // Count the number of OrderAuditLogs
+         * const count = await prisma.orderAuditLog.count({
+         *   where: {
+         *     // ... the filter for the OrderAuditLogs we want to count
+         *   }
+         * })
+        **/
+        count<T extends OrderAuditLogCountArgs>(
+            args?: Subset<T, OrderAuditLogCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], OrderAuditLogCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a OrderAuditLog.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends OrderAuditLogAggregateArgs>(args: Subset<T, OrderAuditLogAggregateArgs>): Prisma.PrismaPromise<GetOrderAuditLogAggregateType<T>>
+
+        /**
+         * Group by OrderAuditLog.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {OrderAuditLogGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends OrderAuditLogGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: OrderAuditLogGroupByArgs['orderBy'] }
+            : { orderBy?: OrderAuditLogGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, OrderAuditLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderAuditLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the OrderAuditLog model
+         */
+        readonly fields: OrderAuditLogFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for OrderAuditLog.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__OrderAuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        operator<T extends OrderAuditLog$operatorArgs<ExtArgs> = {}>(args?: Subset<T, OrderAuditLog$operatorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        approvedBy<T extends OrderAuditLog$approvedByArgs<ExtArgs> = {}>(args?: Subset<T, OrderAuditLog$approvedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the OrderAuditLog model
+     */
+    interface OrderAuditLogFieldRefs {
+        readonly id: FieldRef<"OrderAuditLog", 'String'>
+        readonly storeId: FieldRef<"OrderAuditLog", 'String'>
+        readonly orderId: FieldRef<"OrderAuditLog", 'String'>
+        readonly action: FieldRef<"OrderAuditLog", 'OrderAuditAction'>
+        readonly fromStatus: FieldRef<"OrderAuditLog", 'OrderStatus'>
+        readonly toStatus: FieldRef<"OrderAuditLog", 'OrderStatus'>
+        readonly amount: FieldRef<"OrderAuditLog", 'Decimal'>
+        readonly reason: FieldRef<"OrderAuditLog", 'String'>
+        readonly operatorId: FieldRef<"OrderAuditLog", 'String'>
+        readonly approvedById: FieldRef<"OrderAuditLog", 'String'>
+        readonly createdAt: FieldRef<"OrderAuditLog", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * OrderAuditLog findUnique
+     */
+    export type OrderAuditLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter, which OrderAuditLog to fetch.
+         */
+        where: OrderAuditLogWhereUniqueInput
+    }
+
+    /**
+     * OrderAuditLog findUniqueOrThrow
+     */
+    export type OrderAuditLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter, which OrderAuditLog to fetch.
+         */
+        where: OrderAuditLogWhereUniqueInput
+    }
+
+    /**
+     * OrderAuditLog findFirst
+     */
+    export type OrderAuditLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter, which OrderAuditLog to fetch.
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of OrderAuditLogs to fetch.
+         */
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for OrderAuditLogs.
+         */
+        cursor?: OrderAuditLogWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` OrderAuditLogs from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` OrderAuditLogs.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of OrderAuditLogs.
+         */
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * OrderAuditLog findFirstOrThrow
+     */
+    export type OrderAuditLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter, which OrderAuditLog to fetch.
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of OrderAuditLogs to fetch.
+         */
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for OrderAuditLogs.
+         */
+        cursor?: OrderAuditLogWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` OrderAuditLogs from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` OrderAuditLogs.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of OrderAuditLogs.
+         */
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * OrderAuditLog findMany
+     */
+    export type OrderAuditLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter, which OrderAuditLogs to fetch.
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of OrderAuditLogs to fetch.
+         */
+        orderBy?: OrderAuditLogOrderByWithRelationInput | OrderAuditLogOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing OrderAuditLogs.
+         */
+        cursor?: OrderAuditLogWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` OrderAuditLogs from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` OrderAuditLogs.
+         */
+        skip?: number
+        distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * OrderAuditLog create
+     */
+    export type OrderAuditLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * The data needed to create a OrderAuditLog.
+         */
+        data: XOR<OrderAuditLogCreateInput, OrderAuditLogUncheckedCreateInput>
+    }
+
+    /**
+     * OrderAuditLog createMany
+     */
+    export type OrderAuditLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many OrderAuditLogs.
+         */
+        data: OrderAuditLogCreateManyInput | OrderAuditLogCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * OrderAuditLog update
+     */
+    export type OrderAuditLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * The data needed to update a OrderAuditLog.
+         */
+        data: XOR<OrderAuditLogUpdateInput, OrderAuditLogUncheckedUpdateInput>
+        /**
+         * Choose, which OrderAuditLog to update.
+         */
+        where: OrderAuditLogWhereUniqueInput
+    }
+
+    /**
+     * OrderAuditLog updateMany
+     */
+    export type OrderAuditLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update OrderAuditLogs.
+         */
+        data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyInput>
+        /**
+         * Filter which OrderAuditLogs to update
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * Limit how many OrderAuditLogs to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * OrderAuditLog upsert
+     */
+    export type OrderAuditLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * The filter to search for the OrderAuditLog to update in case it exists.
+         */
+        where: OrderAuditLogWhereUniqueInput
+        /**
+         * In case the OrderAuditLog found by the `where` argument doesn't exist, create a new OrderAuditLog with this data.
+         */
+        create: XOR<OrderAuditLogCreateInput, OrderAuditLogUncheckedCreateInput>
+        /**
+         * In case the OrderAuditLog was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<OrderAuditLogUpdateInput, OrderAuditLogUncheckedUpdateInput>
+    }
+
+    /**
+     * OrderAuditLog delete
+     */
+    export type OrderAuditLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
+        /**
+         * Filter which OrderAuditLog to delete.
+         */
+        where: OrderAuditLogWhereUniqueInput
+    }
+
+    /**
+     * OrderAuditLog deleteMany
+     */
+    export type OrderAuditLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which OrderAuditLogs to delete
+         */
+        where?: OrderAuditLogWhereInput
+        /**
+         * Limit how many OrderAuditLogs to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * OrderAuditLog.operator
+     */
+    export type OrderAuditLog$operatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * OrderAuditLog.approvedBy
+     */
+    export type OrderAuditLog$approvedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * OrderAuditLog without action
+     */
+    export type OrderAuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the OrderAuditLog
+         */
+        select?: OrderAuditLogSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the OrderAuditLog
+         */
+        omit?: OrderAuditLogOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderAuditLogInclude<ExtArgs> | null
     }
 
 
@@ -14898,6 +18743,53 @@ export namespace Prisma {
     export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
 
 
+    export const RefundScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        refundNumber: 'refundNumber',
+        idempotencyKey: 'idempotencyKey',
+        status: 'status',
+        method: 'method',
+        amount: 'amount',
+        reason: 'reason',
+        operatorId: 'operatorId',
+        approvedById: 'approvedById',
+        createdAt: 'createdAt'
+    };
+
+    export type RefundScalarFieldEnum = (typeof RefundScalarFieldEnum)[keyof typeof RefundScalarFieldEnum]
+
+
+    export const RefundItemScalarFieldEnum: {
+        id: 'id',
+        refundId: 'refundId',
+        orderItemId: 'orderItemId',
+        quantity: 'quantity',
+        amount: 'amount',
+        createdAt: 'createdAt'
+    };
+
+    export type RefundItemScalarFieldEnum = (typeof RefundItemScalarFieldEnum)[keyof typeof RefundItemScalarFieldEnum]
+
+
+    export const OrderAuditLogScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        action: 'action',
+        fromStatus: 'fromStatus',
+        toStatus: 'toStatus',
+        amount: 'amount',
+        reason: 'reason',
+        operatorId: 'operatorId',
+        approvedById: 'approvedById',
+        createdAt: 'createdAt'
+    };
+
+    export type OrderAuditLogScalarFieldEnum = (typeof OrderAuditLogScalarFieldEnum)[keyof typeof OrderAuditLogScalarFieldEnum]
+
+
     export const AiDraftScalarFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -15081,6 +18973,41 @@ export namespace Prisma {
     export type OrderItemOrderByRelevanceFieldEnum = (typeof OrderItemOrderByRelevanceFieldEnum)[keyof typeof OrderItemOrderByRelevanceFieldEnum]
 
 
+    export const RefundOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        refundNumber: 'refundNumber',
+        idempotencyKey: 'idempotencyKey',
+        reason: 'reason',
+        operatorId: 'operatorId',
+        approvedById: 'approvedById'
+    };
+
+    export type RefundOrderByRelevanceFieldEnum = (typeof RefundOrderByRelevanceFieldEnum)[keyof typeof RefundOrderByRelevanceFieldEnum]
+
+
+    export const RefundItemOrderByRelevanceFieldEnum: {
+        id: 'id',
+        refundId: 'refundId',
+        orderItemId: 'orderItemId'
+    };
+
+    export type RefundItemOrderByRelevanceFieldEnum = (typeof RefundItemOrderByRelevanceFieldEnum)[keyof typeof RefundItemOrderByRelevanceFieldEnum]
+
+
+    export const OrderAuditLogOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        reason: 'reason',
+        operatorId: 'operatorId',
+        approvedById: 'approvedById'
+    };
+
+    export type OrderAuditLogOrderByRelevanceFieldEnum = (typeof OrderAuditLogOrderByRelevanceFieldEnum)[keyof typeof OrderAuditLogOrderByRelevanceFieldEnum]
+
+
     export const AiDraftOrderByRelevanceFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -15209,6 +19136,20 @@ export namespace Prisma {
 
 
     /**
+     * Reference to a field of type 'RefundStatus'
+     */
+    export type EnumRefundStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RefundStatus'>
+
+
+
+    /**
+     * Reference to a field of type 'OrderAuditAction'
+     */
+    export type EnumOrderAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderAuditAction'>
+
+
+
+    /**
      * Reference to a field of type 'AiDraftStatus'
      */
     export type EnumAiDraftStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiDraftStatus'>
@@ -15248,6 +19189,8 @@ export namespace Prisma {
         categories?: CategoryListRelationFilter
         products?: ProductListRelationFilter
         orders?: OrderListRelationFilter
+        refunds?: RefundListRelationFilter
+        auditLogs?: OrderAuditLogListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }
@@ -15265,6 +19208,8 @@ export namespace Prisma {
         categories?: CategoryOrderByRelationAggregateInput
         products?: ProductOrderByRelationAggregateInput
         orders?: OrderOrderByRelationAggregateInput
+        refunds?: RefundOrderByRelationAggregateInput
+        auditLogs?: OrderAuditLogOrderByRelationAggregateInput
         aiDrafts?: AiDraftOrderByRelationAggregateInput
         campaigns?: CampaignOrderByRelationAggregateInput
         _relevance?: StoreOrderByRelevanceInput
@@ -15286,6 +19231,8 @@ export namespace Prisma {
         categories?: CategoryListRelationFilter
         products?: ProductListRelationFilter
         orders?: OrderListRelationFilter
+        refunds?: RefundListRelationFilter
+        auditLogs?: OrderAuditLogListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }, "id" | "code">
@@ -15330,6 +19277,10 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"User"> | Date | string
         updatedAt?: DateTimeFilter<"User"> | Date | string
         stores?: StoreUserListRelationFilter
+        operatedRefunds?: RefundListRelationFilter
+        approvedRefunds?: RefundListRelationFilter
+        operatedOrderAuditLogs?: OrderAuditLogListRelationFilter
+        approvedOrderAuditLogs?: OrderAuditLogListRelationFilter
     }
 
     export type UserOrderByWithRelationInput = {
@@ -15341,6 +19292,10 @@ export namespace Prisma {
         createdAt?: SortOrder
         updatedAt?: SortOrder
         stores?: StoreUserOrderByRelationAggregateInput
+        operatedRefunds?: RefundOrderByRelationAggregateInput
+        approvedRefunds?: RefundOrderByRelationAggregateInput
+        operatedOrderAuditLogs?: OrderAuditLogOrderByRelationAggregateInput
+        approvedOrderAuditLogs?: OrderAuditLogOrderByRelationAggregateInput
         _relevance?: UserOrderByRelevanceInput
     }
 
@@ -15356,6 +19311,10 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"User"> | Date | string
         updatedAt?: DateTimeFilter<"User"> | Date | string
         stores?: StoreUserListRelationFilter
+        operatedRefunds?: RefundListRelationFilter
+        approvedRefunds?: RefundListRelationFilter
+        operatedOrderAuditLogs?: OrderAuditLogListRelationFilter
+        approvedOrderAuditLogs?: OrderAuditLogListRelationFilter
     }, "id" | "email">
 
     export type UserOrderByWithAggregationInput = {
@@ -15820,6 +19779,8 @@ export namespace Prisma {
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
         items?: OrderItemListRelationFilter
         payments?: OrderPaymentListRelationFilter
+        refunds?: RefundListRelationFilter
+        auditLogs?: OrderAuditLogListRelationFilter
     }
 
     export type OrderOrderByWithRelationInput = {
@@ -15847,6 +19808,8 @@ export namespace Prisma {
         store?: StoreOrderByWithRelationInput
         items?: OrderItemOrderByRelationAggregateInput
         payments?: OrderPaymentOrderByRelationAggregateInput
+        refunds?: RefundOrderByRelationAggregateInput
+        auditLogs?: OrderAuditLogOrderByRelationAggregateInput
         _relevance?: OrderOrderByRelevanceInput
     }
 
@@ -15878,6 +19841,8 @@ export namespace Prisma {
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
         items?: OrderItemListRelationFilter
         payments?: OrderPaymentListRelationFilter
+        refunds?: RefundListRelationFilter
+        auditLogs?: OrderAuditLogListRelationFilter
     }, "id" | "orderNumber">
 
     export type OrderOrderByWithAggregationInput = {
@@ -16020,6 +19985,7 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"OrderItem"> | Date | string
         order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
         product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+        refundItems?: RefundItemListRelationFilter
     }
 
     export type OrderItemOrderByWithRelationInput = {
@@ -16035,6 +20001,7 @@ export namespace Prisma {
         createdAt?: SortOrder
         order?: OrderOrderByWithRelationInput
         product?: ProductOrderByWithRelationInput
+        refundItems?: RefundItemOrderByRelationAggregateInput
         _relevance?: OrderItemOrderByRelevanceInput
     }
 
@@ -16054,6 +20021,7 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"OrderItem"> | Date | string
         order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
         product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+        refundItems?: RefundItemListRelationFilter
     }, "id">
 
     export type OrderItemOrderByWithAggregationInput = {
@@ -16088,6 +20056,275 @@ export namespace Prisma {
         lineTotal?: DecimalWithAggregatesFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
         modifiers?: JsonNullableWithAggregatesFilter<"OrderItem">
         createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
+    }
+
+    export type RefundWhereInput = {
+        AND?: RefundWhereInput | RefundWhereInput[]
+        OR?: RefundWhereInput[]
+        NOT?: RefundWhereInput | RefundWhereInput[]
+        id?: StringFilter<"Refund"> | string
+        storeId?: StringFilter<"Refund"> | string
+        orderId?: StringFilter<"Refund"> | string
+        refundNumber?: StringFilter<"Refund"> | string
+        idempotencyKey?: StringFilter<"Refund"> | string
+        status?: EnumRefundStatusFilter<"Refund"> | $Enums.RefundStatus
+        method?: EnumPaymentMethodFilter<"Refund"> | $Enums.PaymentMethod
+        amount?: DecimalFilter<"Refund"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"Refund"> | string
+        operatorId?: StringNullableFilter<"Refund"> | string | null
+        approvedById?: StringNullableFilter<"Refund"> | string | null
+        createdAt?: DateTimeFilter<"Refund"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        operator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        items?: RefundItemListRelationFilter
+    }
+
+    export type RefundOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        refundNumber?: SortOrder
+        idempotencyKey?: SortOrder
+        status?: SortOrder
+        method?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrderInput | SortOrder
+        approvedById?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        order?: OrderOrderByWithRelationInput
+        operator?: UserOrderByWithRelationInput
+        approvedBy?: UserOrderByWithRelationInput
+        items?: RefundItemOrderByRelationAggregateInput
+        _relevance?: RefundOrderByRelevanceInput
+    }
+
+    export type RefundWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        refundNumber?: string
+        storeId_idempotencyKey?: RefundStoreIdIdempotencyKeyCompoundUniqueInput
+        AND?: RefundWhereInput | RefundWhereInput[]
+        OR?: RefundWhereInput[]
+        NOT?: RefundWhereInput | RefundWhereInput[]
+        storeId?: StringFilter<"Refund"> | string
+        orderId?: StringFilter<"Refund"> | string
+        idempotencyKey?: StringFilter<"Refund"> | string
+        status?: EnumRefundStatusFilter<"Refund"> | $Enums.RefundStatus
+        method?: EnumPaymentMethodFilter<"Refund"> | $Enums.PaymentMethod
+        amount?: DecimalFilter<"Refund"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"Refund"> | string
+        operatorId?: StringNullableFilter<"Refund"> | string | null
+        approvedById?: StringNullableFilter<"Refund"> | string | null
+        createdAt?: DateTimeFilter<"Refund"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        operator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        items?: RefundItemListRelationFilter
+    }, "id" | "refundNumber" | "storeId_idempotencyKey">
+
+    export type RefundOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        refundNumber?: SortOrder
+        idempotencyKey?: SortOrder
+        status?: SortOrder
+        method?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrderInput | SortOrder
+        approvedById?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        _count?: RefundCountOrderByAggregateInput
+        _avg?: RefundAvgOrderByAggregateInput
+        _max?: RefundMaxOrderByAggregateInput
+        _min?: RefundMinOrderByAggregateInput
+        _sum?: RefundSumOrderByAggregateInput
+    }
+
+    export type RefundScalarWhereWithAggregatesInput = {
+        AND?: RefundScalarWhereWithAggregatesInput | RefundScalarWhereWithAggregatesInput[]
+        OR?: RefundScalarWhereWithAggregatesInput[]
+        NOT?: RefundScalarWhereWithAggregatesInput | RefundScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"Refund"> | string
+        storeId?: StringWithAggregatesFilter<"Refund"> | string
+        orderId?: StringWithAggregatesFilter<"Refund"> | string
+        refundNumber?: StringWithAggregatesFilter<"Refund"> | string
+        idempotencyKey?: StringWithAggregatesFilter<"Refund"> | string
+        status?: EnumRefundStatusWithAggregatesFilter<"Refund"> | $Enums.RefundStatus
+        method?: EnumPaymentMethodWithAggregatesFilter<"Refund"> | $Enums.PaymentMethod
+        amount?: DecimalWithAggregatesFilter<"Refund"> | Decimal | DecimalJsLike | number | string
+        reason?: StringWithAggregatesFilter<"Refund"> | string
+        operatorId?: StringNullableWithAggregatesFilter<"Refund"> | string | null
+        approvedById?: StringNullableWithAggregatesFilter<"Refund"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"Refund"> | Date | string
+    }
+
+    export type RefundItemWhereInput = {
+        AND?: RefundItemWhereInput | RefundItemWhereInput[]
+        OR?: RefundItemWhereInput[]
+        NOT?: RefundItemWhereInput | RefundItemWhereInput[]
+        id?: StringFilter<"RefundItem"> | string
+        refundId?: StringFilter<"RefundItem"> | string
+        orderItemId?: StringFilter<"RefundItem"> | string
+        quantity?: IntFilter<"RefundItem"> | number
+        amount?: DecimalFilter<"RefundItem"> | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFilter<"RefundItem"> | Date | string
+        refund?: XOR<RefundScalarRelationFilter, RefundWhereInput>
+        orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
+    }
+
+    export type RefundItemOrderByWithRelationInput = {
+        id?: SortOrder
+        refundId?: SortOrder
+        orderItemId?: SortOrder
+        quantity?: SortOrder
+        amount?: SortOrder
+        createdAt?: SortOrder
+        refund?: RefundOrderByWithRelationInput
+        orderItem?: OrderItemOrderByWithRelationInput
+        _relevance?: RefundItemOrderByRelevanceInput
+    }
+
+    export type RefundItemWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        AND?: RefundItemWhereInput | RefundItemWhereInput[]
+        OR?: RefundItemWhereInput[]
+        NOT?: RefundItemWhereInput | RefundItemWhereInput[]
+        refundId?: StringFilter<"RefundItem"> | string
+        orderItemId?: StringFilter<"RefundItem"> | string
+        quantity?: IntFilter<"RefundItem"> | number
+        amount?: DecimalFilter<"RefundItem"> | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFilter<"RefundItem"> | Date | string
+        refund?: XOR<RefundScalarRelationFilter, RefundWhereInput>
+        orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
+    }, "id">
+
+    export type RefundItemOrderByWithAggregationInput = {
+        id?: SortOrder
+        refundId?: SortOrder
+        orderItemId?: SortOrder
+        quantity?: SortOrder
+        amount?: SortOrder
+        createdAt?: SortOrder
+        _count?: RefundItemCountOrderByAggregateInput
+        _avg?: RefundItemAvgOrderByAggregateInput
+        _max?: RefundItemMaxOrderByAggregateInput
+        _min?: RefundItemMinOrderByAggregateInput
+        _sum?: RefundItemSumOrderByAggregateInput
+    }
+
+    export type RefundItemScalarWhereWithAggregatesInput = {
+        AND?: RefundItemScalarWhereWithAggregatesInput | RefundItemScalarWhereWithAggregatesInput[]
+        OR?: RefundItemScalarWhereWithAggregatesInput[]
+        NOT?: RefundItemScalarWhereWithAggregatesInput | RefundItemScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"RefundItem"> | string
+        refundId?: StringWithAggregatesFilter<"RefundItem"> | string
+        orderItemId?: StringWithAggregatesFilter<"RefundItem"> | string
+        quantity?: IntWithAggregatesFilter<"RefundItem"> | number
+        amount?: DecimalWithAggregatesFilter<"RefundItem"> | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeWithAggregatesFilter<"RefundItem"> | Date | string
+    }
+
+    export type OrderAuditLogWhereInput = {
+        AND?: OrderAuditLogWhereInput | OrderAuditLogWhereInput[]
+        OR?: OrderAuditLogWhereInput[]
+        NOT?: OrderAuditLogWhereInput | OrderAuditLogWhereInput[]
+        id?: StringFilter<"OrderAuditLog"> | string
+        storeId?: StringFilter<"OrderAuditLog"> | string
+        orderId?: StringFilter<"OrderAuditLog"> | string
+        action?: EnumOrderAuditActionFilter<"OrderAuditLog"> | $Enums.OrderAuditAction
+        fromStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        toStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        amount?: DecimalNullableFilter<"OrderAuditLog"> | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFilter<"OrderAuditLog"> | string
+        operatorId?: StringNullableFilter<"OrderAuditLog"> | string | null
+        approvedById?: StringNullableFilter<"OrderAuditLog"> | string | null
+        createdAt?: DateTimeFilter<"OrderAuditLog"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        operator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }
+
+    export type OrderAuditLogOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        action?: SortOrder
+        fromStatus?: SortOrderInput | SortOrder
+        toStatus?: SortOrderInput | SortOrder
+        amount?: SortOrderInput | SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrderInput | SortOrder
+        approvedById?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        order?: OrderOrderByWithRelationInput
+        operator?: UserOrderByWithRelationInput
+        approvedBy?: UserOrderByWithRelationInput
+        _relevance?: OrderAuditLogOrderByRelevanceInput
+    }
+
+    export type OrderAuditLogWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        AND?: OrderAuditLogWhereInput | OrderAuditLogWhereInput[]
+        OR?: OrderAuditLogWhereInput[]
+        NOT?: OrderAuditLogWhereInput | OrderAuditLogWhereInput[]
+        storeId?: StringFilter<"OrderAuditLog"> | string
+        orderId?: StringFilter<"OrderAuditLog"> | string
+        action?: EnumOrderAuditActionFilter<"OrderAuditLog"> | $Enums.OrderAuditAction
+        fromStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        toStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        amount?: DecimalNullableFilter<"OrderAuditLog"> | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFilter<"OrderAuditLog"> | string
+        operatorId?: StringNullableFilter<"OrderAuditLog"> | string | null
+        approvedById?: StringNullableFilter<"OrderAuditLog"> | string | null
+        createdAt?: DateTimeFilter<"OrderAuditLog"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        operator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }, "id">
+
+    export type OrderAuditLogOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        action?: SortOrder
+        fromStatus?: SortOrderInput | SortOrder
+        toStatus?: SortOrderInput | SortOrder
+        amount?: SortOrderInput | SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrderInput | SortOrder
+        approvedById?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        _count?: OrderAuditLogCountOrderByAggregateInput
+        _avg?: OrderAuditLogAvgOrderByAggregateInput
+        _max?: OrderAuditLogMaxOrderByAggregateInput
+        _min?: OrderAuditLogMinOrderByAggregateInput
+        _sum?: OrderAuditLogSumOrderByAggregateInput
+    }
+
+    export type OrderAuditLogScalarWhereWithAggregatesInput = {
+        AND?: OrderAuditLogScalarWhereWithAggregatesInput | OrderAuditLogScalarWhereWithAggregatesInput[]
+        OR?: OrderAuditLogScalarWhereWithAggregatesInput[]
+        NOT?: OrderAuditLogScalarWhereWithAggregatesInput | OrderAuditLogScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"OrderAuditLog"> | string
+        storeId?: StringWithAggregatesFilter<"OrderAuditLog"> | string
+        orderId?: StringWithAggregatesFilter<"OrderAuditLog"> | string
+        action?: EnumOrderAuditActionWithAggregatesFilter<"OrderAuditLog"> | $Enums.OrderAuditAction
+        fromStatus?: EnumOrderStatusNullableWithAggregatesFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        toStatus?: EnumOrderStatusNullableWithAggregatesFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        amount?: DecimalNullableWithAggregatesFilter<"OrderAuditLog"> | Decimal | DecimalJsLike | number | string | null
+        reason?: StringWithAggregatesFilter<"OrderAuditLog"> | string
+        operatorId?: StringNullableWithAggregatesFilter<"OrderAuditLog"> | string | null
+        approvedById?: StringNullableWithAggregatesFilter<"OrderAuditLog"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"OrderAuditLog"> | Date | string
     }
 
     export type AiDraftWhereInput = {
@@ -16277,6 +20514,8 @@ export namespace Prisma {
         categories?: CategoryCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -16294,6 +20533,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -16311,6 +20552,8 @@ export namespace Prisma {
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -16328,6 +20571,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -16374,6 +20619,10 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
     }
 
     export type UserUncheckedCreateInput = {
@@ -16385,6 +20634,10 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
     }
 
     export type UserUpdateInput = {
@@ -16396,6 +20649,10 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
     }
 
     export type UserUncheckedUpdateInput = {
@@ -16407,6 +20664,10 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
     }
 
     export type UserCreateManyInput = {
@@ -16892,6 +21153,8 @@ export namespace Prisma {
         store?: StoreCreateNestedOneWithoutOrdersInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateInput = {
@@ -16918,6 +21181,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUpdateInput = {
@@ -16944,6 +21209,8 @@ export namespace Prisma {
         store?: StoreUpdateOneWithoutOrdersNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateInput = {
@@ -16970,6 +21237,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderCreateManyInput = {
@@ -17123,6 +21392,7 @@ export namespace Prisma {
         createdAt?: Date | string
         order: OrderCreateNestedOneWithoutItemsInput
         product: ProductCreateNestedOneWithoutOrderItemsInput
+        refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateInput = {
@@ -17136,6 +21406,7 @@ export namespace Prisma {
         lineTotal: Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
+        refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUpdateInput = {
@@ -17149,6 +21420,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         order?: OrderUpdateOneRequiredWithoutItemsNestedInput
         product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+        refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateInput = {
@@ -17162,6 +21434,7 @@ export namespace Prisma {
         lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemCreateManyInput = {
@@ -17198,6 +21471,266 @@ export namespace Prisma {
         unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundCreateInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutRefundsInput
+        order: OrderCreateNestedOneWithoutRefundsInput
+        operator?: UserCreateNestedOneWithoutOperatedRefundsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedRefundsInput
+        items?: RefundItemCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+        items?: RefundItemUncheckedCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutRefundsNestedInput
+        order?: OrderUpdateOneRequiredWithoutRefundsNestedInput
+        operator?: UserUpdateOneWithoutOperatedRefundsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedRefundsNestedInput
+        items?: RefundItemUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: RefundItemUncheckedUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundCreateManyInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type RefundUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemCreateInput = {
+        id?: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+        refund: RefundCreateNestedOneWithoutItemsInput
+        orderItem: OrderItemCreateNestedOneWithoutRefundItemsInput
+    }
+
+    export type RefundItemUncheckedCreateInput = {
+        id?: string
+        refundId: string
+        orderItemId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refund?: RefundUpdateOneRequiredWithoutItemsNestedInput
+        orderItem?: OrderItemUpdateOneRequiredWithoutRefundItemsNestedInput
+    }
+
+    export type RefundItemUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemCreateManyInput = {
+        id?: string
+        refundId: string
+        orderItemId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogCreateInput = {
+        id?: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutAuditLogsInput
+        order: OrderCreateNestedOneWithoutAuditLogsInput
+        operator?: UserCreateNestedOneWithoutOperatedOrderAuditLogsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedOrderAuditLogsInput
+    }
+
+    export type OrderAuditLogUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutAuditLogsNestedInput
+        order?: OrderUpdateOneRequiredWithoutAuditLogsNestedInput
+        operator?: UserUpdateOneWithoutOperatedOrderAuditLogsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedOrderAuditLogsNestedInput
+    }
+
+    export type OrderAuditLogUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogCreateManyInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
@@ -17465,6 +21998,18 @@ export namespace Prisma {
         none?: OrderWhereInput
     }
 
+    export type RefundListRelationFilter = {
+        every?: RefundWhereInput
+        some?: RefundWhereInput
+        none?: RefundWhereInput
+    }
+
+    export type OrderAuditLogListRelationFilter = {
+        every?: OrderAuditLogWhereInput
+        some?: OrderAuditLogWhereInput
+        none?: OrderAuditLogWhereInput
+    }
+
     export type AiDraftListRelationFilter = {
         every?: AiDraftWhereInput
         some?: AiDraftWhereInput
@@ -17495,6 +22040,14 @@ export namespace Prisma {
     }
 
     export type OrderOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type RefundOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type OrderAuditLogOrderByRelationAggregateInput = {
         _count?: SortOrder
     }
 
@@ -18385,6 +22938,16 @@ export namespace Prisma {
         not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     }
 
+    export type RefundItemListRelationFilter = {
+        every?: RefundItemWhereInput
+        some?: RefundItemWhereInput
+        none?: RefundItemWhereInput
+    }
+
+    export type RefundItemOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
     export type OrderItemOrderByRelevanceInput = {
         fields: OrderItemOrderByRelevanceFieldEnum | OrderItemOrderByRelevanceFieldEnum[]
         sort: SortOrder
@@ -18464,6 +23027,235 @@ export namespace Prisma {
         _count?: NestedIntNullableFilter<$PrismaModel>
         _min?: NestedJsonNullableFilter<$PrismaModel>
         _max?: NestedJsonNullableFilter<$PrismaModel>
+    }
+
+    export type EnumRefundStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.RefundStatus | EnumRefundStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.RefundStatus[]
+        notIn?: $Enums.RefundStatus[]
+        not?: NestedEnumRefundStatusFilter<$PrismaModel> | $Enums.RefundStatus
+    }
+
+    export type UserNullableScalarRelationFilter = {
+        is?: UserWhereInput | null
+        isNot?: UserWhereInput | null
+    }
+
+    export type RefundOrderByRelevanceInput = {
+        fields: RefundOrderByRelevanceFieldEnum | RefundOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type RefundStoreIdIdempotencyKeyCompoundUniqueInput = {
+        storeId: string
+        idempotencyKey: string
+    }
+
+    export type RefundCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        refundNumber?: SortOrder
+        idempotencyKey?: SortOrder
+        status?: SortOrder
+        method?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundAvgOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type RefundMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        refundNumber?: SortOrder
+        idempotencyKey?: SortOrder
+        status?: SortOrder
+        method?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        refundNumber?: SortOrder
+        idempotencyKey?: SortOrder
+        status?: SortOrder
+        method?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundSumOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type EnumRefundStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.RefundStatus | EnumRefundStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.RefundStatus[]
+        notIn?: $Enums.RefundStatus[]
+        not?: NestedEnumRefundStatusWithAggregatesFilter<$PrismaModel> | $Enums.RefundStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumRefundStatusFilter<$PrismaModel>
+        _max?: NestedEnumRefundStatusFilter<$PrismaModel>
+    }
+
+    export type RefundScalarRelationFilter = {
+        is?: RefundWhereInput
+        isNot?: RefundWhereInput
+    }
+
+    export type OrderItemScalarRelationFilter = {
+        is?: OrderItemWhereInput
+        isNot?: OrderItemWhereInput
+    }
+
+    export type RefundItemOrderByRelevanceInput = {
+        fields: RefundItemOrderByRelevanceFieldEnum | RefundItemOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type RefundItemCountOrderByAggregateInput = {
+        id?: SortOrder
+        refundId?: SortOrder
+        orderItemId?: SortOrder
+        quantity?: SortOrder
+        amount?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundItemAvgOrderByAggregateInput = {
+        quantity?: SortOrder
+        amount?: SortOrder
+    }
+
+    export type RefundItemMaxOrderByAggregateInput = {
+        id?: SortOrder
+        refundId?: SortOrder
+        orderItemId?: SortOrder
+        quantity?: SortOrder
+        amount?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundItemMinOrderByAggregateInput = {
+        id?: SortOrder
+        refundId?: SortOrder
+        orderItemId?: SortOrder
+        quantity?: SortOrder
+        amount?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type RefundItemSumOrderByAggregateInput = {
+        quantity?: SortOrder
+        amount?: SortOrder
+    }
+
+    export type EnumOrderAuditActionFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderAuditAction | EnumOrderAuditActionFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderAuditAction[]
+        notIn?: $Enums.OrderAuditAction[]
+        not?: NestedEnumOrderAuditActionFilter<$PrismaModel> | $Enums.OrderAuditAction
+    }
+
+    export type EnumOrderStatusNullableFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel> | null
+        in?: $Enums.OrderStatus[] | null
+        notIn?: $Enums.OrderStatus[] | null
+        not?: NestedEnumOrderStatusNullableFilter<$PrismaModel> | $Enums.OrderStatus | null
+    }
+
+    export type OrderAuditLogOrderByRelevanceInput = {
+        fields: OrderAuditLogOrderByRelevanceFieldEnum | OrderAuditLogOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type OrderAuditLogCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        action?: SortOrder
+        fromStatus?: SortOrder
+        toStatus?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type OrderAuditLogAvgOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type OrderAuditLogMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        action?: SortOrder
+        fromStatus?: SortOrder
+        toStatus?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type OrderAuditLogMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        action?: SortOrder
+        fromStatus?: SortOrder
+        toStatus?: SortOrder
+        amount?: SortOrder
+        reason?: SortOrder
+        operatorId?: SortOrder
+        approvedById?: SortOrder
+        createdAt?: SortOrder
+    }
+
+    export type OrderAuditLogSumOrderByAggregateInput = {
+        amount?: SortOrder
+    }
+
+    export type EnumOrderAuditActionWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderAuditAction | EnumOrderAuditActionFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderAuditAction[]
+        notIn?: $Enums.OrderAuditAction[]
+        not?: NestedEnumOrderAuditActionWithAggregatesFilter<$PrismaModel> | $Enums.OrderAuditAction
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumOrderAuditActionFilter<$PrismaModel>
+        _max?: NestedEnumOrderAuditActionFilter<$PrismaModel>
+    }
+
+    export type EnumOrderStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel> | null
+        in?: $Enums.OrderStatus[] | null
+        notIn?: $Enums.OrderStatus[] | null
+        not?: NestedEnumOrderStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus | null
+        _count?: NestedIntNullableFilter<$PrismaModel>
+        _min?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
+        _max?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
     }
     export type JsonFilter<$PrismaModel = never> =
         | PatchUndefined<
@@ -18704,6 +23496,20 @@ export namespace Prisma {
         connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
     }
 
+    export type RefundCreateNestedManyWithoutStoreInput = {
+        create?: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput> | RefundCreateWithoutStoreInput[] | RefundUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutStoreInput | RefundCreateOrConnectWithoutStoreInput[]
+        createMany?: RefundCreateManyStoreInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogCreateNestedManyWithoutStoreInput = {
+        create?: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput> | OrderAuditLogCreateWithoutStoreInput[] | OrderAuditLogUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutStoreInput | OrderAuditLogCreateOrConnectWithoutStoreInput[]
+        createMany?: OrderAuditLogCreateManyStoreInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
     export type AiDraftCreateNestedManyWithoutStoreInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -18744,6 +23550,20 @@ export namespace Prisma {
         connectOrCreate?: OrderCreateOrConnectWithoutStoreInput | OrderCreateOrConnectWithoutStoreInput[]
         createMany?: OrderCreateManyStoreInputEnvelope
         connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    }
+
+    export type RefundUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput> | RefundCreateWithoutStoreInput[] | RefundUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutStoreInput | RefundCreateOrConnectWithoutStoreInput[]
+        createMany?: RefundCreateManyStoreInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput> | OrderAuditLogCreateWithoutStoreInput[] | OrderAuditLogUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutStoreInput | OrderAuditLogCreateOrConnectWithoutStoreInput[]
+        createMany?: OrderAuditLogCreateManyStoreInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
     export type AiDraftUncheckedCreateNestedManyWithoutStoreInput = {
@@ -18832,6 +23652,34 @@ export namespace Prisma {
         deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
     }
 
+    export type RefundUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput> | RefundCreateWithoutStoreInput[] | RefundUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutStoreInput | RefundCreateOrConnectWithoutStoreInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutStoreInput | RefundUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: RefundCreateManyStoreInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutStoreInput | RefundUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutStoreInput | RefundUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput> | OrderAuditLogCreateWithoutStoreInput[] | OrderAuditLogUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutStoreInput | OrderAuditLogCreateOrConnectWithoutStoreInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutStoreInput | OrderAuditLogUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: OrderAuditLogCreateManyStoreInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutStoreInput | OrderAuditLogUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutStoreInput | OrderAuditLogUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
     export type AiDraftUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -18916,6 +23764,34 @@ export namespace Prisma {
         deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
     }
 
+    export type RefundUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput> | RefundCreateWithoutStoreInput[] | RefundUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutStoreInput | RefundCreateOrConnectWithoutStoreInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutStoreInput | RefundUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: RefundCreateManyStoreInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutStoreInput | RefundUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutStoreInput | RefundUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput> | OrderAuditLogCreateWithoutStoreInput[] | OrderAuditLogUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutStoreInput | OrderAuditLogCreateOrConnectWithoutStoreInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutStoreInput | OrderAuditLogUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: OrderAuditLogCreateManyStoreInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutStoreInput | OrderAuditLogUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutStoreInput | OrderAuditLogUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
     export type AiDraftUncheckedUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -18951,11 +23827,67 @@ export namespace Prisma {
         connect?: StoreUserWhereUniqueInput | StoreUserWhereUniqueInput[]
     }
 
+    export type RefundCreateNestedManyWithoutOperatorInput = {
+        create?: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput> | RefundCreateWithoutOperatorInput[] | RefundUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOperatorInput | RefundCreateOrConnectWithoutOperatorInput[]
+        createMany?: RefundCreateManyOperatorInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type RefundCreateNestedManyWithoutApprovedByInput = {
+        create?: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput> | RefundCreateWithoutApprovedByInput[] | RefundUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutApprovedByInput | RefundCreateOrConnectWithoutApprovedByInput[]
+        createMany?: RefundCreateManyApprovedByInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogCreateNestedManyWithoutOperatorInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput> | OrderAuditLogCreateWithoutOperatorInput[] | OrderAuditLogUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOperatorInput | OrderAuditLogCreateOrConnectWithoutOperatorInput[]
+        createMany?: OrderAuditLogCreateManyOperatorInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogCreateNestedManyWithoutApprovedByInput = {
+        create?: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput> | OrderAuditLogCreateWithoutApprovedByInput[] | OrderAuditLogUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutApprovedByInput | OrderAuditLogCreateOrConnectWithoutApprovedByInput[]
+        createMany?: OrderAuditLogCreateManyApprovedByInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
     export type StoreUserUncheckedCreateNestedManyWithoutUserInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
         createMany?: StoreUserCreateManyUserInputEnvelope
         connect?: StoreUserWhereUniqueInput | StoreUserWhereUniqueInput[]
+    }
+
+    export type RefundUncheckedCreateNestedManyWithoutOperatorInput = {
+        create?: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput> | RefundCreateWithoutOperatorInput[] | RefundUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOperatorInput | RefundCreateOrConnectWithoutOperatorInput[]
+        createMany?: RefundCreateManyOperatorInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type RefundUncheckedCreateNestedManyWithoutApprovedByInput = {
+        create?: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput> | RefundCreateWithoutApprovedByInput[] | RefundUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutApprovedByInput | RefundCreateOrConnectWithoutApprovedByInput[]
+        createMany?: RefundCreateManyApprovedByInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput> | OrderAuditLogCreateWithoutOperatorInput[] | OrderAuditLogUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOperatorInput | OrderAuditLogCreateOrConnectWithoutOperatorInput[]
+        createMany?: OrderAuditLogCreateManyOperatorInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput = {
+        create?: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput> | OrderAuditLogCreateWithoutApprovedByInput[] | OrderAuditLogUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutApprovedByInput | OrderAuditLogCreateOrConnectWithoutApprovedByInput[]
+        createMany?: OrderAuditLogCreateManyApprovedByInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
     export type StoreUserUpdateManyWithoutUserNestedInput = {
@@ -18972,6 +23904,62 @@ export namespace Prisma {
         deleteMany?: StoreUserScalarWhereInput | StoreUserScalarWhereInput[]
     }
 
+    export type RefundUpdateManyWithoutOperatorNestedInput = {
+        create?: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput> | RefundCreateWithoutOperatorInput[] | RefundUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOperatorInput | RefundCreateOrConnectWithoutOperatorInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutOperatorInput | RefundUpsertWithWhereUniqueWithoutOperatorInput[]
+        createMany?: RefundCreateManyOperatorInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutOperatorInput | RefundUpdateWithWhereUniqueWithoutOperatorInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutOperatorInput | RefundUpdateManyWithWhereWithoutOperatorInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type RefundUpdateManyWithoutApprovedByNestedInput = {
+        create?: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput> | RefundCreateWithoutApprovedByInput[] | RefundUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutApprovedByInput | RefundCreateOrConnectWithoutApprovedByInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutApprovedByInput | RefundUpsertWithWhereUniqueWithoutApprovedByInput[]
+        createMany?: RefundCreateManyApprovedByInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutApprovedByInput | RefundUpdateWithWhereUniqueWithoutApprovedByInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutApprovedByInput | RefundUpdateManyWithWhereWithoutApprovedByInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUpdateManyWithoutOperatorNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput> | OrderAuditLogCreateWithoutOperatorInput[] | OrderAuditLogUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOperatorInput | OrderAuditLogCreateOrConnectWithoutOperatorInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutOperatorInput | OrderAuditLogUpsertWithWhereUniqueWithoutOperatorInput[]
+        createMany?: OrderAuditLogCreateManyOperatorInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutOperatorInput | OrderAuditLogUpdateWithWhereUniqueWithoutOperatorInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutOperatorInput | OrderAuditLogUpdateManyWithWhereWithoutOperatorInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUpdateManyWithoutApprovedByNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput> | OrderAuditLogCreateWithoutApprovedByInput[] | OrderAuditLogUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutApprovedByInput | OrderAuditLogCreateOrConnectWithoutApprovedByInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutApprovedByInput | OrderAuditLogUpsertWithWhereUniqueWithoutApprovedByInput[]
+        createMany?: OrderAuditLogCreateManyApprovedByInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput | OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput | OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
     export type StoreUserUncheckedUpdateManyWithoutUserNestedInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
@@ -18984,6 +23972,62 @@ export namespace Prisma {
         update?: StoreUserUpdateWithWhereUniqueWithoutUserInput | StoreUserUpdateWithWhereUniqueWithoutUserInput[]
         updateMany?: StoreUserUpdateManyWithWhereWithoutUserInput | StoreUserUpdateManyWithWhereWithoutUserInput[]
         deleteMany?: StoreUserScalarWhereInput | StoreUserScalarWhereInput[]
+    }
+
+    export type RefundUncheckedUpdateManyWithoutOperatorNestedInput = {
+        create?: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput> | RefundCreateWithoutOperatorInput[] | RefundUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOperatorInput | RefundCreateOrConnectWithoutOperatorInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutOperatorInput | RefundUpsertWithWhereUniqueWithoutOperatorInput[]
+        createMany?: RefundCreateManyOperatorInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutOperatorInput | RefundUpdateWithWhereUniqueWithoutOperatorInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutOperatorInput | RefundUpdateManyWithWhereWithoutOperatorInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type RefundUncheckedUpdateManyWithoutApprovedByNestedInput = {
+        create?: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput> | RefundCreateWithoutApprovedByInput[] | RefundUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutApprovedByInput | RefundCreateOrConnectWithoutApprovedByInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutApprovedByInput | RefundUpsertWithWhereUniqueWithoutApprovedByInput[]
+        createMany?: RefundCreateManyApprovedByInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutApprovedByInput | RefundUpdateWithWhereUniqueWithoutApprovedByInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutApprovedByInput | RefundUpdateManyWithWhereWithoutApprovedByInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput> | OrderAuditLogCreateWithoutOperatorInput[] | OrderAuditLogUncheckedCreateWithoutOperatorInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOperatorInput | OrderAuditLogCreateOrConnectWithoutOperatorInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutOperatorInput | OrderAuditLogUpsertWithWhereUniqueWithoutOperatorInput[]
+        createMany?: OrderAuditLogCreateManyOperatorInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutOperatorInput | OrderAuditLogUpdateWithWhereUniqueWithoutOperatorInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutOperatorInput | OrderAuditLogUpdateManyWithWhereWithoutOperatorInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput> | OrderAuditLogCreateWithoutApprovedByInput[] | OrderAuditLogUncheckedCreateWithoutApprovedByInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutApprovedByInput | OrderAuditLogCreateOrConnectWithoutApprovedByInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutApprovedByInput | OrderAuditLogUpsertWithWhereUniqueWithoutApprovedByInput[]
+        createMany?: OrderAuditLogCreateManyApprovedByInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput | OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput | OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
     export type StoreCreateNestedOneWithoutUsersInput = {
@@ -19308,6 +24352,20 @@ export namespace Prisma {
         connect?: OrderPaymentWhereUniqueInput | OrderPaymentWhereUniqueInput[]
     }
 
+    export type RefundCreateNestedManyWithoutOrderInput = {
+        create?: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput> | RefundCreateWithoutOrderInput[] | RefundUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOrderInput | RefundCreateOrConnectWithoutOrderInput[]
+        createMany?: RefundCreateManyOrderInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogCreateNestedManyWithoutOrderInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput> | OrderAuditLogCreateWithoutOrderInput[] | OrderAuditLogUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOrderInput | OrderAuditLogCreateOrConnectWithoutOrderInput[]
+        createMany?: OrderAuditLogCreateManyOrderInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
     export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
         create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
         connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -19320,6 +24378,20 @@ export namespace Prisma {
         connectOrCreate?: OrderPaymentCreateOrConnectWithoutOrderInput | OrderPaymentCreateOrConnectWithoutOrderInput[]
         createMany?: OrderPaymentCreateManyOrderInputEnvelope
         connect?: OrderPaymentWhereUniqueInput | OrderPaymentWhereUniqueInput[]
+    }
+
+    export type RefundUncheckedCreateNestedManyWithoutOrderInput = {
+        create?: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput> | RefundCreateWithoutOrderInput[] | RefundUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOrderInput | RefundCreateOrConnectWithoutOrderInput[]
+        createMany?: RefundCreateManyOrderInputEnvelope
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+    }
+
+    export type OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput> | OrderAuditLogCreateWithoutOrderInput[] | OrderAuditLogUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOrderInput | OrderAuditLogCreateOrConnectWithoutOrderInput[]
+        createMany?: OrderAuditLogCreateManyOrderInputEnvelope
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
     export type EnumOrderStatusFieldUpdateOperationsInput = {
@@ -19384,6 +24456,34 @@ export namespace Prisma {
         deleteMany?: OrderPaymentScalarWhereInput | OrderPaymentScalarWhereInput[]
     }
 
+    export type RefundUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput> | RefundCreateWithoutOrderInput[] | RefundUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOrderInput | RefundCreateOrConnectWithoutOrderInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutOrderInput | RefundUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: RefundCreateManyOrderInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutOrderInput | RefundUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutOrderInput | RefundUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput> | OrderAuditLogCreateWithoutOrderInput[] | OrderAuditLogUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOrderInput | OrderAuditLogCreateOrConnectWithoutOrderInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutOrderInput | OrderAuditLogUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: OrderAuditLogCreateManyOrderInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutOrderInput | OrderAuditLogUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutOrderInput | OrderAuditLogUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+    }
+
     export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
         create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
         connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -19410,6 +24510,34 @@ export namespace Prisma {
         update?: OrderPaymentUpdateWithWhereUniqueWithoutOrderInput | OrderPaymentUpdateWithWhereUniqueWithoutOrderInput[]
         updateMany?: OrderPaymentUpdateManyWithWhereWithoutOrderInput | OrderPaymentUpdateManyWithWhereWithoutOrderInput[]
         deleteMany?: OrderPaymentScalarWhereInput | OrderPaymentScalarWhereInput[]
+    }
+
+    export type RefundUncheckedUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput> | RefundCreateWithoutOrderInput[] | RefundUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: RefundCreateOrConnectWithoutOrderInput | RefundCreateOrConnectWithoutOrderInput[]
+        upsert?: RefundUpsertWithWhereUniqueWithoutOrderInput | RefundUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: RefundCreateManyOrderInputEnvelope
+        set?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        disconnect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        delete?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        connect?: RefundWhereUniqueInput | RefundWhereUniqueInput[]
+        update?: RefundUpdateWithWhereUniqueWithoutOrderInput | RefundUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: RefundUpdateManyWithWhereWithoutOrderInput | RefundUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: RefundScalarWhereInput | RefundScalarWhereInput[]
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput> | OrderAuditLogCreateWithoutOrderInput[] | OrderAuditLogUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOrderInput | OrderAuditLogCreateOrConnectWithoutOrderInput[]
+        upsert?: OrderAuditLogUpsertWithWhereUniqueWithoutOrderInput | OrderAuditLogUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: OrderAuditLogCreateManyOrderInputEnvelope
+        set?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        disconnect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        delete?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+        update?: OrderAuditLogUpdateWithWhereUniqueWithoutOrderInput | OrderAuditLogUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: OrderAuditLogUpdateManyWithWhereWithoutOrderInput | OrderAuditLogUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
     export type OrderCreateNestedOneWithoutPaymentsInput = {
@@ -19442,6 +24570,20 @@ export namespace Prisma {
         connect?: ProductWhereUniqueInput
     }
 
+    export type RefundItemCreateNestedManyWithoutOrderItemInput = {
+        create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
+        createMany?: RefundItemCreateManyOrderItemInputEnvelope
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+    }
+
+    export type RefundItemUncheckedCreateNestedManyWithoutOrderItemInput = {
+        create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
+        createMany?: RefundItemCreateManyOrderItemInputEnvelope
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+    }
+
     export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
         create?: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
         connectOrCreate?: OrderCreateOrConnectWithoutItemsInput
@@ -19456,6 +24598,236 @@ export namespace Prisma {
         upsert?: ProductUpsertWithoutOrderItemsInput
         connect?: ProductWhereUniqueInput
         update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutOrderItemsInput, ProductUpdateWithoutOrderItemsInput>, ProductUncheckedUpdateWithoutOrderItemsInput>
+    }
+
+    export type RefundItemUpdateManyWithoutOrderItemNestedInput = {
+        create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
+        upsert?: RefundItemUpsertWithWhereUniqueWithoutOrderItemInput | RefundItemUpsertWithWhereUniqueWithoutOrderItemInput[]
+        createMany?: RefundItemCreateManyOrderItemInputEnvelope
+        set?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        disconnect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        delete?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        update?: RefundItemUpdateWithWhereUniqueWithoutOrderItemInput | RefundItemUpdateWithWhereUniqueWithoutOrderItemInput[]
+        updateMany?: RefundItemUpdateManyWithWhereWithoutOrderItemInput | RefundItemUpdateManyWithWhereWithoutOrderItemInput[]
+        deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+    }
+
+    export type RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput = {
+        create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
+        upsert?: RefundItemUpsertWithWhereUniqueWithoutOrderItemInput | RefundItemUpsertWithWhereUniqueWithoutOrderItemInput[]
+        createMany?: RefundItemCreateManyOrderItemInputEnvelope
+        set?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        disconnect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        delete?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        update?: RefundItemUpdateWithWhereUniqueWithoutOrderItemInput | RefundItemUpdateWithWhereUniqueWithoutOrderItemInput[]
+        updateMany?: RefundItemUpdateManyWithWhereWithoutOrderItemInput | RefundItemUpdateManyWithWhereWithoutOrderItemInput[]
+        deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutRefundsInput = {
+        create?: XOR<StoreCreateWithoutRefundsInput, StoreUncheckedCreateWithoutRefundsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutRefundsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type OrderCreateNestedOneWithoutRefundsInput = {
+        create?: XOR<OrderCreateWithoutRefundsInput, OrderUncheckedCreateWithoutRefundsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutRefundsInput
+        connect?: OrderWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutOperatedRefundsInput = {
+        create?: XOR<UserCreateWithoutOperatedRefundsInput, UserUncheckedCreateWithoutOperatedRefundsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOperatedRefundsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutApprovedRefundsInput = {
+        create?: XOR<UserCreateWithoutApprovedRefundsInput, UserUncheckedCreateWithoutApprovedRefundsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutApprovedRefundsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type RefundItemCreateNestedManyWithoutRefundInput = {
+        create?: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput> | RefundItemCreateWithoutRefundInput[] | RefundItemUncheckedCreateWithoutRefundInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutRefundInput | RefundItemCreateOrConnectWithoutRefundInput[]
+        createMany?: RefundItemCreateManyRefundInputEnvelope
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+    }
+
+    export type RefundItemUncheckedCreateNestedManyWithoutRefundInput = {
+        create?: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput> | RefundItemCreateWithoutRefundInput[] | RefundItemUncheckedCreateWithoutRefundInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutRefundInput | RefundItemCreateOrConnectWithoutRefundInput[]
+        createMany?: RefundItemCreateManyRefundInputEnvelope
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+    }
+
+    export type EnumRefundStatusFieldUpdateOperationsInput = {
+        set?: $Enums.RefundStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutRefundsNestedInput = {
+        create?: XOR<StoreCreateWithoutRefundsInput, StoreUncheckedCreateWithoutRefundsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutRefundsInput
+        upsert?: StoreUpsertWithoutRefundsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutRefundsInput, StoreUpdateWithoutRefundsInput>, StoreUncheckedUpdateWithoutRefundsInput>
+    }
+
+    export type OrderUpdateOneRequiredWithoutRefundsNestedInput = {
+        create?: XOR<OrderCreateWithoutRefundsInput, OrderUncheckedCreateWithoutRefundsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutRefundsInput
+        upsert?: OrderUpsertWithoutRefundsInput
+        connect?: OrderWhereUniqueInput
+        update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutRefundsInput, OrderUpdateWithoutRefundsInput>, OrderUncheckedUpdateWithoutRefundsInput>
+    }
+
+    export type UserUpdateOneWithoutOperatedRefundsNestedInput = {
+        create?: XOR<UserCreateWithoutOperatedRefundsInput, UserUncheckedCreateWithoutOperatedRefundsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOperatedRefundsInput
+        upsert?: UserUpsertWithoutOperatedRefundsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOperatedRefundsInput, UserUpdateWithoutOperatedRefundsInput>, UserUncheckedUpdateWithoutOperatedRefundsInput>
+    }
+
+    export type UserUpdateOneWithoutApprovedRefundsNestedInput = {
+        create?: XOR<UserCreateWithoutApprovedRefundsInput, UserUncheckedCreateWithoutApprovedRefundsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutApprovedRefundsInput
+        upsert?: UserUpsertWithoutApprovedRefundsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApprovedRefundsInput, UserUpdateWithoutApprovedRefundsInput>, UserUncheckedUpdateWithoutApprovedRefundsInput>
+    }
+
+    export type RefundItemUpdateManyWithoutRefundNestedInput = {
+        create?: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput> | RefundItemCreateWithoutRefundInput[] | RefundItemUncheckedCreateWithoutRefundInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutRefundInput | RefundItemCreateOrConnectWithoutRefundInput[]
+        upsert?: RefundItemUpsertWithWhereUniqueWithoutRefundInput | RefundItemUpsertWithWhereUniqueWithoutRefundInput[]
+        createMany?: RefundItemCreateManyRefundInputEnvelope
+        set?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        disconnect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        delete?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        update?: RefundItemUpdateWithWhereUniqueWithoutRefundInput | RefundItemUpdateWithWhereUniqueWithoutRefundInput[]
+        updateMany?: RefundItemUpdateManyWithWhereWithoutRefundInput | RefundItemUpdateManyWithWhereWithoutRefundInput[]
+        deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+    }
+
+    export type RefundItemUncheckedUpdateManyWithoutRefundNestedInput = {
+        create?: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput> | RefundItemCreateWithoutRefundInput[] | RefundItemUncheckedCreateWithoutRefundInput[]
+        connectOrCreate?: RefundItemCreateOrConnectWithoutRefundInput | RefundItemCreateOrConnectWithoutRefundInput[]
+        upsert?: RefundItemUpsertWithWhereUniqueWithoutRefundInput | RefundItemUpsertWithWhereUniqueWithoutRefundInput[]
+        createMany?: RefundItemCreateManyRefundInputEnvelope
+        set?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        disconnect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        delete?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+        update?: RefundItemUpdateWithWhereUniqueWithoutRefundInput | RefundItemUpdateWithWhereUniqueWithoutRefundInput[]
+        updateMany?: RefundItemUpdateManyWithWhereWithoutRefundInput | RefundItemUpdateManyWithWhereWithoutRefundInput[]
+        deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+    }
+
+    export type RefundCreateNestedOneWithoutItemsInput = {
+        create?: XOR<RefundCreateWithoutItemsInput, RefundUncheckedCreateWithoutItemsInput>
+        connectOrCreate?: RefundCreateOrConnectWithoutItemsInput
+        connect?: RefundWhereUniqueInput
+    }
+
+    export type OrderItemCreateNestedOneWithoutRefundItemsInput = {
+        create?: XOR<OrderItemCreateWithoutRefundItemsInput, OrderItemUncheckedCreateWithoutRefundItemsInput>
+        connectOrCreate?: OrderItemCreateOrConnectWithoutRefundItemsInput
+        connect?: OrderItemWhereUniqueInput
+    }
+
+    export type RefundUpdateOneRequiredWithoutItemsNestedInput = {
+        create?: XOR<RefundCreateWithoutItemsInput, RefundUncheckedCreateWithoutItemsInput>
+        connectOrCreate?: RefundCreateOrConnectWithoutItemsInput
+        upsert?: RefundUpsertWithoutItemsInput
+        connect?: RefundWhereUniqueInput
+        update?: XOR<XOR<RefundUpdateToOneWithWhereWithoutItemsInput, RefundUpdateWithoutItemsInput>, RefundUncheckedUpdateWithoutItemsInput>
+    }
+
+    export type OrderItemUpdateOneRequiredWithoutRefundItemsNestedInput = {
+        create?: XOR<OrderItemCreateWithoutRefundItemsInput, OrderItemUncheckedCreateWithoutRefundItemsInput>
+        connectOrCreate?: OrderItemCreateOrConnectWithoutRefundItemsInput
+        upsert?: OrderItemUpsertWithoutRefundItemsInput
+        connect?: OrderItemWhereUniqueInput
+        update?: XOR<XOR<OrderItemUpdateToOneWithWhereWithoutRefundItemsInput, OrderItemUpdateWithoutRefundItemsInput>, OrderItemUncheckedUpdateWithoutRefundItemsInput>
+    }
+
+    export type StoreCreateNestedOneWithoutAuditLogsInput = {
+        create?: XOR<StoreCreateWithoutAuditLogsInput, StoreUncheckedCreateWithoutAuditLogsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutAuditLogsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type OrderCreateNestedOneWithoutAuditLogsInput = {
+        create?: XOR<OrderCreateWithoutAuditLogsInput, OrderUncheckedCreateWithoutAuditLogsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutAuditLogsInput
+        connect?: OrderWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutOperatedOrderAuditLogsInput = {
+        create?: XOR<UserCreateWithoutOperatedOrderAuditLogsInput, UserUncheckedCreateWithoutOperatedOrderAuditLogsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOperatedOrderAuditLogsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutApprovedOrderAuditLogsInput = {
+        create?: XOR<UserCreateWithoutApprovedOrderAuditLogsInput, UserUncheckedCreateWithoutApprovedOrderAuditLogsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutApprovedOrderAuditLogsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type EnumOrderAuditActionFieldUpdateOperationsInput = {
+        set?: $Enums.OrderAuditAction
+    }
+
+    export type NullableEnumOrderStatusFieldUpdateOperationsInput = {
+        set?: $Enums.OrderStatus | null
+    }
+
+    export type StoreUpdateOneRequiredWithoutAuditLogsNestedInput = {
+        create?: XOR<StoreCreateWithoutAuditLogsInput, StoreUncheckedCreateWithoutAuditLogsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutAuditLogsInput
+        upsert?: StoreUpsertWithoutAuditLogsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutAuditLogsInput, StoreUpdateWithoutAuditLogsInput>, StoreUncheckedUpdateWithoutAuditLogsInput>
+    }
+
+    export type OrderUpdateOneRequiredWithoutAuditLogsNestedInput = {
+        create?: XOR<OrderCreateWithoutAuditLogsInput, OrderUncheckedCreateWithoutAuditLogsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutAuditLogsInput
+        upsert?: OrderUpsertWithoutAuditLogsInput
+        connect?: OrderWhereUniqueInput
+        update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutAuditLogsInput, OrderUpdateWithoutAuditLogsInput>, OrderUncheckedUpdateWithoutAuditLogsInput>
+    }
+
+    export type UserUpdateOneWithoutOperatedOrderAuditLogsNestedInput = {
+        create?: XOR<UserCreateWithoutOperatedOrderAuditLogsInput, UserUncheckedCreateWithoutOperatedOrderAuditLogsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOperatedOrderAuditLogsInput
+        upsert?: UserUpsertWithoutOperatedOrderAuditLogsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOperatedOrderAuditLogsInput, UserUpdateWithoutOperatedOrderAuditLogsInput>, UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput>
+    }
+
+    export type UserUpdateOneWithoutApprovedOrderAuditLogsNestedInput = {
+        create?: XOR<UserCreateWithoutApprovedOrderAuditLogsInput, UserUncheckedCreateWithoutApprovedOrderAuditLogsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutApprovedOrderAuditLogsInput
+        upsert?: UserUpsertWithoutApprovedOrderAuditLogsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApprovedOrderAuditLogsInput, UserUpdateWithoutApprovedOrderAuditLogsInput>, UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput>
     }
 
     export type StoreCreateNestedOneWithoutAiDraftsInput = {
@@ -19895,6 +25267,57 @@ export namespace Prisma {
         not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     }
 
+    export type NestedEnumRefundStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.RefundStatus | EnumRefundStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.RefundStatus[]
+        notIn?: $Enums.RefundStatus[]
+        not?: NestedEnumRefundStatusFilter<$PrismaModel> | $Enums.RefundStatus
+    }
+
+    export type NestedEnumRefundStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.RefundStatus | EnumRefundStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.RefundStatus[]
+        notIn?: $Enums.RefundStatus[]
+        not?: NestedEnumRefundStatusWithAggregatesFilter<$PrismaModel> | $Enums.RefundStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumRefundStatusFilter<$PrismaModel>
+        _max?: NestedEnumRefundStatusFilter<$PrismaModel>
+    }
+
+    export type NestedEnumOrderAuditActionFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderAuditAction | EnumOrderAuditActionFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderAuditAction[]
+        notIn?: $Enums.OrderAuditAction[]
+        not?: NestedEnumOrderAuditActionFilter<$PrismaModel> | $Enums.OrderAuditAction
+    }
+
+    export type NestedEnumOrderStatusNullableFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel> | null
+        in?: $Enums.OrderStatus[] | null
+        notIn?: $Enums.OrderStatus[] | null
+        not?: NestedEnumOrderStatusNullableFilter<$PrismaModel> | $Enums.OrderStatus | null
+    }
+
+    export type NestedEnumOrderAuditActionWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderAuditAction | EnumOrderAuditActionFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderAuditAction[]
+        notIn?: $Enums.OrderAuditAction[]
+        not?: NestedEnumOrderAuditActionWithAggregatesFilter<$PrismaModel> | $Enums.OrderAuditAction
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumOrderAuditActionFilter<$PrismaModel>
+        _max?: NestedEnumOrderAuditActionFilter<$PrismaModel>
+    }
+
+    export type NestedEnumOrderStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel> | null
+        in?: $Enums.OrderStatus[] | null
+        notIn?: $Enums.OrderStatus[] | null
+        not?: NestedEnumOrderStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus | null
+        _count?: NestedIntNullableFilter<$PrismaModel>
+        _min?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
+        _max?: NestedEnumOrderStatusNullableFilter<$PrismaModel>
+    }
+
     export type NestedEnumAiDraftStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.AiDraftStatus | EnumAiDraftStatusFieldRefInput<$PrismaModel>
         in?: $Enums.AiDraftStatus[]
@@ -20102,6 +25525,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutStoreInput = {
@@ -20127,6 +25552,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutStoreInput = {
@@ -20136,6 +25563,82 @@ export namespace Prisma {
 
     export type OrderCreateManyStoreInputEnvelope = {
         data: OrderCreateManyStoreInput | OrderCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type RefundCreateWithoutStoreInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        order: OrderCreateNestedOneWithoutRefundsInput
+        operator?: UserCreateNestedOneWithoutOperatedRefundsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedRefundsInput
+        items?: RefundItemCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUncheckedCreateWithoutStoreInput = {
+        id?: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+        items?: RefundItemUncheckedCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundCreateOrConnectWithoutStoreInput = {
+        where: RefundWhereUniqueInput
+        create: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput>
+    }
+
+    export type RefundCreateManyStoreInputEnvelope = {
+        data: RefundCreateManyStoreInput | RefundCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type OrderAuditLogCreateWithoutStoreInput = {
+        id?: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        createdAt?: Date | string
+        order: OrderCreateNestedOneWithoutAuditLogsInput
+        operator?: UserCreateNestedOneWithoutOperatedOrderAuditLogsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedOrderAuditLogsInput
+    }
+
+    export type OrderAuditLogUncheckedCreateWithoutStoreInput = {
+        id?: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateOrConnectWithoutStoreInput = {
+        where: OrderAuditLogWhereUniqueInput
+        create: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput>
+    }
+
+    export type OrderAuditLogCreateManyStoreInputEnvelope = {
+        data: OrderAuditLogCreateManyStoreInput | OrderAuditLogCreateManyStoreInput[]
         skipDuplicates?: boolean
     }
 
@@ -20346,6 +25849,73 @@ export namespace Prisma {
         updatedAt?: DateTimeFilter<"Order"> | Date | string
     }
 
+    export type RefundUpsertWithWhereUniqueWithoutStoreInput = {
+        where: RefundWhereUniqueInput
+        update: XOR<RefundUpdateWithoutStoreInput, RefundUncheckedUpdateWithoutStoreInput>
+        create: XOR<RefundCreateWithoutStoreInput, RefundUncheckedCreateWithoutStoreInput>
+    }
+
+    export type RefundUpdateWithWhereUniqueWithoutStoreInput = {
+        where: RefundWhereUniqueInput
+        data: XOR<RefundUpdateWithoutStoreInput, RefundUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type RefundUpdateManyWithWhereWithoutStoreInput = {
+        where: RefundScalarWhereInput
+        data: XOR<RefundUpdateManyMutationInput, RefundUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type RefundScalarWhereInput = {
+        AND?: RefundScalarWhereInput | RefundScalarWhereInput[]
+        OR?: RefundScalarWhereInput[]
+        NOT?: RefundScalarWhereInput | RefundScalarWhereInput[]
+        id?: StringFilter<"Refund"> | string
+        storeId?: StringFilter<"Refund"> | string
+        orderId?: StringFilter<"Refund"> | string
+        refundNumber?: StringFilter<"Refund"> | string
+        idempotencyKey?: StringFilter<"Refund"> | string
+        status?: EnumRefundStatusFilter<"Refund"> | $Enums.RefundStatus
+        method?: EnumPaymentMethodFilter<"Refund"> | $Enums.PaymentMethod
+        amount?: DecimalFilter<"Refund"> | Decimal | DecimalJsLike | number | string
+        reason?: StringFilter<"Refund"> | string
+        operatorId?: StringNullableFilter<"Refund"> | string | null
+        approvedById?: StringNullableFilter<"Refund"> | string | null
+        createdAt?: DateTimeFilter<"Refund"> | Date | string
+    }
+
+    export type OrderAuditLogUpsertWithWhereUniqueWithoutStoreInput = {
+        where: OrderAuditLogWhereUniqueInput
+        update: XOR<OrderAuditLogUpdateWithoutStoreInput, OrderAuditLogUncheckedUpdateWithoutStoreInput>
+        create: XOR<OrderAuditLogCreateWithoutStoreInput, OrderAuditLogUncheckedCreateWithoutStoreInput>
+    }
+
+    export type OrderAuditLogUpdateWithWhereUniqueWithoutStoreInput = {
+        where: OrderAuditLogWhereUniqueInput
+        data: XOR<OrderAuditLogUpdateWithoutStoreInput, OrderAuditLogUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type OrderAuditLogUpdateManyWithWhereWithoutStoreInput = {
+        where: OrderAuditLogScalarWhereInput
+        data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type OrderAuditLogScalarWhereInput = {
+        AND?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+        OR?: OrderAuditLogScalarWhereInput[]
+        NOT?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
+        id?: StringFilter<"OrderAuditLog"> | string
+        storeId?: StringFilter<"OrderAuditLog"> | string
+        orderId?: StringFilter<"OrderAuditLog"> | string
+        action?: EnumOrderAuditActionFilter<"OrderAuditLog"> | $Enums.OrderAuditAction
+        fromStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        toStatus?: EnumOrderStatusNullableFilter<"OrderAuditLog"> | $Enums.OrderStatus | null
+        amount?: DecimalNullableFilter<"OrderAuditLog"> | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFilter<"OrderAuditLog"> | string
+        operatorId?: StringNullableFilter<"OrderAuditLog"> | string | null
+        approvedById?: StringNullableFilter<"OrderAuditLog"> | string | null
+        createdAt?: DateTimeFilter<"OrderAuditLog"> | Date | string
+    }
+
     export type AiDraftUpsertWithWhereUniqueWithoutStoreInput = {
         where: AiDraftWhereUniqueInput
         update: XOR<AiDraftUpdateWithoutStoreInput, AiDraftUncheckedUpdateWithoutStoreInput>
@@ -20440,6 +26010,158 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type RefundCreateWithoutOperatorInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutRefundsInput
+        order: OrderCreateNestedOneWithoutRefundsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedRefundsInput
+        items?: RefundItemCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUncheckedCreateWithoutOperatorInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        approvedById?: string | null
+        createdAt?: Date | string
+        items?: RefundItemUncheckedCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundCreateOrConnectWithoutOperatorInput = {
+        where: RefundWhereUniqueInput
+        create: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput>
+    }
+
+    export type RefundCreateManyOperatorInputEnvelope = {
+        data: RefundCreateManyOperatorInput | RefundCreateManyOperatorInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type RefundCreateWithoutApprovedByInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutRefundsInput
+        order: OrderCreateNestedOneWithoutRefundsInput
+        operator?: UserCreateNestedOneWithoutOperatedRefundsInput
+        items?: RefundItemCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUncheckedCreateWithoutApprovedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        createdAt?: Date | string
+        items?: RefundItemUncheckedCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundCreateOrConnectWithoutApprovedByInput = {
+        where: RefundWhereUniqueInput
+        create: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput>
+    }
+
+    export type RefundCreateManyApprovedByInputEnvelope = {
+        data: RefundCreateManyApprovedByInput | RefundCreateManyApprovedByInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type OrderAuditLogCreateWithoutOperatorInput = {
+        id?: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutAuditLogsInput
+        order: OrderCreateNestedOneWithoutAuditLogsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedOrderAuditLogsInput
+    }
+
+    export type OrderAuditLogUncheckedCreateWithoutOperatorInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateOrConnectWithoutOperatorInput = {
+        where: OrderAuditLogWhereUniqueInput
+        create: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput>
+    }
+
+    export type OrderAuditLogCreateManyOperatorInputEnvelope = {
+        data: OrderAuditLogCreateManyOperatorInput | OrderAuditLogCreateManyOperatorInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type OrderAuditLogCreateWithoutApprovedByInput = {
+        id?: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutAuditLogsInput
+        order: OrderCreateNestedOneWithoutAuditLogsInput
+        operator?: UserCreateNestedOneWithoutOperatedOrderAuditLogsInput
+    }
+
+    export type OrderAuditLogUncheckedCreateWithoutApprovedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateOrConnectWithoutApprovedByInput = {
+        where: OrderAuditLogWhereUniqueInput
+        create: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput>
+    }
+
+    export type OrderAuditLogCreateManyApprovedByInputEnvelope = {
+        data: OrderAuditLogCreateManyApprovedByInput | OrderAuditLogCreateManyApprovedByInput[]
+        skipDuplicates?: boolean
+    }
+
     export type StoreUserUpsertWithWhereUniqueWithoutUserInput = {
         where: StoreUserWhereUniqueInput
         update: XOR<StoreUserUpdateWithoutUserInput, StoreUserUncheckedUpdateWithoutUserInput>
@@ -20456,6 +26178,70 @@ export namespace Prisma {
         data: XOR<StoreUserUpdateManyMutationInput, StoreUserUncheckedUpdateManyWithoutUserInput>
     }
 
+    export type RefundUpsertWithWhereUniqueWithoutOperatorInput = {
+        where: RefundWhereUniqueInput
+        update: XOR<RefundUpdateWithoutOperatorInput, RefundUncheckedUpdateWithoutOperatorInput>
+        create: XOR<RefundCreateWithoutOperatorInput, RefundUncheckedCreateWithoutOperatorInput>
+    }
+
+    export type RefundUpdateWithWhereUniqueWithoutOperatorInput = {
+        where: RefundWhereUniqueInput
+        data: XOR<RefundUpdateWithoutOperatorInput, RefundUncheckedUpdateWithoutOperatorInput>
+    }
+
+    export type RefundUpdateManyWithWhereWithoutOperatorInput = {
+        where: RefundScalarWhereInput
+        data: XOR<RefundUpdateManyMutationInput, RefundUncheckedUpdateManyWithoutOperatorInput>
+    }
+
+    export type RefundUpsertWithWhereUniqueWithoutApprovedByInput = {
+        where: RefundWhereUniqueInput
+        update: XOR<RefundUpdateWithoutApprovedByInput, RefundUncheckedUpdateWithoutApprovedByInput>
+        create: XOR<RefundCreateWithoutApprovedByInput, RefundUncheckedCreateWithoutApprovedByInput>
+    }
+
+    export type RefundUpdateWithWhereUniqueWithoutApprovedByInput = {
+        where: RefundWhereUniqueInput
+        data: XOR<RefundUpdateWithoutApprovedByInput, RefundUncheckedUpdateWithoutApprovedByInput>
+    }
+
+    export type RefundUpdateManyWithWhereWithoutApprovedByInput = {
+        where: RefundScalarWhereInput
+        data: XOR<RefundUpdateManyMutationInput, RefundUncheckedUpdateManyWithoutApprovedByInput>
+    }
+
+    export type OrderAuditLogUpsertWithWhereUniqueWithoutOperatorInput = {
+        where: OrderAuditLogWhereUniqueInput
+        update: XOR<OrderAuditLogUpdateWithoutOperatorInput, OrderAuditLogUncheckedUpdateWithoutOperatorInput>
+        create: XOR<OrderAuditLogCreateWithoutOperatorInput, OrderAuditLogUncheckedCreateWithoutOperatorInput>
+    }
+
+    export type OrderAuditLogUpdateWithWhereUniqueWithoutOperatorInput = {
+        where: OrderAuditLogWhereUniqueInput
+        data: XOR<OrderAuditLogUpdateWithoutOperatorInput, OrderAuditLogUncheckedUpdateWithoutOperatorInput>
+    }
+
+    export type OrderAuditLogUpdateManyWithWhereWithoutOperatorInput = {
+        where: OrderAuditLogScalarWhereInput
+        data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutOperatorInput>
+    }
+
+    export type OrderAuditLogUpsertWithWhereUniqueWithoutApprovedByInput = {
+        where: OrderAuditLogWhereUniqueInput
+        update: XOR<OrderAuditLogUpdateWithoutApprovedByInput, OrderAuditLogUncheckedUpdateWithoutApprovedByInput>
+        create: XOR<OrderAuditLogCreateWithoutApprovedByInput, OrderAuditLogUncheckedCreateWithoutApprovedByInput>
+    }
+
+    export type OrderAuditLogUpdateWithWhereUniqueWithoutApprovedByInput = {
+        where: OrderAuditLogWhereUniqueInput
+        data: XOR<OrderAuditLogUpdateWithoutApprovedByInput, OrderAuditLogUncheckedUpdateWithoutApprovedByInput>
+    }
+
+    export type OrderAuditLogUpdateManyWithWhereWithoutApprovedByInput = {
+        where: OrderAuditLogScalarWhereInput
+        data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutApprovedByInput>
+    }
+
     export type StoreCreateWithoutUsersInput = {
         id?: string
         name: string
@@ -20468,6 +26254,8 @@ export namespace Prisma {
         categories?: CategoryCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -20484,6 +26272,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -20501,6 +26291,10 @@ export namespace Prisma {
         active?: boolean
         createdAt?: Date | string
         updatedAt?: Date | string
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
     }
 
     export type UserUncheckedCreateWithoutStoresInput = {
@@ -20511,6 +26305,10 @@ export namespace Prisma {
         active?: boolean
         createdAt?: Date | string
         updatedAt?: Date | string
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
     }
 
     export type UserCreateOrConnectWithoutStoresInput = {
@@ -20541,6 +26339,8 @@ export namespace Prisma {
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -20557,6 +26357,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -20580,6 +26382,10 @@ export namespace Prisma {
         active?: BoolFieldUpdateOperationsInput | boolean
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutStoresInput = {
@@ -20590,6 +26396,10 @@ export namespace Prisma {
         active?: BoolFieldUpdateOperationsInput | boolean
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
     }
 
     export type StoreCreateWithoutCategoriesInput = {
@@ -20604,6 +26414,8 @@ export namespace Prisma {
         users?: StoreUserCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -20620,6 +26432,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -20694,6 +26508,8 @@ export namespace Prisma {
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -20710,6 +26526,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -20742,6 +26560,8 @@ export namespace Prisma {
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -20758,6 +26578,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -20840,6 +26662,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
         order: OrderCreateNestedOneWithoutItemsInput
+        refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateWithoutProductInput = {
@@ -20852,6 +26675,7 @@ export namespace Prisma {
         lineTotal: Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
+        refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemCreateOrConnectWithoutProductInput = {
@@ -20887,6 +26711,8 @@ export namespace Prisma {
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -20903,6 +26729,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -21227,6 +27055,8 @@ export namespace Prisma {
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -21243,6 +27073,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -21262,6 +27094,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
         product: ProductCreateNestedOneWithoutOrderItemsInput
+        refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateWithoutOrderInput = {
@@ -21274,6 +27107,7 @@ export namespace Prisma {
         lineTotal: Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
+        refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -21314,6 +27148,82 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type RefundCreateWithoutOrderInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutRefundsInput
+        operator?: UserCreateNestedOneWithoutOperatedRefundsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedRefundsInput
+        items?: RefundItemCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundUncheckedCreateWithoutOrderInput = {
+        id?: string
+        storeId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+        items?: RefundItemUncheckedCreateNestedManyWithoutRefundInput
+    }
+
+    export type RefundCreateOrConnectWithoutOrderInput = {
+        where: RefundWhereUniqueInput
+        create: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput>
+    }
+
+    export type RefundCreateManyOrderInputEnvelope = {
+        data: RefundCreateManyOrderInput | RefundCreateManyOrderInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type OrderAuditLogCreateWithoutOrderInput = {
+        id?: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutAuditLogsInput
+        operator?: UserCreateNestedOneWithoutOperatedOrderAuditLogsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedOrderAuditLogsInput
+    }
+
+    export type OrderAuditLogUncheckedCreateWithoutOrderInput = {
+        id?: string
+        storeId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateOrConnectWithoutOrderInput = {
+        where: OrderAuditLogWhereUniqueInput
+        create: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput>
+    }
+
+    export type OrderAuditLogCreateManyOrderInputEnvelope = {
+        data: OrderAuditLogCreateManyOrderInput | OrderAuditLogCreateManyOrderInput[]
+        skipDuplicates?: boolean
+    }
+
     export type StoreUpsertWithoutOrdersInput = {
         update: XOR<StoreUpdateWithoutOrdersInput, StoreUncheckedUpdateWithoutOrdersInput>
         create: XOR<StoreCreateWithoutOrdersInput, StoreUncheckedCreateWithoutOrdersInput>
@@ -21337,6 +27247,8 @@ export namespace Prisma {
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -21353,6 +27265,8 @@ export namespace Prisma {
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -21402,6 +27316,38 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"OrderPayment"> | Date | string
     }
 
+    export type RefundUpsertWithWhereUniqueWithoutOrderInput = {
+        where: RefundWhereUniqueInput
+        update: XOR<RefundUpdateWithoutOrderInput, RefundUncheckedUpdateWithoutOrderInput>
+        create: XOR<RefundCreateWithoutOrderInput, RefundUncheckedCreateWithoutOrderInput>
+    }
+
+    export type RefundUpdateWithWhereUniqueWithoutOrderInput = {
+        where: RefundWhereUniqueInput
+        data: XOR<RefundUpdateWithoutOrderInput, RefundUncheckedUpdateWithoutOrderInput>
+    }
+
+    export type RefundUpdateManyWithWhereWithoutOrderInput = {
+        where: RefundScalarWhereInput
+        data: XOR<RefundUpdateManyMutationInput, RefundUncheckedUpdateManyWithoutOrderInput>
+    }
+
+    export type OrderAuditLogUpsertWithWhereUniqueWithoutOrderInput = {
+        where: OrderAuditLogWhereUniqueInput
+        update: XOR<OrderAuditLogUpdateWithoutOrderInput, OrderAuditLogUncheckedUpdateWithoutOrderInput>
+        create: XOR<OrderAuditLogCreateWithoutOrderInput, OrderAuditLogUncheckedCreateWithoutOrderInput>
+    }
+
+    export type OrderAuditLogUpdateWithWhereUniqueWithoutOrderInput = {
+        where: OrderAuditLogWhereUniqueInput
+        data: XOR<OrderAuditLogUpdateWithoutOrderInput, OrderAuditLogUncheckedUpdateWithoutOrderInput>
+    }
+
+    export type OrderAuditLogUpdateManyWithWhereWithoutOrderInput = {
+        where: OrderAuditLogScalarWhereInput
+        data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutOrderInput>
+    }
+
     export type OrderCreateWithoutPaymentsInput = {
         id?: string
         orderNumber: string
@@ -21425,6 +27371,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutPaymentsInput = {
@@ -21450,6 +27398,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutPaymentsInput = {
@@ -21491,6 +27441,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutPaymentsInput = {
@@ -21516,6 +27468,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderCreateWithoutItemsInput = {
@@ -21541,6 +27495,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutItemsInput = {
@@ -21566,6 +27522,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutItemsInput = {
@@ -21610,6 +27568,32 @@ export namespace Prisma {
         create: XOR<ProductCreateWithoutOrderItemsInput, ProductUncheckedCreateWithoutOrderItemsInput>
     }
 
+    export type RefundItemCreateWithoutOrderItemInput = {
+        id?: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+        refund: RefundCreateNestedOneWithoutItemsInput
+    }
+
+    export type RefundItemUncheckedCreateWithoutOrderItemInput = {
+        id?: string
+        refundId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemCreateOrConnectWithoutOrderItemInput = {
+        where: RefundItemWhereUniqueInput
+        create: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput>
+    }
+
+    export type RefundItemCreateManyOrderItemInputEnvelope = {
+        data: RefundItemCreateManyOrderItemInput | RefundItemCreateManyOrderItemInput[]
+        skipDuplicates?: boolean
+    }
+
     export type OrderUpsertWithoutItemsInput = {
         update: XOR<OrderUpdateWithoutItemsInput, OrderUncheckedUpdateWithoutItemsInput>
         create: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
@@ -21644,6 +27628,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -21669,6 +27655,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type ProductUpsertWithoutOrderItemsInput = {
@@ -21714,6 +27702,932 @@ export namespace Prisma {
         modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
     }
 
+    export type RefundItemUpsertWithWhereUniqueWithoutOrderItemInput = {
+        where: RefundItemWhereUniqueInput
+        update: XOR<RefundItemUpdateWithoutOrderItemInput, RefundItemUncheckedUpdateWithoutOrderItemInput>
+        create: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput>
+    }
+
+    export type RefundItemUpdateWithWhereUniqueWithoutOrderItemInput = {
+        where: RefundItemWhereUniqueInput
+        data: XOR<RefundItemUpdateWithoutOrderItemInput, RefundItemUncheckedUpdateWithoutOrderItemInput>
+    }
+
+    export type RefundItemUpdateManyWithWhereWithoutOrderItemInput = {
+        where: RefundItemScalarWhereInput
+        data: XOR<RefundItemUpdateManyMutationInput, RefundItemUncheckedUpdateManyWithoutOrderItemInput>
+    }
+
+    export type RefundItemScalarWhereInput = {
+        AND?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+        OR?: RefundItemScalarWhereInput[]
+        NOT?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+        id?: StringFilter<"RefundItem"> | string
+        refundId?: StringFilter<"RefundItem"> | string
+        orderItemId?: StringFilter<"RefundItem"> | string
+        quantity?: IntFilter<"RefundItem"> | number
+        amount?: DecimalFilter<"RefundItem"> | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFilter<"RefundItem"> | Date | string
+    }
+
+    export type StoreCreateWithoutRefundsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutRefundsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutRefundsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutRefundsInput, StoreUncheckedCreateWithoutRefundsInput>
+    }
+
+    export type OrderCreateWithoutRefundsInput = {
+        id?: string
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutOrdersInput
+        items?: OrderItemCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderUncheckedCreateWithoutRefundsInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderCreateOrConnectWithoutRefundsInput = {
+        where: OrderWhereUniqueInput
+        create: XOR<OrderCreateWithoutRefundsInput, OrderUncheckedCreateWithoutRefundsInput>
+    }
+
+    export type UserCreateWithoutOperatedRefundsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserUncheckedCreateWithoutOperatedRefundsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserCreateOrConnectWithoutOperatedRefundsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutOperatedRefundsInput, UserUncheckedCreateWithoutOperatedRefundsInput>
+    }
+
+    export type UserCreateWithoutApprovedRefundsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserUncheckedCreateWithoutApprovedRefundsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserCreateOrConnectWithoutApprovedRefundsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutApprovedRefundsInput, UserUncheckedCreateWithoutApprovedRefundsInput>
+    }
+
+    export type RefundItemCreateWithoutRefundInput = {
+        id?: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+        orderItem: OrderItemCreateNestedOneWithoutRefundItemsInput
+    }
+
+    export type RefundItemUncheckedCreateWithoutRefundInput = {
+        id?: string
+        orderItemId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemCreateOrConnectWithoutRefundInput = {
+        where: RefundItemWhereUniqueInput
+        create: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput>
+    }
+
+    export type RefundItemCreateManyRefundInputEnvelope = {
+        data: RefundItemCreateManyRefundInput | RefundItemCreateManyRefundInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutRefundsInput = {
+        update: XOR<StoreUpdateWithoutRefundsInput, StoreUncheckedUpdateWithoutRefundsInput>
+        create: XOR<StoreCreateWithoutRefundsInput, StoreUncheckedCreateWithoutRefundsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutRefundsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutRefundsInput, StoreUncheckedUpdateWithoutRefundsInput>
+    }
+
+    export type StoreUpdateWithoutRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type OrderUpsertWithoutRefundsInput = {
+        update: XOR<OrderUpdateWithoutRefundsInput, OrderUncheckedUpdateWithoutRefundsInput>
+        create: XOR<OrderCreateWithoutRefundsInput, OrderUncheckedCreateWithoutRefundsInput>
+        where?: OrderWhereInput
+    }
+
+    export type OrderUpdateToOneWithWhereWithoutRefundsInput = {
+        where?: OrderWhereInput
+        data: XOR<OrderUpdateWithoutRefundsInput, OrderUncheckedUpdateWithoutRefundsInput>
+    }
+
+    export type OrderUpdateWithoutRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutOrdersNestedInput
+        items?: OrderItemUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateWithoutRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+    }
+
+    export type UserUpsertWithoutOperatedRefundsInput = {
+        update: XOR<UserUpdateWithoutOperatedRefundsInput, UserUncheckedUpdateWithoutOperatedRefundsInput>
+        create: XOR<UserCreateWithoutOperatedRefundsInput, UserUncheckedCreateWithoutOperatedRefundsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutOperatedRefundsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutOperatedRefundsInput, UserUncheckedUpdateWithoutOperatedRefundsInput>
+    }
+
+    export type UserUpdateWithoutOperatedRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutOperatedRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type UserUpsertWithoutApprovedRefundsInput = {
+        update: XOR<UserUpdateWithoutApprovedRefundsInput, UserUncheckedUpdateWithoutApprovedRefundsInput>
+        create: XOR<UserCreateWithoutApprovedRefundsInput, UserUncheckedCreateWithoutApprovedRefundsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutApprovedRefundsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutApprovedRefundsInput, UserUncheckedUpdateWithoutApprovedRefundsInput>
+    }
+
+    export type UserUpdateWithoutApprovedRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutApprovedRefundsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type RefundItemUpsertWithWhereUniqueWithoutRefundInput = {
+        where: RefundItemWhereUniqueInput
+        update: XOR<RefundItemUpdateWithoutRefundInput, RefundItemUncheckedUpdateWithoutRefundInput>
+        create: XOR<RefundItemCreateWithoutRefundInput, RefundItemUncheckedCreateWithoutRefundInput>
+    }
+
+    export type RefundItemUpdateWithWhereUniqueWithoutRefundInput = {
+        where: RefundItemWhereUniqueInput
+        data: XOR<RefundItemUpdateWithoutRefundInput, RefundItemUncheckedUpdateWithoutRefundInput>
+    }
+
+    export type RefundItemUpdateManyWithWhereWithoutRefundInput = {
+        where: RefundItemScalarWhereInput
+        data: XOR<RefundItemUpdateManyMutationInput, RefundItemUncheckedUpdateManyWithoutRefundInput>
+    }
+
+    export type RefundCreateWithoutItemsInput = {
+        id?: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        createdAt?: Date | string
+        store: StoreCreateNestedOneWithoutRefundsInput
+        order: OrderCreateNestedOneWithoutRefundsInput
+        operator?: UserCreateNestedOneWithoutOperatedRefundsInput
+        approvedBy?: UserCreateNestedOneWithoutApprovedRefundsInput
+    }
+
+    export type RefundUncheckedCreateWithoutItemsInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type RefundCreateOrConnectWithoutItemsInput = {
+        where: RefundWhereUniqueInput
+        create: XOR<RefundCreateWithoutItemsInput, RefundUncheckedCreateWithoutItemsInput>
+    }
+
+    export type OrderItemCreateWithoutRefundItemsInput = {
+        id?: string
+        productNameSnapshot?: string | null
+        productCategorySnapshot?: string | null
+        quantity: number
+        unitPrice: Decimal | DecimalJsLike | number | string
+        lineTotal: Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: Date | string
+        order: OrderCreateNestedOneWithoutItemsInput
+        product: ProductCreateNestedOneWithoutOrderItemsInput
+    }
+
+    export type OrderItemUncheckedCreateWithoutRefundItemsInput = {
+        id?: string
+        orderId: string
+        productId: string
+        productNameSnapshot?: string | null
+        productCategorySnapshot?: string | null
+        quantity: number
+        unitPrice: Decimal | DecimalJsLike | number | string
+        lineTotal: Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: Date | string
+    }
+
+    export type OrderItemCreateOrConnectWithoutRefundItemsInput = {
+        where: OrderItemWhereUniqueInput
+        create: XOR<OrderItemCreateWithoutRefundItemsInput, OrderItemUncheckedCreateWithoutRefundItemsInput>
+    }
+
+    export type RefundUpsertWithoutItemsInput = {
+        update: XOR<RefundUpdateWithoutItemsInput, RefundUncheckedUpdateWithoutItemsInput>
+        create: XOR<RefundCreateWithoutItemsInput, RefundUncheckedCreateWithoutItemsInput>
+        where?: RefundWhereInput
+    }
+
+    export type RefundUpdateToOneWithWhereWithoutItemsInput = {
+        where?: RefundWhereInput
+        data: XOR<RefundUpdateWithoutItemsInput, RefundUncheckedUpdateWithoutItemsInput>
+    }
+
+    export type RefundUpdateWithoutItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutRefundsNestedInput
+        order?: OrderUpdateOneRequiredWithoutRefundsNestedInput
+        operator?: UserUpdateOneWithoutOperatedRefundsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedRefundsNestedInput
+    }
+
+    export type RefundUncheckedUpdateWithoutItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderItemUpsertWithoutRefundItemsInput = {
+        update: XOR<OrderItemUpdateWithoutRefundItemsInput, OrderItemUncheckedUpdateWithoutRefundItemsInput>
+        create: XOR<OrderItemCreateWithoutRefundItemsInput, OrderItemUncheckedCreateWithoutRefundItemsInput>
+        where?: OrderItemWhereInput
+    }
+
+    export type OrderItemUpdateToOneWithWhereWithoutRefundItemsInput = {
+        where?: OrderItemWhereInput
+        data: XOR<OrderItemUpdateWithoutRefundItemsInput, OrderItemUncheckedUpdateWithoutRefundItemsInput>
+    }
+
+    export type OrderItemUpdateWithoutRefundItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        productCategorySnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        quantity?: IntFieldUpdateOperationsInput | number
+        unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+        product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+    }
+
+    export type OrderItemUncheckedUpdateWithoutRefundItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        productCategorySnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        quantity?: IntFieldUpdateOperationsInput | number
+        unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type StoreCreateWithoutAuditLogsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutAuditLogsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutAuditLogsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutAuditLogsInput, StoreUncheckedCreateWithoutAuditLogsInput>
+    }
+
+    export type OrderCreateWithoutAuditLogsInput = {
+        id?: string
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutOrdersInput
+        items?: OrderItemCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderUncheckedCreateWithoutAuditLogsInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderCreateOrConnectWithoutAuditLogsInput = {
+        where: OrderWhereUniqueInput
+        create: XOR<OrderCreateWithoutAuditLogsInput, OrderUncheckedCreateWithoutAuditLogsInput>
+    }
+
+    export type UserCreateWithoutOperatedOrderAuditLogsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserUncheckedCreateWithoutOperatedOrderAuditLogsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+    }
+
+    export type UserCreateOrConnectWithoutOperatedOrderAuditLogsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutOperatedOrderAuditLogsInput, UserUncheckedCreateWithoutOperatedOrderAuditLogsInput>
+    }
+
+    export type UserCreateWithoutApprovedOrderAuditLogsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+    }
+
+    export type UserUncheckedCreateWithoutApprovedOrderAuditLogsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+    }
+
+    export type UserCreateOrConnectWithoutApprovedOrderAuditLogsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutApprovedOrderAuditLogsInput, UserUncheckedCreateWithoutApprovedOrderAuditLogsInput>
+    }
+
+    export type StoreUpsertWithoutAuditLogsInput = {
+        update: XOR<StoreUpdateWithoutAuditLogsInput, StoreUncheckedUpdateWithoutAuditLogsInput>
+        create: XOR<StoreCreateWithoutAuditLogsInput, StoreUncheckedCreateWithoutAuditLogsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutAuditLogsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutAuditLogsInput, StoreUncheckedUpdateWithoutAuditLogsInput>
+    }
+
+    export type StoreUpdateWithoutAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type OrderUpsertWithoutAuditLogsInput = {
+        update: XOR<OrderUpdateWithoutAuditLogsInput, OrderUncheckedUpdateWithoutAuditLogsInput>
+        create: XOR<OrderCreateWithoutAuditLogsInput, OrderUncheckedCreateWithoutAuditLogsInput>
+        where?: OrderWhereInput
+    }
+
+    export type OrderUpdateToOneWithWhereWithoutAuditLogsInput = {
+        where?: OrderWhereInput
+        data: XOR<OrderUpdateWithoutAuditLogsInput, OrderUncheckedUpdateWithoutAuditLogsInput>
+    }
+
+    export type OrderUpdateWithoutAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutOrdersNestedInput
+        items?: OrderItemUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateWithoutAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+    }
+
+    export type UserUpsertWithoutOperatedOrderAuditLogsInput = {
+        update: XOR<UserUpdateWithoutOperatedOrderAuditLogsInput, UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput>
+        create: XOR<UserCreateWithoutOperatedOrderAuditLogsInput, UserUncheckedCreateWithoutOperatedOrderAuditLogsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutOperatedOrderAuditLogsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutOperatedOrderAuditLogsInput, UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput>
+    }
+
+    export type UserUpdateWithoutOperatedOrderAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+    }
+
+    export type UserUpsertWithoutApprovedOrderAuditLogsInput = {
+        update: XOR<UserUpdateWithoutApprovedOrderAuditLogsInput, UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput>
+        create: XOR<UserCreateWithoutApprovedOrderAuditLogsInput, UserUncheckedCreateWithoutApprovedOrderAuditLogsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutApprovedOrderAuditLogsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutApprovedOrderAuditLogsInput, UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput>
+    }
+
+    export type UserUpdateWithoutApprovedOrderAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+    }
+
     export type StoreCreateWithoutAiDraftsInput = {
         id?: string
         name: string
@@ -21727,6 +28641,8 @@ export namespace Prisma {
         categories?: CategoryCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
 
@@ -21743,6 +28659,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -21775,6 +28693,8 @@ export namespace Prisma {
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
 
@@ -21791,6 +28711,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -21807,6 +28729,8 @@ export namespace Prisma {
         categories?: CategoryCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
     }
 
@@ -21823,6 +28747,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -21855,6 +28781,8 @@ export namespace Prisma {
         categories?: CategoryUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
     }
 
@@ -21871,6 +28799,8 @@ export namespace Prisma {
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -21927,6 +28857,33 @@ export namespace Prisma {
         printedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+    }
+
+    export type RefundCreateManyStoreInput = {
+        id?: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateManyStoreInput = {
+        id?: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
     }
 
     export type AiDraftCreateManyStoreInput = {
@@ -22080,6 +29037,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutStoreInput = {
@@ -22105,6 +29064,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateManyWithoutStoreInput = {
@@ -22128,6 +29089,89 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        order?: OrderUpdateOneRequiredWithoutRefundsNestedInput
+        operator?: UserUpdateOneWithoutOperatedRefundsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedRefundsNestedInput
+        items?: RefundItemUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: RefundItemUncheckedUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        order?: OrderUpdateOneRequiredWithoutAuditLogsNestedInput
+        operator?: UserUpdateOneWithoutOperatedOrderAuditLogsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedOrderAuditLogsNestedInput
+    }
+
+    export type OrderAuditLogUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
     export type AiDraftUpdateWithoutStoreInput = {
@@ -22217,6 +29261,60 @@ export namespace Prisma {
         updatedAt?: Date | string
     }
 
+    export type RefundCreateManyOperatorInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type RefundCreateManyApprovedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateManyOperatorInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateManyApprovedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        createdAt?: Date | string
+    }
+
     export type StoreUserUpdateWithoutUserInput = {
         id?: StringFieldUpdateOperationsInput | string
         role?: EnumStoreRoleFieldUpdateOperationsInput | $Enums.StoreRole
@@ -22242,6 +29340,172 @@ export namespace Prisma {
         active?: BoolFieldUpdateOperationsInput | boolean
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundUpdateWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutRefundsNestedInput
+        order?: OrderUpdateOneRequiredWithoutRefundsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedRefundsNestedInput
+        items?: RefundItemUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: RefundItemUncheckedUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateManyWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundUpdateWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutRefundsNestedInput
+        order?: OrderUpdateOneRequiredWithoutRefundsNestedInput
+        operator?: UserUpdateOneWithoutOperatedRefundsNestedInput
+        items?: RefundItemUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: RefundItemUncheckedUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateManyWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUpdateWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutAuditLogsNestedInput
+        order?: OrderUpdateOneRequiredWithoutAuditLogsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedOrderAuditLogsNestedInput
+    }
+
+    export type OrderAuditLogUncheckedUpdateWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutOperatorInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUpdateWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutAuditLogsNestedInput
+        order?: OrderUpdateOneRequiredWithoutAuditLogsNestedInput
+        operator?: UserUpdateOneWithoutOperatedOrderAuditLogsNestedInput
+    }
+
+    export type OrderAuditLogUncheckedUpdateWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutApprovedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
     export type ProductCreateManyCategoryRefInput = {
@@ -22380,6 +29644,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+        refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateWithoutProductInput = {
@@ -22392,6 +29657,7 @@ export namespace Prisma {
         lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateManyWithoutProductInput = {
@@ -22467,6 +29733,33 @@ export namespace Prisma {
         createdAt?: Date | string
     }
 
+    export type RefundCreateManyOrderInput = {
+        id?: string
+        storeId: string
+        refundNumber: string
+        idempotencyKey: string
+        status?: $Enums.RefundStatus
+        method: $Enums.PaymentMethod
+        amount: Decimal | DecimalJsLike | number | string
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
+    export type OrderAuditLogCreateManyOrderInput = {
+        id?: string
+        storeId: string
+        action: $Enums.OrderAuditAction
+        fromStatus?: $Enums.OrderStatus | null
+        toStatus?: $Enums.OrderStatus | null
+        amount?: Decimal | DecimalJsLike | number | string | null
+        reason: string
+        operatorId?: string | null
+        approvedById?: string | null
+        createdAt?: Date | string
+    }
+
     export type OrderItemUpdateWithoutOrderInput = {
         id?: StringFieldUpdateOperationsInput | string
         productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22477,6 +29770,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+        refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateWithoutOrderInput = {
@@ -22489,6 +29783,7 @@ export namespace Prisma {
         lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
@@ -22527,6 +29822,153 @@ export namespace Prisma {
         amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         amountReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutRefundsNestedInput
+        operator?: UserUpdateOneWithoutOperatedRefundsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedRefundsNestedInput
+        items?: RefundItemUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: RefundItemUncheckedUpdateManyWithoutRefundNestedInput
+    }
+
+    export type RefundUncheckedUpdateManyWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        refundNumber?: StringFieldUpdateOperationsInput | string
+        idempotencyKey?: StringFieldUpdateOperationsInput | string
+        status?: EnumRefundStatusFieldUpdateOperationsInput | $Enums.RefundStatus
+        method?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutAuditLogsNestedInput
+        operator?: UserUpdateOneWithoutOperatedOrderAuditLogsNestedInput
+        approvedBy?: UserUpdateOneWithoutApprovedOrderAuditLogsNestedInput
+    }
+
+    export type OrderAuditLogUncheckedUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderAuditLogUncheckedUpdateManyWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        action?: EnumOrderAuditActionFieldUpdateOperationsInput | $Enums.OrderAuditAction
+        fromStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        toStatus?: NullableEnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus | null
+        amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        reason?: StringFieldUpdateOperationsInput | string
+        operatorId?: NullableStringFieldUpdateOperationsInput | string | null
+        approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemCreateManyOrderItemInput = {
+        id?: string
+        refundId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemUpdateWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refund?: RefundUpdateOneRequiredWithoutItemsNestedInput
+    }
+
+    export type RefundItemUncheckedUpdateWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemUncheckedUpdateManyWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        refundId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemCreateManyRefundInput = {
+        id?: string
+        orderItemId: string
+        quantity: number
+        amount: Decimal | DecimalJsLike | number | string
+        createdAt?: Date | string
+    }
+
+    export type RefundItemUpdateWithoutRefundInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        orderItem?: OrderItemUpdateOneRequiredWithoutRefundItemsNestedInput
+    }
+
+    export type RefundItemUncheckedUpdateWithoutRefundInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type RefundItemUncheckedUpdateManyWithoutRefundInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 

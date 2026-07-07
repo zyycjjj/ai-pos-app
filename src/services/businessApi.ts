@@ -11,6 +11,7 @@ export type CheckoutOrderItem = {
   quantity: number;
   unitPrice: number;
   lineTotal: number;
+  refundedQuantity?: number;
   modifiers: SelectedModifier[];
 };
 
@@ -26,7 +27,7 @@ export type CheckoutOrder = {
   id: string;
   orderNumber: string;
   pickupNumber: string | null;
-  status: 'OPEN' | 'PAID' | 'CANCELLED';
+  status: 'OPEN' | 'PAID' | 'CANCELLED' | 'VOIDED' | 'PARTIALLY_REFUNDED' | 'REFUNDED';
   printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
   paymentMethod: 'CASH' | 'CARD' | 'MANUAL' | null;
   currency: string;
@@ -42,12 +43,50 @@ export type CheckoutOrder = {
   paidAt: string | null;
   printedAt: string | null;
   createdAt: string;
+  refundedTotal?: number;
   payments: CheckoutPaymentLine[];
+  refunds?: CheckoutRefund[];
+  auditLogs?: CheckoutOrderAuditLog[];
   items: CheckoutOrderItem[];
+};
+
+export type CheckoutRefund = {
+  id: string;
+  refundNumber: string;
+  orderId?: string;
+  status: 'COMPLETED';
+  method: 'CASH' | 'CARD' | 'MANUAL';
+  amount: number;
+  reason: string;
+  operatorId: string | null;
+  approvedById: string | null;
+  createdAt: string;
+  items: Array<{
+    id: string;
+    orderItemId: string;
+    quantity: number;
+    amount: number;
+  }>;
+};
+
+export type CheckoutOrderAuditLog = {
+  id: string;
+  action: 'CANCELLED' | 'VOIDED' | 'REFUNDED';
+  fromStatus: CheckoutOrder['status'] | null;
+  toStatus: CheckoutOrder['status'] | null;
+  amount: number | null;
+  reason: string;
+  operatorId: string | null;
+  approvedById: string | null;
+  createdAt: string;
 };
 
 export type TodaySummary = {
   salesTotal: number;
+  grossSales: number;
+  netSales: number;
+  refundTotal: number;
+  refundCount: number;
   orderCount: number;
   averageTicket: number;
   activeProducts: number;
@@ -213,8 +252,26 @@ export type ReceiptPayload = {
   order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'pickupNumber' | 'status' | 'printStatus' | 'createdAt' | 'paidAt' | 'printedAt'>;
   currency: string;
   items: Array<Pick<CheckoutOrderItem, 'name' | 'quantity' | 'unitPrice' | 'lineTotal' | 'modifiers'>>;
-  totals: Pick<CheckoutOrder, 'subtotal' | 'adjustment' | 'tax' | 'tip' | 'total'>;
+  totals: Pick<CheckoutOrder, 'subtotal' | 'adjustment' | 'tax' | 'tip' | 'total'> & {
+    refundedTotal?: number;
+    netTotal?: number;
+  };
+  refunds?: Array<Pick<CheckoutRefund, 'id' | 'refundNumber' | 'status' | 'method' | 'amount' | 'reason' | 'createdAt'>>;
   payments: CheckoutPaymentLine[];
+  footer: {
+    message: string;
+    qrPayload: string;
+  };
+};
+
+export type RefundReceiptPayload = {
+  format: string;
+  type: 'refund';
+  store: { name: string };
+  refund: Pick<CheckoutRefund, 'id' | 'refundNumber' | 'status' | 'method' | 'amount' | 'reason' | 'createdAt'>;
+  order: Pick<CheckoutOrder, 'id' | 'orderNumber' | 'pickupNumber' | 'status' | 'paidAt'>;
+  currency: string;
+  items: Array<{ name: string; quantity: number; amount: number }>;
   footer: {
     message: string;
     qrPayload: string;
@@ -301,6 +358,64 @@ export function useMarkOrderPrinted() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['receipts'] });
+    },
+  });
+}
+
+export function useCancelOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { orderId: string; reason: string }) => {
+      const { data } = await apiClient.patch<CheckoutOrder>(`/api/checkout/orders/${payload.orderId}/cancel`, { reason: payload.reason });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useVoidOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { orderId: string; reason: string; approvedById?: string }) => {
+      const { data } = await apiClient.patch<CheckoutOrder>(`/api/checkout/orders/${payload.orderId}/void`, {
+        reason: payload.reason,
+        approvedById: payload.approvedById,
+      });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useRefundOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      orderId: string;
+      idempotencyKey: string;
+      reason: string;
+      method?: 'CASH' | 'CARD' | 'MANUAL';
+      amount?: number;
+      items?: Array<{ orderItemId: string; quantity: number }>;
+      approvedById?: string;
+    }) => {
+      const { orderId, ...body } = payload;
+      const { data } = await apiClient.post<CheckoutRefund>(`/api/checkout/orders/${orderId}/refunds`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
       void queryClient.invalidateQueries({ queryKey: ['receipts'] });
     },
   });
@@ -395,5 +510,10 @@ export async function fetchReceiptPayload(orderId?: string) {
   }
 
   const { data } = await apiClient.get<ReceiptPayload>(`/api/receipts/orders/${orderId}`);
+  return data;
+}
+
+export async function fetchRefundReceiptPayload(refundId: string) {
+  const { data } = await apiClient.get<RefundReceiptPayload>(`/api/receipts/refunds/${refundId}`);
   return data;
 }

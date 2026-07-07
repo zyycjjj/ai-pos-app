@@ -58,6 +58,18 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, refunds: {
+                    name: "refunds",
+                    type: "Refund",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, auditLogs: {
+                    name: "auditLogs",
+                    type: "OrderAuditLog",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, aiDrafts: {
                     name: "aiDrafts",
                     type: "AiDraft",
@@ -116,6 +128,30 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'user',
+                }, operatedRefunds: {
+                    name: "operatedRefunds",
+                    type: "Refund",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'operator',
+                }, approvedRefunds: {
+                    name: "approvedRefunds",
+                    type: "Refund",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'approvedBy',
+                }, operatedOrderAuditLogs: {
+                    name: "operatedOrderAuditLogs",
+                    type: "OrderAuditLog",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'operator',
+                }, approvedOrderAuditLogs: {
+                    name: "approvedOrderAuditLogs",
+                    type: "OrderAuditLog",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'approvedBy',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -552,6 +588,18 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'order',
+                }, refunds: {
+                    name: "refunds",
+                    type: "Refund",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'order',
+                }, auditLogs: {
+                    name: "auditLogs",
+                    type: "OrderAuditLog",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'order',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -668,6 +716,252 @@ const metadata: ModelMeta = {
                     name: "modifiers",
                     type: "Json",
                     isOptional: true,
+                }, refundItems: {
+                    name: "refundItems",
+                    type: "RefundItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'orderItem',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        refund: {
+            name: 'Refund', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'refunds',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, orderId: {
+                    name: "orderId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'order',
+                }, order: {
+                    name: "order",
+                    type: "Order",
+                    isDataModel: true,
+                    backLink: 'refunds',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderId" },
+                }, refundNumber: {
+                    name: "refundNumber",
+                    type: "String",
+                }, idempotencyKey: {
+                    name: "idempotencyKey",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "RefundStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, method: {
+                    name: "method",
+                    type: "PaymentMethod",
+                }, amount: {
+                    name: "amount",
+                    type: "Decimal",
+                }, reason: {
+                    name: "reason",
+                    type: "String",
+                }, operatorId: {
+                    name: "operatorId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'operator',
+                }, operator: {
+                    name: "operator",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'operatedRefunds',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "operatorId" },
+                }, approvedById: {
+                    name: "approvedById",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'approvedBy',
+                }, approvedBy: {
+                    name: "approvedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'approvedRefunds',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "approvedById" },
+                }, items: {
+                    name: "items",
+                    type: "RefundItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'refund',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, refundNumber: {
+                    name: "refundNumber",
+                    fields: ["refundNumber"]
+                }, storeId_idempotencyKey: {
+                    name: "storeId_idempotencyKey",
+                    fields: ["storeId", "idempotencyKey"]
+                },
+            },
+        },
+        refundItem: {
+            name: 'RefundItem', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, refundId: {
+                    name: "refundId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'refund',
+                }, refund: {
+                    name: "refund",
+                    type: "Refund",
+                    isDataModel: true,
+                    backLink: 'items',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "refundId" },
+                }, orderItemId: {
+                    name: "orderItemId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'orderItem',
+                }, orderItem: {
+                    name: "orderItem",
+                    type: "OrderItem",
+                    isDataModel: true,
+                    backLink: 'refundItems',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderItemId" },
+                }, quantity: {
+                    name: "quantity",
+                    type: "Int",
+                }, amount: {
+                    name: "amount",
+                    type: "Decimal",
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        orderAuditLog: {
+            name: 'OrderAuditLog', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'auditLogs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, orderId: {
+                    name: "orderId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'order',
+                }, order: {
+                    name: "order",
+                    type: "Order",
+                    isDataModel: true,
+                    backLink: 'auditLogs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderId" },
+                }, action: {
+                    name: "action",
+                    type: "OrderAuditAction",
+                }, fromStatus: {
+                    name: "fromStatus",
+                    type: "OrderStatus",
+                    isOptional: true,
+                }, toStatus: {
+                    name: "toStatus",
+                    type: "OrderStatus",
+                    isOptional: true,
+                }, amount: {
+                    name: "amount",
+                    type: "Decimal",
+                    isOptional: true,
+                }, reason: {
+                    name: "reason",
+                    type: "String",
+                }, operatorId: {
+                    name: "operatorId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'operator',
+                }, operator: {
+                    name: "operator",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'operatedOrderAuditLogs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "operatorId" },
+                }, approvedById: {
+                    name: "approvedById",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'approvedBy',
+                }, approvedBy: {
+                    name: "approvedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'approvedOrderAuditLogs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "approvedById" },
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
