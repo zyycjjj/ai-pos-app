@@ -328,7 +328,7 @@ export function useSuspenseCountProduct<TArgs extends Prisma.ProductCountArgs, T
 }
 import type { ProductAvailabilityStatus } from './__types';
 
-export function useCheckProduct<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; description?: string; categoryId?: string; category?: string; currency?: string; isActive?: boolean; availabilityStatus?: ProductAvailabilityStatus }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckProduct<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; description?: string; categoryId?: string; category?: string; currency?: string; isActive?: boolean; availabilityStatus?: ProductAvailabilityStatus; kitchenStationId?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Product', `${endpoint}/product/check`, args, options, fetch);
 }

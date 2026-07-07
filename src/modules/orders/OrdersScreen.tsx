@@ -126,6 +126,7 @@ function OrderCard({ order, money, t, onReprint, onRefund, onVoid, isPrinting, i
             {order.pickupNumber ? <StatusPill value={t('orders.list.pickupNumber', { number: order.pickupNumber })} tone="info" /> : null}
             <StatusPill value={getStatusLabel(order.status, t)} tone={getStatusTone(order.status)} />
             <StatusPill value={getPrintStatusLabel(order.printStatus, t)} tone={getPrintStatusTone(order.printStatus)} />
+            {order.kitchenStatus ? <StatusPill value={getKitchenStatusLabel(order.kitchenStatus)} tone={getKitchenStatusTone(order.kitchenStatus)} /> : null}
           </View>
 
           {/* Date and items */}
@@ -134,6 +135,9 @@ function OrderCard({ order, money, t, onReprint, onRefund, onVoid, isPrinting, i
             <Text style={[tokens.typography.body, { color: tokens.colors.muted }]}>{itemsLabel}</Text>
             {order.payments?.length ? (
               <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>{formatPaymentSummary(order, money, t)}</Text>
+            ) : null}
+            {order.kitchenTickets?.length ? (
+              <Text style={[tokens.typography.caption, { color: tokens.colors.muted }]}>{formatKitchenStations(order)}</Text>
             ) : null}
           </View>
         </View>
@@ -254,6 +258,39 @@ function getPrintStatusTone(printStatus: CheckoutOrder['printStatus']): 'success
   }
 }
 
+function getKitchenStatusLabel(status: NonNullable<CheckoutOrder['kitchenStatus']>): string {
+  switch (status) {
+    case 'NEW':
+      return 'Kitchen New';
+    case 'PREPARING':
+      return 'Preparing';
+    case 'READY':
+      return 'Ready';
+    case 'COMPLETED':
+      return 'Kitchen Done';
+    case 'CANCELLED':
+      return 'Kitchen Cancelled';
+    default:
+      return status;
+  }
+}
+
+function getKitchenStatusTone(status: NonNullable<CheckoutOrder['kitchenStatus']>): 'success' | 'warning' | 'danger' | 'neutral' | 'info' {
+  switch (status) {
+    case 'READY':
+    case 'COMPLETED':
+      return 'success';
+    case 'PREPARING':
+      return 'warning';
+    case 'CANCELLED':
+      return 'danger';
+    case 'NEW':
+      return 'info';
+    default:
+      return 'neutral';
+  }
+}
+
 function getPrintButtonLabel(printStatus: CheckoutOrder['printStatus'], isPrinting: boolean, t: (key: string) => string): string {
   if (isPrinting) {
     return t('orders.print.printing');
@@ -269,6 +306,11 @@ function formatPaymentSummary(order: CheckoutOrder, money: (value: number) => st
     return order.payments.map((payment) => `${getPaymentMethodLabel(payment.method, t)} ${money(payment.amount)}`).join(' / ');
   }
   return order.paymentMethod ? getPaymentMethodLabel(order.paymentMethod, t) : '';
+}
+
+function formatKitchenStations(order: CheckoutOrder) {
+  const names = [...new Set((order.kitchenTickets ?? []).map((ticket) => ticket.stationName).filter(Boolean))];
+  return names.length > 0 ? `Kitchen: ${names.join(' / ')}` : 'Kitchen ticket created';
 }
 
 function getPaymentMethodLabel(method: NonNullable<CheckoutOrder['paymentMethod']>, t: (key: string) => string) {

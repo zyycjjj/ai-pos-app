@@ -328,7 +328,7 @@ export function useSuspenseCountCategory<TArgs extends Prisma.CategoryCountArgs,
 }
 import type { CatalogStatus } from './__types';
 
-export function useCheckCategory<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; status?: CatalogStatus; sortOrder?: number }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckCategory<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; status?: CatalogStatus; sortOrder?: number; defaultKitchenStationId?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Category', `${endpoint}/category/check`, args, options, fetch);
 }

@@ -82,6 +82,24 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, kitchenStations: {
+                    name: "kitchenStations",
+                    type: "KitchenStation",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, kitchenTickets: {
+                    name: "kitchenTickets",
+                    type: "KitchenTicket",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, kitchenTicketItems: {
+                    name: "kitchenTicketItems",
+                    type: "KitchenTicketItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, aiDrafts: {
                     name: "aiDrafts",
                     type: "AiDraft",
@@ -185,6 +203,12 @@ const metadata: ModelMeta = {
                 }, cashMovements: {
                     name: "cashMovements",
                     type: "CashMovement",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'createdBy',
+                }, createdKitchenTickets: {
+                    name: "createdKitchenTickets",
+                    type: "KitchenTicket",
                     isDataModel: true,
                     isArray: true,
                     backLink: 'createdBy',
@@ -294,6 +318,20 @@ const metadata: ModelMeta = {
                     name: "sortOrder",
                     type: "Int",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, defaultKitchenStationId: {
+                    name: "defaultKitchenStationId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'defaultKitchenStation',
+                }, defaultKitchenStation: {
+                    name: "defaultKitchenStation",
+                    type: "KitchenStation",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'categories',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "defaultKitchenStationId" },
                 }, products: {
                     name: "products",
                     type: "Product",
@@ -380,6 +418,20 @@ const metadata: ModelMeta = {
                     name: "availabilityStatus",
                     type: "ProductAvailabilityStatus",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, kitchenStationId: {
+                    name: "kitchenStationId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'kitchenStation',
+                }, kitchenStation: {
+                    name: "kitchenStation",
+                    type: "KitchenStation",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'products',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "kitchenStationId" },
                 }, modifierGroups: {
                     name: "modifierGroups",
                     type: "ProductModifierGroup",
@@ -636,6 +688,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'order',
+                }, kitchenTickets: {
+                    name: "kitchenTickets",
+                    type: "KitchenTicket",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'order',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -755,6 +813,12 @@ const metadata: ModelMeta = {
                 }, refundItems: {
                     name: "refundItems",
                     type: "RefundItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'orderItem',
+                }, kitchenTicketItems: {
+                    name: "kitchenTicketItems",
+                    type: "KitchenTicketItem",
                     isDataModel: true,
                     isArray: true,
                     backLink: 'orderItem',
@@ -1197,6 +1261,272 @@ const metadata: ModelMeta = {
                 }, storeId_type_referenceType_referenceId: {
                     name: "storeId_type_referenceType_referenceId",
                     fields: ["storeId", "type", "referenceType", "referenceId"]
+                },
+            },
+        },
+        kitchenStation: {
+            name: 'KitchenStation', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'kitchenStations',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, code: {
+                    name: "code",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "KitchenStationStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, sortOrder: {
+                    name: "sortOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, isDefault: {
+                    name: "isDefault",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, products: {
+                    name: "products",
+                    type: "Product",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'kitchenStation',
+                }, categories: {
+                    name: "categories",
+                    type: "Category",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'defaultKitchenStation',
+                }, tickets: {
+                    name: "tickets",
+                    type: "KitchenTicket",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'station',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_code: {
+                    name: "storeId_code",
+                    fields: ["storeId", "code"]
+                },
+            },
+        },
+        kitchenTicket: {
+            name: 'KitchenTicket', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'kitchenTickets',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, orderId: {
+                    name: "orderId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'order',
+                }, order: {
+                    name: "order",
+                    type: "Order",
+                    isDataModel: true,
+                    backLink: 'kitchenTickets',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderId" },
+                }, stationId: {
+                    name: "stationId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'station',
+                }, station: {
+                    name: "station",
+                    type: "KitchenStation",
+                    isDataModel: true,
+                    backLink: 'tickets',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "stationId" },
+                }, ticketNumber: {
+                    name: "ticketNumber",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "KitchenTicketStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, startedAt: {
+                    name: "startedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, readyAt: {
+                    name: "readyAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, completedAt: {
+                    name: "completedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, cancelledAt: {
+                    name: "cancelledAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, cancelReason: {
+                    name: "cancelReason",
+                    type: "String",
+                    isOptional: true,
+                }, createdByUserId: {
+                    name: "createdByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'createdBy',
+                }, createdBy: {
+                    name: "createdBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'createdKitchenTickets',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "createdByUserId" },
+                }, items: {
+                    name: "items",
+                    type: "KitchenTicketItem",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'ticket',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, ticketNumber: {
+                    name: "ticketNumber",
+                    fields: ["ticketNumber"]
+                }, storeId_orderId_stationId: {
+                    name: "storeId_orderId_stationId",
+                    fields: ["storeId", "orderId", "stationId"]
+                },
+            },
+        },
+        kitchenTicketItem: {
+            name: 'KitchenTicketItem', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'kitchenTicketItems',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, ticketId: {
+                    name: "ticketId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'ticket',
+                }, ticket: {
+                    name: "ticket",
+                    type: "KitchenTicket",
+                    isDataModel: true,
+                    backLink: 'items',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "ticketId" },
+                }, orderItemId: {
+                    name: "orderItemId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'orderItem',
+                }, orderItem: {
+                    name: "orderItem",
+                    type: "OrderItem",
+                    isDataModel: true,
+                    backLink: 'kitchenTicketItems',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderItemId" },
+                }, productId: {
+                    name: "productId",
+                    type: "String",
+                }, productNameSnapshot: {
+                    name: "productNameSnapshot",
+                    type: "String",
+                }, quantity: {
+                    name: "quantity",
+                    type: "Int",
+                }, modifiers: {
+                    name: "modifiers",
+                    type: "Json",
+                    isOptional: true,
+                }, notes: {
+                    name: "notes",
+                    type: "String",
+                    isOptional: true,
+                }, status: {
+                    name: "status",
+                    type: "KitchenTicketStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
                 },
             },
         },

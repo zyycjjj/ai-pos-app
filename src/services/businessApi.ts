@@ -23,6 +23,20 @@ export type CheckoutPaymentLine = {
   changeDue: number | null;
 };
 
+export type KitchenTicketStatus = 'NEW' | 'PREPARING' | 'READY' | 'COMPLETED' | 'CANCELLED';
+
+export type CheckoutKitchenTicket = {
+  id: string;
+  ticketNumber: string;
+  status: KitchenTicketStatus;
+  stationId: string;
+  stationName: string | null;
+  startedAt: string | null;
+  readyAt: string | null;
+  completedAt: string | null;
+  cancelledAt: string | null;
+};
+
 export type CheckoutOrder = {
   id: string;
   orderNumber: string;
@@ -47,6 +61,8 @@ export type CheckoutOrder = {
   payments: CheckoutPaymentLine[];
   refunds?: CheckoutRefund[];
   auditLogs?: CheckoutOrderAuditLog[];
+  kitchenTickets?: CheckoutKitchenTicket[];
+  kitchenStatus?: KitchenTicketStatus | null;
   items: CheckoutOrderItem[];
 };
 

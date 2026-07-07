@@ -90,6 +90,21 @@ export type Shift = $Result.DefaultSelection<Prisma.$ShiftPayload>
  */
 export type CashMovement = $Result.DefaultSelection<Prisma.$CashMovementPayload>
 /**
+ * Model KitchenStation
+ * 
+ */
+export type KitchenStation = $Result.DefaultSelection<Prisma.$KitchenStationPayload>
+/**
+ * Model KitchenTicket
+ * 
+ */
+export type KitchenTicket = $Result.DefaultSelection<Prisma.$KitchenTicketPayload>
+/**
+ * Model KitchenTicketItem
+ * 
+ */
+export type KitchenTicketItem = $Result.DefaultSelection<Prisma.$KitchenTicketItemPayload>
+/**
  * Model AiDraft
  * 
  */
@@ -180,6 +195,25 @@ export namespace $Enums {
     export type CashMovementReferenceType = (typeof CashMovementReferenceType)[keyof typeof CashMovementReferenceType]
 
 
+    export const KitchenStationStatus: {
+        ACTIVE: 'ACTIVE',
+        INACTIVE: 'INACTIVE'
+    };
+
+    export type KitchenStationStatus = (typeof KitchenStationStatus)[keyof typeof KitchenStationStatus]
+
+
+    export const KitchenTicketStatus: {
+        NEW: 'NEW',
+        PREPARING: 'PREPARING',
+        READY: 'READY',
+        COMPLETED: 'COMPLETED',
+        CANCELLED: 'CANCELLED'
+    };
+
+    export type KitchenTicketStatus = (typeof KitchenTicketStatus)[keyof typeof KitchenTicketStatus]
+
+
     export const AiDraftStatus: {
         DRAFT: 'DRAFT',
         CONFIRMED: 'CONFIRMED',
@@ -266,6 +300,14 @@ export const CashMovementType: typeof $Enums.CashMovementType
 export type CashMovementReferenceType = $Enums.CashMovementReferenceType
 
 export const CashMovementReferenceType: typeof $Enums.CashMovementReferenceType
+
+export type KitchenStationStatus = $Enums.KitchenStationStatus
+
+export const KitchenStationStatus: typeof $Enums.KitchenStationStatus
+
+export type KitchenTicketStatus = $Enums.KitchenTicketStatus
+
+export const KitchenTicketStatus: typeof $Enums.KitchenTicketStatus
 
 export type AiDraftStatus = $Enums.AiDraftStatus
 
@@ -565,6 +607,36 @@ export class PrismaClient<
       * ```
       */
     get cashMovement(): Prisma.CashMovementDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.kitchenStation`: Exposes CRUD operations for the **KitchenStation** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more KitchenStations
+      * const kitchenStations = await prisma.kitchenStation.findMany()
+      * ```
+      */
+    get kitchenStation(): Prisma.KitchenStationDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.kitchenTicket`: Exposes CRUD operations for the **KitchenTicket** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more KitchenTickets
+      * const kitchenTickets = await prisma.kitchenTicket.findMany()
+      * ```
+      */
+    get kitchenTicket(): Prisma.KitchenTicketDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.kitchenTicketItem`: Exposes CRUD operations for the **KitchenTicketItem** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more KitchenTicketItems
+      * const kitchenTicketItems = await prisma.kitchenTicketItem.findMany()
+      * ```
+      */
+    get kitchenTicketItem(): Prisma.KitchenTicketItemDelegate<ExtArgs, ClientOptions>;
 
     /**
      * `prisma.aiDraft`: Exposes CRUD operations for the **AiDraft** model.
@@ -1040,6 +1112,9 @@ export namespace Prisma {
         OrderAuditLog: 'OrderAuditLog',
         Shift: 'Shift',
         CashMovement: 'CashMovement',
+        KitchenStation: 'KitchenStation',
+        KitchenTicket: 'KitchenTicket',
+        KitchenTicketItem: 'KitchenTicketItem',
         AiDraft: 'AiDraft',
         Campaign: 'Campaign'
     };
@@ -1060,7 +1135,7 @@ export namespace Prisma {
             omit: GlobalOmitOptions
         }
         meta: {
-            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "aiDraft" | "campaign"
+            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "kitchenStation" | "kitchenTicket" | "kitchenTicketItem" | "aiDraft" | "campaign"
             txIsolationLevel: Prisma.TransactionIsolationLevel
         }
         model: {
@@ -2054,6 +2129,204 @@ export namespace Prisma {
                     }
                 }
             }
+            KitchenStation: {
+                payload: Prisma.$KitchenStationPayload<ExtArgs>
+                fields: Prisma.KitchenStationFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.KitchenStationFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.KitchenStationFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.KitchenStationFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.KitchenStationFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    findMany: {
+                        args: Prisma.KitchenStationFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>[]
+                    }
+                    create: {
+                        args: Prisma.KitchenStationCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    createMany: {
+                        args: Prisma.KitchenStationCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.KitchenStationDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    update: {
+                        args: Prisma.KitchenStationUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.KitchenStationDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.KitchenStationUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.KitchenStationUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenStationPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.KitchenStationAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateKitchenStation>
+                    }
+                    groupBy: {
+                        args: Prisma.KitchenStationGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenStationGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.KitchenStationCountArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenStationCountAggregateOutputType> | number
+                    }
+                }
+            }
+            KitchenTicket: {
+                payload: Prisma.$KitchenTicketPayload<ExtArgs>
+                fields: Prisma.KitchenTicketFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.KitchenTicketFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.KitchenTicketFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.KitchenTicketFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.KitchenTicketFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    findMany: {
+                        args: Prisma.KitchenTicketFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>[]
+                    }
+                    create: {
+                        args: Prisma.KitchenTicketCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    createMany: {
+                        args: Prisma.KitchenTicketCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.KitchenTicketDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    update: {
+                        args: Prisma.KitchenTicketUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.KitchenTicketDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.KitchenTicketUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.KitchenTicketUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.KitchenTicketAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateKitchenTicket>
+                    }
+                    groupBy: {
+                        args: Prisma.KitchenTicketGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenTicketGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.KitchenTicketCountArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenTicketCountAggregateOutputType> | number
+                    }
+                }
+            }
+            KitchenTicketItem: {
+                payload: Prisma.$KitchenTicketItemPayload<ExtArgs>
+                fields: Prisma.KitchenTicketItemFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.KitchenTicketItemFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.KitchenTicketItemFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.KitchenTicketItemFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.KitchenTicketItemFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    findMany: {
+                        args: Prisma.KitchenTicketItemFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>[]
+                    }
+                    create: {
+                        args: Prisma.KitchenTicketItemCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    createMany: {
+                        args: Prisma.KitchenTicketItemCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.KitchenTicketItemDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    update: {
+                        args: Prisma.KitchenTicketItemUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.KitchenTicketItemDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.KitchenTicketItemUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.KitchenTicketItemUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$KitchenTicketItemPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.KitchenTicketItemAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateKitchenTicketItem>
+                    }
+                    groupBy: {
+                        args: Prisma.KitchenTicketItemGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenTicketItemGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.KitchenTicketItemCountArgs<ExtArgs>
+                        result: $Utils.Optional<KitchenTicketItemCountAggregateOutputType> | number
+                    }
+                }
+            }
             AiDraft: {
                 payload: Prisma.$AiDraftPayload<ExtArgs>
                 fields: Prisma.AiDraftFieldRefs
@@ -2285,6 +2558,9 @@ export namespace Prisma {
         orderAuditLog?: OrderAuditLogOmit
         shift?: ShiftOmit
         cashMovement?: CashMovementOmit
+        kitchenStation?: KitchenStationOmit
+        kitchenTicket?: KitchenTicketOmit
+        kitchenTicketItem?: KitchenTicketItemOmit
         aiDraft?: AiDraftOmit
         campaign?: CampaignOmit
     }
@@ -2389,6 +2665,9 @@ export namespace Prisma {
         auditLogs: number
         shifts: number
         cashMovements: number
+        kitchenStations: number
+        kitchenTickets: number
+        kitchenTicketItems: number
         aiDrafts: number
         campaigns: number
     }
@@ -2402,6 +2681,9 @@ export namespace Prisma {
         auditLogs?: boolean | StoreCountOutputTypeCountAuditLogsArgs
         shifts?: boolean | StoreCountOutputTypeCountShiftsArgs
         cashMovements?: boolean | StoreCountOutputTypeCountCashMovementsArgs
+        kitchenStations?: boolean | StoreCountOutputTypeCountKitchenStationsArgs
+        kitchenTickets?: boolean | StoreCountOutputTypeCountKitchenTicketsArgs
+        kitchenTicketItems?: boolean | StoreCountOutputTypeCountKitchenTicketItemsArgs
         aiDrafts?: boolean | StoreCountOutputTypeCountAiDraftsArgs
         campaigns?: boolean | StoreCountOutputTypeCountCampaignsArgs
     }
@@ -2476,6 +2758,27 @@ export namespace Prisma {
     /**
      * StoreCountOutputType without action
      */
+    export type StoreCountOutputTypeCountKitchenStationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenStationWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountKitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountKitchenTicketItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketItemWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
     export type StoreCountOutputTypeCountAiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: AiDraftWhereInput
     }
@@ -2502,6 +2805,7 @@ export namespace Prisma {
         openedShifts: number
         closedShifts: number
         cashMovements: number
+        createdKitchenTickets: number
     }
 
     export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2514,6 +2818,7 @@ export namespace Prisma {
         openedShifts?: boolean | UserCountOutputTypeCountOpenedShiftsArgs
         closedShifts?: boolean | UserCountOutputTypeCountClosedShiftsArgs
         cashMovements?: boolean | UserCountOutputTypeCountCashMovementsArgs
+        createdKitchenTickets?: boolean | UserCountOutputTypeCountCreatedKitchenTicketsArgs
     }
 
     // Custom InputTypes
@@ -2588,6 +2893,13 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeCountCashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: CashMovementWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountCreatedKitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketWhereInput
     }
 
 
@@ -2702,6 +3014,7 @@ export namespace Prisma {
         payments: number
         refunds: number
         auditLogs: number
+        kitchenTickets: number
     }
 
     export type OrderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2709,6 +3022,7 @@ export namespace Prisma {
         payments?: boolean | OrderCountOutputTypeCountPaymentsArgs
         refunds?: boolean | OrderCountOutputTypeCountRefundsArgs
         auditLogs?: boolean | OrderCountOutputTypeCountAuditLogsArgs
+        kitchenTickets?: boolean | OrderCountOutputTypeCountKitchenTicketsArgs
     }
 
     // Custom InputTypes
@@ -2750,6 +3064,13 @@ export namespace Prisma {
         where?: OrderAuditLogWhereInput
     }
 
+    /**
+     * OrderCountOutputType without action
+     */
+    export type OrderCountOutputTypeCountKitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketWhereInput
+    }
+
 
     /**
      * Count Type OrderItemCountOutputType
@@ -2757,10 +3078,12 @@ export namespace Prisma {
 
     export type OrderItemCountOutputType = {
         refundItems: number
+        kitchenTicketItems: number
     }
 
     export type OrderItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         refundItems?: boolean | OrderItemCountOutputTypeCountRefundItemsArgs
+        kitchenTicketItems?: boolean | OrderItemCountOutputTypeCountKitchenTicketItemsArgs
     }
 
     // Custom InputTypes
@@ -2779,6 +3102,13 @@ export namespace Prisma {
      */
     export type OrderItemCountOutputTypeCountRefundItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: RefundItemWhereInput
+    }
+
+    /**
+     * OrderItemCountOutputType without action
+     */
+    export type OrderItemCountOutputTypeCountKitchenTicketItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketItemWhereInput
     }
 
 
@@ -2841,6 +3171,86 @@ export namespace Prisma {
      */
     export type ShiftCountOutputTypeCountMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: CashMovementWhereInput
+    }
+
+
+    /**
+     * Count Type KitchenStationCountOutputType
+     */
+
+    export type KitchenStationCountOutputType = {
+        products: number
+        categories: number
+        tickets: number
+    }
+
+    export type KitchenStationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        products?: boolean | KitchenStationCountOutputTypeCountProductsArgs
+        categories?: boolean | KitchenStationCountOutputTypeCountCategoriesArgs
+        tickets?: boolean | KitchenStationCountOutputTypeCountTicketsArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * KitchenStationCountOutputType without action
+     */
+    export type KitchenStationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStationCountOutputType
+         */
+        select?: KitchenStationCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * KitchenStationCountOutputType without action
+     */
+    export type KitchenStationCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: ProductWhereInput
+    }
+
+    /**
+     * KitchenStationCountOutputType without action
+     */
+    export type KitchenStationCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: CategoryWhereInput
+    }
+
+    /**
+     * KitchenStationCountOutputType without action
+     */
+    export type KitchenStationCountOutputTypeCountTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketWhereInput
+    }
+
+
+    /**
+     * Count Type KitchenTicketCountOutputType
+     */
+
+    export type KitchenTicketCountOutputType = {
+        items: number
+    }
+
+    export type KitchenTicketCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        items?: boolean | KitchenTicketCountOutputTypeCountItemsArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * KitchenTicketCountOutputType without action
+     */
+    export type KitchenTicketCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketCountOutputType
+         */
+        select?: KitchenTicketCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * KitchenTicketCountOutputType without action
+     */
+    export type KitchenTicketCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketItemWhereInput
     }
 
 
@@ -3044,6 +3454,9 @@ export namespace Prisma {
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         shifts?: boolean | Store$shiftsArgs<ExtArgs>
         cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
+        kitchenStations?: boolean | Store$kitchenStationsArgs<ExtArgs>
+        kitchenTickets?: boolean | Store$kitchenTicketsArgs<ExtArgs>
+        kitchenTicketItems?: boolean | Store$kitchenTicketItemsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -3072,6 +3485,9 @@ export namespace Prisma {
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         shifts?: boolean | Store$shiftsArgs<ExtArgs>
         cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
+        kitchenStations?: boolean | Store$kitchenStationsArgs<ExtArgs>
+        kitchenTickets?: boolean | Store$kitchenTicketsArgs<ExtArgs>
+        kitchenTicketItems?: boolean | Store$kitchenTicketItemsArgs<ExtArgs>
         aiDrafts?: boolean | Store$aiDraftsArgs<ExtArgs>
         campaigns?: boolean | Store$campaignsArgs<ExtArgs>
         _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -3088,6 +3504,9 @@ export namespace Prisma {
             auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
             shifts: Prisma.$ShiftPayload<ExtArgs>[]
             cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
+            kitchenStations: Prisma.$KitchenStationPayload<ExtArgs>[]
+            kitchenTickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
+            kitchenTicketItems: Prisma.$KitchenTicketItemPayload<ExtArgs>[]
             aiDrafts: Prisma.$AiDraftPayload<ExtArgs>[]
             campaigns: Prisma.$CampaignPayload<ExtArgs>[]
         }
@@ -3448,6 +3867,9 @@ export namespace Prisma {
         auditLogs<T extends Store$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Store$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         shifts<T extends Store$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         cashMovements<T extends Store$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Store$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        kitchenStations<T extends Store$kitchenStationsArgs<ExtArgs> = {}>(args?: Subset<T, Store$kitchenStationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        kitchenTickets<T extends Store$kitchenTicketsArgs<ExtArgs> = {}>(args?: Subset<T, Store$kitchenTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        kitchenTicketItems<T extends Store$kitchenTicketItemsArgs<ExtArgs> = {}>(args?: Subset<T, Store$kitchenTicketItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         aiDrafts<T extends Store$aiDraftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$aiDraftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiDraftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         campaigns<T extends Store$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Store$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
@@ -4022,6 +4444,78 @@ export namespace Prisma {
     }
 
     /**
+     * Store.kitchenStations
+     */
+    export type Store$kitchenStationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        where?: KitchenStationWhereInput
+        orderBy?: KitchenStationOrderByWithRelationInput | KitchenStationOrderByWithRelationInput[]
+        cursor?: KitchenStationWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenStationScalarFieldEnum | KitchenStationScalarFieldEnum[]
+    }
+
+    /**
+     * Store.kitchenTickets
+     */
+    export type Store$kitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        where?: KitchenTicketWhereInput
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        cursor?: KitchenTicketWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
+    }
+
+    /**
+     * Store.kitchenTicketItems
+     */
+    export type Store$kitchenTicketItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        where?: KitchenTicketItemWhereInput
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        cursor?: KitchenTicketItemWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
+    }
+
+    /**
      * Store.aiDrafts
      */
     export type Store$aiDraftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4277,6 +4771,7 @@ export namespace Prisma {
         openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
         closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
         cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
+        createdKitchenTickets?: boolean | User$createdKitchenTicketsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["user"]>
 
@@ -4303,6 +4798,7 @@ export namespace Prisma {
         openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
         closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
         cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
+        createdKitchenTickets?: boolean | User$createdKitchenTicketsArgs<ExtArgs>
         _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -4318,6 +4814,7 @@ export namespace Prisma {
             openedShifts: Prisma.$ShiftPayload<ExtArgs>[]
             closedShifts: Prisma.$ShiftPayload<ExtArgs>[]
             cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
+            createdKitchenTickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -4676,6 +5173,7 @@ export namespace Prisma {
         openedShifts<T extends User$openedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$openedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         closedShifts<T extends User$closedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$closedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         cashMovements<T extends User$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, User$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        createdKitchenTickets<T extends User$createdKitchenTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdKitchenTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5268,6 +5766,30 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: CashMovementScalarFieldEnum | CashMovementScalarFieldEnum[]
+    }
+
+    /**
+     * User.createdKitchenTickets
+     */
+    export type User$createdKitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        where?: KitchenTicketWhereInput
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        cursor?: KitchenTicketWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
     }
 
     /**
@@ -6270,6 +6792,7 @@ export namespace Prisma {
         name: string | null
         status: $Enums.CatalogStatus | null
         sortOrder: number | null
+        defaultKitchenStationId: string | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -6280,6 +6803,7 @@ export namespace Prisma {
         name: string | null
         status: $Enums.CatalogStatus | null
         sortOrder: number | null
+        defaultKitchenStationId: string | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -6290,6 +6814,7 @@ export namespace Prisma {
         name: number
         status: number
         sortOrder: number
+        defaultKitchenStationId: number
         createdAt: number
         updatedAt: number
         _all: number
@@ -6310,6 +6835,7 @@ export namespace Prisma {
         name?: true
         status?: true
         sortOrder?: true
+        defaultKitchenStationId?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -6320,6 +6846,7 @@ export namespace Prisma {
         name?: true
         status?: true
         sortOrder?: true
+        defaultKitchenStationId?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -6330,6 +6857,7 @@ export namespace Prisma {
         name?: true
         status?: true
         sortOrder?: true
+        defaultKitchenStationId?: true
         createdAt?: true
         updatedAt?: true
         _all?: true
@@ -6427,6 +6955,7 @@ export namespace Prisma {
         name: string
         status: $Enums.CatalogStatus
         sortOrder: number
+        defaultKitchenStationId: string | null
         createdAt: Date
         updatedAt: Date
         _count: CategoryCountAggregateOutputType | null
@@ -6456,9 +6985,11 @@ export namespace Prisma {
         name?: boolean
         status?: boolean
         sortOrder?: boolean
+        defaultKitchenStationId?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         store?: boolean | StoreDefaultArgs<ExtArgs>
+        defaultKitchenStation?: boolean | Category$defaultKitchenStationArgs<ExtArgs>
         products?: boolean | Category$productsArgs<ExtArgs>
         _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["category"]>
@@ -6471,13 +7002,15 @@ export namespace Prisma {
         name?: boolean
         status?: boolean
         sortOrder?: boolean
+        defaultKitchenStationId?: boolean
         createdAt?: boolean
         updatedAt?: boolean
     }
 
-    export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "status" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+    export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "status" | "sortOrder" | "defaultKitchenStationId" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
     export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | StoreDefaultArgs<ExtArgs>
+        defaultKitchenStation?: boolean | Category$defaultKitchenStationArgs<ExtArgs>
         products?: boolean | Category$productsArgs<ExtArgs>
         _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
     }
@@ -6486,6 +7019,7 @@ export namespace Prisma {
         name: "Category"
         objects: {
             store: Prisma.$StorePayload<ExtArgs>
+            defaultKitchenStation: Prisma.$KitchenStationPayload<ExtArgs> | null
             products: Prisma.$ProductPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
@@ -6494,6 +7028,7 @@ export namespace Prisma {
             name: string
             status: $Enums.CatalogStatus
             sortOrder: number
+            defaultKitchenStationId: string | null
             createdAt: Date
             updatedAt: Date
         }, ExtArgs["result"]["category"]>
@@ -6837,6 +7372,7 @@ export namespace Prisma {
     export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        defaultKitchenStation<T extends Category$defaultKitchenStationArgs<ExtArgs> = {}>(args?: Subset<T, Category$defaultKitchenStationArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
         products<T extends Category$productsArgs<ExtArgs> = {}>(args?: Subset<T, Category$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6872,6 +7408,7 @@ export namespace Prisma {
         readonly name: FieldRef<"Category", 'String'>
         readonly status: FieldRef<"Category", 'CatalogStatus'>
         readonly sortOrder: FieldRef<"Category", 'Int'>
+        readonly defaultKitchenStationId: FieldRef<"Category", 'String'>
         readonly createdAt: FieldRef<"Category", 'DateTime'>
         readonly updatedAt: FieldRef<"Category", 'DateTime'>
     }
@@ -7217,6 +7754,25 @@ export namespace Prisma {
     }
 
     /**
+     * Category.defaultKitchenStation
+     */
+    export type Category$defaultKitchenStationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        where?: KitchenStationWhereInput
+    }
+
+    /**
      * Category.products
      */
     export type Category$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7290,6 +7846,7 @@ export namespace Prisma {
         currency: string | null
         isActive: boolean | null
         availabilityStatus: $Enums.ProductAvailabilityStatus | null
+        kitchenStationId: string | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -7305,6 +7862,7 @@ export namespace Prisma {
         currency: string | null
         isActive: boolean | null
         availabilityStatus: $Enums.ProductAvailabilityStatus | null
+        kitchenStationId: string | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -7320,6 +7878,7 @@ export namespace Prisma {
         currency: number
         isActive: number
         availabilityStatus: number
+        kitchenStationId: number
         createdAt: number
         updatedAt: number
         _all: number
@@ -7345,6 +7904,7 @@ export namespace Prisma {
         currency?: true
         isActive?: true
         availabilityStatus?: true
+        kitchenStationId?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -7360,6 +7920,7 @@ export namespace Prisma {
         currency?: true
         isActive?: true
         availabilityStatus?: true
+        kitchenStationId?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -7375,6 +7936,7 @@ export namespace Prisma {
         currency?: true
         isActive?: true
         availabilityStatus?: true
+        kitchenStationId?: true
         createdAt?: true
         updatedAt?: true
         _all?: true
@@ -7477,6 +8039,7 @@ export namespace Prisma {
         currency: string
         isActive: boolean
         availabilityStatus: $Enums.ProductAvailabilityStatus
+        kitchenStationId: string | null
         createdAt: Date
         updatedAt: Date
         _count: ProductCountAggregateOutputType | null
@@ -7511,10 +8074,12 @@ export namespace Prisma {
         currency?: boolean
         isActive?: boolean
         availabilityStatus?: boolean
+        kitchenStationId?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         store?: boolean | Product$storeArgs<ExtArgs>
         categoryRef?: boolean | Product$categoryRefArgs<ExtArgs>
+        kitchenStation?: boolean | Product$kitchenStationArgs<ExtArgs>
         modifierGroups?: boolean | Product$modifierGroupsArgs<ExtArgs>
         orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
         _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -7533,14 +8098,16 @@ export namespace Prisma {
         currency?: boolean
         isActive?: boolean
         availabilityStatus?: boolean
+        kitchenStationId?: boolean
         createdAt?: boolean
         updatedAt?: boolean
     }
 
-    export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "description" | "categoryId" | "category" | "price" | "currency" | "isActive" | "availabilityStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+    export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "description" | "categoryId" | "category" | "price" | "currency" | "isActive" | "availabilityStatus" | "kitchenStationId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
     export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | Product$storeArgs<ExtArgs>
         categoryRef?: boolean | Product$categoryRefArgs<ExtArgs>
+        kitchenStation?: boolean | Product$kitchenStationArgs<ExtArgs>
         modifierGroups?: boolean | Product$modifierGroupsArgs<ExtArgs>
         orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
         _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -7551,6 +8118,7 @@ export namespace Prisma {
         objects: {
             store: Prisma.$StorePayload<ExtArgs> | null
             categoryRef: Prisma.$CategoryPayload<ExtArgs> | null
+            kitchenStation: Prisma.$KitchenStationPayload<ExtArgs> | null
             modifierGroups: Prisma.$ProductModifierGroupPayload<ExtArgs>[]
             orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
         }
@@ -7565,6 +8133,7 @@ export namespace Prisma {
             currency: string
             isActive: boolean
             availabilityStatus: $Enums.ProductAvailabilityStatus
+            kitchenStationId: string | null
             createdAt: Date
             updatedAt: Date
         }, ExtArgs["result"]["product"]>
@@ -7909,6 +8478,7 @@ export namespace Prisma {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         store<T extends Product$storeArgs<ExtArgs> = {}>(args?: Subset<T, Product$storeArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
         categoryRef<T extends Product$categoryRefArgs<ExtArgs> = {}>(args?: Subset<T, Product$categoryRefArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        kitchenStation<T extends Product$kitchenStationArgs<ExtArgs> = {}>(args?: Subset<T, Product$kitchenStationArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
         modifierGroups<T extends Product$modifierGroupsArgs<ExtArgs> = {}>(args?: Subset<T, Product$modifierGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductModifierGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         orderItems<T extends Product$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
@@ -7950,6 +8520,7 @@ export namespace Prisma {
         readonly currency: FieldRef<"Product", 'String'>
         readonly isActive: FieldRef<"Product", 'Boolean'>
         readonly availabilityStatus: FieldRef<"Product", 'ProductAvailabilityStatus'>
+        readonly kitchenStationId: FieldRef<"Product", 'String'>
         readonly createdAt: FieldRef<"Product", 'DateTime'>
         readonly updatedAt: FieldRef<"Product", 'DateTime'>
     }
@@ -8330,6 +8901,25 @@ export namespace Prisma {
          */
         include?: CategoryInclude<ExtArgs> | null
         where?: CategoryWhereInput
+    }
+
+    /**
+     * Product.kitchenStation
+     */
+    export type Product$kitchenStationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        where?: KitchenStationWhereInput
     }
 
     /**
@@ -10825,6 +11415,7 @@ export namespace Prisma {
         payments?: boolean | Order$paymentsArgs<ExtArgs>
         refunds?: boolean | Order$refundsArgs<ExtArgs>
         auditLogs?: boolean | Order$auditLogsArgs<ExtArgs>
+        kitchenTickets?: boolean | Order$kitchenTicketsArgs<ExtArgs>
         _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["order"]>
 
@@ -10861,6 +11452,7 @@ export namespace Prisma {
         payments?: boolean | Order$paymentsArgs<ExtArgs>
         refunds?: boolean | Order$refundsArgs<ExtArgs>
         auditLogs?: boolean | Order$auditLogsArgs<ExtArgs>
+        kitchenTickets?: boolean | Order$kitchenTicketsArgs<ExtArgs>
         _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -10872,6 +11464,7 @@ export namespace Prisma {
             payments: Prisma.$OrderPaymentPayload<ExtArgs>[]
             refunds: Prisma.$RefundPayload<ExtArgs>[]
             auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
+            kitchenTickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -11240,6 +11833,7 @@ export namespace Prisma {
         payments<T extends Order$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         refunds<T extends Order$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Order$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         auditLogs<T extends Order$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Order$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        kitchenTickets<T extends Order$kitchenTicketsArgs<ExtArgs> = {}>(args?: Subset<T, Order$kitchenTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11745,6 +12339,30 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: OrderAuditLogScalarFieldEnum | OrderAuditLogScalarFieldEnum[]
+    }
+
+    /**
+     * Order.kitchenTickets
+     */
+    export type Order$kitchenTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        where?: KitchenTicketWhereInput
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        cursor?: KitchenTicketWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
     }
 
     /**
@@ -13004,6 +13622,7 @@ export namespace Prisma {
         order?: boolean | OrderDefaultArgs<ExtArgs>
         product?: boolean | ProductDefaultArgs<ExtArgs>
         refundItems?: boolean | OrderItem$refundItemsArgs<ExtArgs>
+        kitchenTicketItems?: boolean | OrderItem$kitchenTicketItemsArgs<ExtArgs>
         _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
     }, ExtArgs["result"]["orderItem"]>
 
@@ -13027,6 +13646,7 @@ export namespace Prisma {
         order?: boolean | OrderDefaultArgs<ExtArgs>
         product?: boolean | ProductDefaultArgs<ExtArgs>
         refundItems?: boolean | OrderItem$refundItemsArgs<ExtArgs>
+        kitchenTicketItems?: boolean | OrderItem$kitchenTicketItemsArgs<ExtArgs>
         _count?: boolean | OrderItemCountOutputTypeDefaultArgs<ExtArgs>
     }
 
@@ -13036,6 +13656,7 @@ export namespace Prisma {
             order: Prisma.$OrderPayload<ExtArgs>
             product: Prisma.$ProductPayload<ExtArgs>
             refundItems: Prisma.$RefundItemPayload<ExtArgs>[]
+            kitchenTicketItems: Prisma.$KitchenTicketItemPayload<ExtArgs>[]
         }
         scalars: $Extensions.GetPayloadResult<{
             id: string
@@ -13391,6 +14012,7 @@ export namespace Prisma {
         order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
         product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
         refundItems<T extends OrderItem$refundItemsArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$refundItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        kitchenTicketItems<T extends OrderItem$kitchenTicketItemsArgs<ExtArgs> = {}>(args?: Subset<T, OrderItem$kitchenTicketItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         /**
          * Attaches callbacks for the resolution and/or rejection of the Promise.
          * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13794,6 +14416,30 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: RefundItemScalarFieldEnum | RefundItemScalarFieldEnum[]
+    }
+
+    /**
+     * OrderItem.kitchenTicketItems
+     */
+    export type OrderItem$kitchenTicketItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        where?: KitchenTicketItemWhereInput
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        cursor?: KitchenTicketItemWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
     }
 
     /**
@@ -19207,6 +19853,3232 @@ export namespace Prisma {
 
 
     /**
+     * Model KitchenStation
+     */
+
+    export type AggregateKitchenStation = {
+        _count: KitchenStationCountAggregateOutputType | null
+        _avg: KitchenStationAvgAggregateOutputType | null
+        _sum: KitchenStationSumAggregateOutputType | null
+        _min: KitchenStationMinAggregateOutputType | null
+        _max: KitchenStationMaxAggregateOutputType | null
+    }
+
+    export type KitchenStationAvgAggregateOutputType = {
+        sortOrder: number | null
+    }
+
+    export type KitchenStationSumAggregateOutputType = {
+        sortOrder: number | null
+    }
+
+    export type KitchenStationMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        name: string | null
+        code: string | null
+        status: $Enums.KitchenStationStatus | null
+        sortOrder: number | null
+        isDefault: boolean | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenStationMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        name: string | null
+        code: string | null
+        status: $Enums.KitchenStationStatus | null
+        sortOrder: number | null
+        isDefault: boolean | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenStationCountAggregateOutputType = {
+        id: number
+        storeId: number
+        name: number
+        code: number
+        status: number
+        sortOrder: number
+        isDefault: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type KitchenStationAvgAggregateInputType = {
+        sortOrder?: true
+    }
+
+    export type KitchenStationSumAggregateInputType = {
+        sortOrder?: true
+    }
+
+    export type KitchenStationMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        code?: true
+        status?: true
+        sortOrder?: true
+        isDefault?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenStationMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        code?: true
+        status?: true
+        sortOrder?: true
+        isDefault?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenStationCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        code?: true
+        status?: true
+        sortOrder?: true
+        isDefault?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type KitchenStationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenStation to aggregate.
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenStations to fetch.
+         */
+        orderBy?: KitchenStationOrderByWithRelationInput | KitchenStationOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: KitchenStationWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenStations from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenStations.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned KitchenStations
+        **/
+        _count?: true | KitchenStationCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: KitchenStationAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: KitchenStationSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: KitchenStationMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: KitchenStationMaxAggregateInputType
+    }
+
+    export type GetKitchenStationAggregateType<T extends KitchenStationAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitchenStation]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitchenStation[P]>
+        : GetScalarType<T[P], AggregateKitchenStation[P]>
+    }
+
+
+
+
+    export type KitchenStationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenStationWhereInput
+        orderBy?: KitchenStationOrderByWithAggregationInput | KitchenStationOrderByWithAggregationInput[]
+        by: KitchenStationScalarFieldEnum[] | KitchenStationScalarFieldEnum
+        having?: KitchenStationScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: KitchenStationCountAggregateInputType | true
+        _avg?: KitchenStationAvgAggregateInputType
+        _sum?: KitchenStationSumAggregateInputType
+        _min?: KitchenStationMinAggregateInputType
+        _max?: KitchenStationMaxAggregateInputType
+    }
+
+    export type KitchenStationGroupByOutputType = {
+        id: string
+        storeId: string
+        name: string
+        code: string
+        status: $Enums.KitchenStationStatus
+        sortOrder: number
+        isDefault: boolean
+        createdAt: Date
+        updatedAt: Date
+        _count: KitchenStationCountAggregateOutputType | null
+        _avg: KitchenStationAvgAggregateOutputType | null
+        _sum: KitchenStationSumAggregateOutputType | null
+        _min: KitchenStationMinAggregateOutputType | null
+        _max: KitchenStationMaxAggregateOutputType | null
+    }
+
+    type GetKitchenStationGroupByPayload<T extends KitchenStationGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<KitchenStationGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof KitchenStationGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], KitchenStationGroupByOutputType[P]>
+                : GetScalarType<T[P], KitchenStationGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type KitchenStationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        name?: boolean
+        code?: boolean
+        status?: boolean
+        sortOrder?: boolean
+        isDefault?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        products?: boolean | KitchenStation$productsArgs<ExtArgs>
+        categories?: boolean | KitchenStation$categoriesArgs<ExtArgs>
+        tickets?: boolean | KitchenStation$ticketsArgs<ExtArgs>
+        _count?: boolean | KitchenStationCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["kitchenStation"]>
+
+
+
+    export type KitchenStationSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        name?: boolean
+        code?: boolean
+        status?: boolean
+        sortOrder?: boolean
+        isDefault?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type KitchenStationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "code" | "status" | "sortOrder" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["kitchenStation"]>
+    export type KitchenStationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        products?: boolean | KitchenStation$productsArgs<ExtArgs>
+        categories?: boolean | KitchenStation$categoriesArgs<ExtArgs>
+        tickets?: boolean | KitchenStation$ticketsArgs<ExtArgs>
+        _count?: boolean | KitchenStationCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $KitchenStationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "KitchenStation"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            products: Prisma.$ProductPayload<ExtArgs>[]
+            categories: Prisma.$CategoryPayload<ExtArgs>[]
+            tickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            name: string
+            code: string
+            status: $Enums.KitchenStationStatus
+            sortOrder: number
+            isDefault: boolean
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["kitchenStation"]>
+        composites: {}
+    }
+
+    type KitchenStationGetPayload<S extends boolean | null | undefined | KitchenStationDefaultArgs> = $Result.GetResult<Prisma.$KitchenStationPayload, S>
+
+    type KitchenStationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<KitchenStationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: KitchenStationCountAggregateInputType | true
+        }
+
+    export interface KitchenStationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitchenStation'], meta: { name: 'KitchenStation' } }
+        /**
+         * Find zero or one KitchenStation that matches the filter.
+         * @param {KitchenStationFindUniqueArgs} args - Arguments to find a KitchenStation
+         * @example
+         * // Get one KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends KitchenStationFindUniqueArgs>(args: SelectSubset<T, KitchenStationFindUniqueArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one KitchenStation that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {KitchenStationFindUniqueOrThrowArgs} args - Arguments to find a KitchenStation
+         * @example
+         * // Get one KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends KitchenStationFindUniqueOrThrowArgs>(args: SelectSubset<T, KitchenStationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenStation that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationFindFirstArgs} args - Arguments to find a KitchenStation
+         * @example
+         * // Get one KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends KitchenStationFindFirstArgs>(args?: SelectSubset<T, KitchenStationFindFirstArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenStation that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationFindFirstOrThrowArgs} args - Arguments to find a KitchenStation
+         * @example
+         * // Get one KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends KitchenStationFindFirstOrThrowArgs>(args?: SelectSubset<T, KitchenStationFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more KitchenStations that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all KitchenStations
+         * const kitchenStations = await prisma.kitchenStation.findMany()
+         * 
+         * // Get first 10 KitchenStations
+         * const kitchenStations = await prisma.kitchenStation.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const kitchenStationWithIdOnly = await prisma.kitchenStation.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends KitchenStationFindManyArgs>(args?: SelectSubset<T, KitchenStationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a KitchenStation.
+         * @param {KitchenStationCreateArgs} args - Arguments to create a KitchenStation.
+         * @example
+         * // Create one KitchenStation
+         * const KitchenStation = await prisma.kitchenStation.create({
+         *   data: {
+         *     // ... data to create a KitchenStation
+         *   }
+         * })
+         * 
+         */
+        create<T extends KitchenStationCreateArgs>(args: SelectSubset<T, KitchenStationCreateArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many KitchenStations.
+         * @param {KitchenStationCreateManyArgs} args - Arguments to create many KitchenStations.
+         * @example
+         * // Create many KitchenStations
+         * const kitchenStation = await prisma.kitchenStation.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends KitchenStationCreateManyArgs>(args?: SelectSubset<T, KitchenStationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a KitchenStation.
+         * @param {KitchenStationDeleteArgs} args - Arguments to delete one KitchenStation.
+         * @example
+         * // Delete one KitchenStation
+         * const KitchenStation = await prisma.kitchenStation.delete({
+         *   where: {
+         *     // ... filter to delete one KitchenStation
+         *   }
+         * })
+         * 
+         */
+        delete<T extends KitchenStationDeleteArgs>(args: SelectSubset<T, KitchenStationDeleteArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one KitchenStation.
+         * @param {KitchenStationUpdateArgs} args - Arguments to update one KitchenStation.
+         * @example
+         * // Update one KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends KitchenStationUpdateArgs>(args: SelectSubset<T, KitchenStationUpdateArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more KitchenStations.
+         * @param {KitchenStationDeleteManyArgs} args - Arguments to filter KitchenStations to delete.
+         * @example
+         * // Delete a few KitchenStations
+         * const { count } = await prisma.kitchenStation.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends KitchenStationDeleteManyArgs>(args?: SelectSubset<T, KitchenStationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more KitchenStations.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many KitchenStations
+         * const kitchenStation = await prisma.kitchenStation.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends KitchenStationUpdateManyArgs>(args: SelectSubset<T, KitchenStationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one KitchenStation.
+         * @param {KitchenStationUpsertArgs} args - Arguments to update or create a KitchenStation.
+         * @example
+         * // Update or create a KitchenStation
+         * const kitchenStation = await prisma.kitchenStation.upsert({
+         *   create: {
+         *     // ... data to create a KitchenStation
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the KitchenStation we want to update
+         *   }
+         * })
+         */
+        upsert<T extends KitchenStationUpsertArgs>(args: SelectSubset<T, KitchenStationUpsertArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of KitchenStations.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationCountArgs} args - Arguments to filter KitchenStations to count.
+         * @example
+         * // Count the number of KitchenStations
+         * const count = await prisma.kitchenStation.count({
+         *   where: {
+         *     // ... the filter for the KitchenStations we want to count
+         *   }
+         * })
+        **/
+        count<T extends KitchenStationCountArgs>(
+            args?: Subset<T, KitchenStationCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], KitchenStationCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a KitchenStation.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends KitchenStationAggregateArgs>(args: Subset<T, KitchenStationAggregateArgs>): Prisma.PrismaPromise<GetKitchenStationAggregateType<T>>
+
+        /**
+         * Group by KitchenStation.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenStationGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends KitchenStationGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: KitchenStationGroupByArgs['orderBy'] }
+            : { orderBy?: KitchenStationGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, KitchenStationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitchenStationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the KitchenStation model
+         */
+        readonly fields: KitchenStationFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for KitchenStation.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__KitchenStationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        products<T extends KitchenStation$productsArgs<ExtArgs> = {}>(args?: Subset<T, KitchenStation$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        categories<T extends KitchenStation$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, KitchenStation$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        tickets<T extends KitchenStation$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, KitchenStation$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the KitchenStation model
+     */
+    interface KitchenStationFieldRefs {
+        readonly id: FieldRef<"KitchenStation", 'String'>
+        readonly storeId: FieldRef<"KitchenStation", 'String'>
+        readonly name: FieldRef<"KitchenStation", 'String'>
+        readonly code: FieldRef<"KitchenStation", 'String'>
+        readonly status: FieldRef<"KitchenStation", 'KitchenStationStatus'>
+        readonly sortOrder: FieldRef<"KitchenStation", 'Int'>
+        readonly isDefault: FieldRef<"KitchenStation", 'Boolean'>
+        readonly createdAt: FieldRef<"KitchenStation", 'DateTime'>
+        readonly updatedAt: FieldRef<"KitchenStation", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * KitchenStation findUnique
+     */
+    export type KitchenStationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenStation to fetch.
+         */
+        where: KitchenStationWhereUniqueInput
+    }
+
+    /**
+     * KitchenStation findUniqueOrThrow
+     */
+    export type KitchenStationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenStation to fetch.
+         */
+        where: KitchenStationWhereUniqueInput
+    }
+
+    /**
+     * KitchenStation findFirst
+     */
+    export type KitchenStationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenStation to fetch.
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenStations to fetch.
+         */
+        orderBy?: KitchenStationOrderByWithRelationInput | KitchenStationOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenStations.
+         */
+        cursor?: KitchenStationWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenStations from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenStations.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenStations.
+         */
+        distinct?: KitchenStationScalarFieldEnum | KitchenStationScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation findFirstOrThrow
+     */
+    export type KitchenStationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenStation to fetch.
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenStations to fetch.
+         */
+        orderBy?: KitchenStationOrderByWithRelationInput | KitchenStationOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenStations.
+         */
+        cursor?: KitchenStationWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenStations from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenStations.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenStations.
+         */
+        distinct?: KitchenStationScalarFieldEnum | KitchenStationScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation findMany
+     */
+    export type KitchenStationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenStations to fetch.
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenStations to fetch.
+         */
+        orderBy?: KitchenStationOrderByWithRelationInput | KitchenStationOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing KitchenStations.
+         */
+        cursor?: KitchenStationWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenStations from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenStations.
+         */
+        skip?: number
+        distinct?: KitchenStationScalarFieldEnum | KitchenStationScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation create
+     */
+    export type KitchenStationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * The data needed to create a KitchenStation.
+         */
+        data: XOR<KitchenStationCreateInput, KitchenStationUncheckedCreateInput>
+    }
+
+    /**
+     * KitchenStation createMany
+     */
+    export type KitchenStationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many KitchenStations.
+         */
+        data: KitchenStationCreateManyInput | KitchenStationCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * KitchenStation update
+     */
+    export type KitchenStationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * The data needed to update a KitchenStation.
+         */
+        data: XOR<KitchenStationUpdateInput, KitchenStationUncheckedUpdateInput>
+        /**
+         * Choose, which KitchenStation to update.
+         */
+        where: KitchenStationWhereUniqueInput
+    }
+
+    /**
+     * KitchenStation updateMany
+     */
+    export type KitchenStationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update KitchenStations.
+         */
+        data: XOR<KitchenStationUpdateManyMutationInput, KitchenStationUncheckedUpdateManyInput>
+        /**
+         * Filter which KitchenStations to update
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * Limit how many KitchenStations to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenStation upsert
+     */
+    export type KitchenStationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * The filter to search for the KitchenStation to update in case it exists.
+         */
+        where: KitchenStationWhereUniqueInput
+        /**
+         * In case the KitchenStation found by the `where` argument doesn't exist, create a new KitchenStation with this data.
+         */
+        create: XOR<KitchenStationCreateInput, KitchenStationUncheckedCreateInput>
+        /**
+         * In case the KitchenStation was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<KitchenStationUpdateInput, KitchenStationUncheckedUpdateInput>
+    }
+
+    /**
+     * KitchenStation delete
+     */
+    export type KitchenStationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+        /**
+         * Filter which KitchenStation to delete.
+         */
+        where: KitchenStationWhereUniqueInput
+    }
+
+    /**
+     * KitchenStation deleteMany
+     */
+    export type KitchenStationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenStations to delete
+         */
+        where?: KitchenStationWhereInput
+        /**
+         * Limit how many KitchenStations to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenStation.products
+     */
+    export type KitchenStation$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Product
+         */
+        select?: ProductSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Product
+         */
+        omit?: ProductOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: ProductInclude<ExtArgs> | null
+        where?: ProductWhereInput
+        orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
+        cursor?: ProductWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation.categories
+     */
+    export type KitchenStation$categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Category
+         */
+        select?: CategorySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Category
+         */
+        omit?: CategoryOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: CategoryInclude<ExtArgs> | null
+        where?: CategoryWhereInput
+        orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+        cursor?: CategoryWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation.tickets
+     */
+    export type KitchenStation$ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        where?: KitchenTicketWhereInput
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        cursor?: KitchenTicketWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenStation without action
+     */
+    export type KitchenStationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenStation
+         */
+        select?: KitchenStationSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenStation
+         */
+        omit?: KitchenStationOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenStationInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model KitchenTicket
+     */
+
+    export type AggregateKitchenTicket = {
+        _count: KitchenTicketCountAggregateOutputType | null
+        _min: KitchenTicketMinAggregateOutputType | null
+        _max: KitchenTicketMaxAggregateOutputType | null
+    }
+
+    export type KitchenTicketMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        stationId: string | null
+        ticketNumber: string | null
+        status: $Enums.KitchenTicketStatus | null
+        startedAt: Date | null
+        readyAt: Date | null
+        completedAt: Date | null
+        cancelledAt: Date | null
+        cancelReason: string | null
+        createdByUserId: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenTicketMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        orderId: string | null
+        stationId: string | null
+        ticketNumber: string | null
+        status: $Enums.KitchenTicketStatus | null
+        startedAt: Date | null
+        readyAt: Date | null
+        completedAt: Date | null
+        cancelledAt: Date | null
+        cancelReason: string | null
+        createdByUserId: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenTicketCountAggregateOutputType = {
+        id: number
+        storeId: number
+        orderId: number
+        stationId: number
+        ticketNumber: number
+        status: number
+        startedAt: number
+        readyAt: number
+        completedAt: number
+        cancelledAt: number
+        cancelReason: number
+        createdByUserId: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type KitchenTicketMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        stationId?: true
+        ticketNumber?: true
+        status?: true
+        startedAt?: true
+        readyAt?: true
+        completedAt?: true
+        cancelledAt?: true
+        cancelReason?: true
+        createdByUserId?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenTicketMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        stationId?: true
+        ticketNumber?: true
+        status?: true
+        startedAt?: true
+        readyAt?: true
+        completedAt?: true
+        cancelledAt?: true
+        cancelReason?: true
+        createdByUserId?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenTicketCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        orderId?: true
+        stationId?: true
+        ticketNumber?: true
+        status?: true
+        startedAt?: true
+        readyAt?: true
+        completedAt?: true
+        cancelledAt?: true
+        cancelReason?: true
+        createdByUserId?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type KitchenTicketAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenTicket to aggregate.
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTickets to fetch.
+         */
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: KitchenTicketWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTickets from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTickets.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned KitchenTickets
+        **/
+        _count?: true | KitchenTicketCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: KitchenTicketMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: KitchenTicketMaxAggregateInputType
+    }
+
+    export type GetKitchenTicketAggregateType<T extends KitchenTicketAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitchenTicket]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitchenTicket[P]>
+        : GetScalarType<T[P], AggregateKitchenTicket[P]>
+    }
+
+
+
+
+    export type KitchenTicketGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketWhereInput
+        orderBy?: KitchenTicketOrderByWithAggregationInput | KitchenTicketOrderByWithAggregationInput[]
+        by: KitchenTicketScalarFieldEnum[] | KitchenTicketScalarFieldEnum
+        having?: KitchenTicketScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: KitchenTicketCountAggregateInputType | true
+        _min?: KitchenTicketMinAggregateInputType
+        _max?: KitchenTicketMaxAggregateInputType
+    }
+
+    export type KitchenTicketGroupByOutputType = {
+        id: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status: $Enums.KitchenTicketStatus
+        startedAt: Date | null
+        readyAt: Date | null
+        completedAt: Date | null
+        cancelledAt: Date | null
+        cancelReason: string | null
+        createdByUserId: string | null
+        createdAt: Date
+        updatedAt: Date
+        _count: KitchenTicketCountAggregateOutputType | null
+        _min: KitchenTicketMinAggregateOutputType | null
+        _max: KitchenTicketMaxAggregateOutputType | null
+    }
+
+    type GetKitchenTicketGroupByPayload<T extends KitchenTicketGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<KitchenTicketGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof KitchenTicketGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], KitchenTicketGroupByOutputType[P]>
+                : GetScalarType<T[P], KitchenTicketGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type KitchenTicketSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        stationId?: boolean
+        ticketNumber?: boolean
+        status?: boolean
+        startedAt?: boolean
+        readyAt?: boolean
+        completedAt?: boolean
+        cancelledAt?: boolean
+        cancelReason?: boolean
+        createdByUserId?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        station?: boolean | KitchenStationDefaultArgs<ExtArgs>
+        createdBy?: boolean | KitchenTicket$createdByArgs<ExtArgs>
+        items?: boolean | KitchenTicket$itemsArgs<ExtArgs>
+        _count?: boolean | KitchenTicketCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["kitchenTicket"]>
+
+
+
+    export type KitchenTicketSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        orderId?: boolean
+        stationId?: boolean
+        ticketNumber?: boolean
+        status?: boolean
+        startedAt?: boolean
+        readyAt?: boolean
+        completedAt?: boolean
+        cancelledAt?: boolean
+        cancelReason?: boolean
+        createdByUserId?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type KitchenTicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderId" | "stationId" | "ticketNumber" | "status" | "startedAt" | "readyAt" | "completedAt" | "cancelledAt" | "cancelReason" | "createdByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["kitchenTicket"]>
+    export type KitchenTicketInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        order?: boolean | OrderDefaultArgs<ExtArgs>
+        station?: boolean | KitchenStationDefaultArgs<ExtArgs>
+        createdBy?: boolean | KitchenTicket$createdByArgs<ExtArgs>
+        items?: boolean | KitchenTicket$itemsArgs<ExtArgs>
+        _count?: boolean | KitchenTicketCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $KitchenTicketPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "KitchenTicket"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            order: Prisma.$OrderPayload<ExtArgs>
+            station: Prisma.$KitchenStationPayload<ExtArgs>
+            createdBy: Prisma.$UserPayload<ExtArgs> | null
+            items: Prisma.$KitchenTicketItemPayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            orderId: string
+            stationId: string
+            ticketNumber: string
+            status: $Enums.KitchenTicketStatus
+            startedAt: Date | null
+            readyAt: Date | null
+            completedAt: Date | null
+            cancelledAt: Date | null
+            cancelReason: string | null
+            createdByUserId: string | null
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["kitchenTicket"]>
+        composites: {}
+    }
+
+    type KitchenTicketGetPayload<S extends boolean | null | undefined | KitchenTicketDefaultArgs> = $Result.GetResult<Prisma.$KitchenTicketPayload, S>
+
+    type KitchenTicketCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<KitchenTicketFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: KitchenTicketCountAggregateInputType | true
+        }
+
+    export interface KitchenTicketDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitchenTicket'], meta: { name: 'KitchenTicket' } }
+        /**
+         * Find zero or one KitchenTicket that matches the filter.
+         * @param {KitchenTicketFindUniqueArgs} args - Arguments to find a KitchenTicket
+         * @example
+         * // Get one KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends KitchenTicketFindUniqueArgs>(args: SelectSubset<T, KitchenTicketFindUniqueArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one KitchenTicket that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {KitchenTicketFindUniqueOrThrowArgs} args - Arguments to find a KitchenTicket
+         * @example
+         * // Get one KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends KitchenTicketFindUniqueOrThrowArgs>(args: SelectSubset<T, KitchenTicketFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenTicket that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketFindFirstArgs} args - Arguments to find a KitchenTicket
+         * @example
+         * // Get one KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends KitchenTicketFindFirstArgs>(args?: SelectSubset<T, KitchenTicketFindFirstArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenTicket that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketFindFirstOrThrowArgs} args - Arguments to find a KitchenTicket
+         * @example
+         * // Get one KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends KitchenTicketFindFirstOrThrowArgs>(args?: SelectSubset<T, KitchenTicketFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more KitchenTickets that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all KitchenTickets
+         * const kitchenTickets = await prisma.kitchenTicket.findMany()
+         * 
+         * // Get first 10 KitchenTickets
+         * const kitchenTickets = await prisma.kitchenTicket.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const kitchenTicketWithIdOnly = await prisma.kitchenTicket.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends KitchenTicketFindManyArgs>(args?: SelectSubset<T, KitchenTicketFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a KitchenTicket.
+         * @param {KitchenTicketCreateArgs} args - Arguments to create a KitchenTicket.
+         * @example
+         * // Create one KitchenTicket
+         * const KitchenTicket = await prisma.kitchenTicket.create({
+         *   data: {
+         *     // ... data to create a KitchenTicket
+         *   }
+         * })
+         * 
+         */
+        create<T extends KitchenTicketCreateArgs>(args: SelectSubset<T, KitchenTicketCreateArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many KitchenTickets.
+         * @param {KitchenTicketCreateManyArgs} args - Arguments to create many KitchenTickets.
+         * @example
+         * // Create many KitchenTickets
+         * const kitchenTicket = await prisma.kitchenTicket.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends KitchenTicketCreateManyArgs>(args?: SelectSubset<T, KitchenTicketCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a KitchenTicket.
+         * @param {KitchenTicketDeleteArgs} args - Arguments to delete one KitchenTicket.
+         * @example
+         * // Delete one KitchenTicket
+         * const KitchenTicket = await prisma.kitchenTicket.delete({
+         *   where: {
+         *     // ... filter to delete one KitchenTicket
+         *   }
+         * })
+         * 
+         */
+        delete<T extends KitchenTicketDeleteArgs>(args: SelectSubset<T, KitchenTicketDeleteArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one KitchenTicket.
+         * @param {KitchenTicketUpdateArgs} args - Arguments to update one KitchenTicket.
+         * @example
+         * // Update one KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends KitchenTicketUpdateArgs>(args: SelectSubset<T, KitchenTicketUpdateArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more KitchenTickets.
+         * @param {KitchenTicketDeleteManyArgs} args - Arguments to filter KitchenTickets to delete.
+         * @example
+         * // Delete a few KitchenTickets
+         * const { count } = await prisma.kitchenTicket.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends KitchenTicketDeleteManyArgs>(args?: SelectSubset<T, KitchenTicketDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more KitchenTickets.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many KitchenTickets
+         * const kitchenTicket = await prisma.kitchenTicket.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends KitchenTicketUpdateManyArgs>(args: SelectSubset<T, KitchenTicketUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one KitchenTicket.
+         * @param {KitchenTicketUpsertArgs} args - Arguments to update or create a KitchenTicket.
+         * @example
+         * // Update or create a KitchenTicket
+         * const kitchenTicket = await prisma.kitchenTicket.upsert({
+         *   create: {
+         *     // ... data to create a KitchenTicket
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the KitchenTicket we want to update
+         *   }
+         * })
+         */
+        upsert<T extends KitchenTicketUpsertArgs>(args: SelectSubset<T, KitchenTicketUpsertArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of KitchenTickets.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketCountArgs} args - Arguments to filter KitchenTickets to count.
+         * @example
+         * // Count the number of KitchenTickets
+         * const count = await prisma.kitchenTicket.count({
+         *   where: {
+         *     // ... the filter for the KitchenTickets we want to count
+         *   }
+         * })
+        **/
+        count<T extends KitchenTicketCountArgs>(
+            args?: Subset<T, KitchenTicketCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], KitchenTicketCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a KitchenTicket.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends KitchenTicketAggregateArgs>(args: Subset<T, KitchenTicketAggregateArgs>): Prisma.PrismaPromise<GetKitchenTicketAggregateType<T>>
+
+        /**
+         * Group by KitchenTicket.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends KitchenTicketGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: KitchenTicketGroupByArgs['orderBy'] }
+            : { orderBy?: KitchenTicketGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, KitchenTicketGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitchenTicketGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the KitchenTicket model
+         */
+        readonly fields: KitchenTicketFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for KitchenTicket.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__KitchenTicketClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        station<T extends KitchenStationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitchenStationDefaultArgs<ExtArgs>>): Prisma__KitchenStationClient<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        createdBy<T extends KitchenTicket$createdByArgs<ExtArgs> = {}>(args?: Subset<T, KitchenTicket$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        items<T extends KitchenTicket$itemsArgs<ExtArgs> = {}>(args?: Subset<T, KitchenTicket$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the KitchenTicket model
+     */
+    interface KitchenTicketFieldRefs {
+        readonly id: FieldRef<"KitchenTicket", 'String'>
+        readonly storeId: FieldRef<"KitchenTicket", 'String'>
+        readonly orderId: FieldRef<"KitchenTicket", 'String'>
+        readonly stationId: FieldRef<"KitchenTicket", 'String'>
+        readonly ticketNumber: FieldRef<"KitchenTicket", 'String'>
+        readonly status: FieldRef<"KitchenTicket", 'KitchenTicketStatus'>
+        readonly startedAt: FieldRef<"KitchenTicket", 'DateTime'>
+        readonly readyAt: FieldRef<"KitchenTicket", 'DateTime'>
+        readonly completedAt: FieldRef<"KitchenTicket", 'DateTime'>
+        readonly cancelledAt: FieldRef<"KitchenTicket", 'DateTime'>
+        readonly cancelReason: FieldRef<"KitchenTicket", 'String'>
+        readonly createdByUserId: FieldRef<"KitchenTicket", 'String'>
+        readonly createdAt: FieldRef<"KitchenTicket", 'DateTime'>
+        readonly updatedAt: FieldRef<"KitchenTicket", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * KitchenTicket findUnique
+     */
+    export type KitchenTicketFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicket to fetch.
+         */
+        where: KitchenTicketWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicket findUniqueOrThrow
+     */
+    export type KitchenTicketFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicket to fetch.
+         */
+        where: KitchenTicketWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicket findFirst
+     */
+    export type KitchenTicketFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicket to fetch.
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTickets to fetch.
+         */
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenTickets.
+         */
+        cursor?: KitchenTicketWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTickets from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTickets.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenTickets.
+         */
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicket findFirstOrThrow
+     */
+    export type KitchenTicketFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicket to fetch.
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTickets to fetch.
+         */
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenTickets.
+         */
+        cursor?: KitchenTicketWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTickets from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTickets.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenTickets.
+         */
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicket findMany
+     */
+    export type KitchenTicketFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTickets to fetch.
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTickets to fetch.
+         */
+        orderBy?: KitchenTicketOrderByWithRelationInput | KitchenTicketOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing KitchenTickets.
+         */
+        cursor?: KitchenTicketWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTickets from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTickets.
+         */
+        skip?: number
+        distinct?: KitchenTicketScalarFieldEnum | KitchenTicketScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicket create
+     */
+    export type KitchenTicketCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * The data needed to create a KitchenTicket.
+         */
+        data: XOR<KitchenTicketCreateInput, KitchenTicketUncheckedCreateInput>
+    }
+
+    /**
+     * KitchenTicket createMany
+     */
+    export type KitchenTicketCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many KitchenTickets.
+         */
+        data: KitchenTicketCreateManyInput | KitchenTicketCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * KitchenTicket update
+     */
+    export type KitchenTicketUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * The data needed to update a KitchenTicket.
+         */
+        data: XOR<KitchenTicketUpdateInput, KitchenTicketUncheckedUpdateInput>
+        /**
+         * Choose, which KitchenTicket to update.
+         */
+        where: KitchenTicketWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicket updateMany
+     */
+    export type KitchenTicketUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update KitchenTickets.
+         */
+        data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyInput>
+        /**
+         * Filter which KitchenTickets to update
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * Limit how many KitchenTickets to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenTicket upsert
+     */
+    export type KitchenTicketUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * The filter to search for the KitchenTicket to update in case it exists.
+         */
+        where: KitchenTicketWhereUniqueInput
+        /**
+         * In case the KitchenTicket found by the `where` argument doesn't exist, create a new KitchenTicket with this data.
+         */
+        create: XOR<KitchenTicketCreateInput, KitchenTicketUncheckedCreateInput>
+        /**
+         * In case the KitchenTicket was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<KitchenTicketUpdateInput, KitchenTicketUncheckedUpdateInput>
+    }
+
+    /**
+     * KitchenTicket delete
+     */
+    export type KitchenTicketDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+        /**
+         * Filter which KitchenTicket to delete.
+         */
+        where: KitchenTicketWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicket deleteMany
+     */
+    export type KitchenTicketDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenTickets to delete
+         */
+        where?: KitchenTicketWhereInput
+        /**
+         * Limit how many KitchenTickets to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenTicket.createdBy
+     */
+    export type KitchenTicket$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * KitchenTicket.items
+     */
+    export type KitchenTicket$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        where?: KitchenTicketItemWhereInput
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        cursor?: KitchenTicketItemWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicket without action
+     */
+    export type KitchenTicketDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicket
+         */
+        select?: KitchenTicketSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicket
+         */
+        omit?: KitchenTicketOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model KitchenTicketItem
+     */
+
+    export type AggregateKitchenTicketItem = {
+        _count: KitchenTicketItemCountAggregateOutputType | null
+        _avg: KitchenTicketItemAvgAggregateOutputType | null
+        _sum: KitchenTicketItemSumAggregateOutputType | null
+        _min: KitchenTicketItemMinAggregateOutputType | null
+        _max: KitchenTicketItemMaxAggregateOutputType | null
+    }
+
+    export type KitchenTicketItemAvgAggregateOutputType = {
+        quantity: number | null
+    }
+
+    export type KitchenTicketItemSumAggregateOutputType = {
+        quantity: number | null
+    }
+
+    export type KitchenTicketItemMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        ticketId: string | null
+        orderItemId: string | null
+        productId: string | null
+        productNameSnapshot: string | null
+        quantity: number | null
+        notes: string | null
+        status: $Enums.KitchenTicketStatus | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenTicketItemMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        ticketId: string | null
+        orderItemId: string | null
+        productId: string | null
+        productNameSnapshot: string | null
+        quantity: number | null
+        notes: string | null
+        status: $Enums.KitchenTicketStatus | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type KitchenTicketItemCountAggregateOutputType = {
+        id: number
+        storeId: number
+        ticketId: number
+        orderItemId: number
+        productId: number
+        productNameSnapshot: number
+        quantity: number
+        modifiers: number
+        notes: number
+        status: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type KitchenTicketItemAvgAggregateInputType = {
+        quantity?: true
+    }
+
+    export type KitchenTicketItemSumAggregateInputType = {
+        quantity?: true
+    }
+
+    export type KitchenTicketItemMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        ticketId?: true
+        orderItemId?: true
+        productId?: true
+        productNameSnapshot?: true
+        quantity?: true
+        notes?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenTicketItemMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        ticketId?: true
+        orderItemId?: true
+        productId?: true
+        productNameSnapshot?: true
+        quantity?: true
+        notes?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type KitchenTicketItemCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        ticketId?: true
+        orderItemId?: true
+        productId?: true
+        productNameSnapshot?: true
+        quantity?: true
+        modifiers?: true
+        notes?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type KitchenTicketItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenTicketItem to aggregate.
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTicketItems to fetch.
+         */
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: KitchenTicketItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTicketItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTicketItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned KitchenTicketItems
+        **/
+        _count?: true | KitchenTicketItemCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: KitchenTicketItemAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: KitchenTicketItemSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: KitchenTicketItemMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: KitchenTicketItemMaxAggregateInputType
+    }
+
+    export type GetKitchenTicketItemAggregateType<T extends KitchenTicketItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateKitchenTicketItem]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKitchenTicketItem[P]>
+        : GetScalarType<T[P], AggregateKitchenTicketItem[P]>
+    }
+
+
+
+
+    export type KitchenTicketItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: KitchenTicketItemWhereInput
+        orderBy?: KitchenTicketItemOrderByWithAggregationInput | KitchenTicketItemOrderByWithAggregationInput[]
+        by: KitchenTicketItemScalarFieldEnum[] | KitchenTicketItemScalarFieldEnum
+        having?: KitchenTicketItemScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: KitchenTicketItemCountAggregateInputType | true
+        _avg?: KitchenTicketItemAvgAggregateInputType
+        _sum?: KitchenTicketItemSumAggregateInputType
+        _min?: KitchenTicketItemMinAggregateInputType
+        _max?: KitchenTicketItemMaxAggregateInputType
+    }
+
+    export type KitchenTicketItemGroupByOutputType = {
+        id: string
+        storeId: string
+        ticketId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers: JsonValue | null
+        notes: string | null
+        status: $Enums.KitchenTicketStatus
+        createdAt: Date
+        updatedAt: Date
+        _count: KitchenTicketItemCountAggregateOutputType | null
+        _avg: KitchenTicketItemAvgAggregateOutputType | null
+        _sum: KitchenTicketItemSumAggregateOutputType | null
+        _min: KitchenTicketItemMinAggregateOutputType | null
+        _max: KitchenTicketItemMaxAggregateOutputType | null
+    }
+
+    type GetKitchenTicketItemGroupByPayload<T extends KitchenTicketItemGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<KitchenTicketItemGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof KitchenTicketItemGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], KitchenTicketItemGroupByOutputType[P]>
+                : GetScalarType<T[P], KitchenTicketItemGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type KitchenTicketItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        ticketId?: boolean
+        orderItemId?: boolean
+        productId?: boolean
+        productNameSnapshot?: boolean
+        quantity?: boolean
+        modifiers?: boolean
+        notes?: boolean
+        status?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        ticket?: boolean | KitchenTicketDefaultArgs<ExtArgs>
+        orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["kitchenTicketItem"]>
+
+
+
+    export type KitchenTicketItemSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        ticketId?: boolean
+        orderItemId?: boolean
+        productId?: boolean
+        productNameSnapshot?: boolean
+        quantity?: boolean
+        modifiers?: boolean
+        notes?: boolean
+        status?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type KitchenTicketItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "ticketId" | "orderItemId" | "productId" | "productNameSnapshot" | "quantity" | "modifiers" | "notes" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["kitchenTicketItem"]>
+    export type KitchenTicketItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        ticket?: boolean | KitchenTicketDefaultArgs<ExtArgs>
+        orderItem?: boolean | OrderItemDefaultArgs<ExtArgs>
+    }
+
+    export type $KitchenTicketItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "KitchenTicketItem"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            ticket: Prisma.$KitchenTicketPayload<ExtArgs>
+            orderItem: Prisma.$OrderItemPayload<ExtArgs>
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            ticketId: string
+            orderItemId: string
+            productId: string
+            productNameSnapshot: string
+            quantity: number
+            modifiers: Prisma.JsonValue | null
+            notes: string | null
+            status: $Enums.KitchenTicketStatus
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["kitchenTicketItem"]>
+        composites: {}
+    }
+
+    type KitchenTicketItemGetPayload<S extends boolean | null | undefined | KitchenTicketItemDefaultArgs> = $Result.GetResult<Prisma.$KitchenTicketItemPayload, S>
+
+    type KitchenTicketItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<KitchenTicketItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: KitchenTicketItemCountAggregateInputType | true
+        }
+
+    export interface KitchenTicketItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KitchenTicketItem'], meta: { name: 'KitchenTicketItem' } }
+        /**
+         * Find zero or one KitchenTicketItem that matches the filter.
+         * @param {KitchenTicketItemFindUniqueArgs} args - Arguments to find a KitchenTicketItem
+         * @example
+         * // Get one KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends KitchenTicketItemFindUniqueArgs>(args: SelectSubset<T, KitchenTicketItemFindUniqueArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one KitchenTicketItem that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {KitchenTicketItemFindUniqueOrThrowArgs} args - Arguments to find a KitchenTicketItem
+         * @example
+         * // Get one KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends KitchenTicketItemFindUniqueOrThrowArgs>(args: SelectSubset<T, KitchenTicketItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenTicketItem that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemFindFirstArgs} args - Arguments to find a KitchenTicketItem
+         * @example
+         * // Get one KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends KitchenTicketItemFindFirstArgs>(args?: SelectSubset<T, KitchenTicketItemFindFirstArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first KitchenTicketItem that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemFindFirstOrThrowArgs} args - Arguments to find a KitchenTicketItem
+         * @example
+         * // Get one KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends KitchenTicketItemFindFirstOrThrowArgs>(args?: SelectSubset<T, KitchenTicketItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more KitchenTicketItems that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all KitchenTicketItems
+         * const kitchenTicketItems = await prisma.kitchenTicketItem.findMany()
+         * 
+         * // Get first 10 KitchenTicketItems
+         * const kitchenTicketItems = await prisma.kitchenTicketItem.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const kitchenTicketItemWithIdOnly = await prisma.kitchenTicketItem.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends KitchenTicketItemFindManyArgs>(args?: SelectSubset<T, KitchenTicketItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a KitchenTicketItem.
+         * @param {KitchenTicketItemCreateArgs} args - Arguments to create a KitchenTicketItem.
+         * @example
+         * // Create one KitchenTicketItem
+         * const KitchenTicketItem = await prisma.kitchenTicketItem.create({
+         *   data: {
+         *     // ... data to create a KitchenTicketItem
+         *   }
+         * })
+         * 
+         */
+        create<T extends KitchenTicketItemCreateArgs>(args: SelectSubset<T, KitchenTicketItemCreateArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many KitchenTicketItems.
+         * @param {KitchenTicketItemCreateManyArgs} args - Arguments to create many KitchenTicketItems.
+         * @example
+         * // Create many KitchenTicketItems
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends KitchenTicketItemCreateManyArgs>(args?: SelectSubset<T, KitchenTicketItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a KitchenTicketItem.
+         * @param {KitchenTicketItemDeleteArgs} args - Arguments to delete one KitchenTicketItem.
+         * @example
+         * // Delete one KitchenTicketItem
+         * const KitchenTicketItem = await prisma.kitchenTicketItem.delete({
+         *   where: {
+         *     // ... filter to delete one KitchenTicketItem
+         *   }
+         * })
+         * 
+         */
+        delete<T extends KitchenTicketItemDeleteArgs>(args: SelectSubset<T, KitchenTicketItemDeleteArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one KitchenTicketItem.
+         * @param {KitchenTicketItemUpdateArgs} args - Arguments to update one KitchenTicketItem.
+         * @example
+         * // Update one KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends KitchenTicketItemUpdateArgs>(args: SelectSubset<T, KitchenTicketItemUpdateArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more KitchenTicketItems.
+         * @param {KitchenTicketItemDeleteManyArgs} args - Arguments to filter KitchenTicketItems to delete.
+         * @example
+         * // Delete a few KitchenTicketItems
+         * const { count } = await prisma.kitchenTicketItem.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends KitchenTicketItemDeleteManyArgs>(args?: SelectSubset<T, KitchenTicketItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more KitchenTicketItems.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many KitchenTicketItems
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends KitchenTicketItemUpdateManyArgs>(args: SelectSubset<T, KitchenTicketItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one KitchenTicketItem.
+         * @param {KitchenTicketItemUpsertArgs} args - Arguments to update or create a KitchenTicketItem.
+         * @example
+         * // Update or create a KitchenTicketItem
+         * const kitchenTicketItem = await prisma.kitchenTicketItem.upsert({
+         *   create: {
+         *     // ... data to create a KitchenTicketItem
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the KitchenTicketItem we want to update
+         *   }
+         * })
+         */
+        upsert<T extends KitchenTicketItemUpsertArgs>(args: SelectSubset<T, KitchenTicketItemUpsertArgs<ExtArgs>>): Prisma__KitchenTicketItemClient<$Result.GetResult<Prisma.$KitchenTicketItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of KitchenTicketItems.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemCountArgs} args - Arguments to filter KitchenTicketItems to count.
+         * @example
+         * // Count the number of KitchenTicketItems
+         * const count = await prisma.kitchenTicketItem.count({
+         *   where: {
+         *     // ... the filter for the KitchenTicketItems we want to count
+         *   }
+         * })
+        **/
+        count<T extends KitchenTicketItemCountArgs>(
+            args?: Subset<T, KitchenTicketItemCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], KitchenTicketItemCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a KitchenTicketItem.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends KitchenTicketItemAggregateArgs>(args: Subset<T, KitchenTicketItemAggregateArgs>): Prisma.PrismaPromise<GetKitchenTicketItemAggregateType<T>>
+
+        /**
+         * Group by KitchenTicketItem.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {KitchenTicketItemGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends KitchenTicketItemGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: KitchenTicketItemGroupByArgs['orderBy'] }
+            : { orderBy?: KitchenTicketItemGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, KitchenTicketItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKitchenTicketItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the KitchenTicketItem model
+         */
+        readonly fields: KitchenTicketItemFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for KitchenTicketItem.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__KitchenTicketItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        ticket<T extends KitchenTicketDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KitchenTicketDefaultArgs<ExtArgs>>): Prisma__KitchenTicketClient<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        orderItem<T extends OrderItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderItemDefaultArgs<ExtArgs>>): Prisma__OrderItemClient<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the KitchenTicketItem model
+     */
+    interface KitchenTicketItemFieldRefs {
+        readonly id: FieldRef<"KitchenTicketItem", 'String'>
+        readonly storeId: FieldRef<"KitchenTicketItem", 'String'>
+        readonly ticketId: FieldRef<"KitchenTicketItem", 'String'>
+        readonly orderItemId: FieldRef<"KitchenTicketItem", 'String'>
+        readonly productId: FieldRef<"KitchenTicketItem", 'String'>
+        readonly productNameSnapshot: FieldRef<"KitchenTicketItem", 'String'>
+        readonly quantity: FieldRef<"KitchenTicketItem", 'Int'>
+        readonly modifiers: FieldRef<"KitchenTicketItem", 'Json'>
+        readonly notes: FieldRef<"KitchenTicketItem", 'String'>
+        readonly status: FieldRef<"KitchenTicketItem", 'KitchenTicketStatus'>
+        readonly createdAt: FieldRef<"KitchenTicketItem", 'DateTime'>
+        readonly updatedAt: FieldRef<"KitchenTicketItem", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * KitchenTicketItem findUnique
+     */
+    export type KitchenTicketItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicketItem to fetch.
+         */
+        where: KitchenTicketItemWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicketItem findUniqueOrThrow
+     */
+    export type KitchenTicketItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicketItem to fetch.
+         */
+        where: KitchenTicketItemWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicketItem findFirst
+     */
+    export type KitchenTicketItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicketItem to fetch.
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTicketItems to fetch.
+         */
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenTicketItems.
+         */
+        cursor?: KitchenTicketItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTicketItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTicketItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenTicketItems.
+         */
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicketItem findFirstOrThrow
+     */
+    export type KitchenTicketItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicketItem to fetch.
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTicketItems to fetch.
+         */
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for KitchenTicketItems.
+         */
+        cursor?: KitchenTicketItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTicketItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTicketItems.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of KitchenTicketItems.
+         */
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicketItem findMany
+     */
+    export type KitchenTicketItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter, which KitchenTicketItems to fetch.
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of KitchenTicketItems to fetch.
+         */
+        orderBy?: KitchenTicketItemOrderByWithRelationInput | KitchenTicketItemOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing KitchenTicketItems.
+         */
+        cursor?: KitchenTicketItemWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` KitchenTicketItems from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` KitchenTicketItems.
+         */
+        skip?: number
+        distinct?: KitchenTicketItemScalarFieldEnum | KitchenTicketItemScalarFieldEnum[]
+    }
+
+    /**
+     * KitchenTicketItem create
+     */
+    export type KitchenTicketItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * The data needed to create a KitchenTicketItem.
+         */
+        data: XOR<KitchenTicketItemCreateInput, KitchenTicketItemUncheckedCreateInput>
+    }
+
+    /**
+     * KitchenTicketItem createMany
+     */
+    export type KitchenTicketItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many KitchenTicketItems.
+         */
+        data: KitchenTicketItemCreateManyInput | KitchenTicketItemCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * KitchenTicketItem update
+     */
+    export type KitchenTicketItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * The data needed to update a KitchenTicketItem.
+         */
+        data: XOR<KitchenTicketItemUpdateInput, KitchenTicketItemUncheckedUpdateInput>
+        /**
+         * Choose, which KitchenTicketItem to update.
+         */
+        where: KitchenTicketItemWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicketItem updateMany
+     */
+    export type KitchenTicketItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update KitchenTicketItems.
+         */
+        data: XOR<KitchenTicketItemUpdateManyMutationInput, KitchenTicketItemUncheckedUpdateManyInput>
+        /**
+         * Filter which KitchenTicketItems to update
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * Limit how many KitchenTicketItems to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenTicketItem upsert
+     */
+    export type KitchenTicketItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * The filter to search for the KitchenTicketItem to update in case it exists.
+         */
+        where: KitchenTicketItemWhereUniqueInput
+        /**
+         * In case the KitchenTicketItem found by the `where` argument doesn't exist, create a new KitchenTicketItem with this data.
+         */
+        create: XOR<KitchenTicketItemCreateInput, KitchenTicketItemUncheckedCreateInput>
+        /**
+         * In case the KitchenTicketItem was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<KitchenTicketItemUpdateInput, KitchenTicketItemUncheckedUpdateInput>
+    }
+
+    /**
+     * KitchenTicketItem delete
+     */
+    export type KitchenTicketItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+        /**
+         * Filter which KitchenTicketItem to delete.
+         */
+        where: KitchenTicketItemWhereUniqueInput
+    }
+
+    /**
+     * KitchenTicketItem deleteMany
+     */
+    export type KitchenTicketItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which KitchenTicketItems to delete
+         */
+        where?: KitchenTicketItemWhereInput
+        /**
+         * Limit how many KitchenTicketItems to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * KitchenTicketItem without action
+     */
+    export type KitchenTicketItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the KitchenTicketItem
+         */
+        select?: KitchenTicketItemSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the KitchenTicketItem
+         */
+        omit?: KitchenTicketItemOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: KitchenTicketItemInclude<ExtArgs> | null
+    }
+
+
+    /**
      * Model AiDraft
      */
 
@@ -21301,6 +25173,7 @@ export namespace Prisma {
         name: 'name',
         status: 'status',
         sortOrder: 'sortOrder',
+        defaultKitchenStationId: 'defaultKitchenStationId',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt'
     };
@@ -21319,6 +25192,7 @@ export namespace Prisma {
         currency: 'currency',
         isActive: 'isActive',
         availabilityStatus: 'availabilityStatus',
+        kitchenStationId: 'kitchenStationId',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt'
     };
@@ -21497,6 +25371,59 @@ export namespace Prisma {
     export type CashMovementScalarFieldEnum = (typeof CashMovementScalarFieldEnum)[keyof typeof CashMovementScalarFieldEnum]
 
 
+    export const KitchenStationScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        name: 'name',
+        code: 'code',
+        status: 'status',
+        sortOrder: 'sortOrder',
+        isDefault: 'isDefault',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type KitchenStationScalarFieldEnum = (typeof KitchenStationScalarFieldEnum)[keyof typeof KitchenStationScalarFieldEnum]
+
+
+    export const KitchenTicketScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        stationId: 'stationId',
+        ticketNumber: 'ticketNumber',
+        status: 'status',
+        startedAt: 'startedAt',
+        readyAt: 'readyAt',
+        completedAt: 'completedAt',
+        cancelledAt: 'cancelledAt',
+        cancelReason: 'cancelReason',
+        createdByUserId: 'createdByUserId',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type KitchenTicketScalarFieldEnum = (typeof KitchenTicketScalarFieldEnum)[keyof typeof KitchenTicketScalarFieldEnum]
+
+
+    export const KitchenTicketItemScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        ticketId: 'ticketId',
+        orderItemId: 'orderItemId',
+        productId: 'productId',
+        productNameSnapshot: 'productNameSnapshot',
+        quantity: 'quantity',
+        modifiers: 'modifiers',
+        notes: 'notes',
+        status: 'status',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type KitchenTicketItemScalarFieldEnum = (typeof KitchenTicketItemScalarFieldEnum)[keyof typeof KitchenTicketItemScalarFieldEnum]
+
+
     export const AiDraftScalarFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -21595,7 +25522,8 @@ export namespace Prisma {
     export const CategoryOrderByRelevanceFieldEnum: {
         id: 'id',
         storeId: 'storeId',
-        name: 'name'
+        name: 'name',
+        defaultKitchenStationId: 'defaultKitchenStationId'
     };
 
     export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
@@ -21608,7 +25536,8 @@ export namespace Prisma {
         description: 'description',
         categoryId: 'categoryId',
         category: 'category',
-        currency: 'currency'
+        currency: 'currency',
+        kitchenStationId: 'kitchenStationId'
     };
 
     export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
@@ -21737,6 +25666,42 @@ export namespace Prisma {
     };
 
     export type CashMovementOrderByRelevanceFieldEnum = (typeof CashMovementOrderByRelevanceFieldEnum)[keyof typeof CashMovementOrderByRelevanceFieldEnum]
+
+
+    export const KitchenStationOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        name: 'name',
+        code: 'code'
+    };
+
+    export type KitchenStationOrderByRelevanceFieldEnum = (typeof KitchenStationOrderByRelevanceFieldEnum)[keyof typeof KitchenStationOrderByRelevanceFieldEnum]
+
+
+    export const KitchenTicketOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        orderId: 'orderId',
+        stationId: 'stationId',
+        ticketNumber: 'ticketNumber',
+        cancelReason: 'cancelReason',
+        createdByUserId: 'createdByUserId'
+    };
+
+    export type KitchenTicketOrderByRelevanceFieldEnum = (typeof KitchenTicketOrderByRelevanceFieldEnum)[keyof typeof KitchenTicketOrderByRelevanceFieldEnum]
+
+
+    export const KitchenTicketItemOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        ticketId: 'ticketId',
+        orderItemId: 'orderItemId',
+        productId: 'productId',
+        productNameSnapshot: 'productNameSnapshot',
+        notes: 'notes'
+    };
+
+    export type KitchenTicketItemOrderByRelevanceFieldEnum = (typeof KitchenTicketItemOrderByRelevanceFieldEnum)[keyof typeof KitchenTicketItemOrderByRelevanceFieldEnum]
 
 
     export const AiDraftOrderByRelevanceFieldEnum: {
@@ -21902,6 +25867,20 @@ export namespace Prisma {
 
 
     /**
+     * Reference to a field of type 'KitchenStationStatus'
+     */
+    export type EnumKitchenStationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitchenStationStatus'>
+
+
+
+    /**
+     * Reference to a field of type 'KitchenTicketStatus'
+     */
+    export type EnumKitchenTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KitchenTicketStatus'>
+
+
+
+    /**
      * Reference to a field of type 'AiDraftStatus'
      */
     export type EnumAiDraftStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiDraftStatus'>
@@ -21945,6 +25924,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogListRelationFilter
         shifts?: ShiftListRelationFilter
         cashMovements?: CashMovementListRelationFilter
+        kitchenStations?: KitchenStationListRelationFilter
+        kitchenTickets?: KitchenTicketListRelationFilter
+        kitchenTicketItems?: KitchenTicketItemListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }
@@ -21966,6 +25948,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogOrderByRelationAggregateInput
         shifts?: ShiftOrderByRelationAggregateInput
         cashMovements?: CashMovementOrderByRelationAggregateInput
+        kitchenStations?: KitchenStationOrderByRelationAggregateInput
+        kitchenTickets?: KitchenTicketOrderByRelationAggregateInput
+        kitchenTicketItems?: KitchenTicketItemOrderByRelationAggregateInput
         aiDrafts?: AiDraftOrderByRelationAggregateInput
         campaigns?: CampaignOrderByRelationAggregateInput
         _relevance?: StoreOrderByRelevanceInput
@@ -21991,6 +25976,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogListRelationFilter
         shifts?: ShiftListRelationFilter
         cashMovements?: CashMovementListRelationFilter
+        kitchenStations?: KitchenStationListRelationFilter
+        kitchenTickets?: KitchenTicketListRelationFilter
+        kitchenTicketItems?: KitchenTicketItemListRelationFilter
         aiDrafts?: AiDraftListRelationFilter
         campaigns?: CampaignListRelationFilter
     }, "id" | "code">
@@ -22043,6 +26031,7 @@ export namespace Prisma {
         openedShifts?: ShiftListRelationFilter
         closedShifts?: ShiftListRelationFilter
         cashMovements?: CashMovementListRelationFilter
+        createdKitchenTickets?: KitchenTicketListRelationFilter
     }
 
     export type UserOrderByWithRelationInput = {
@@ -22062,6 +26051,7 @@ export namespace Prisma {
         openedShifts?: ShiftOrderByRelationAggregateInput
         closedShifts?: ShiftOrderByRelationAggregateInput
         cashMovements?: CashMovementOrderByRelationAggregateInput
+        createdKitchenTickets?: KitchenTicketOrderByRelationAggregateInput
         _relevance?: UserOrderByRelevanceInput
     }
 
@@ -22085,6 +26075,7 @@ export namespace Prisma {
         openedShifts?: ShiftListRelationFilter
         closedShifts?: ShiftListRelationFilter
         cashMovements?: CashMovementListRelationFilter
+        createdKitchenTickets?: KitchenTicketListRelationFilter
     }, "id" | "email">
 
     export type UserOrderByWithAggregationInput = {
@@ -22192,9 +26183,11 @@ export namespace Prisma {
         name?: StringFilter<"Category"> | string
         status?: EnumCatalogStatusFilter<"Category"> | $Enums.CatalogStatus
         sortOrder?: IntFilter<"Category"> | number
+        defaultKitchenStationId?: StringNullableFilter<"Category"> | string | null
         createdAt?: DateTimeFilter<"Category"> | Date | string
         updatedAt?: DateTimeFilter<"Category"> | Date | string
         store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        defaultKitchenStation?: XOR<KitchenStationNullableScalarRelationFilter, KitchenStationWhereInput> | null
         products?: ProductListRelationFilter
     }
 
@@ -22204,9 +26197,11 @@ export namespace Prisma {
         name?: SortOrder
         status?: SortOrder
         sortOrder?: SortOrder
+        defaultKitchenStationId?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         store?: StoreOrderByWithRelationInput
+        defaultKitchenStation?: KitchenStationOrderByWithRelationInput
         products?: ProductOrderByRelationAggregateInput
         _relevance?: CategoryOrderByRelevanceInput
     }
@@ -22221,9 +26216,11 @@ export namespace Prisma {
         name?: StringFilter<"Category"> | string
         status?: EnumCatalogStatusFilter<"Category"> | $Enums.CatalogStatus
         sortOrder?: IntFilter<"Category"> | number
+        defaultKitchenStationId?: StringNullableFilter<"Category"> | string | null
         createdAt?: DateTimeFilter<"Category"> | Date | string
         updatedAt?: DateTimeFilter<"Category"> | Date | string
         store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        defaultKitchenStation?: XOR<KitchenStationNullableScalarRelationFilter, KitchenStationWhereInput> | null
         products?: ProductListRelationFilter
     }, "id" | "storeId_name">
 
@@ -22233,6 +26230,7 @@ export namespace Prisma {
         name?: SortOrder
         status?: SortOrder
         sortOrder?: SortOrder
+        defaultKitchenStationId?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         _count?: CategoryCountOrderByAggregateInput
@@ -22251,6 +26249,7 @@ export namespace Prisma {
         name?: StringWithAggregatesFilter<"Category"> | string
         status?: EnumCatalogStatusWithAggregatesFilter<"Category"> | $Enums.CatalogStatus
         sortOrder?: IntWithAggregatesFilter<"Category"> | number
+        defaultKitchenStationId?: StringNullableWithAggregatesFilter<"Category"> | string | null
         createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
     }
@@ -22269,10 +26268,12 @@ export namespace Prisma {
         currency?: StringFilter<"Product"> | string
         isActive?: BoolFilter<"Product"> | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFilter<"Product"> | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: StringNullableFilter<"Product"> | string | null
         createdAt?: DateTimeFilter<"Product"> | Date | string
         updatedAt?: DateTimeFilter<"Product"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
         categoryRef?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+        kitchenStation?: XOR<KitchenStationNullableScalarRelationFilter, KitchenStationWhereInput> | null
         modifierGroups?: ProductModifierGroupListRelationFilter
         orderItems?: OrderItemListRelationFilter
     }
@@ -22288,10 +26289,12 @@ export namespace Prisma {
         currency?: SortOrder
         isActive?: SortOrder
         availabilityStatus?: SortOrder
+        kitchenStationId?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         store?: StoreOrderByWithRelationInput
         categoryRef?: CategoryOrderByWithRelationInput
+        kitchenStation?: KitchenStationOrderByWithRelationInput
         modifierGroups?: ProductModifierGroupOrderByRelationAggregateInput
         orderItems?: OrderItemOrderByRelationAggregateInput
         _relevance?: ProductOrderByRelevanceInput
@@ -22311,10 +26314,12 @@ export namespace Prisma {
         currency?: StringFilter<"Product"> | string
         isActive?: BoolFilter<"Product"> | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFilter<"Product"> | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: StringNullableFilter<"Product"> | string | null
         createdAt?: DateTimeFilter<"Product"> | Date | string
         updatedAt?: DateTimeFilter<"Product"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
         categoryRef?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+        kitchenStation?: XOR<KitchenStationNullableScalarRelationFilter, KitchenStationWhereInput> | null
         modifierGroups?: ProductModifierGroupListRelationFilter
         orderItems?: OrderItemListRelationFilter
     }, "id">
@@ -22330,6 +26335,7 @@ export namespace Prisma {
         currency?: SortOrder
         isActive?: SortOrder
         availabilityStatus?: SortOrder
+        kitchenStationId?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         _count?: ProductCountOrderByAggregateInput
@@ -22353,6 +26359,7 @@ export namespace Prisma {
         currency?: StringWithAggregatesFilter<"Product"> | string
         isActive?: BoolWithAggregatesFilter<"Product"> | boolean
         availabilityStatus?: EnumProductAvailabilityStatusWithAggregatesFilter<"Product"> | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: StringNullableWithAggregatesFilter<"Product"> | string | null
         createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     }
@@ -22551,6 +26558,7 @@ export namespace Prisma {
         payments?: OrderPaymentListRelationFilter
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
+        kitchenTickets?: KitchenTicketListRelationFilter
     }
 
     export type OrderOrderByWithRelationInput = {
@@ -22580,6 +26588,7 @@ export namespace Prisma {
         payments?: OrderPaymentOrderByRelationAggregateInput
         refunds?: RefundOrderByRelationAggregateInput
         auditLogs?: OrderAuditLogOrderByRelationAggregateInput
+        kitchenTickets?: KitchenTicketOrderByRelationAggregateInput
         _relevance?: OrderOrderByRelevanceInput
     }
 
@@ -22613,6 +26622,7 @@ export namespace Prisma {
         payments?: OrderPaymentListRelationFilter
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
+        kitchenTickets?: KitchenTicketListRelationFilter
     }, "id" | "orderNumber">
 
     export type OrderOrderByWithAggregationInput = {
@@ -22756,6 +26766,7 @@ export namespace Prisma {
         order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
         product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
         refundItems?: RefundItemListRelationFilter
+        kitchenTicketItems?: KitchenTicketItemListRelationFilter
     }
 
     export type OrderItemOrderByWithRelationInput = {
@@ -22772,6 +26783,7 @@ export namespace Prisma {
         order?: OrderOrderByWithRelationInput
         product?: ProductOrderByWithRelationInput
         refundItems?: RefundItemOrderByRelationAggregateInput
+        kitchenTicketItems?: KitchenTicketItemOrderByRelationAggregateInput
         _relevance?: OrderItemOrderByRelevanceInput
     }
 
@@ -22792,6 +26804,7 @@ export namespace Prisma {
         order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
         product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
         refundItems?: RefundItemListRelationFilter
+        kitchenTicketItems?: KitchenTicketItemListRelationFilter
     }, "id">
 
     export type OrderItemOrderByWithAggregationInput = {
@@ -23307,6 +27320,307 @@ export namespace Prisma {
         createdAt?: DateTimeWithAggregatesFilter<"CashMovement"> | Date | string
     }
 
+    export type KitchenStationWhereInput = {
+        AND?: KitchenStationWhereInput | KitchenStationWhereInput[]
+        OR?: KitchenStationWhereInput[]
+        NOT?: KitchenStationWhereInput | KitchenStationWhereInput[]
+        id?: StringFilter<"KitchenStation"> | string
+        storeId?: StringFilter<"KitchenStation"> | string
+        name?: StringFilter<"KitchenStation"> | string
+        code?: StringFilter<"KitchenStation"> | string
+        status?: EnumKitchenStationStatusFilter<"KitchenStation"> | $Enums.KitchenStationStatus
+        sortOrder?: IntFilter<"KitchenStation"> | number
+        isDefault?: BoolFilter<"KitchenStation"> | boolean
+        createdAt?: DateTimeFilter<"KitchenStation"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenStation"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        products?: ProductListRelationFilter
+        categories?: CategoryListRelationFilter
+        tickets?: KitchenTicketListRelationFilter
+    }
+
+    export type KitchenStationOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        code?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        isDefault?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        products?: ProductOrderByRelationAggregateInput
+        categories?: CategoryOrderByRelationAggregateInput
+        tickets?: KitchenTicketOrderByRelationAggregateInput
+        _relevance?: KitchenStationOrderByRelevanceInput
+    }
+
+    export type KitchenStationWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        storeId_code?: KitchenStationStoreIdCodeCompoundUniqueInput
+        AND?: KitchenStationWhereInput | KitchenStationWhereInput[]
+        OR?: KitchenStationWhereInput[]
+        NOT?: KitchenStationWhereInput | KitchenStationWhereInput[]
+        storeId?: StringFilter<"KitchenStation"> | string
+        name?: StringFilter<"KitchenStation"> | string
+        code?: StringFilter<"KitchenStation"> | string
+        status?: EnumKitchenStationStatusFilter<"KitchenStation"> | $Enums.KitchenStationStatus
+        sortOrder?: IntFilter<"KitchenStation"> | number
+        isDefault?: BoolFilter<"KitchenStation"> | boolean
+        createdAt?: DateTimeFilter<"KitchenStation"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenStation"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        products?: ProductListRelationFilter
+        categories?: CategoryListRelationFilter
+        tickets?: KitchenTicketListRelationFilter
+    }, "id" | "storeId_code">
+
+    export type KitchenStationOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        code?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        isDefault?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: KitchenStationCountOrderByAggregateInput
+        _avg?: KitchenStationAvgOrderByAggregateInput
+        _max?: KitchenStationMaxOrderByAggregateInput
+        _min?: KitchenStationMinOrderByAggregateInput
+        _sum?: KitchenStationSumOrderByAggregateInput
+    }
+
+    export type KitchenStationScalarWhereWithAggregatesInput = {
+        AND?: KitchenStationScalarWhereWithAggregatesInput | KitchenStationScalarWhereWithAggregatesInput[]
+        OR?: KitchenStationScalarWhereWithAggregatesInput[]
+        NOT?: KitchenStationScalarWhereWithAggregatesInput | KitchenStationScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"KitchenStation"> | string
+        storeId?: StringWithAggregatesFilter<"KitchenStation"> | string
+        name?: StringWithAggregatesFilter<"KitchenStation"> | string
+        code?: StringWithAggregatesFilter<"KitchenStation"> | string
+        status?: EnumKitchenStationStatusWithAggregatesFilter<"KitchenStation"> | $Enums.KitchenStationStatus
+        sortOrder?: IntWithAggregatesFilter<"KitchenStation"> | number
+        isDefault?: BoolWithAggregatesFilter<"KitchenStation"> | boolean
+        createdAt?: DateTimeWithAggregatesFilter<"KitchenStation"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"KitchenStation"> | Date | string
+    }
+
+    export type KitchenTicketWhereInput = {
+        AND?: KitchenTicketWhereInput | KitchenTicketWhereInput[]
+        OR?: KitchenTicketWhereInput[]
+        NOT?: KitchenTicketWhereInput | KitchenTicketWhereInput[]
+        id?: StringFilter<"KitchenTicket"> | string
+        storeId?: StringFilter<"KitchenTicket"> | string
+        orderId?: StringFilter<"KitchenTicket"> | string
+        stationId?: StringFilter<"KitchenTicket"> | string
+        ticketNumber?: StringFilter<"KitchenTicket"> | string
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicket"> | $Enums.KitchenTicketStatus
+        startedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        readyAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        completedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelledAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelReason?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdByUserId?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        station?: XOR<KitchenStationScalarRelationFilter, KitchenStationWhereInput>
+        createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        items?: KitchenTicketItemListRelationFilter
+    }
+
+    export type KitchenTicketOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        stationId?: SortOrder
+        ticketNumber?: SortOrder
+        status?: SortOrder
+        startedAt?: SortOrderInput | SortOrder
+        readyAt?: SortOrderInput | SortOrder
+        completedAt?: SortOrderInput | SortOrder
+        cancelledAt?: SortOrderInput | SortOrder
+        cancelReason?: SortOrderInput | SortOrder
+        createdByUserId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        order?: OrderOrderByWithRelationInput
+        station?: KitchenStationOrderByWithRelationInput
+        createdBy?: UserOrderByWithRelationInput
+        items?: KitchenTicketItemOrderByRelationAggregateInput
+        _relevance?: KitchenTicketOrderByRelevanceInput
+    }
+
+    export type KitchenTicketWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        ticketNumber?: string
+        storeId_orderId_stationId?: KitchenTicketStoreIdOrderIdStationIdCompoundUniqueInput
+        AND?: KitchenTicketWhereInput | KitchenTicketWhereInput[]
+        OR?: KitchenTicketWhereInput[]
+        NOT?: KitchenTicketWhereInput | KitchenTicketWhereInput[]
+        storeId?: StringFilter<"KitchenTicket"> | string
+        orderId?: StringFilter<"KitchenTicket"> | string
+        stationId?: StringFilter<"KitchenTicket"> | string
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicket"> | $Enums.KitchenTicketStatus
+        startedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        readyAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        completedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelledAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelReason?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdByUserId?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+        station?: XOR<KitchenStationScalarRelationFilter, KitchenStationWhereInput>
+        createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        items?: KitchenTicketItemListRelationFilter
+    }, "id" | "ticketNumber" | "storeId_orderId_stationId">
+
+    export type KitchenTicketOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        stationId?: SortOrder
+        ticketNumber?: SortOrder
+        status?: SortOrder
+        startedAt?: SortOrderInput | SortOrder
+        readyAt?: SortOrderInput | SortOrder
+        completedAt?: SortOrderInput | SortOrder
+        cancelledAt?: SortOrderInput | SortOrder
+        cancelReason?: SortOrderInput | SortOrder
+        createdByUserId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: KitchenTicketCountOrderByAggregateInput
+        _max?: KitchenTicketMaxOrderByAggregateInput
+        _min?: KitchenTicketMinOrderByAggregateInput
+    }
+
+    export type KitchenTicketScalarWhereWithAggregatesInput = {
+        AND?: KitchenTicketScalarWhereWithAggregatesInput | KitchenTicketScalarWhereWithAggregatesInput[]
+        OR?: KitchenTicketScalarWhereWithAggregatesInput[]
+        NOT?: KitchenTicketScalarWhereWithAggregatesInput | KitchenTicketScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"KitchenTicket"> | string
+        storeId?: StringWithAggregatesFilter<"KitchenTicket"> | string
+        orderId?: StringWithAggregatesFilter<"KitchenTicket"> | string
+        stationId?: StringWithAggregatesFilter<"KitchenTicket"> | string
+        ticketNumber?: StringWithAggregatesFilter<"KitchenTicket"> | string
+        status?: EnumKitchenTicketStatusWithAggregatesFilter<"KitchenTicket"> | $Enums.KitchenTicketStatus
+        startedAt?: DateTimeNullableWithAggregatesFilter<"KitchenTicket"> | Date | string | null
+        readyAt?: DateTimeNullableWithAggregatesFilter<"KitchenTicket"> | Date | string | null
+        completedAt?: DateTimeNullableWithAggregatesFilter<"KitchenTicket"> | Date | string | null
+        cancelledAt?: DateTimeNullableWithAggregatesFilter<"KitchenTicket"> | Date | string | null
+        cancelReason?: StringNullableWithAggregatesFilter<"KitchenTicket"> | string | null
+        createdByUserId?: StringNullableWithAggregatesFilter<"KitchenTicket"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"KitchenTicket"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"KitchenTicket"> | Date | string
+    }
+
+    export type KitchenTicketItemWhereInput = {
+        AND?: KitchenTicketItemWhereInput | KitchenTicketItemWhereInput[]
+        OR?: KitchenTicketItemWhereInput[]
+        NOT?: KitchenTicketItemWhereInput | KitchenTicketItemWhereInput[]
+        id?: StringFilter<"KitchenTicketItem"> | string
+        storeId?: StringFilter<"KitchenTicketItem"> | string
+        ticketId?: StringFilter<"KitchenTicketItem"> | string
+        orderItemId?: StringFilter<"KitchenTicketItem"> | string
+        productId?: StringFilter<"KitchenTicketItem"> | string
+        productNameSnapshot?: StringFilter<"KitchenTicketItem"> | string
+        quantity?: IntFilter<"KitchenTicketItem"> | number
+        modifiers?: JsonNullableFilter<"KitchenTicketItem">
+        notes?: StringNullableFilter<"KitchenTicketItem"> | string | null
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicketItem"> | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        ticket?: XOR<KitchenTicketScalarRelationFilter, KitchenTicketWhereInput>
+        orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
+    }
+
+    export type KitchenTicketItemOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        ticketId?: SortOrder
+        orderItemId?: SortOrder
+        productId?: SortOrder
+        productNameSnapshot?: SortOrder
+        quantity?: SortOrder
+        modifiers?: SortOrderInput | SortOrder
+        notes?: SortOrderInput | SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        ticket?: KitchenTicketOrderByWithRelationInput
+        orderItem?: OrderItemOrderByWithRelationInput
+        _relevance?: KitchenTicketItemOrderByRelevanceInput
+    }
+
+    export type KitchenTicketItemWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        AND?: KitchenTicketItemWhereInput | KitchenTicketItemWhereInput[]
+        OR?: KitchenTicketItemWhereInput[]
+        NOT?: KitchenTicketItemWhereInput | KitchenTicketItemWhereInput[]
+        storeId?: StringFilter<"KitchenTicketItem"> | string
+        ticketId?: StringFilter<"KitchenTicketItem"> | string
+        orderItemId?: StringFilter<"KitchenTicketItem"> | string
+        productId?: StringFilter<"KitchenTicketItem"> | string
+        productNameSnapshot?: StringFilter<"KitchenTicketItem"> | string
+        quantity?: IntFilter<"KitchenTicketItem"> | number
+        modifiers?: JsonNullableFilter<"KitchenTicketItem">
+        notes?: StringNullableFilter<"KitchenTicketItem"> | string | null
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicketItem"> | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        ticket?: XOR<KitchenTicketScalarRelationFilter, KitchenTicketWhereInput>
+        orderItem?: XOR<OrderItemScalarRelationFilter, OrderItemWhereInput>
+    }, "id">
+
+    export type KitchenTicketItemOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        ticketId?: SortOrder
+        orderItemId?: SortOrder
+        productId?: SortOrder
+        productNameSnapshot?: SortOrder
+        quantity?: SortOrder
+        modifiers?: SortOrderInput | SortOrder
+        notes?: SortOrderInput | SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: KitchenTicketItemCountOrderByAggregateInput
+        _avg?: KitchenTicketItemAvgOrderByAggregateInput
+        _max?: KitchenTicketItemMaxOrderByAggregateInput
+        _min?: KitchenTicketItemMinOrderByAggregateInput
+        _sum?: KitchenTicketItemSumOrderByAggregateInput
+    }
+
+    export type KitchenTicketItemScalarWhereWithAggregatesInput = {
+        AND?: KitchenTicketItemScalarWhereWithAggregatesInput | KitchenTicketItemScalarWhereWithAggregatesInput[]
+        OR?: KitchenTicketItemScalarWhereWithAggregatesInput[]
+        NOT?: KitchenTicketItemScalarWhereWithAggregatesInput | KitchenTicketItemScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        storeId?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        ticketId?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        orderItemId?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        productId?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        productNameSnapshot?: StringWithAggregatesFilter<"KitchenTicketItem"> | string
+        quantity?: IntWithAggregatesFilter<"KitchenTicketItem"> | number
+        modifiers?: JsonNullableWithAggregatesFilter<"KitchenTicketItem">
+        notes?: StringNullableWithAggregatesFilter<"KitchenTicketItem"> | string | null
+        status?: EnumKitchenTicketStatusWithAggregatesFilter<"KitchenTicketItem"> | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeWithAggregatesFilter<"KitchenTicketItem"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"KitchenTicketItem"> | Date | string
+    }
+
     export type AiDraftWhereInput = {
         AND?: AiDraftWhereInput | AiDraftWhereInput[]
         OR?: AiDraftWhereInput[]
@@ -23498,6 +27812,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -23519,6 +27836,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -23540,6 +27860,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -23561,6 +27884,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -23615,6 +27941,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateInput = {
@@ -23634,6 +27961,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUpdateInput = {
@@ -23653,6 +27981,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateInput = {
@@ -23672,6 +28001,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserCreateManyInput = {
@@ -23780,6 +28110,7 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         store: StoreCreateNestedOneWithoutCategoriesInput
+        defaultKitchenStation?: KitchenStationCreateNestedOneWithoutCategoriesInput
         products?: ProductCreateNestedManyWithoutCategoryRefInput
     }
 
@@ -23789,6 +28120,7 @@ export namespace Prisma {
         name: string
         status?: $Enums.CatalogStatus
         sortOrder?: number
+        defaultKitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         products?: ProductUncheckedCreateNestedManyWithoutCategoryRefInput
@@ -23802,6 +28134,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneRequiredWithoutCategoriesNestedInput
+        defaultKitchenStation?: KitchenStationUpdateOneWithoutCategoriesNestedInput
         products?: ProductUpdateManyWithoutCategoryRefNestedInput
     }
 
@@ -23811,6 +28144,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
         sortOrder?: IntFieldUpdateOperationsInput | number
+        defaultKitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         products?: ProductUncheckedUpdateManyWithoutCategoryRefNestedInput
@@ -23822,6 +28156,7 @@ export namespace Prisma {
         name: string
         status?: $Enums.CatalogStatus
         sortOrder?: number
+        defaultKitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -23841,6 +28176,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
         sortOrder?: IntFieldUpdateOperationsInput | number
+        defaultKitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -23858,6 +28194,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutProductsInput
         categoryRef?: CategoryCreateNestedOneWithoutProductsInput
+        kitchenStation?: KitchenStationCreateNestedOneWithoutProductsInput
         modifierGroups?: ProductModifierGroupCreateNestedManyWithoutProductInput
         orderItems?: OrderItemCreateNestedManyWithoutProductInput
     }
@@ -23873,6 +28210,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         modifierGroups?: ProductModifierGroupUncheckedCreateNestedManyWithoutProductInput
@@ -23892,6 +28230,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutProductsNestedInput
         categoryRef?: CategoryUpdateOneWithoutProductsNestedInput
+        kitchenStation?: KitchenStationUpdateOneWithoutProductsNestedInput
         modifierGroups?: ProductModifierGroupUpdateManyWithoutProductNestedInput
         orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     }
@@ -23907,6 +28246,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
@@ -23924,6 +28264,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -23952,6 +28293,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -24159,6 +28501,7 @@ export namespace Prisma {
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateInput = {
@@ -24187,6 +28530,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUpdateInput = {
@@ -24215,6 +28559,7 @@ export namespace Prisma {
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateInput = {
@@ -24243,6 +28588,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderCreateManyInput = {
@@ -24397,6 +28743,7 @@ export namespace Prisma {
         order: OrderCreateNestedOneWithoutItemsInput
         product: ProductCreateNestedOneWithoutOrderItemsInput
         refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateInput = {
@@ -24411,6 +28758,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
         refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUpdateInput = {
@@ -24425,6 +28773,7 @@ export namespace Prisma {
         order?: OrderUpdateOneRequiredWithoutItemsNestedInput
         product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
         refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateInput = {
@@ -24439,6 +28788,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemCreateManyInput = {
@@ -24952,6 +29302,322 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type KitchenStationCreateInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenStationsInput
+        products?: ProductCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductUncheckedCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketUncheckedCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenStationsNestedInput
+        products?: ProductUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUncheckedUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUncheckedUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationCreateManyInput = {
+        id?: string
+        storeId: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenStationUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenStationUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketCreateInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketsInput
+        order: OrderCreateNestedOneWithoutKitchenTicketsInput
+        station: KitchenStationCreateNestedOneWithoutTicketsInput
+        createdBy?: UserCreateNestedOneWithoutCreatedKitchenTicketsInput
+        items?: KitchenTicketItemCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        order?: OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        station?: KitchenStationUpdateOneRequiredWithoutTicketsNestedInput
+        createdBy?: UserUpdateOneWithoutCreatedKitchenTicketsNestedInput
+        items?: KitchenTicketItemUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketCreateManyInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemCreateInput = {
+        id?: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketItemsInput
+        ticket: KitchenTicketCreateNestedOneWithoutItemsInput
+        orderItem: OrderItemCreateNestedOneWithoutKitchenTicketItemsInput
+    }
+
+    export type KitchenTicketItemUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        ticketId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+        ticket?: KitchenTicketUpdateOneRequiredWithoutItemsNestedInput
+        orderItem?: OrderItemUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+    }
+
+    export type KitchenTicketItemUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemCreateManyInput = {
+        id?: string
+        storeId: string
+        ticketId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type AiDraftCreateInput = {
         id?: string
         prompt: string
@@ -25240,6 +29906,24 @@ export namespace Prisma {
         none?: CashMovementWhereInput
     }
 
+    export type KitchenStationListRelationFilter = {
+        every?: KitchenStationWhereInput
+        some?: KitchenStationWhereInput
+        none?: KitchenStationWhereInput
+    }
+
+    export type KitchenTicketListRelationFilter = {
+        every?: KitchenTicketWhereInput
+        some?: KitchenTicketWhereInput
+        none?: KitchenTicketWhereInput
+    }
+
+    export type KitchenTicketItemListRelationFilter = {
+        every?: KitchenTicketItemWhereInput
+        some?: KitchenTicketItemWhereInput
+        none?: KitchenTicketItemWhereInput
+    }
+
     export type AiDraftListRelationFilter = {
         every?: AiDraftWhereInput
         some?: AiDraftWhereInput
@@ -25286,6 +29970,18 @@ export namespace Prisma {
     }
 
     export type CashMovementOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type KitchenStationOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type KitchenTicketOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type KitchenTicketItemOrderByRelationAggregateInput = {
         _count?: SortOrder
     }
 
@@ -25516,6 +30212,11 @@ export namespace Prisma {
         not?: NestedIntFilter<$PrismaModel> | number
     }
 
+    export type KitchenStationNullableScalarRelationFilter = {
+        is?: KitchenStationWhereInput | null
+        isNot?: KitchenStationWhereInput | null
+    }
+
     export type CategoryOrderByRelevanceInput = {
         fields: CategoryOrderByRelevanceFieldEnum | CategoryOrderByRelevanceFieldEnum[]
         sort: SortOrder
@@ -25533,6 +30234,7 @@ export namespace Prisma {
         name?: SortOrder
         status?: SortOrder
         sortOrder?: SortOrder
+        defaultKitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -25547,6 +30249,7 @@ export namespace Prisma {
         name?: SortOrder
         status?: SortOrder
         sortOrder?: SortOrder
+        defaultKitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -25557,6 +30260,7 @@ export namespace Prisma {
         name?: SortOrder
         status?: SortOrder
         sortOrder?: SortOrder
+        defaultKitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -25656,6 +30360,7 @@ export namespace Prisma {
         currency?: SortOrder
         isActive?: SortOrder
         availabilityStatus?: SortOrder
+        kitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -25675,6 +30380,7 @@ export namespace Prisma {
         currency?: SortOrder
         isActive?: SortOrder
         availabilityStatus?: SortOrder
+        kitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -25690,6 +30396,7 @@ export namespace Prisma {
         currency?: SortOrder
         isActive?: SortOrder
         availabilityStatus?: SortOrder
+        kitchenStationId?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -26685,6 +31392,225 @@ export namespace Prisma {
         _min?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
         _max?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
     }
+
+    export type EnumKitchenStationStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenStationStatus | EnumKitchenStationStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenStationStatus[]
+        notIn?: $Enums.KitchenStationStatus[]
+        not?: NestedEnumKitchenStationStatusFilter<$PrismaModel> | $Enums.KitchenStationStatus
+    }
+
+    export type KitchenStationOrderByRelevanceInput = {
+        fields: KitchenStationOrderByRelevanceFieldEnum | KitchenStationOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type KitchenStationStoreIdCodeCompoundUniqueInput = {
+        storeId: string
+        code: string
+    }
+
+    export type KitchenStationCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        code?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        isDefault?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenStationAvgOrderByAggregateInput = {
+        sortOrder?: SortOrder
+    }
+
+    export type KitchenStationMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        code?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        isDefault?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenStationMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        code?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        isDefault?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenStationSumOrderByAggregateInput = {
+        sortOrder?: SortOrder
+    }
+
+    export type EnumKitchenStationStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenStationStatus | EnumKitchenStationStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenStationStatus[]
+        notIn?: $Enums.KitchenStationStatus[]
+        not?: NestedEnumKitchenStationStatusWithAggregatesFilter<$PrismaModel> | $Enums.KitchenStationStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumKitchenStationStatusFilter<$PrismaModel>
+        _max?: NestedEnumKitchenStationStatusFilter<$PrismaModel>
+    }
+
+    export type EnumKitchenTicketStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenTicketStatus | EnumKitchenTicketStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenTicketStatus[]
+        notIn?: $Enums.KitchenTicketStatus[]
+        not?: NestedEnumKitchenTicketStatusFilter<$PrismaModel> | $Enums.KitchenTicketStatus
+    }
+
+    export type KitchenStationScalarRelationFilter = {
+        is?: KitchenStationWhereInput
+        isNot?: KitchenStationWhereInput
+    }
+
+    export type KitchenTicketOrderByRelevanceInput = {
+        fields: KitchenTicketOrderByRelevanceFieldEnum | KitchenTicketOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type KitchenTicketStoreIdOrderIdStationIdCompoundUniqueInput = {
+        storeId: string
+        orderId: string
+        stationId: string
+    }
+
+    export type KitchenTicketCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        stationId?: SortOrder
+        ticketNumber?: SortOrder
+        status?: SortOrder
+        startedAt?: SortOrder
+        readyAt?: SortOrder
+        completedAt?: SortOrder
+        cancelledAt?: SortOrder
+        cancelReason?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenTicketMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        stationId?: SortOrder
+        ticketNumber?: SortOrder
+        status?: SortOrder
+        startedAt?: SortOrder
+        readyAt?: SortOrder
+        completedAt?: SortOrder
+        cancelledAt?: SortOrder
+        cancelReason?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenTicketMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        orderId?: SortOrder
+        stationId?: SortOrder
+        ticketNumber?: SortOrder
+        status?: SortOrder
+        startedAt?: SortOrder
+        readyAt?: SortOrder
+        completedAt?: SortOrder
+        cancelledAt?: SortOrder
+        cancelReason?: SortOrder
+        createdByUserId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type EnumKitchenTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenTicketStatus | EnumKitchenTicketStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenTicketStatus[]
+        notIn?: $Enums.KitchenTicketStatus[]
+        not?: NestedEnumKitchenTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.KitchenTicketStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumKitchenTicketStatusFilter<$PrismaModel>
+        _max?: NestedEnumKitchenTicketStatusFilter<$PrismaModel>
+    }
+
+    export type KitchenTicketScalarRelationFilter = {
+        is?: KitchenTicketWhereInput
+        isNot?: KitchenTicketWhereInput
+    }
+
+    export type KitchenTicketItemOrderByRelevanceInput = {
+        fields: KitchenTicketItemOrderByRelevanceFieldEnum | KitchenTicketItemOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type KitchenTicketItemCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        ticketId?: SortOrder
+        orderItemId?: SortOrder
+        productId?: SortOrder
+        productNameSnapshot?: SortOrder
+        quantity?: SortOrder
+        modifiers?: SortOrder
+        notes?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenTicketItemAvgOrderByAggregateInput = {
+        quantity?: SortOrder
+    }
+
+    export type KitchenTicketItemMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        ticketId?: SortOrder
+        orderItemId?: SortOrder
+        productId?: SortOrder
+        productNameSnapshot?: SortOrder
+        quantity?: SortOrder
+        notes?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenTicketItemMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        ticketId?: SortOrder
+        orderItemId?: SortOrder
+        productId?: SortOrder
+        productNameSnapshot?: SortOrder
+        quantity?: SortOrder
+        notes?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type KitchenTicketItemSumOrderByAggregateInput = {
+        quantity?: SortOrder
+    }
     export type JsonFilter<$PrismaModel = never> =
         | PatchUndefined<
             Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -26952,6 +31878,27 @@ export namespace Prisma {
         connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
     }
 
+    export type KitchenStationCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput> | KitchenStationCreateWithoutStoreInput[] | KitchenStationUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutStoreInput | KitchenStationCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenStationCreateManyStoreInputEnvelope
+        connect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+    }
+
+    export type KitchenTicketCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput> | KitchenTicketCreateWithoutStoreInput[] | KitchenTicketUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStoreInput | KitchenTicketCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenTicketCreateManyStoreInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
+    export type KitchenTicketItemCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput> | KitchenTicketItemCreateWithoutStoreInput[] | KitchenTicketItemUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutStoreInput | KitchenTicketItemCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenTicketItemCreateManyStoreInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+    }
+
     export type AiDraftCreateNestedManyWithoutStoreInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -27020,6 +31967,27 @@ export namespace Prisma {
         connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
         createMany?: CashMovementCreateManyStoreInputEnvelope
         connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
+    export type KitchenStationUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput> | KitchenStationCreateWithoutStoreInput[] | KitchenStationUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutStoreInput | KitchenStationCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenStationCreateManyStoreInputEnvelope
+        connect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+    }
+
+    export type KitchenTicketUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput> | KitchenTicketCreateWithoutStoreInput[] | KitchenTicketUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStoreInput | KitchenTicketCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenTicketCreateManyStoreInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
+    export type KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput> | KitchenTicketItemCreateWithoutStoreInput[] | KitchenTicketItemUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutStoreInput | KitchenTicketItemCreateOrConnectWithoutStoreInput[]
+        createMany?: KitchenTicketItemCreateManyStoreInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
     }
 
     export type AiDraftUncheckedCreateNestedManyWithoutStoreInput = {
@@ -27164,6 +32132,48 @@ export namespace Prisma {
         deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
     }
 
+    export type KitchenStationUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput> | KitchenStationCreateWithoutStoreInput[] | KitchenStationUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutStoreInput | KitchenStationCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenStationUpsertWithWhereUniqueWithoutStoreInput | KitchenStationUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenStationCreateManyStoreInputEnvelope
+        set?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        disconnect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        delete?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        connect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        update?: KitchenStationUpdateWithWhereUniqueWithoutStoreInput | KitchenStationUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenStationUpdateManyWithWhereWithoutStoreInput | KitchenStationUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenStationScalarWhereInput | KitchenStationScalarWhereInput[]
+    }
+
+    export type KitchenTicketUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput> | KitchenTicketCreateWithoutStoreInput[] | KitchenTicketUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStoreInput | KitchenTicketCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutStoreInput | KitchenTicketUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenTicketCreateManyStoreInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutStoreInput | KitchenTicketUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutStoreInput | KitchenTicketUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type KitchenTicketItemUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput> | KitchenTicketItemCreateWithoutStoreInput[] | KitchenTicketItemUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutStoreInput | KitchenTicketItemCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutStoreInput | KitchenTicketItemUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenTicketItemCreateManyStoreInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutStoreInput | KitchenTicketItemUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutStoreInput | KitchenTicketItemUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+    }
+
     export type AiDraftUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -27304,6 +32314,48 @@ export namespace Prisma {
         deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
     }
 
+    export type KitchenStationUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput> | KitchenStationCreateWithoutStoreInput[] | KitchenStationUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutStoreInput | KitchenStationCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenStationUpsertWithWhereUniqueWithoutStoreInput | KitchenStationUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenStationCreateManyStoreInputEnvelope
+        set?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        disconnect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        delete?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        connect?: KitchenStationWhereUniqueInput | KitchenStationWhereUniqueInput[]
+        update?: KitchenStationUpdateWithWhereUniqueWithoutStoreInput | KitchenStationUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenStationUpdateManyWithWhereWithoutStoreInput | KitchenStationUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenStationScalarWhereInput | KitchenStationScalarWhereInput[]
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput> | KitchenTicketCreateWithoutStoreInput[] | KitchenTicketUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStoreInput | KitchenTicketCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutStoreInput | KitchenTicketUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenTicketCreateManyStoreInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutStoreInput | KitchenTicketUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutStoreInput | KitchenTicketUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput> | KitchenTicketItemCreateWithoutStoreInput[] | KitchenTicketItemUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutStoreInput | KitchenTicketItemCreateOrConnectWithoutStoreInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutStoreInput | KitchenTicketItemUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: KitchenTicketItemCreateManyStoreInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutStoreInput | KitchenTicketItemUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutStoreInput | KitchenTicketItemUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+    }
+
     export type AiDraftUncheckedUpdateManyWithoutStoreNestedInput = {
         create?: XOR<AiDraftCreateWithoutStoreInput, AiDraftUncheckedCreateWithoutStoreInput> | AiDraftCreateWithoutStoreInput[] | AiDraftUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: AiDraftCreateOrConnectWithoutStoreInput | AiDraftCreateOrConnectWithoutStoreInput[]
@@ -27395,6 +32447,13 @@ export namespace Prisma {
         connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
     }
 
+    export type KitchenTicketCreateNestedManyWithoutCreatedByInput = {
+        create?: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput> | KitchenTicketCreateWithoutCreatedByInput[] | KitchenTicketUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutCreatedByInput | KitchenTicketCreateOrConnectWithoutCreatedByInput[]
+        createMany?: KitchenTicketCreateManyCreatedByInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
     export type StoreUserUncheckedCreateNestedManyWithoutUserInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
@@ -27456,6 +32515,13 @@ export namespace Prisma {
         connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
         createMany?: CashMovementCreateManyCreatedByInputEnvelope
         connect?: CashMovementWhereUniqueInput | CashMovementWhereUniqueInput[]
+    }
+
+    export type KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput = {
+        create?: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput> | KitchenTicketCreateWithoutCreatedByInput[] | KitchenTicketUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutCreatedByInput | KitchenTicketCreateOrConnectWithoutCreatedByInput[]
+        createMany?: KitchenTicketCreateManyCreatedByInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
     }
 
     export type StoreUserUpdateManyWithoutUserNestedInput = {
@@ -27584,6 +32650,20 @@ export namespace Prisma {
         deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
     }
 
+    export type KitchenTicketUpdateManyWithoutCreatedByNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput> | KitchenTicketCreateWithoutCreatedByInput[] | KitchenTicketUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutCreatedByInput | KitchenTicketCreateOrConnectWithoutCreatedByInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutCreatedByInput | KitchenTicketUpsertWithWhereUniqueWithoutCreatedByInput[]
+        createMany?: KitchenTicketCreateManyCreatedByInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutCreatedByInput | KitchenTicketUpdateWithWhereUniqueWithoutCreatedByInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutCreatedByInput | KitchenTicketUpdateManyWithWhereWithoutCreatedByInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
     export type StoreUserUncheckedUpdateManyWithoutUserNestedInput = {
         create?: XOR<StoreUserCreateWithoutUserInput, StoreUserUncheckedCreateWithoutUserInput> | StoreUserCreateWithoutUserInput[] | StoreUserUncheckedCreateWithoutUserInput[]
         connectOrCreate?: StoreUserCreateOrConnectWithoutUserInput | StoreUserCreateOrConnectWithoutUserInput[]
@@ -27710,6 +32790,20 @@ export namespace Prisma {
         deleteMany?: CashMovementScalarWhereInput | CashMovementScalarWhereInput[]
     }
 
+    export type KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput> | KitchenTicketCreateWithoutCreatedByInput[] | KitchenTicketUncheckedCreateWithoutCreatedByInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutCreatedByInput | KitchenTicketCreateOrConnectWithoutCreatedByInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutCreatedByInput | KitchenTicketUpsertWithWhereUniqueWithoutCreatedByInput[]
+        createMany?: KitchenTicketCreateManyCreatedByInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutCreatedByInput | KitchenTicketUpdateWithWhereUniqueWithoutCreatedByInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutCreatedByInput | KitchenTicketUpdateManyWithWhereWithoutCreatedByInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
     export type StoreCreateNestedOneWithoutUsersInput = {
         create?: XOR<StoreCreateWithoutUsersInput, StoreUncheckedCreateWithoutUsersInput>
         connectOrCreate?: StoreCreateOrConnectWithoutUsersInput
@@ -27748,6 +32842,12 @@ export namespace Prisma {
         connect?: StoreWhereUniqueInput
     }
 
+    export type KitchenStationCreateNestedOneWithoutCategoriesInput = {
+        create?: XOR<KitchenStationCreateWithoutCategoriesInput, KitchenStationUncheckedCreateWithoutCategoriesInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutCategoriesInput
+        connect?: KitchenStationWhereUniqueInput
+    }
+
     export type ProductCreateNestedManyWithoutCategoryRefInput = {
         create?: XOR<ProductCreateWithoutCategoryRefInput, ProductUncheckedCreateWithoutCategoryRefInput> | ProductCreateWithoutCategoryRefInput[] | ProductUncheckedCreateWithoutCategoryRefInput[]
         connectOrCreate?: ProductCreateOrConnectWithoutCategoryRefInput | ProductCreateOrConnectWithoutCategoryRefInput[]
@@ -27780,6 +32880,16 @@ export namespace Prisma {
         upsert?: StoreUpsertWithoutCategoriesInput
         connect?: StoreWhereUniqueInput
         update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutCategoriesInput, StoreUpdateWithoutCategoriesInput>, StoreUncheckedUpdateWithoutCategoriesInput>
+    }
+
+    export type KitchenStationUpdateOneWithoutCategoriesNestedInput = {
+        create?: XOR<KitchenStationCreateWithoutCategoriesInput, KitchenStationUncheckedCreateWithoutCategoriesInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutCategoriesInput
+        upsert?: KitchenStationUpsertWithoutCategoriesInput
+        disconnect?: KitchenStationWhereInput | boolean
+        delete?: KitchenStationWhereInput | boolean
+        connect?: KitchenStationWhereUniqueInput
+        update?: XOR<XOR<KitchenStationUpdateToOneWithWhereWithoutCategoriesInput, KitchenStationUpdateWithoutCategoriesInput>, KitchenStationUncheckedUpdateWithoutCategoriesInput>
     }
 
     export type ProductUpdateManyWithoutCategoryRefNestedInput = {
@@ -27820,6 +32930,12 @@ export namespace Prisma {
         create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
         connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput
         connect?: CategoryWhereUniqueInput
+    }
+
+    export type KitchenStationCreateNestedOneWithoutProductsInput = {
+        create?: XOR<KitchenStationCreateWithoutProductsInput, KitchenStationUncheckedCreateWithoutProductsInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutProductsInput
+        connect?: KitchenStationWhereUniqueInput
     }
 
     export type ProductModifierGroupCreateNestedManyWithoutProductInput = {
@@ -27880,6 +32996,16 @@ export namespace Prisma {
         delete?: CategoryWhereInput | boolean
         connect?: CategoryWhereUniqueInput
         update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProductsInput, CategoryUpdateWithoutProductsInput>, CategoryUncheckedUpdateWithoutProductsInput>
+    }
+
+    export type KitchenStationUpdateOneWithoutProductsNestedInput = {
+        create?: XOR<KitchenStationCreateWithoutProductsInput, KitchenStationUncheckedCreateWithoutProductsInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutProductsInput
+        upsert?: KitchenStationUpsertWithoutProductsInput
+        disconnect?: KitchenStationWhereInput | boolean
+        delete?: KitchenStationWhereInput | boolean
+        connect?: KitchenStationWhereUniqueInput
+        update?: XOR<XOR<KitchenStationUpdateToOneWithWhereWithoutProductsInput, KitchenStationUpdateWithoutProductsInput>, KitchenStationUncheckedUpdateWithoutProductsInput>
     }
 
     export type ProductModifierGroupUpdateManyWithoutProductNestedInput = {
@@ -28046,6 +33172,13 @@ export namespace Prisma {
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
     }
 
+    export type KitchenTicketCreateNestedManyWithoutOrderInput = {
+        create?: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput> | KitchenTicketCreateWithoutOrderInput[] | KitchenTicketUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutOrderInput | KitchenTicketCreateOrConnectWithoutOrderInput[]
+        createMany?: KitchenTicketCreateManyOrderInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
     export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
         create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
         connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -28072,6 +33205,13 @@ export namespace Prisma {
         connectOrCreate?: OrderAuditLogCreateOrConnectWithoutOrderInput | OrderAuditLogCreateOrConnectWithoutOrderInput[]
         createMany?: OrderAuditLogCreateManyOrderInputEnvelope
         connect?: OrderAuditLogWhereUniqueInput | OrderAuditLogWhereUniqueInput[]
+    }
+
+    export type KitchenTicketUncheckedCreateNestedManyWithoutOrderInput = {
+        create?: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput> | KitchenTicketCreateWithoutOrderInput[] | KitchenTicketUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutOrderInput | KitchenTicketCreateOrConnectWithoutOrderInput[]
+        createMany?: KitchenTicketCreateManyOrderInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
     }
 
     export type EnumOrderStatusFieldUpdateOperationsInput = {
@@ -28164,6 +33304,20 @@ export namespace Prisma {
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
+    export type KitchenTicketUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput> | KitchenTicketCreateWithoutOrderInput[] | KitchenTicketUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutOrderInput | KitchenTicketCreateOrConnectWithoutOrderInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutOrderInput | KitchenTicketUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: KitchenTicketCreateManyOrderInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutOrderInput | KitchenTicketUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutOrderInput | KitchenTicketUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
     export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
         create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
         connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -28220,6 +33374,20 @@ export namespace Prisma {
         deleteMany?: OrderAuditLogScalarWhereInput | OrderAuditLogScalarWhereInput[]
     }
 
+    export type KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput> | KitchenTicketCreateWithoutOrderInput[] | KitchenTicketUncheckedCreateWithoutOrderInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutOrderInput | KitchenTicketCreateOrConnectWithoutOrderInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutOrderInput | KitchenTicketUpsertWithWhereUniqueWithoutOrderInput[]
+        createMany?: KitchenTicketCreateManyOrderInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutOrderInput | KitchenTicketUpdateWithWhereUniqueWithoutOrderInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutOrderInput | KitchenTicketUpdateManyWithWhereWithoutOrderInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
     export type OrderCreateNestedOneWithoutPaymentsInput = {
         create?: XOR<OrderCreateWithoutPaymentsInput, OrderUncheckedCreateWithoutPaymentsInput>
         connectOrCreate?: OrderCreateOrConnectWithoutPaymentsInput
@@ -28257,11 +33425,25 @@ export namespace Prisma {
         connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
     }
 
+    export type KitchenTicketItemCreateNestedManyWithoutOrderItemInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput> | KitchenTicketItemCreateWithoutOrderItemInput[] | KitchenTicketItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutOrderItemInput | KitchenTicketItemCreateOrConnectWithoutOrderItemInput[]
+        createMany?: KitchenTicketItemCreateManyOrderItemInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+    }
+
     export type RefundItemUncheckedCreateNestedManyWithoutOrderItemInput = {
         create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
         connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
         createMany?: RefundItemCreateManyOrderItemInputEnvelope
         connect?: RefundItemWhereUniqueInput | RefundItemWhereUniqueInput[]
+    }
+
+    export type KitchenTicketItemUncheckedCreateNestedManyWithoutOrderItemInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput> | KitchenTicketItemCreateWithoutOrderItemInput[] | KitchenTicketItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutOrderItemInput | KitchenTicketItemCreateOrConnectWithoutOrderItemInput[]
+        createMany?: KitchenTicketItemCreateManyOrderItemInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
     }
 
     export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
@@ -28294,6 +33476,20 @@ export namespace Prisma {
         deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
     }
 
+    export type KitchenTicketItemUpdateManyWithoutOrderItemNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput> | KitchenTicketItemCreateWithoutOrderItemInput[] | KitchenTicketItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutOrderItemInput | KitchenTicketItemCreateOrConnectWithoutOrderItemInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutOrderItemInput | KitchenTicketItemUpsertWithWhereUniqueWithoutOrderItemInput[]
+        createMany?: KitchenTicketItemCreateManyOrderItemInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutOrderItemInput | KitchenTicketItemUpdateWithWhereUniqueWithoutOrderItemInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutOrderItemInput | KitchenTicketItemUpdateManyWithWhereWithoutOrderItemInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+    }
+
     export type RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput = {
         create?: XOR<RefundItemCreateWithoutOrderItemInput, RefundItemUncheckedCreateWithoutOrderItemInput> | RefundItemCreateWithoutOrderItemInput[] | RefundItemUncheckedCreateWithoutOrderItemInput[]
         connectOrCreate?: RefundItemCreateOrConnectWithoutOrderItemInput | RefundItemCreateOrConnectWithoutOrderItemInput[]
@@ -28306,6 +33502,20 @@ export namespace Prisma {
         update?: RefundItemUpdateWithWhereUniqueWithoutOrderItemInput | RefundItemUpdateWithWhereUniqueWithoutOrderItemInput[]
         updateMany?: RefundItemUpdateManyWithWhereWithoutOrderItemInput | RefundItemUpdateManyWithWhereWithoutOrderItemInput[]
         deleteMany?: RefundItemScalarWhereInput | RefundItemScalarWhereInput[]
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutOrderItemNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput> | KitchenTicketItemCreateWithoutOrderItemInput[] | KitchenTicketItemUncheckedCreateWithoutOrderItemInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutOrderItemInput | KitchenTicketItemCreateOrConnectWithoutOrderItemInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutOrderItemInput | KitchenTicketItemUpsertWithWhereUniqueWithoutOrderItemInput[]
+        createMany?: KitchenTicketItemCreateManyOrderItemInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutOrderItemInput | KitchenTicketItemUpdateWithWhereUniqueWithoutOrderItemInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutOrderItemInput | KitchenTicketItemUpdateManyWithWhereWithoutOrderItemInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
     }
 
     export type StoreCreateNestedOneWithoutRefundsInput = {
@@ -28666,6 +33876,296 @@ export namespace Prisma {
         delete?: UserWhereInput | boolean
         connect?: UserWhereUniqueInput
         update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCashMovementsInput, UserUpdateWithoutCashMovementsInput>, UserUncheckedUpdateWithoutCashMovementsInput>
+    }
+
+    export type StoreCreateNestedOneWithoutKitchenStationsInput = {
+        create?: XOR<StoreCreateWithoutKitchenStationsInput, StoreUncheckedCreateWithoutKitchenStationsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenStationsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type ProductCreateNestedManyWithoutKitchenStationInput = {
+        create?: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput> | ProductCreateWithoutKitchenStationInput[] | ProductUncheckedCreateWithoutKitchenStationInput[]
+        connectOrCreate?: ProductCreateOrConnectWithoutKitchenStationInput | ProductCreateOrConnectWithoutKitchenStationInput[]
+        createMany?: ProductCreateManyKitchenStationInputEnvelope
+        connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    }
+
+    export type CategoryCreateNestedManyWithoutDefaultKitchenStationInput = {
+        create?: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput> | CategoryCreateWithoutDefaultKitchenStationInput[] | CategoryUncheckedCreateWithoutDefaultKitchenStationInput[]
+        connectOrCreate?: CategoryCreateOrConnectWithoutDefaultKitchenStationInput | CategoryCreateOrConnectWithoutDefaultKitchenStationInput[]
+        createMany?: CategoryCreateManyDefaultKitchenStationInputEnvelope
+        connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    }
+
+    export type KitchenTicketCreateNestedManyWithoutStationInput = {
+        create?: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput> | KitchenTicketCreateWithoutStationInput[] | KitchenTicketUncheckedCreateWithoutStationInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStationInput | KitchenTicketCreateOrConnectWithoutStationInput[]
+        createMany?: KitchenTicketCreateManyStationInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
+    export type ProductUncheckedCreateNestedManyWithoutKitchenStationInput = {
+        create?: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput> | ProductCreateWithoutKitchenStationInput[] | ProductUncheckedCreateWithoutKitchenStationInput[]
+        connectOrCreate?: ProductCreateOrConnectWithoutKitchenStationInput | ProductCreateOrConnectWithoutKitchenStationInput[]
+        createMany?: ProductCreateManyKitchenStationInputEnvelope
+        connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+    }
+
+    export type CategoryUncheckedCreateNestedManyWithoutDefaultKitchenStationInput = {
+        create?: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput> | CategoryCreateWithoutDefaultKitchenStationInput[] | CategoryUncheckedCreateWithoutDefaultKitchenStationInput[]
+        connectOrCreate?: CategoryCreateOrConnectWithoutDefaultKitchenStationInput | CategoryCreateOrConnectWithoutDefaultKitchenStationInput[]
+        createMany?: CategoryCreateManyDefaultKitchenStationInputEnvelope
+        connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    }
+
+    export type KitchenTicketUncheckedCreateNestedManyWithoutStationInput = {
+        create?: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput> | KitchenTicketCreateWithoutStationInput[] | KitchenTicketUncheckedCreateWithoutStationInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStationInput | KitchenTicketCreateOrConnectWithoutStationInput[]
+        createMany?: KitchenTicketCreateManyStationInputEnvelope
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
+    export type EnumKitchenStationStatusFieldUpdateOperationsInput = {
+        set?: $Enums.KitchenStationStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutKitchenStationsNestedInput = {
+        create?: XOR<StoreCreateWithoutKitchenStationsInput, StoreUncheckedCreateWithoutKitchenStationsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenStationsInput
+        upsert?: StoreUpsertWithoutKitchenStationsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutKitchenStationsInput, StoreUpdateWithoutKitchenStationsInput>, StoreUncheckedUpdateWithoutKitchenStationsInput>
+    }
+
+    export type ProductUpdateManyWithoutKitchenStationNestedInput = {
+        create?: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput> | ProductCreateWithoutKitchenStationInput[] | ProductUncheckedCreateWithoutKitchenStationInput[]
+        connectOrCreate?: ProductCreateOrConnectWithoutKitchenStationInput | ProductCreateOrConnectWithoutKitchenStationInput[]
+        upsert?: ProductUpsertWithWhereUniqueWithoutKitchenStationInput | ProductUpsertWithWhereUniqueWithoutKitchenStationInput[]
+        createMany?: ProductCreateManyKitchenStationInputEnvelope
+        set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        update?: ProductUpdateWithWhereUniqueWithoutKitchenStationInput | ProductUpdateWithWhereUniqueWithoutKitchenStationInput[]
+        updateMany?: ProductUpdateManyWithWhereWithoutKitchenStationInput | ProductUpdateManyWithWhereWithoutKitchenStationInput[]
+        deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    }
+
+    export type CategoryUpdateManyWithoutDefaultKitchenStationNestedInput = {
+        create?: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput> | CategoryCreateWithoutDefaultKitchenStationInput[] | CategoryUncheckedCreateWithoutDefaultKitchenStationInput[]
+        connectOrCreate?: CategoryCreateOrConnectWithoutDefaultKitchenStationInput | CategoryCreateOrConnectWithoutDefaultKitchenStationInput[]
+        upsert?: CategoryUpsertWithWhereUniqueWithoutDefaultKitchenStationInput | CategoryUpsertWithWhereUniqueWithoutDefaultKitchenStationInput[]
+        createMany?: CategoryCreateManyDefaultKitchenStationInputEnvelope
+        set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        update?: CategoryUpdateWithWhereUniqueWithoutDefaultKitchenStationInput | CategoryUpdateWithWhereUniqueWithoutDefaultKitchenStationInput[]
+        updateMany?: CategoryUpdateManyWithWhereWithoutDefaultKitchenStationInput | CategoryUpdateManyWithWhereWithoutDefaultKitchenStationInput[]
+        deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    }
+
+    export type KitchenTicketUpdateManyWithoutStationNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput> | KitchenTicketCreateWithoutStationInput[] | KitchenTicketUncheckedCreateWithoutStationInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStationInput | KitchenTicketCreateOrConnectWithoutStationInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutStationInput | KitchenTicketUpsertWithWhereUniqueWithoutStationInput[]
+        createMany?: KitchenTicketCreateManyStationInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutStationInput | KitchenTicketUpdateWithWhereUniqueWithoutStationInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutStationInput | KitchenTicketUpdateManyWithWhereWithoutStationInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type ProductUncheckedUpdateManyWithoutKitchenStationNestedInput = {
+        create?: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput> | ProductCreateWithoutKitchenStationInput[] | ProductUncheckedCreateWithoutKitchenStationInput[]
+        connectOrCreate?: ProductCreateOrConnectWithoutKitchenStationInput | ProductCreateOrConnectWithoutKitchenStationInput[]
+        upsert?: ProductUpsertWithWhereUniqueWithoutKitchenStationInput | ProductUpsertWithWhereUniqueWithoutKitchenStationInput[]
+        createMany?: ProductCreateManyKitchenStationInputEnvelope
+        set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
+        update?: ProductUpdateWithWhereUniqueWithoutKitchenStationInput | ProductUpdateWithWhereUniqueWithoutKitchenStationInput[]
+        updateMany?: ProductUpdateManyWithWhereWithoutKitchenStationInput | ProductUpdateManyWithWhereWithoutKitchenStationInput[]
+        deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    }
+
+    export type CategoryUncheckedUpdateManyWithoutDefaultKitchenStationNestedInput = {
+        create?: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput> | CategoryCreateWithoutDefaultKitchenStationInput[] | CategoryUncheckedCreateWithoutDefaultKitchenStationInput[]
+        connectOrCreate?: CategoryCreateOrConnectWithoutDefaultKitchenStationInput | CategoryCreateOrConnectWithoutDefaultKitchenStationInput[]
+        upsert?: CategoryUpsertWithWhereUniqueWithoutDefaultKitchenStationInput | CategoryUpsertWithWhereUniqueWithoutDefaultKitchenStationInput[]
+        createMany?: CategoryCreateManyDefaultKitchenStationInputEnvelope
+        set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+        update?: CategoryUpdateWithWhereUniqueWithoutDefaultKitchenStationInput | CategoryUpdateWithWhereUniqueWithoutDefaultKitchenStationInput[]
+        updateMany?: CategoryUpdateManyWithWhereWithoutDefaultKitchenStationInput | CategoryUpdateManyWithWhereWithoutDefaultKitchenStationInput[]
+        deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutStationNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput> | KitchenTicketCreateWithoutStationInput[] | KitchenTicketUncheckedCreateWithoutStationInput[]
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutStationInput | KitchenTicketCreateOrConnectWithoutStationInput[]
+        upsert?: KitchenTicketUpsertWithWhereUniqueWithoutStationInput | KitchenTicketUpsertWithWhereUniqueWithoutStationInput[]
+        createMany?: KitchenTicketCreateManyStationInputEnvelope
+        set?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        disconnect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        delete?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+        update?: KitchenTicketUpdateWithWhereUniqueWithoutStationInput | KitchenTicketUpdateWithWhereUniqueWithoutStationInput[]
+        updateMany?: KitchenTicketUpdateManyWithWhereWithoutStationInput | KitchenTicketUpdateManyWithWhereWithoutStationInput[]
+        deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutKitchenTicketsInput = {
+        create?: XOR<StoreCreateWithoutKitchenTicketsInput, StoreUncheckedCreateWithoutKitchenTicketsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenTicketsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type OrderCreateNestedOneWithoutKitchenTicketsInput = {
+        create?: XOR<OrderCreateWithoutKitchenTicketsInput, OrderUncheckedCreateWithoutKitchenTicketsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutKitchenTicketsInput
+        connect?: OrderWhereUniqueInput
+    }
+
+    export type KitchenStationCreateNestedOneWithoutTicketsInput = {
+        create?: XOR<KitchenStationCreateWithoutTicketsInput, KitchenStationUncheckedCreateWithoutTicketsInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutTicketsInput
+        connect?: KitchenStationWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutCreatedKitchenTicketsInput = {
+        create?: XOR<UserCreateWithoutCreatedKitchenTicketsInput, UserUncheckedCreateWithoutCreatedKitchenTicketsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutCreatedKitchenTicketsInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type KitchenTicketItemCreateNestedManyWithoutTicketInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput> | KitchenTicketItemCreateWithoutTicketInput[] | KitchenTicketItemUncheckedCreateWithoutTicketInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutTicketInput | KitchenTicketItemCreateOrConnectWithoutTicketInput[]
+        createMany?: KitchenTicketItemCreateManyTicketInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+    }
+
+    export type KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput> | KitchenTicketItemCreateWithoutTicketInput[] | KitchenTicketItemUncheckedCreateWithoutTicketInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutTicketInput | KitchenTicketItemCreateOrConnectWithoutTicketInput[]
+        createMany?: KitchenTicketItemCreateManyTicketInputEnvelope
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+    }
+
+    export type EnumKitchenTicketStatusFieldUpdateOperationsInput = {
+        set?: $Enums.KitchenTicketStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput = {
+        create?: XOR<StoreCreateWithoutKitchenTicketsInput, StoreUncheckedCreateWithoutKitchenTicketsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenTicketsInput
+        upsert?: StoreUpsertWithoutKitchenTicketsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutKitchenTicketsInput, StoreUpdateWithoutKitchenTicketsInput>, StoreUncheckedUpdateWithoutKitchenTicketsInput>
+    }
+
+    export type OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput = {
+        create?: XOR<OrderCreateWithoutKitchenTicketsInput, OrderUncheckedCreateWithoutKitchenTicketsInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutKitchenTicketsInput
+        upsert?: OrderUpsertWithoutKitchenTicketsInput
+        connect?: OrderWhereUniqueInput
+        update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutKitchenTicketsInput, OrderUpdateWithoutKitchenTicketsInput>, OrderUncheckedUpdateWithoutKitchenTicketsInput>
+    }
+
+    export type KitchenStationUpdateOneRequiredWithoutTicketsNestedInput = {
+        create?: XOR<KitchenStationCreateWithoutTicketsInput, KitchenStationUncheckedCreateWithoutTicketsInput>
+        connectOrCreate?: KitchenStationCreateOrConnectWithoutTicketsInput
+        upsert?: KitchenStationUpsertWithoutTicketsInput
+        connect?: KitchenStationWhereUniqueInput
+        update?: XOR<XOR<KitchenStationUpdateToOneWithWhereWithoutTicketsInput, KitchenStationUpdateWithoutTicketsInput>, KitchenStationUncheckedUpdateWithoutTicketsInput>
+    }
+
+    export type UserUpdateOneWithoutCreatedKitchenTicketsNestedInput = {
+        create?: XOR<UserCreateWithoutCreatedKitchenTicketsInput, UserUncheckedCreateWithoutCreatedKitchenTicketsInput>
+        connectOrCreate?: UserCreateOrConnectWithoutCreatedKitchenTicketsInput
+        upsert?: UserUpsertWithoutCreatedKitchenTicketsInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedKitchenTicketsInput, UserUpdateWithoutCreatedKitchenTicketsInput>, UserUncheckedUpdateWithoutCreatedKitchenTicketsInput>
+    }
+
+    export type KitchenTicketItemUpdateManyWithoutTicketNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput> | KitchenTicketItemCreateWithoutTicketInput[] | KitchenTicketItemUncheckedCreateWithoutTicketInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutTicketInput | KitchenTicketItemCreateOrConnectWithoutTicketInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutTicketInput | KitchenTicketItemUpsertWithWhereUniqueWithoutTicketInput[]
+        createMany?: KitchenTicketItemCreateManyTicketInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutTicketInput | KitchenTicketItemUpdateWithWhereUniqueWithoutTicketInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutTicketInput | KitchenTicketItemUpdateManyWithWhereWithoutTicketInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput = {
+        create?: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput> | KitchenTicketItemCreateWithoutTicketInput[] | KitchenTicketItemUncheckedCreateWithoutTicketInput[]
+        connectOrCreate?: KitchenTicketItemCreateOrConnectWithoutTicketInput | KitchenTicketItemCreateOrConnectWithoutTicketInput[]
+        upsert?: KitchenTicketItemUpsertWithWhereUniqueWithoutTicketInput | KitchenTicketItemUpsertWithWhereUniqueWithoutTicketInput[]
+        createMany?: KitchenTicketItemCreateManyTicketInputEnvelope
+        set?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        disconnect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        delete?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        connect?: KitchenTicketItemWhereUniqueInput | KitchenTicketItemWhereUniqueInput[]
+        update?: KitchenTicketItemUpdateWithWhereUniqueWithoutTicketInput | KitchenTicketItemUpdateWithWhereUniqueWithoutTicketInput[]
+        updateMany?: KitchenTicketItemUpdateManyWithWhereWithoutTicketInput | KitchenTicketItemUpdateManyWithWhereWithoutTicketInput[]
+        deleteMany?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutKitchenTicketItemsInput = {
+        create?: XOR<StoreCreateWithoutKitchenTicketItemsInput, StoreUncheckedCreateWithoutKitchenTicketItemsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenTicketItemsInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type KitchenTicketCreateNestedOneWithoutItemsInput = {
+        create?: XOR<KitchenTicketCreateWithoutItemsInput, KitchenTicketUncheckedCreateWithoutItemsInput>
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutItemsInput
+        connect?: KitchenTicketWhereUniqueInput
+    }
+
+    export type OrderItemCreateNestedOneWithoutKitchenTicketItemsInput = {
+        create?: XOR<OrderItemCreateWithoutKitchenTicketItemsInput, OrderItemUncheckedCreateWithoutKitchenTicketItemsInput>
+        connectOrCreate?: OrderItemCreateOrConnectWithoutKitchenTicketItemsInput
+        connect?: OrderItemWhereUniqueInput
+    }
+
+    export type StoreUpdateOneRequiredWithoutKitchenTicketItemsNestedInput = {
+        create?: XOR<StoreCreateWithoutKitchenTicketItemsInput, StoreUncheckedCreateWithoutKitchenTicketItemsInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutKitchenTicketItemsInput
+        upsert?: StoreUpsertWithoutKitchenTicketItemsInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutKitchenTicketItemsInput, StoreUpdateWithoutKitchenTicketItemsInput>, StoreUncheckedUpdateWithoutKitchenTicketItemsInput>
+    }
+
+    export type KitchenTicketUpdateOneRequiredWithoutItemsNestedInput = {
+        create?: XOR<KitchenTicketCreateWithoutItemsInput, KitchenTicketUncheckedCreateWithoutItemsInput>
+        connectOrCreate?: KitchenTicketCreateOrConnectWithoutItemsInput
+        upsert?: KitchenTicketUpsertWithoutItemsInput
+        connect?: KitchenTicketWhereUniqueInput
+        update?: XOR<XOR<KitchenTicketUpdateToOneWithWhereWithoutItemsInput, KitchenTicketUpdateWithoutItemsInput>, KitchenTicketUncheckedUpdateWithoutItemsInput>
+    }
+
+    export type OrderItemUpdateOneRequiredWithoutKitchenTicketItemsNestedInput = {
+        create?: XOR<OrderItemCreateWithoutKitchenTicketItemsInput, OrderItemUncheckedCreateWithoutKitchenTicketItemsInput>
+        connectOrCreate?: OrderItemCreateOrConnectWithoutKitchenTicketItemsInput
+        upsert?: OrderItemUpsertWithoutKitchenTicketItemsInput
+        connect?: OrderItemWhereUniqueInput
+        update?: XOR<XOR<OrderItemUpdateToOneWithWhereWithoutKitchenTicketItemsInput, OrderItemUpdateWithoutKitchenTicketItemsInput>, OrderItemUncheckedUpdateWithoutKitchenTicketItemsInput>
     }
 
     export type StoreCreateNestedOneWithoutAiDraftsInput = {
@@ -29207,6 +34707,40 @@ export namespace Prisma {
         _max?: NestedEnumCashMovementReferenceTypeFilter<$PrismaModel>
     }
 
+    export type NestedEnumKitchenStationStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenStationStatus | EnumKitchenStationStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenStationStatus[]
+        notIn?: $Enums.KitchenStationStatus[]
+        not?: NestedEnumKitchenStationStatusFilter<$PrismaModel> | $Enums.KitchenStationStatus
+    }
+
+    export type NestedEnumKitchenStationStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenStationStatus | EnumKitchenStationStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenStationStatus[]
+        notIn?: $Enums.KitchenStationStatus[]
+        not?: NestedEnumKitchenStationStatusWithAggregatesFilter<$PrismaModel> | $Enums.KitchenStationStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumKitchenStationStatusFilter<$PrismaModel>
+        _max?: NestedEnumKitchenStationStatusFilter<$PrismaModel>
+    }
+
+    export type NestedEnumKitchenTicketStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenTicketStatus | EnumKitchenTicketStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenTicketStatus[]
+        notIn?: $Enums.KitchenTicketStatus[]
+        not?: NestedEnumKitchenTicketStatusFilter<$PrismaModel> | $Enums.KitchenTicketStatus
+    }
+
+    export type NestedEnumKitchenTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.KitchenTicketStatus | EnumKitchenTicketStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.KitchenTicketStatus[]
+        notIn?: $Enums.KitchenTicketStatus[]
+        not?: NestedEnumKitchenTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.KitchenTicketStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumKitchenTicketStatusFilter<$PrismaModel>
+        _max?: NestedEnumKitchenTicketStatusFilter<$PrismaModel>
+    }
+
     export type NestedEnumAiDraftStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.AiDraftStatus | EnumAiDraftStatusFieldRefInput<$PrismaModel>
         in?: $Enums.AiDraftStatus[]
@@ -29326,6 +34860,7 @@ export namespace Prisma {
         sortOrder?: number
         createdAt?: Date | string
         updatedAt?: Date | string
+        defaultKitchenStation?: KitchenStationCreateNestedOneWithoutCategoriesInput
         products?: ProductCreateNestedManyWithoutCategoryRefInput
     }
 
@@ -29334,6 +34869,7 @@ export namespace Prisma {
         name: string
         status?: $Enums.CatalogStatus
         sortOrder?: number
+        defaultKitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         products?: ProductUncheckedCreateNestedManyWithoutCategoryRefInput
@@ -29361,6 +34897,7 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         categoryRef?: CategoryCreateNestedOneWithoutProductsInput
+        kitchenStation?: KitchenStationCreateNestedOneWithoutProductsInput
         modifierGroups?: ProductModifierGroupCreateNestedManyWithoutProductInput
         orderItems?: OrderItemCreateNestedManyWithoutProductInput
     }
@@ -29375,6 +34912,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         modifierGroups?: ProductModifierGroupUncheckedCreateNestedManyWithoutProductInput
@@ -29416,6 +34954,7 @@ export namespace Prisma {
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutStoreInput = {
@@ -29443,6 +34982,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutStoreInput = {
@@ -29611,6 +35151,126 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type KitchenStationCreateWithoutStoreInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationUncheckedCreateWithoutStoreInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductUncheckedCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketUncheckedCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationCreateOrConnectWithoutStoreInput = {
+        where: KitchenStationWhereUniqueInput
+        create: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenStationCreateManyStoreInputEnvelope = {
+        data: KitchenStationCreateManyStoreInput | KitchenStationCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type KitchenTicketCreateWithoutStoreInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        order: OrderCreateNestedOneWithoutKitchenTicketsInput
+        station: KitchenStationCreateNestedOneWithoutTicketsInput
+        createdBy?: UserCreateNestedOneWithoutCreatedKitchenTicketsInput
+        items?: KitchenTicketItemCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUncheckedCreateWithoutStoreInput = {
+        id?: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketCreateOrConnectWithoutStoreInput = {
+        where: KitchenTicketWhereUniqueInput
+        create: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenTicketCreateManyStoreInputEnvelope = {
+        data: KitchenTicketCreateManyStoreInput | KitchenTicketCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type KitchenTicketItemCreateWithoutStoreInput = {
+        id?: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        ticket: KitchenTicketCreateNestedOneWithoutItemsInput
+        orderItem: OrderItemCreateNestedOneWithoutKitchenTicketItemsInput
+    }
+
+    export type KitchenTicketItemUncheckedCreateWithoutStoreInput = {
+        id?: string
+        ticketId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemCreateOrConnectWithoutStoreInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        create: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenTicketItemCreateManyStoreInputEnvelope = {
+        data: KitchenTicketItemCreateManyStoreInput | KitchenTicketItemCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
     export type AiDraftCreateWithoutStoreInput = {
         id?: string
         prompt: string
@@ -29737,6 +35397,7 @@ export namespace Prisma {
         name?: StringFilter<"Category"> | string
         status?: EnumCatalogStatusFilter<"Category"> | $Enums.CatalogStatus
         sortOrder?: IntFilter<"Category"> | number
+        defaultKitchenStationId?: StringNullableFilter<"Category"> | string | null
         createdAt?: DateTimeFilter<"Category"> | Date | string
         updatedAt?: DateTimeFilter<"Category"> | Date | string
     }
@@ -29771,6 +35432,7 @@ export namespace Prisma {
         currency?: StringFilter<"Product"> | string
         isActive?: BoolFilter<"Product"> | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFilter<"Product"> | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: StringNullableFilter<"Product"> | string | null
         createdAt?: DateTimeFilter<"Product"> | Date | string
         updatedAt?: DateTimeFilter<"Product"> | Date | string
     }
@@ -29952,6 +35614,107 @@ export namespace Prisma {
         referenceId?: StringNullableFilter<"CashMovement"> | string | null
         createdByUserId?: StringNullableFilter<"CashMovement"> | string | null
         createdAt?: DateTimeFilter<"CashMovement"> | Date | string
+    }
+
+    export type KitchenStationUpsertWithWhereUniqueWithoutStoreInput = {
+        where: KitchenStationWhereUniqueInput
+        update: XOR<KitchenStationUpdateWithoutStoreInput, KitchenStationUncheckedUpdateWithoutStoreInput>
+        create: XOR<KitchenStationCreateWithoutStoreInput, KitchenStationUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenStationUpdateWithWhereUniqueWithoutStoreInput = {
+        where: KitchenStationWhereUniqueInput
+        data: XOR<KitchenStationUpdateWithoutStoreInput, KitchenStationUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type KitchenStationUpdateManyWithWhereWithoutStoreInput = {
+        where: KitchenStationScalarWhereInput
+        data: XOR<KitchenStationUpdateManyMutationInput, KitchenStationUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type KitchenStationScalarWhereInput = {
+        AND?: KitchenStationScalarWhereInput | KitchenStationScalarWhereInput[]
+        OR?: KitchenStationScalarWhereInput[]
+        NOT?: KitchenStationScalarWhereInput | KitchenStationScalarWhereInput[]
+        id?: StringFilter<"KitchenStation"> | string
+        storeId?: StringFilter<"KitchenStation"> | string
+        name?: StringFilter<"KitchenStation"> | string
+        code?: StringFilter<"KitchenStation"> | string
+        status?: EnumKitchenStationStatusFilter<"KitchenStation"> | $Enums.KitchenStationStatus
+        sortOrder?: IntFilter<"KitchenStation"> | number
+        isDefault?: BoolFilter<"KitchenStation"> | boolean
+        createdAt?: DateTimeFilter<"KitchenStation"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenStation"> | Date | string
+    }
+
+    export type KitchenTicketUpsertWithWhereUniqueWithoutStoreInput = {
+        where: KitchenTicketWhereUniqueInput
+        update: XOR<KitchenTicketUpdateWithoutStoreInput, KitchenTicketUncheckedUpdateWithoutStoreInput>
+        create: XOR<KitchenTicketCreateWithoutStoreInput, KitchenTicketUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenTicketUpdateWithWhereUniqueWithoutStoreInput = {
+        where: KitchenTicketWhereUniqueInput
+        data: XOR<KitchenTicketUpdateWithoutStoreInput, KitchenTicketUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type KitchenTicketUpdateManyWithWhereWithoutStoreInput = {
+        where: KitchenTicketScalarWhereInput
+        data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type KitchenTicketScalarWhereInput = {
+        AND?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+        OR?: KitchenTicketScalarWhereInput[]
+        NOT?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+        id?: StringFilter<"KitchenTicket"> | string
+        storeId?: StringFilter<"KitchenTicket"> | string
+        orderId?: StringFilter<"KitchenTicket"> | string
+        stationId?: StringFilter<"KitchenTicket"> | string
+        ticketNumber?: StringFilter<"KitchenTicket"> | string
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicket"> | $Enums.KitchenTicketStatus
+        startedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        readyAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        completedAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelledAt?: DateTimeNullableFilter<"KitchenTicket"> | Date | string | null
+        cancelReason?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdByUserId?: StringNullableFilter<"KitchenTicket"> | string | null
+        createdAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicket"> | Date | string
+    }
+
+    export type KitchenTicketItemUpsertWithWhereUniqueWithoutStoreInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        update: XOR<KitchenTicketItemUpdateWithoutStoreInput, KitchenTicketItemUncheckedUpdateWithoutStoreInput>
+        create: XOR<KitchenTicketItemCreateWithoutStoreInput, KitchenTicketItemUncheckedCreateWithoutStoreInput>
+    }
+
+    export type KitchenTicketItemUpdateWithWhereUniqueWithoutStoreInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        data: XOR<KitchenTicketItemUpdateWithoutStoreInput, KitchenTicketItemUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type KitchenTicketItemUpdateManyWithWhereWithoutStoreInput = {
+        where: KitchenTicketItemScalarWhereInput
+        data: XOR<KitchenTicketItemUpdateManyMutationInput, KitchenTicketItemUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type KitchenTicketItemScalarWhereInput = {
+        AND?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+        OR?: KitchenTicketItemScalarWhereInput[]
+        NOT?: KitchenTicketItemScalarWhereInput | KitchenTicketItemScalarWhereInput[]
+        id?: StringFilter<"KitchenTicketItem"> | string
+        storeId?: StringFilter<"KitchenTicketItem"> | string
+        ticketId?: StringFilter<"KitchenTicketItem"> | string
+        orderItemId?: StringFilter<"KitchenTicketItem"> | string
+        productId?: StringFilter<"KitchenTicketItem"> | string
+        productNameSnapshot?: StringFilter<"KitchenTicketItem"> | string
+        quantity?: IntFilter<"KitchenTicketItem"> | number
+        modifiers?: JsonNullableFilter<"KitchenTicketItem">
+        notes?: StringNullableFilter<"KitchenTicketItem"> | string | null
+        status?: EnumKitchenTicketStatusFilter<"KitchenTicketItem"> | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
+        updatedAt?: DateTimeFilter<"KitchenTicketItem"> | Date | string
     }
 
     export type AiDraftUpsertWithWhereUniqueWithoutStoreInput = {
@@ -30372,6 +36135,50 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type KitchenTicketCreateWithoutCreatedByInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketsInput
+        order: OrderCreateNestedOneWithoutKitchenTicketsInput
+        station: KitchenStationCreateNestedOneWithoutTicketsInput
+        items?: KitchenTicketItemCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUncheckedCreateWithoutCreatedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketCreateOrConnectWithoutCreatedByInput = {
+        where: KitchenTicketWhereUniqueInput
+        create: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput>
+    }
+
+    export type KitchenTicketCreateManyCreatedByInputEnvelope = {
+        data: KitchenTicketCreateManyCreatedByInput | KitchenTicketCreateManyCreatedByInput[]
+        skipDuplicates?: boolean
+    }
+
     export type StoreUserUpsertWithWhereUniqueWithoutUserInput = {
         where: StoreUserWhereUniqueInput
         update: XOR<StoreUserUpdateWithoutUserInput, StoreUserUncheckedUpdateWithoutUserInput>
@@ -30516,6 +36323,22 @@ export namespace Prisma {
         data: XOR<CashMovementUpdateManyMutationInput, CashMovementUncheckedUpdateManyWithoutCreatedByInput>
     }
 
+    export type KitchenTicketUpsertWithWhereUniqueWithoutCreatedByInput = {
+        where: KitchenTicketWhereUniqueInput
+        update: XOR<KitchenTicketUpdateWithoutCreatedByInput, KitchenTicketUncheckedUpdateWithoutCreatedByInput>
+        create: XOR<KitchenTicketCreateWithoutCreatedByInput, KitchenTicketUncheckedCreateWithoutCreatedByInput>
+    }
+
+    export type KitchenTicketUpdateWithWhereUniqueWithoutCreatedByInput = {
+        where: KitchenTicketWhereUniqueInput
+        data: XOR<KitchenTicketUpdateWithoutCreatedByInput, KitchenTicketUncheckedUpdateWithoutCreatedByInput>
+    }
+
+    export type KitchenTicketUpdateManyWithWhereWithoutCreatedByInput = {
+        where: KitchenTicketScalarWhereInput
+        data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyWithoutCreatedByInput>
+    }
+
     export type StoreCreateWithoutUsersInput = {
         id?: string
         name: string
@@ -30532,6 +36355,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -30552,6 +36378,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -30577,6 +36406,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutStoresInput = {
@@ -30595,6 +36425,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutStoresInput = {
@@ -30629,6 +36460,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -30649,6 +36483,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -30680,6 +36517,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutStoresInput = {
@@ -30698,6 +36536,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type StoreCreateWithoutCategoriesInput = {
@@ -30716,6 +36555,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -30736,6 +36578,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -30743,6 +36588,39 @@ export namespace Prisma {
     export type StoreCreateOrConnectWithoutCategoriesInput = {
         where: StoreWhereUniqueInput
         create: XOR<StoreCreateWithoutCategoriesInput, StoreUncheckedCreateWithoutCategoriesInput>
+    }
+
+    export type KitchenStationCreateWithoutCategoriesInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenStationsInput
+        products?: ProductCreateNestedManyWithoutKitchenStationInput
+        tickets?: KitchenTicketCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationUncheckedCreateWithoutCategoriesInput = {
+        id?: string
+        storeId: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductUncheckedCreateNestedManyWithoutKitchenStationInput
+        tickets?: KitchenTicketUncheckedCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationCreateOrConnectWithoutCategoriesInput = {
+        where: KitchenStationWhereUniqueInput
+        create: XOR<KitchenStationCreateWithoutCategoriesInput, KitchenStationUncheckedCreateWithoutCategoriesInput>
     }
 
     export type ProductCreateWithoutCategoryRefInput = {
@@ -30757,6 +36635,7 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutProductsInput
+        kitchenStation?: KitchenStationCreateNestedOneWithoutProductsInput
         modifierGroups?: ProductModifierGroupCreateNestedManyWithoutProductInput
         orderItems?: OrderItemCreateNestedManyWithoutProductInput
     }
@@ -30771,6 +36650,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         modifierGroups?: ProductModifierGroupUncheckedCreateNestedManyWithoutProductInput
@@ -30814,6 +36694,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -30834,8 +36717,50 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type KitchenStationUpsertWithoutCategoriesInput = {
+        update: XOR<KitchenStationUpdateWithoutCategoriesInput, KitchenStationUncheckedUpdateWithoutCategoriesInput>
+        create: XOR<KitchenStationCreateWithoutCategoriesInput, KitchenStationUncheckedCreateWithoutCategoriesInput>
+        where?: KitchenStationWhereInput
+    }
+
+    export type KitchenStationUpdateToOneWithWhereWithoutCategoriesInput = {
+        where?: KitchenStationWhereInput
+        data: XOR<KitchenStationUpdateWithoutCategoriesInput, KitchenStationUncheckedUpdateWithoutCategoriesInput>
+    }
+
+    export type KitchenStationUpdateWithoutCategoriesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenStationsNestedInput
+        products?: ProductUpdateManyWithoutKitchenStationNestedInput
+        tickets?: KitchenTicketUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateWithoutCategoriesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUncheckedUpdateManyWithoutKitchenStationNestedInput
+        tickets?: KitchenTicketUncheckedUpdateManyWithoutStationNestedInput
     }
 
     export type ProductUpsertWithWhereUniqueWithoutCategoryRefInput = {
@@ -30870,6 +36795,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -30890,6 +36818,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -30907,6 +36838,7 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         store: StoreCreateNestedOneWithoutCategoriesInput
+        defaultKitchenStation?: KitchenStationCreateNestedOneWithoutCategoriesInput
     }
 
     export type CategoryUncheckedCreateWithoutProductsInput = {
@@ -30915,6 +36847,7 @@ export namespace Prisma {
         name: string
         status?: $Enums.CatalogStatus
         sortOrder?: number
+        defaultKitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -30922,6 +36855,39 @@ export namespace Prisma {
     export type CategoryCreateOrConnectWithoutProductsInput = {
         where: CategoryWhereUniqueInput
         create: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
+    }
+
+    export type KitchenStationCreateWithoutProductsInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenStationsInput
+        categories?: CategoryCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationUncheckedCreateWithoutProductsInput = {
+        id?: string
+        storeId: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        categories?: CategoryUncheckedCreateNestedManyWithoutDefaultKitchenStationInput
+        tickets?: KitchenTicketUncheckedCreateNestedManyWithoutStationInput
+    }
+
+    export type KitchenStationCreateOrConnectWithoutProductsInput = {
+        where: KitchenStationWhereUniqueInput
+        create: XOR<KitchenStationCreateWithoutProductsInput, KitchenStationUncheckedCreateWithoutProductsInput>
     }
 
     export type ProductModifierGroupCreateWithoutProductInput = {
@@ -30973,6 +36939,7 @@ export namespace Prisma {
         createdAt?: Date | string
         order: OrderCreateNestedOneWithoutItemsInput
         refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateWithoutProductInput = {
@@ -30986,6 +36953,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
         refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemCreateOrConnectWithoutProductInput = {
@@ -31025,6 +36993,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -31045,6 +37016,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -31068,6 +37042,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneRequiredWithoutCategoriesNestedInput
+        defaultKitchenStation?: KitchenStationUpdateOneWithoutCategoriesNestedInput
     }
 
     export type CategoryUncheckedUpdateWithoutProductsInput = {
@@ -31076,8 +37051,48 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
         sortOrder?: IntFieldUpdateOperationsInput | number
+        defaultKitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenStationUpsertWithoutProductsInput = {
+        update: XOR<KitchenStationUpdateWithoutProductsInput, KitchenStationUncheckedUpdateWithoutProductsInput>
+        create: XOR<KitchenStationCreateWithoutProductsInput, KitchenStationUncheckedCreateWithoutProductsInput>
+        where?: KitchenStationWhereInput
+    }
+
+    export type KitchenStationUpdateToOneWithWhereWithoutProductsInput = {
+        where?: KitchenStationWhereInput
+        data: XOR<KitchenStationUpdateWithoutProductsInput, KitchenStationUncheckedUpdateWithoutProductsInput>
+    }
+
+    export type KitchenStationUpdateWithoutProductsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenStationsNestedInput
+        categories?: CategoryUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateWithoutProductsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        categories?: CategoryUncheckedUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUncheckedUpdateManyWithoutStationNestedInput
     }
 
     export type ProductModifierGroupUpsertWithWhereUniqueWithoutProductInput = {
@@ -31158,6 +37173,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutProductsInput
         categoryRef?: CategoryCreateNestedOneWithoutProductsInput
+        kitchenStation?: KitchenStationCreateNestedOneWithoutProductsInput
         orderItems?: OrderItemCreateNestedManyWithoutProductInput
     }
 
@@ -31172,6 +37188,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -31236,6 +37253,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutProductsNestedInput
         categoryRef?: CategoryUpdateOneWithoutProductsNestedInput
+        kitchenStation?: KitchenStationUpdateOneWithoutProductsNestedInput
         orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     }
 
@@ -31250,6 +37268,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -31373,6 +37392,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -31393,6 +37415,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -31413,6 +37438,7 @@ export namespace Prisma {
         createdAt?: Date | string
         product: ProductCreateNestedOneWithoutOrderItemsInput
         refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateWithoutOrderInput = {
@@ -31426,6 +37452,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
         refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -31542,6 +37569,50 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type KitchenTicketCreateWithoutOrderInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketsInput
+        station: KitchenStationCreateNestedOneWithoutTicketsInput
+        createdBy?: UserCreateNestedOneWithoutCreatedKitchenTicketsInput
+        items?: KitchenTicketItemCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUncheckedCreateWithoutOrderInput = {
+        id?: string
+        storeId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketCreateOrConnectWithoutOrderInput = {
+        where: KitchenTicketWhereUniqueInput
+        create: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput>
+    }
+
+    export type KitchenTicketCreateManyOrderInputEnvelope = {
+        data: KitchenTicketCreateManyOrderInput | KitchenTicketCreateManyOrderInput[]
+        skipDuplicates?: boolean
+    }
+
     export type StoreUpsertWithoutOrdersInput = {
         update: XOR<StoreUpdateWithoutOrdersInput, StoreUncheckedUpdateWithoutOrdersInput>
         create: XOR<StoreCreateWithoutOrdersInput, StoreUncheckedCreateWithoutOrdersInput>
@@ -31569,6 +37640,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -31589,6 +37663,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -31670,6 +37747,22 @@ export namespace Prisma {
         data: XOR<OrderAuditLogUpdateManyMutationInput, OrderAuditLogUncheckedUpdateManyWithoutOrderInput>
     }
 
+    export type KitchenTicketUpsertWithWhereUniqueWithoutOrderInput = {
+        where: KitchenTicketWhereUniqueInput
+        update: XOR<KitchenTicketUpdateWithoutOrderInput, KitchenTicketUncheckedUpdateWithoutOrderInput>
+        create: XOR<KitchenTicketCreateWithoutOrderInput, KitchenTicketUncheckedCreateWithoutOrderInput>
+    }
+
+    export type KitchenTicketUpdateWithWhereUniqueWithoutOrderInput = {
+        where: KitchenTicketWhereUniqueInput
+        data: XOR<KitchenTicketUpdateWithoutOrderInput, KitchenTicketUncheckedUpdateWithoutOrderInput>
+    }
+
+    export type KitchenTicketUpdateManyWithWhereWithoutOrderInput = {
+        where: KitchenTicketScalarWhereInput
+        data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyWithoutOrderInput>
+    }
+
     export type OrderCreateWithoutPaymentsInput = {
         id?: string
         orderNumber: string
@@ -31695,6 +37788,7 @@ export namespace Prisma {
         items?: OrderItemCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutPaymentsInput = {
@@ -31722,6 +37816,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutPaymentsInput = {
@@ -31765,6 +37860,7 @@ export namespace Prisma {
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutPaymentsInput = {
@@ -31792,6 +37888,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderCreateWithoutItemsInput = {
@@ -31819,6 +37916,7 @@ export namespace Prisma {
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutItemsInput = {
@@ -31846,6 +37944,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutItemsInput = {
@@ -31866,6 +37965,7 @@ export namespace Prisma {
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutProductsInput
         categoryRef?: CategoryCreateNestedOneWithoutProductsInput
+        kitchenStation?: KitchenStationCreateNestedOneWithoutProductsInput
         modifierGroups?: ProductModifierGroupCreateNestedManyWithoutProductInput
     }
 
@@ -31880,6 +37980,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         modifierGroups?: ProductModifierGroupUncheckedCreateNestedManyWithoutProductInput
@@ -31913,6 +38014,44 @@ export namespace Prisma {
 
     export type RefundItemCreateManyOrderItemInputEnvelope = {
         data: RefundItemCreateManyOrderItemInput | RefundItemCreateManyOrderItemInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type KitchenTicketItemCreateWithoutOrderItemInput = {
+        id?: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketItemsInput
+        ticket: KitchenTicketCreateNestedOneWithoutItemsInput
+    }
+
+    export type KitchenTicketItemUncheckedCreateWithoutOrderItemInput = {
+        id?: string
+        storeId: string
+        ticketId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemCreateOrConnectWithoutOrderItemInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        create: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput>
+    }
+
+    export type KitchenTicketItemCreateManyOrderItemInputEnvelope = {
+        data: KitchenTicketItemCreateManyOrderItemInput | KitchenTicketItemCreateManyOrderItemInput[]
         skipDuplicates?: boolean
     }
 
@@ -31952,6 +38091,7 @@ export namespace Prisma {
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -31979,6 +38119,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type ProductUpsertWithoutOrderItemsInput = {
@@ -32005,6 +38146,7 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutProductsNestedInput
         categoryRef?: CategoryUpdateOneWithoutProductsNestedInput
+        kitchenStation?: KitchenStationUpdateOneWithoutProductsNestedInput
         modifierGroups?: ProductModifierGroupUpdateManyWithoutProductNestedInput
     }
 
@@ -32019,6 +38161,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
@@ -32052,6 +38195,22 @@ export namespace Prisma {
         createdAt?: DateTimeFilter<"RefundItem"> | Date | string
     }
 
+    export type KitchenTicketItemUpsertWithWhereUniqueWithoutOrderItemInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        update: XOR<KitchenTicketItemUpdateWithoutOrderItemInput, KitchenTicketItemUncheckedUpdateWithoutOrderItemInput>
+        create: XOR<KitchenTicketItemCreateWithoutOrderItemInput, KitchenTicketItemUncheckedCreateWithoutOrderItemInput>
+    }
+
+    export type KitchenTicketItemUpdateWithWhereUniqueWithoutOrderItemInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        data: XOR<KitchenTicketItemUpdateWithoutOrderItemInput, KitchenTicketItemUncheckedUpdateWithoutOrderItemInput>
+    }
+
+    export type KitchenTicketItemUpdateManyWithWhereWithoutOrderItemInput = {
+        where: KitchenTicketItemScalarWhereInput
+        data: XOR<KitchenTicketItemUpdateManyMutationInput, KitchenTicketItemUncheckedUpdateManyWithoutOrderItemInput>
+    }
+
     export type StoreCreateWithoutRefundsInput = {
         id?: string
         name: string
@@ -32068,6 +38227,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -32088,6 +38250,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -32122,6 +38287,7 @@ export namespace Prisma {
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutRefundsInput = {
@@ -32149,6 +38315,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutRefundsInput = {
@@ -32172,6 +38339,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutOperatedRefundsInput = {
@@ -32190,6 +38358,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutOperatedRefundsInput = {
@@ -32213,6 +38382,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutApprovedRefundsInput = {
@@ -32231,6 +38401,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutApprovedRefundsInput = {
@@ -32291,6 +38462,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -32311,6 +38485,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -32351,6 +38528,7 @@ export namespace Prisma {
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutRefundsInput = {
@@ -32378,6 +38556,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type UserUpsertWithoutOperatedRefundsInput = {
@@ -32407,6 +38586,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutOperatedRefundsInput = {
@@ -32425,6 +38605,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutApprovedRefundsInput = {
@@ -32454,6 +38635,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutApprovedRefundsInput = {
@@ -32472,6 +38654,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type RefundItemUpsertWithWhereUniqueWithoutRefundInput = {
@@ -32536,6 +38719,7 @@ export namespace Prisma {
         createdAt?: Date | string
         order: OrderCreateNestedOneWithoutItemsInput
         product: ProductCreateNestedOneWithoutOrderItemsInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemUncheckedCreateWithoutRefundItemsInput = {
@@ -32549,6 +38733,7 @@ export namespace Prisma {
         lineTotal: Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: Date | string
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutOrderItemInput
     }
 
     export type OrderItemCreateOrConnectWithoutRefundItemsInput = {
@@ -32619,6 +38804,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         order?: OrderUpdateOneRequiredWithoutItemsNestedInput
         product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateWithoutRefundItemsInput = {
@@ -32632,6 +38818,7 @@ export namespace Prisma {
         lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type StoreCreateWithoutAuditLogsInput = {
@@ -32650,6 +38837,9 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -32670,6 +38860,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -32704,6 +38897,7 @@ export namespace Prisma {
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
     }
 
     export type OrderUncheckedCreateWithoutAuditLogsInput = {
@@ -32731,6 +38925,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
     }
 
     export type OrderCreateOrConnectWithoutAuditLogsInput = {
@@ -32754,6 +38949,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutOperatedOrderAuditLogsInput = {
@@ -32772,6 +38968,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutOperatedOrderAuditLogsInput = {
@@ -32795,6 +38992,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutApprovedOrderAuditLogsInput = {
@@ -32813,6 +39011,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutApprovedOrderAuditLogsInput = {
@@ -32847,6 +39046,9 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -32867,6 +39069,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -32907,6 +39112,7 @@ export namespace Prisma {
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutAuditLogsInput = {
@@ -32934,6 +39140,7 @@ export namespace Prisma {
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type UserUpsertWithoutOperatedOrderAuditLogsInput = {
@@ -32963,6 +39170,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutOperatedOrderAuditLogsInput = {
@@ -32981,6 +39189,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutApprovedOrderAuditLogsInput = {
@@ -33010,6 +39219,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutApprovedOrderAuditLogsInput = {
@@ -33028,6 +39238,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type StoreCreateWithoutShiftsInput = {
@@ -33046,6 +39257,9 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -33066,6 +39280,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -33091,6 +39308,7 @@ export namespace Prisma {
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutShiftsInput = {
@@ -33109,6 +39327,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutShiftsInput = {
@@ -33132,6 +39351,7 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutOpenedShiftsInput = {
@@ -33150,6 +39370,7 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutOpenedShiftsInput = {
@@ -33173,6 +39394,7 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutClosedShiftsInput = {
@@ -33191,6 +39413,7 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutClosedShiftsInput = {
@@ -33259,6 +39482,9 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -33279,6 +39505,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -33310,6 +39539,7 @@ export namespace Prisma {
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutShiftsInput = {
@@ -33328,6 +39558,7 @@ export namespace Prisma {
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutOpenedShiftsInput = {
@@ -33357,6 +39588,7 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutOpenedShiftsInput = {
@@ -33375,6 +39607,7 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUpsertWithoutClosedShiftsInput = {
@@ -33404,6 +39637,7 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutClosedShiftsInput = {
@@ -33422,6 +39656,7 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
     }
 
     export type CashMovementUpsertWithWhereUniqueWithoutShiftInput = {
@@ -33456,6 +39691,9 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
@@ -33476,6 +39714,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
@@ -33542,6 +39783,7 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserUncheckedCreateWithoutCashMovementsInput = {
@@ -33560,6 +39802,7 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
     }
 
     export type UserCreateOrConnectWithoutCashMovementsInput = {
@@ -33594,6 +39837,9 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
@@ -33614,6 +39860,9 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
@@ -33692,6 +39941,7 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
     }
 
     export type UserUncheckedUpdateWithoutCashMovementsInput = {
@@ -33710,6 +39960,1001 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type StoreCreateWithoutKitchenStationsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutKitchenStationsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutKitchenStationsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutKitchenStationsInput, StoreUncheckedCreateWithoutKitchenStationsInput>
+    }
+
+    export type ProductCreateWithoutKitchenStationInput = {
+        id?: string
+        name: string
+        description?: string | null
+        category?: string | null
+        price: Decimal | DecimalJsLike | number | string
+        currency?: string
+        isActive?: boolean
+        availabilityStatus?: $Enums.ProductAvailabilityStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutProductsInput
+        categoryRef?: CategoryCreateNestedOneWithoutProductsInput
+        modifierGroups?: ProductModifierGroupCreateNestedManyWithoutProductInput
+        orderItems?: OrderItemCreateNestedManyWithoutProductInput
+    }
+
+    export type ProductUncheckedCreateWithoutKitchenStationInput = {
+        id?: string
+        storeId?: string | null
+        name: string
+        description?: string | null
+        categoryId?: string | null
+        category?: string | null
+        price: Decimal | DecimalJsLike | number | string
+        currency?: string
+        isActive?: boolean
+        availabilityStatus?: $Enums.ProductAvailabilityStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        modifierGroups?: ProductModifierGroupUncheckedCreateNestedManyWithoutProductInput
+        orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
+    }
+
+    export type ProductCreateOrConnectWithoutKitchenStationInput = {
+        where: ProductWhereUniqueInput
+        create: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput>
+    }
+
+    export type ProductCreateManyKitchenStationInputEnvelope = {
+        data: ProductCreateManyKitchenStationInput | ProductCreateManyKitchenStationInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type CategoryCreateWithoutDefaultKitchenStationInput = {
+        id?: string
+        name: string
+        status?: $Enums.CatalogStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutCategoriesInput
+        products?: ProductCreateNestedManyWithoutCategoryRefInput
+    }
+
+    export type CategoryUncheckedCreateWithoutDefaultKitchenStationInput = {
+        id?: string
+        storeId: string
+        name: string
+        status?: $Enums.CatalogStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductUncheckedCreateNestedManyWithoutCategoryRefInput
+    }
+
+    export type CategoryCreateOrConnectWithoutDefaultKitchenStationInput = {
+        where: CategoryWhereUniqueInput
+        create: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput>
+    }
+
+    export type CategoryCreateManyDefaultKitchenStationInputEnvelope = {
+        data: CategoryCreateManyDefaultKitchenStationInput | CategoryCreateManyDefaultKitchenStationInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type KitchenTicketCreateWithoutStationInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketsInput
+        order: OrderCreateNestedOneWithoutKitchenTicketsInput
+        createdBy?: UserCreateNestedOneWithoutCreatedKitchenTicketsInput
+        items?: KitchenTicketItemCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketUncheckedCreateWithoutStationInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: KitchenTicketItemUncheckedCreateNestedManyWithoutTicketInput
+    }
+
+    export type KitchenTicketCreateOrConnectWithoutStationInput = {
+        where: KitchenTicketWhereUniqueInput
+        create: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput>
+    }
+
+    export type KitchenTicketCreateManyStationInputEnvelope = {
+        data: KitchenTicketCreateManyStationInput | KitchenTicketCreateManyStationInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutKitchenStationsInput = {
+        update: XOR<StoreUpdateWithoutKitchenStationsInput, StoreUncheckedUpdateWithoutKitchenStationsInput>
+        create: XOR<StoreCreateWithoutKitchenStationsInput, StoreUncheckedCreateWithoutKitchenStationsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutKitchenStationsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutKitchenStationsInput, StoreUncheckedUpdateWithoutKitchenStationsInput>
+    }
+
+    export type StoreUpdateWithoutKitchenStationsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutKitchenStationsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type ProductUpsertWithWhereUniqueWithoutKitchenStationInput = {
+        where: ProductWhereUniqueInput
+        update: XOR<ProductUpdateWithoutKitchenStationInput, ProductUncheckedUpdateWithoutKitchenStationInput>
+        create: XOR<ProductCreateWithoutKitchenStationInput, ProductUncheckedCreateWithoutKitchenStationInput>
+    }
+
+    export type ProductUpdateWithWhereUniqueWithoutKitchenStationInput = {
+        where: ProductWhereUniqueInput
+        data: XOR<ProductUpdateWithoutKitchenStationInput, ProductUncheckedUpdateWithoutKitchenStationInput>
+    }
+
+    export type ProductUpdateManyWithWhereWithoutKitchenStationInput = {
+        where: ProductScalarWhereInput
+        data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyWithoutKitchenStationInput>
+    }
+
+    export type CategoryUpsertWithWhereUniqueWithoutDefaultKitchenStationInput = {
+        where: CategoryWhereUniqueInput
+        update: XOR<CategoryUpdateWithoutDefaultKitchenStationInput, CategoryUncheckedUpdateWithoutDefaultKitchenStationInput>
+        create: XOR<CategoryCreateWithoutDefaultKitchenStationInput, CategoryUncheckedCreateWithoutDefaultKitchenStationInput>
+    }
+
+    export type CategoryUpdateWithWhereUniqueWithoutDefaultKitchenStationInput = {
+        where: CategoryWhereUniqueInput
+        data: XOR<CategoryUpdateWithoutDefaultKitchenStationInput, CategoryUncheckedUpdateWithoutDefaultKitchenStationInput>
+    }
+
+    export type CategoryUpdateManyWithWhereWithoutDefaultKitchenStationInput = {
+        where: CategoryScalarWhereInput
+        data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutDefaultKitchenStationInput>
+    }
+
+    export type KitchenTicketUpsertWithWhereUniqueWithoutStationInput = {
+        where: KitchenTicketWhereUniqueInput
+        update: XOR<KitchenTicketUpdateWithoutStationInput, KitchenTicketUncheckedUpdateWithoutStationInput>
+        create: XOR<KitchenTicketCreateWithoutStationInput, KitchenTicketUncheckedCreateWithoutStationInput>
+    }
+
+    export type KitchenTicketUpdateWithWhereUniqueWithoutStationInput = {
+        where: KitchenTicketWhereUniqueInput
+        data: XOR<KitchenTicketUpdateWithoutStationInput, KitchenTicketUncheckedUpdateWithoutStationInput>
+    }
+
+    export type KitchenTicketUpdateManyWithWhereWithoutStationInput = {
+        where: KitchenTicketScalarWhereInput
+        data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyWithoutStationInput>
+    }
+
+    export type StoreCreateWithoutKitchenTicketsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutKitchenTicketsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutKitchenTicketsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutKitchenTicketsInput, StoreUncheckedCreateWithoutKitchenTicketsInput>
+    }
+
+    export type OrderCreateWithoutKitchenTicketsInput = {
+        id?: string
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutOrdersInput
+        items?: OrderItemCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderUncheckedCreateWithoutKitchenTicketsInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        tax?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderCreateOrConnectWithoutKitchenTicketsInput = {
+        where: OrderWhereUniqueInput
+        create: XOR<OrderCreateWithoutKitchenTicketsInput, OrderUncheckedCreateWithoutKitchenTicketsInput>
+    }
+
+    export type KitchenStationCreateWithoutTicketsInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenStationsInput
+        products?: ProductCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryCreateNestedManyWithoutDefaultKitchenStationInput
+    }
+
+    export type KitchenStationUncheckedCreateWithoutTicketsInput = {
+        id?: string
+        storeId: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        products?: ProductUncheckedCreateNestedManyWithoutKitchenStationInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutDefaultKitchenStationInput
+    }
+
+    export type KitchenStationCreateOrConnectWithoutTicketsInput = {
+        where: KitchenStationWhereUniqueInput
+        create: XOR<KitchenStationCreateWithoutTicketsInput, KitchenStationUncheckedCreateWithoutTicketsInput>
+    }
+
+    export type UserCreateWithoutCreatedKitchenTicketsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserUncheckedCreateWithoutCreatedKitchenTicketsInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+    }
+
+    export type UserCreateOrConnectWithoutCreatedKitchenTicketsInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutCreatedKitchenTicketsInput, UserUncheckedCreateWithoutCreatedKitchenTicketsInput>
+    }
+
+    export type KitchenTicketItemCreateWithoutTicketInput = {
+        id?: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketItemsInput
+        orderItem: OrderItemCreateNestedOneWithoutKitchenTicketItemsInput
+    }
+
+    export type KitchenTicketItemUncheckedCreateWithoutTicketInput = {
+        id?: string
+        storeId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemCreateOrConnectWithoutTicketInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        create: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput>
+    }
+
+    export type KitchenTicketItemCreateManyTicketInputEnvelope = {
+        data: KitchenTicketItemCreateManyTicketInput | KitchenTicketItemCreateManyTicketInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutKitchenTicketsInput = {
+        update: XOR<StoreUpdateWithoutKitchenTicketsInput, StoreUncheckedUpdateWithoutKitchenTicketsInput>
+        create: XOR<StoreCreateWithoutKitchenTicketsInput, StoreUncheckedCreateWithoutKitchenTicketsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutKitchenTicketsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutKitchenTicketsInput, StoreUncheckedUpdateWithoutKitchenTicketsInput>
+    }
+
+    export type StoreUpdateWithoutKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type OrderUpsertWithoutKitchenTicketsInput = {
+        update: XOR<OrderUpdateWithoutKitchenTicketsInput, OrderUncheckedUpdateWithoutKitchenTicketsInput>
+        create: XOR<OrderCreateWithoutKitchenTicketsInput, OrderUncheckedCreateWithoutKitchenTicketsInput>
+        where?: OrderWhereInput
+    }
+
+    export type OrderUpdateToOneWithWhereWithoutKitchenTicketsInput = {
+        where?: OrderWhereInput
+        data: XOR<OrderUpdateWithoutKitchenTicketsInput, OrderUncheckedUpdateWithoutKitchenTicketsInput>
+    }
+
+    export type OrderUpdateWithoutKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutOrdersNestedInput
+        items?: OrderItemUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateWithoutKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+    }
+
+    export type KitchenStationUpsertWithoutTicketsInput = {
+        update: XOR<KitchenStationUpdateWithoutTicketsInput, KitchenStationUncheckedUpdateWithoutTicketsInput>
+        create: XOR<KitchenStationCreateWithoutTicketsInput, KitchenStationUncheckedCreateWithoutTicketsInput>
+        where?: KitchenStationWhereInput
+    }
+
+    export type KitchenStationUpdateToOneWithWhereWithoutTicketsInput = {
+        where?: KitchenStationWhereInput
+        data: XOR<KitchenStationUpdateWithoutTicketsInput, KitchenStationUncheckedUpdateWithoutTicketsInput>
+    }
+
+    export type KitchenStationUpdateWithoutTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenStationsNestedInput
+        products?: ProductUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUpdateManyWithoutDefaultKitchenStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateWithoutTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUncheckedUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutDefaultKitchenStationNestedInput
+    }
+
+    export type UserUpsertWithoutCreatedKitchenTicketsInput = {
+        update: XOR<UserUpdateWithoutCreatedKitchenTicketsInput, UserUncheckedUpdateWithoutCreatedKitchenTicketsInput>
+        create: XOR<UserCreateWithoutCreatedKitchenTicketsInput, UserUncheckedCreateWithoutCreatedKitchenTicketsInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutCreatedKitchenTicketsInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutCreatedKitchenTicketsInput, UserUncheckedUpdateWithoutCreatedKitchenTicketsInput>
+    }
+
+    export type UserUpdateWithoutCreatedKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutCreatedKitchenTicketsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+    }
+
+    export type KitchenTicketItemUpsertWithWhereUniqueWithoutTicketInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        update: XOR<KitchenTicketItemUpdateWithoutTicketInput, KitchenTicketItemUncheckedUpdateWithoutTicketInput>
+        create: XOR<KitchenTicketItemCreateWithoutTicketInput, KitchenTicketItemUncheckedCreateWithoutTicketInput>
+    }
+
+    export type KitchenTicketItemUpdateWithWhereUniqueWithoutTicketInput = {
+        where: KitchenTicketItemWhereUniqueInput
+        data: XOR<KitchenTicketItemUpdateWithoutTicketInput, KitchenTicketItemUncheckedUpdateWithoutTicketInput>
+    }
+
+    export type KitchenTicketItemUpdateManyWithWhereWithoutTicketInput = {
+        where: KitchenTicketItemScalarWhereInput
+        data: XOR<KitchenTicketItemUpdateManyMutationInput, KitchenTicketItemUncheckedUpdateManyWithoutTicketInput>
+    }
+
+    export type StoreCreateWithoutKitchenTicketItemsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutKitchenTicketItemsInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutKitchenTicketItemsInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutKitchenTicketItemsInput, StoreUncheckedCreateWithoutKitchenTicketItemsInput>
+    }
+
+    export type KitchenTicketCreateWithoutItemsInput = {
+        id?: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutKitchenTicketsInput
+        order: OrderCreateNestedOneWithoutKitchenTicketsInput
+        station: KitchenStationCreateNestedOneWithoutTicketsInput
+        createdBy?: UserCreateNestedOneWithoutCreatedKitchenTicketsInput
+    }
+
+    export type KitchenTicketUncheckedCreateWithoutItemsInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketCreateOrConnectWithoutItemsInput = {
+        where: KitchenTicketWhereUniqueInput
+        create: XOR<KitchenTicketCreateWithoutItemsInput, KitchenTicketUncheckedCreateWithoutItemsInput>
+    }
+
+    export type OrderItemCreateWithoutKitchenTicketItemsInput = {
+        id?: string
+        productNameSnapshot?: string | null
+        productCategorySnapshot?: string | null
+        quantity: number
+        unitPrice: Decimal | DecimalJsLike | number | string
+        lineTotal: Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: Date | string
+        order: OrderCreateNestedOneWithoutItemsInput
+        product: ProductCreateNestedOneWithoutOrderItemsInput
+        refundItems?: RefundItemCreateNestedManyWithoutOrderItemInput
+    }
+
+    export type OrderItemUncheckedCreateWithoutKitchenTicketItemsInput = {
+        id?: string
+        orderId: string
+        productId: string
+        productNameSnapshot?: string | null
+        productCategorySnapshot?: string | null
+        quantity: number
+        unitPrice: Decimal | DecimalJsLike | number | string
+        lineTotal: Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: Date | string
+        refundItems?: RefundItemUncheckedCreateNestedManyWithoutOrderItemInput
+    }
+
+    export type OrderItemCreateOrConnectWithoutKitchenTicketItemsInput = {
+        where: OrderItemWhereUniqueInput
+        create: XOR<OrderItemCreateWithoutKitchenTicketItemsInput, OrderItemUncheckedCreateWithoutKitchenTicketItemsInput>
+    }
+
+    export type StoreUpsertWithoutKitchenTicketItemsInput = {
+        update: XOR<StoreUpdateWithoutKitchenTicketItemsInput, StoreUncheckedUpdateWithoutKitchenTicketItemsInput>
+        create: XOR<StoreCreateWithoutKitchenTicketItemsInput, StoreUncheckedCreateWithoutKitchenTicketItemsInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutKitchenTicketItemsInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutKitchenTicketItemsInput, StoreUncheckedUpdateWithoutKitchenTicketItemsInput>
+    }
+
+    export type StoreUpdateWithoutKitchenTicketItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutKitchenTicketItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type KitchenTicketUpsertWithoutItemsInput = {
+        update: XOR<KitchenTicketUpdateWithoutItemsInput, KitchenTicketUncheckedUpdateWithoutItemsInput>
+        create: XOR<KitchenTicketCreateWithoutItemsInput, KitchenTicketUncheckedCreateWithoutItemsInput>
+        where?: KitchenTicketWhereInput
+    }
+
+    export type KitchenTicketUpdateToOneWithWhereWithoutItemsInput = {
+        where?: KitchenTicketWhereInput
+        data: XOR<KitchenTicketUpdateWithoutItemsInput, KitchenTicketUncheckedUpdateWithoutItemsInput>
+    }
+
+    export type KitchenTicketUpdateWithoutItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        order?: OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        station?: KitchenStationUpdateOneRequiredWithoutTicketsNestedInput
+        createdBy?: UserUpdateOneWithoutCreatedKitchenTicketsNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateWithoutItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderItemUpsertWithoutKitchenTicketItemsInput = {
+        update: XOR<OrderItemUpdateWithoutKitchenTicketItemsInput, OrderItemUncheckedUpdateWithoutKitchenTicketItemsInput>
+        create: XOR<OrderItemCreateWithoutKitchenTicketItemsInput, OrderItemUncheckedCreateWithoutKitchenTicketItemsInput>
+        where?: OrderItemWhereInput
+    }
+
+    export type OrderItemUpdateToOneWithWhereWithoutKitchenTicketItemsInput = {
+        where?: OrderItemWhereInput
+        data: XOR<OrderItemUpdateWithoutKitchenTicketItemsInput, OrderItemUncheckedUpdateWithoutKitchenTicketItemsInput>
+    }
+
+    export type OrderItemUpdateWithoutKitchenTicketItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        productCategorySnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        quantity?: IntFieldUpdateOperationsInput | number
+        unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        order?: OrderUpdateOneRequiredWithoutItemsNestedInput
+        product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+        refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
+    }
+
+    export type OrderItemUncheckedUpdateWithoutKitchenTicketItemsInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        productCategorySnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+        quantity?: IntFieldUpdateOperationsInput | number
+        unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        lineTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type StoreCreateWithoutAiDraftsInput = {
@@ -33729,6 +40974,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         campaigns?: CampaignCreateNestedManyWithoutStoreInput
     }
 
@@ -33749,6 +40997,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -33785,6 +41036,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     }
 
@@ -33805,6 +41059,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -33825,6 +41082,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
     }
 
@@ -33845,6 +41105,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
         aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
     }
 
@@ -33881,6 +41144,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
     }
 
@@ -33901,6 +41167,9 @@ export namespace Prisma {
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
         aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
     }
 
@@ -33918,6 +41187,7 @@ export namespace Prisma {
         name: string
         status?: $Enums.CatalogStatus
         sortOrder?: number
+        defaultKitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -33932,6 +41202,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -34015,6 +41286,47 @@ export namespace Prisma {
         createdAt?: Date | string
     }
 
+    export type KitchenStationCreateManyStoreInput = {
+        id?: string
+        name: string
+        code: string
+        status?: $Enums.KitchenStationStatus
+        sortOrder?: number
+        isDefault?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketCreateManyStoreInput = {
+        id?: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemCreateManyStoreInput = {
+        id?: string
+        ticketId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
     export type AiDraftCreateManyStoreInput = {
         id?: string
         prompt: string
@@ -34075,6 +41387,7 @@ export namespace Prisma {
         sortOrder?: IntFieldUpdateOperationsInput | number
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        defaultKitchenStation?: KitchenStationUpdateOneWithoutCategoriesNestedInput
         products?: ProductUpdateManyWithoutCategoryRefNestedInput
     }
 
@@ -34083,6 +41396,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
         sortOrder?: IntFieldUpdateOperationsInput | number
+        defaultKitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         products?: ProductUncheckedUpdateManyWithoutCategoryRefNestedInput
@@ -34093,6 +41407,7 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
         sortOrder?: IntFieldUpdateOperationsInput | number
+        defaultKitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -34109,6 +41424,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         categoryRef?: CategoryUpdateOneWithoutProductsNestedInput
+        kitchenStation?: KitchenStationUpdateOneWithoutProductsNestedInput
         modifierGroups?: ProductModifierGroupUpdateManyWithoutProductNestedInput
         orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     }
@@ -34123,6 +41439,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
@@ -34139,6 +41456,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -34168,6 +41486,7 @@ export namespace Prisma {
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateWithoutStoreInput = {
@@ -34195,6 +41514,7 @@ export namespace Prisma {
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
     }
 
     export type OrderUncheckedUpdateManyWithoutStoreInput = {
@@ -34390,6 +41710,137 @@ export namespace Prisma {
         referenceId?: NullableStringFieldUpdateOperationsInput | string | null
         createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenStationUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUncheckedUpdateManyWithoutKitchenStationNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutDefaultKitchenStationNestedInput
+        tickets?: KitchenTicketUncheckedUpdateManyWithoutStationNestedInput
+    }
+
+    export type KitchenStationUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenStationStatusFieldUpdateOperationsInput | $Enums.KitchenStationStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        isDefault?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        order?: OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        station?: KitchenStationUpdateOneRequiredWithoutTicketsNestedInput
+        createdBy?: UserUpdateOneWithoutCreatedKitchenTicketsNestedInput
+        items?: KitchenTicketItemUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        ticket?: KitchenTicketUpdateOneRequiredWithoutItemsNestedInput
+        orderItem?: OrderItemUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+    }
+
+    export type KitchenTicketItemUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
     export type AiDraftUpdateWithoutStoreInput = {
@@ -34594,6 +42045,22 @@ export namespace Prisma {
         referenceType?: $Enums.CashMovementReferenceType
         referenceId?: string | null
         createdAt?: Date | string
+    }
+
+    export type KitchenTicketCreateManyCreatedByInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
     }
 
     export type StoreUserUpdateWithoutUserInput = {
@@ -34984,6 +42451,56 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type KitchenTicketUpdateWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        order?: OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        station?: KitchenStationUpdateOneRequiredWithoutTicketsNestedInput
+        items?: KitchenTicketItemUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutCreatedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type ProductCreateManyCategoryRefInput = {
         id?: string
         storeId?: string | null
@@ -34994,6 +42511,7 @@ export namespace Prisma {
         currency?: string
         isActive?: boolean
         availabilityStatus?: $Enums.ProductAvailabilityStatus
+        kitchenStationId?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -35010,6 +42528,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutProductsNestedInput
+        kitchenStation?: KitchenStationUpdateOneWithoutProductsNestedInput
         modifierGroups?: ProductModifierGroupUpdateManyWithoutProductNestedInput
         orderItems?: OrderItemUpdateManyWithoutProductNestedInput
     }
@@ -35024,6 +42543,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
@@ -35040,6 +42560,7 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -35121,6 +42642,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         order?: OrderUpdateOneRequiredWithoutItemsNestedInput
         refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateWithoutProductInput = {
@@ -35134,6 +42656,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateManyWithoutProductInput = {
@@ -35236,6 +42759,22 @@ export namespace Prisma {
         createdAt?: Date | string
     }
 
+    export type KitchenTicketCreateManyOrderInput = {
+        id?: string
+        storeId: string
+        stationId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
     export type OrderItemUpdateWithoutOrderInput = {
         id?: StringFieldUpdateOperationsInput | string
         productNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35247,6 +42786,7 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
         refundItems?: RefundItemUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateWithoutOrderInput = {
@@ -35260,6 +42800,7 @@ export namespace Prisma {
         modifiers?: NullableJsonNullValueInput | InputJsonValue
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         refundItems?: RefundItemUncheckedUpdateManyWithoutOrderItemNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutOrderItemNestedInput
     }
 
     export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
@@ -35384,12 +42925,76 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type KitchenTicketUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        station?: KitchenStationUpdateOneRequiredWithoutTicketsNestedInput
+        createdBy?: UserUpdateOneWithoutCreatedKitchenTicketsNestedInput
+        items?: KitchenTicketItemUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        stationId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type RefundItemCreateManyOrderItemInput = {
         id?: string
         refundId: string
         quantity: number
         amount: Decimal | DecimalJsLike | number | string
         createdAt?: Date | string
+    }
+
+    export type KitchenTicketItemCreateManyOrderItemInput = {
+        id?: string
+        storeId: string
+        ticketId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
     }
 
     export type RefundItemUpdateWithoutOrderItemInput = {
@@ -35414,6 +43019,48 @@ export namespace Prisma {
         quantity?: IntFieldUpdateOperationsInput | number
         amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUpdateWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+        ticket?: KitchenTicketUpdateOneRequiredWithoutItemsNestedInput
+    }
+
+    export type KitchenTicketItemUncheckedUpdateWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutOrderItemInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        ticketId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
     export type RefundItemCreateManyRefundInput = {
@@ -35494,6 +43141,234 @@ export namespace Prisma {
         referenceId?: NullableStringFieldUpdateOperationsInput | string | null
         createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type ProductCreateManyKitchenStationInput = {
+        id?: string
+        storeId?: string | null
+        name: string
+        description?: string | null
+        categoryId?: string | null
+        category?: string | null
+        price: Decimal | DecimalJsLike | number | string
+        currency?: string
+        isActive?: boolean
+        availabilityStatus?: $Enums.ProductAvailabilityStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type CategoryCreateManyDefaultKitchenStationInput = {
+        id?: string
+        storeId: string
+        name: string
+        status?: $Enums.CatalogStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketCreateManyStationInput = {
+        id?: string
+        storeId: string
+        orderId: string
+        ticketNumber: string
+        status?: $Enums.KitchenTicketStatus
+        startedAt?: Date | string | null
+        readyAt?: Date | string | null
+        completedAt?: Date | string | null
+        cancelledAt?: Date | string | null
+        cancelReason?: string | null
+        createdByUserId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type ProductUpdateWithoutKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        description?: NullableStringFieldUpdateOperationsInput | string | null
+        category?: NullableStringFieldUpdateOperationsInput | string | null
+        price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        currency?: StringFieldUpdateOperationsInput | string
+        isActive?: BoolFieldUpdateOperationsInput | boolean
+        availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutProductsNestedInput
+        categoryRef?: CategoryUpdateOneWithoutProductsNestedInput
+        modifierGroups?: ProductModifierGroupUpdateManyWithoutProductNestedInput
+        orderItems?: OrderItemUpdateManyWithoutProductNestedInput
+    }
+
+    export type ProductUncheckedUpdateWithoutKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        name?: StringFieldUpdateOperationsInput | string
+        description?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+        category?: NullableStringFieldUpdateOperationsInput | string | null
+        price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        currency?: StringFieldUpdateOperationsInput | string
+        isActive?: BoolFieldUpdateOperationsInput | boolean
+        availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        modifierGroups?: ProductModifierGroupUncheckedUpdateManyWithoutProductNestedInput
+        orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
+    }
+
+    export type ProductUncheckedUpdateManyWithoutKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        name?: StringFieldUpdateOperationsInput | string
+        description?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+        category?: NullableStringFieldUpdateOperationsInput | string | null
+        price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        currency?: StringFieldUpdateOperationsInput | string
+        isActive?: BoolFieldUpdateOperationsInput | boolean
+        availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type CategoryUpdateWithoutDefaultKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutCategoriesNestedInput
+        products?: ProductUpdateManyWithoutCategoryRefNestedInput
+    }
+
+    export type CategoryUncheckedUpdateWithoutDefaultKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        products?: ProductUncheckedUpdateManyWithoutCategoryRefNestedInput
+    }
+
+    export type CategoryUncheckedUpdateManyWithoutDefaultKitchenStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketUpdateWithoutStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        order?: OrderUpdateOneRequiredWithoutKitchenTicketsNestedInput
+        createdBy?: UserUpdateOneWithoutCreatedKitchenTicketsNestedInput
+        items?: KitchenTicketItemUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateWithoutStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: KitchenTicketItemUncheckedUpdateManyWithoutTicketNestedInput
+    }
+
+    export type KitchenTicketUncheckedUpdateManyWithoutStationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderId?: StringFieldUpdateOperationsInput | string
+        ticketNumber?: StringFieldUpdateOperationsInput | string
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        readyAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        cancelReason?: NullableStringFieldUpdateOperationsInput | string | null
+        createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemCreateManyTicketInput = {
+        id?: string
+        storeId: string
+        orderItemId: string
+        productId: string
+        productNameSnapshot: string
+        quantity: number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: string | null
+        status?: $Enums.KitchenTicketStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type KitchenTicketItemUpdateWithoutTicketInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+        orderItem?: OrderItemUpdateOneRequiredWithoutKitchenTicketItemsNestedInput
+    }
+
+    export type KitchenTicketItemUncheckedUpdateWithoutTicketInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type KitchenTicketItemUncheckedUpdateManyWithoutTicketInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        orderItemId?: StringFieldUpdateOperationsInput | string
+        productId?: StringFieldUpdateOperationsInput | string
+        productNameSnapshot?: StringFieldUpdateOperationsInput | string
+        quantity?: IntFieldUpdateOperationsInput | number
+        modifiers?: NullableJsonNullValueInput | InputJsonValue
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        status?: EnumKitchenTicketStatusFieldUpdateOperationsInput | $Enums.KitchenTicketStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
 
