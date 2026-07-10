@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import axios from 'axios';
 import { LogIn } from 'lucide-react-native';
 
 import { AppButton } from '@/components/AppButton';
@@ -8,7 +7,7 @@ import { useI18n } from '@/i18n/useI18n';
 import { tokens } from '@/theme';
 import { useAuthStore } from '@/stores/authStore';
 
-import { loginWithPassword } from './auth.service';
+import { getAuthErrorMessage, loginWithPassword } from './auth.service';
 
 export function LoginScreen() {
   const { t } = useI18n();
@@ -29,14 +28,7 @@ export function LoginScreen() {
       const session = await loginWithPassword({ email: email.trim(), password });
       setSession(session);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseMessage = getResponseMessage(error.response?.data);
-        setErrorMessage(
-          `${t('auth.login.error')} (${error.response?.status ?? 'network'}${responseMessage ? `: ${responseMessage}` : ''})`,
-        );
-      } else {
-        setErrorMessage(t('auth.login.error'));
-      }
+      setErrorMessage(getAuthErrorMessage(error, t('auth.login.error')));
     } finally {
       setLoading(false);
     }
@@ -84,18 +76,6 @@ export function LoginScreen() {
       </View>
     </KeyboardAvoidingView>
   );
-}
-
-function getResponseMessage(data: unknown) {
-  if (!data || typeof data !== 'object') {
-    return undefined;
-  }
-
-  const message = (data as { message?: unknown }).message;
-  if (Array.isArray(message)) {
-    return message.join(', ');
-  }
-  return typeof message === 'string' ? message : undefined;
 }
 
 const styles = StyleSheet.create({
