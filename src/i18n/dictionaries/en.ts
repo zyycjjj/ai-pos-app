@@ -93,6 +93,8 @@ export const en = {
   'shifts.movements.title': 'Recent Movements',
   'shifts.history.title': 'Shift History',
   'shifts.history.empty': 'No shifts yet.',
+  'shifts.print.summary': 'Print shift summary',
+  'shifts.print.short': 'Print',
   'shifts.validation.checkFields': 'Check the amount and required fields.',
 
   'settings.language.title': 'Language',

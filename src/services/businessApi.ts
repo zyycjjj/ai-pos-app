@@ -330,6 +330,39 @@ export type RefundReceiptPayload = {
   };
 };
 
+export type PrintDocumentType = 'CUSTOMER_RECEIPT' | 'KITCHEN_TICKET' | 'REFUND_RECEIPT' | 'SHIFT_SUMMARY' | 'TEST_PAGE';
+export type PrintJobReferenceType = 'ORDER' | 'KITCHEN_TICKET' | 'REFUND' | 'SHIFT' | 'TEST';
+export type PrintJobStatus = 'PENDING' | 'PROCESSING' | 'SUCCEEDED' | 'FAILED' | 'CANCELLED';
+export type PrintJobReason = 'AUTO' | 'MANUAL' | 'MANUAL_REPRINT' | 'TEST';
+
+export type PrintJob = {
+  id: string;
+  printerId: string | null;
+  printer: {
+    id: string;
+    name: string;
+    code: string;
+    type: 'RECEIPT' | 'KITCHEN' | 'MULTI_PURPOSE';
+    connectionType: 'LAN' | 'USB';
+    status: 'ACTIVE' | 'INACTIVE';
+    address: string;
+  } | null;
+  documentType: PrintDocumentType;
+  referenceType: PrintJobReferenceType;
+  referenceId: string;
+  status: PrintJobStatus;
+  reason: PrintJobReason;
+  renderedText: string | null;
+  byteLength: number | null;
+  retryCount: number;
+  maxRetries: number;
+  lastError: string | null;
+  sourceJobId: string | null;
+  claimedByDeviceId: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export function useTodaySummary() {
   return useQuery({
     queryKey: ['metrics', 'today'],
@@ -428,6 +461,7 @@ export function useCheckoutOrders(status?: CheckoutOrder['status']) {
       });
       return data;
     },
+    refetchInterval: 3_000,
   });
 }
 
@@ -550,6 +584,106 @@ export function useRefundOrder() {
       void queryClient.invalidateQueries({ queryKey: ['receipts'] });
     },
   });
+}
+
+export function usePrintOrderReceipt() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (orderId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/orders/${orderId}/receipt`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export function useReprintOrderReceipt() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (orderId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/orders/${orderId}/reprint`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export function usePrintRefundReceipt() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (refundId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/refunds/${refundId}`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export function usePrintShiftSummary() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (shiftId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/shifts/${shiftId}/summary`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export function useReprintPrintJob() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (jobId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/jobs/${jobId}/reprint`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export async function fetchDevicePrintJobs(deviceId: string) {
+  const { data } = await apiClient.get<Array<PrintJob & { deviceId: string }>>('/api/print/device/jobs', {
+    headers: { 'X-Device-Id': deviceId },
+  });
+  return data;
+}
+
+export async function claimDevicePrintJob(jobId: string, deviceId: string) {
+  const { data } = await apiClient.post<PrintJob>(`/api/print/device/jobs/${jobId}/claim`, undefined, {
+    headers: { 'X-Device-Id': deviceId },
+  });
+  return data;
+}
+
+export async function markDevicePrintJobSucceeded(jobId: string, deviceId: string) {
+  const { data } = await apiClient.post<PrintJob>(`/api/print/device/jobs/${jobId}/success`, undefined, {
+    headers: { 'X-Device-Id': deviceId },
+  });
+  return data;
+}
+
+export async function markDevicePrintJobFailed(jobId: string, deviceId: string, error: string) {
+  const { data } = await apiClient.post<PrintJob>(`/api/print/device/jobs/${jobId}/fail`, { error }, {
+    headers: { 'X-Device-Id': deviceId },
+  });
+  return data;
 }
 
 export function useCreateMenuDraft() {

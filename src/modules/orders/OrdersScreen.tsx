@@ -8,9 +8,8 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type CheckoutOrder, useCheckoutOrders, useMarkOrderPrinted, useRefundOrder, useVoidOrder } from '@/services/businessApi';
+import { type CheckoutOrder, useCheckoutOrders, usePrintOrderReceipt, usePrintRefundReceipt, useRefundOrder, useReprintOrderReceipt, useVoidOrder } from '@/services/businessApi';
 import { tokens } from '@/theme';
-import { printOrderReceipt } from '../receipts/receiptPrinter.service';
 
 export function OrdersScreen() {
   const { t } = useI18n();
@@ -18,7 +17,9 @@ export function OrdersScreen() {
   const [printingOrderId, setPrintingOrderId] = useState<string | null>(null);
   const [actionOrderId, setActionOrderId] = useState<string | null>(null);
   const ordersQuery = useCheckoutOrders();
-  const markPrinted = useMarkOrderPrinted();
+  const printOrderReceipt = usePrintOrderReceipt();
+  const reprintOrderReceipt = useReprintOrderReceipt();
+  const printRefundReceipt = usePrintRefundReceipt();
   const refundOrder = useRefundOrder();
   const voidOrder = useVoidOrder();
   const orders = ordersQuery.data ?? [];
@@ -26,8 +27,11 @@ export function OrdersScreen() {
   const reprint = async (order: CheckoutOrder) => {
     setPrintingOrderId(order.id);
     try {
-      await printOrderReceipt(order.id);
-      await markPrinted.mutateAsync(order.id);
+      if (order.printStatus === 'PRINTED') {
+        await reprintOrderReceipt.mutateAsync(order.id);
+      } else {
+        await printOrderReceipt.mutateAsync(order.id);
+      }
     } finally {
       setPrintingOrderId(null);
     }
@@ -36,12 +40,13 @@ export function OrdersScreen() {
   const refund = async (order: CheckoutOrder) => {
     setActionOrderId(order.id);
     try {
-      await refundOrder.mutateAsync({
+      const refundRecord = await refundOrder.mutateAsync({
         orderId: order.id,
         idempotencyKey: `pos-full-refund-${order.id}-${Date.now()}`,
         reason: t('orders.refund.defaultReason'),
         method: order.paymentMethod ?? 'MANUAL',
       });
+      await printRefundReceipt.mutateAsync(refundRecord.id);
     } finally {
       setActionOrderId(null);
     }

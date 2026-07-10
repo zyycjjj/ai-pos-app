@@ -95,6 +95,8 @@ export const zhCN = {
   'shifts.movements.title': '最近现金记录',
   'shifts.history.title': '班次历史',
   'shifts.history.empty': '暂无班次记录。',
+  'shifts.print.summary': '打印班次汇总',
+  'shifts.print.short': '打印',
   'shifts.validation.checkFields': '请检查金额和必填字段。',
 
   'settings.language.title': '语言',

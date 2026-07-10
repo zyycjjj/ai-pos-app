@@ -100,6 +100,24 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, printers: {
+                    name: "printers",
+                    type: "Printer",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, printerRoutes: {
+                    name: "printerRoutes",
+                    type: "PrinterRoute",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, printJobs: {
+                    name: "printJobs",
+                    type: "PrintJob",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, aiDrafts: {
                     name: "aiDrafts",
                     type: "AiDraft",
@@ -212,6 +230,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'createdBy',
+                }, requestedPrintJobs: {
+                    name: "requestedPrintJobs",
+                    type: "PrintJob",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'requestedBy',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -1527,6 +1551,306 @@ const metadata: ModelMeta = {
                 id: {
                     name: "id",
                     fields: ["id"]
+                },
+            },
+        },
+        printer: {
+            name: 'Printer', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'printers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, code: {
+                    name: "code",
+                    type: "String",
+                }, type: {
+                    name: "type",
+                    type: "PrinterType",
+                }, connectionType: {
+                    name: "connectionType",
+                    type: "PrinterConnectionType",
+                }, status: {
+                    name: "status",
+                    type: "PrinterStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, host: {
+                    name: "host",
+                    type: "String",
+                    isOptional: true,
+                }, port: {
+                    name: "port",
+                    type: "Int",
+                    isOptional: true,
+                }, usbVendorId: {
+                    name: "usbVendorId",
+                    type: "String",
+                    isOptional: true,
+                }, usbProductId: {
+                    name: "usbProductId",
+                    type: "String",
+                    isOptional: true,
+                }, paperWidth: {
+                    name: "paperWidth",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 80 }] }],
+                }, autoCut: {
+                    name: "autoCut",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, cashDrawerPulse: {
+                    name: "cashDrawerPulse",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, routes: {
+                    name: "routes",
+                    type: "PrinterRoute",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'printer',
+                }, printJobs: {
+                    name: "printJobs",
+                    type: "PrintJob",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'printer',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_code: {
+                    name: "storeId_code",
+                    fields: ["storeId", "code"]
+                },
+            },
+        },
+        printerRoute: {
+            name: 'PrinterRoute', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'printerRoutes',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, printerId: {
+                    name: "printerId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'printer',
+                }, printer: {
+                    name: "printer",
+                    type: "Printer",
+                    isDataModel: true,
+                    backLink: 'routes',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "printerId" },
+                }, routeType: {
+                    name: "routeType",
+                    type: "PrinterRouteType",
+                }, targetId: {
+                    name: "targetId",
+                    type: "String",
+                    isOptional: true,
+                }, documentType: {
+                    name: "documentType",
+                    type: "PrintDocumentType",
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_routeType_targetId_documentType: {
+                    name: "storeId_routeType_targetId_documentType",
+                    fields: ["storeId", "routeType", "targetId", "documentType"]
+                },
+            },
+        },
+        printJob: {
+            name: 'PrintJob', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'printJobs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, printerId: {
+                    name: "printerId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'printer',
+                }, printer: {
+                    name: "printer",
+                    type: "Printer",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'printJobs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "printerId" },
+                }, documentType: {
+                    name: "documentType",
+                    type: "PrintDocumentType",
+                }, referenceType: {
+                    name: "referenceType",
+                    type: "PrintJobReferenceType",
+                }, referenceId: {
+                    name: "referenceId",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "PrintJobStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, reason: {
+                    name: "reason",
+                    type: "PrintJobReason",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, payload: {
+                    name: "payload",
+                    type: "Json",
+                }, renderedText: {
+                    name: "renderedText",
+                    type: "String",
+                    isOptional: true,
+                }, byteLength: {
+                    name: "byteLength",
+                    type: "Int",
+                    isOptional: true,
+                }, retryCount: {
+                    name: "retryCount",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, maxRetries: {
+                    name: "maxRetries",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 3 }] }],
+                }, lastError: {
+                    name: "lastError",
+                    type: "String",
+                    isOptional: true,
+                }, autoPrintKey: {
+                    name: "autoPrintKey",
+                    type: "String",
+                    isOptional: true,
+                }, sourceJobId: {
+                    name: "sourceJobId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'sourceJob',
+                }, sourceJob: {
+                    name: "sourceJob",
+                    type: "PrintJob",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'reprints',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "sourceJobId" },
+                }, reprints: {
+                    name: "reprints",
+                    type: "PrintJob",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'sourceJob',
+                }, requestedByUserId: {
+                    name: "requestedByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'requestedBy',
+                }, requestedBy: {
+                    name: "requestedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'requestedPrintJobs',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "requestedByUserId" },
+                }, claimedByDeviceId: {
+                    name: "claimedByDeviceId",
+                    type: "String",
+                    isOptional: true,
+                }, startedAt: {
+                    name: "startedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, completedAt: {
+                    name: "completedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, nextRetryAt: {
+                    name: "nextRetryAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_documentType_referenceType_referenceId_autoPrintKey: {
+                    name: "storeId_documentType_referenceType_referenceId_autoPrintKey",
+                    fields: ["storeId", "documentType", "referenceType", "referenceId", "autoPrintKey"]
                 },
             },
         },

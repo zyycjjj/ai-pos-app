@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Banknote, DoorOpen, LogOut, Minus, Plus } from 'lucide-react-native';
+import { Banknote, DoorOpen, LogOut, Minus, Plus, Printer } from 'lucide-react-native';
 
 import { AppButton } from '@/components/AppButton';
 import { AppScreen } from '@/components/AppScreen';
@@ -10,7 +10,7 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type Shift, useActiveShift, useCashIn, useCashOut, useCloseShift, useOpenShift, useShifts } from '@/services/businessApi';
+import { type Shift, useActiveShift, useCashIn, useCashOut, useCloseShift, useOpenShift, usePrintShiftSummary, useShifts } from '@/services/businessApi';
 import { tokens } from '@/theme';
 
 type CashAction = 'cashIn' | 'cashOut';
@@ -24,6 +24,7 @@ export function ShiftScreen() {
   const cashIn = useCashIn();
   const cashOut = useCashOut();
   const closeShift = useCloseShift();
+  const printShiftSummary = usePrintShiftSummary();
 
   const [openingCashText, setOpeningCashText] = useState('200');
   const [openNotes, setOpenNotes] = useState('');
@@ -104,6 +105,17 @@ export function ShiftScreen() {
               <MetricCard label={t('shifts.metrics.cashRefunds')} value={money(activeShift.cashRefunds)} tone="warning" />
             </View>
 
+            <View style={styles.printRow}>
+              <AppButton
+                variant="secondary"
+                icon={<Printer size={16} color={tokens.colors.ink} />}
+                loading={printShiftSummary.isPending}
+                onPress={() => printShiftSummary.mutate(activeShift.id)}
+              >
+                {t('shifts.print.summary')}
+              </AppButton>
+            </View>
+
             <View style={styles.grid}>
               <Surface padding="xl" style={styles.panel}>
                 <Text style={styles.sectionTitle}>{t('shifts.cashMovement.title')}</Text>
@@ -176,6 +188,14 @@ export function ShiftScreen() {
                   <View style={{ alignItems: 'flex-end' }}>
                     <StatusPill value={shift.status} tone={shift.status === 'OPEN' ? 'success' : 'neutral'} />
                     <Text style={styles.muted}>{money(shift.expectedCash)}</Text>
+                    <AppButton
+                      variant="secondary"
+                      icon={<Printer size={16} color={tokens.colors.ink} />}
+                      loading={printShiftSummary.isPending}
+                      onPress={() => printShiftSummary.mutate(shift.id)}
+                    >
+                      {t('shifts.print.short')}
+                    </AppButton>
                   </View>
                 </View>
               ))}
@@ -233,6 +253,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: tokens.spacing.md,
+  },
+  printRow: {
+    alignItems: 'flex-start',
   },
   grid: {
     flexDirection: 'row',
