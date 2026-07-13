@@ -130,6 +130,24 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, aiConversations: {
+                    name: "aiConversations",
+                    type: "AiConversation",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, aiMessages: {
+                    name: "aiMessages",
+                    type: "AiMessage",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, aiExecutions: {
+                    name: "aiExecutions",
+                    type: "AiExecution",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -236,6 +254,18 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'requestedBy',
+                }, aiConversations: {
+                    name: "aiConversations",
+                    type: "AiConversation",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'user',
+                }, aiMessages: {
+                    name: "aiMessages",
+                    type: "AiMessage",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'user',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -1971,6 +2001,255 @@ const metadata: ModelMeta = {
                     name: "updatedAt",
                     type: "DateTime",
                     attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        aiConversation: {
+            name: 'AiConversation', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'aiConversations',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, userId: {
+                    name: "userId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'user',
+                }, user: {
+                    name: "user",
+                    type: "User",
+                    isDataModel: true,
+                    backLink: 'aiConversations',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "userId" },
+                }, title: {
+                    name: "title",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "AiConversationStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, lastMessageAt: {
+                    name: "lastMessageAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, messages: {
+                    name: "messages",
+                    type: "AiMessage",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'conversation',
+                }, executions: {
+                    name: "executions",
+                    type: "AiExecution",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'conversation',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        aiMessage: {
+            name: 'AiMessage', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, conversationId: {
+                    name: "conversationId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'conversation',
+                }, conversation: {
+                    name: "conversation",
+                    type: "AiConversation",
+                    isDataModel: true,
+                    backLink: 'messages',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "conversationId" },
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'aiMessages',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, userId: {
+                    name: "userId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'user',
+                }, user: {
+                    name: "user",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'aiMessages',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "userId" },
+                }, role: {
+                    name: "role",
+                    type: "AiMessageRole",
+                }, content: {
+                    name: "content",
+                    type: "String",
+                }, structuredData: {
+                    name: "structuredData",
+                    type: "Json",
+                    isOptional: true,
+                }, periodContext: {
+                    name: "periodContext",
+                    type: "Json",
+                    isOptional: true,
+                }, executions: {
+                    name: "executions",
+                    type: "AiExecution",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'message',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        aiExecution: {
+            name: 'AiExecution', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'aiExecutions',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, conversationId: {
+                    name: "conversationId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'conversation',
+                }, conversation: {
+                    name: "conversation",
+                    type: "AiConversation",
+                    isDataModel: true,
+                    backLink: 'executions',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "conversationId" },
+                }, messageId: {
+                    name: "messageId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'message',
+                }, message: {
+                    name: "message",
+                    type: "AiMessage",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'executions',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "messageId" },
+                }, provider: {
+                    name: "provider",
+                    type: "String",
+                }, model: {
+                    name: "model",
+                    type: "String",
+                }, status: {
+                    name: "status",
+                    type: "AiExecutionStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, contextType: {
+                    name: "contextType",
+                    type: "String",
+                }, contextHash: {
+                    name: "contextHash",
+                    type: "String",
+                    isOptional: true,
+                }, inputTokenCount: {
+                    name: "inputTokenCount",
+                    type: "Int",
+                    isOptional: true,
+                }, outputTokenCount: {
+                    name: "outputTokenCount",
+                    type: "Int",
+                    isOptional: true,
+                }, latencyMs: {
+                    name: "latencyMs",
+                    type: "Int",
+                    isOptional: true,
+                }, errorCode: {
+                    name: "errorCode",
+                    type: "String",
+                    isOptional: true,
+                }, errorMessage: {
+                    name: "errorMessage",
+                    type: "String",
+                    isOptional: true,
+                }, startedAt: {
+                    name: "startedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, completedAt: {
+                    name: "completedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 },
             }, uniqueConstraints: {
                 id: {
