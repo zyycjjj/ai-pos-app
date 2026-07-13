@@ -241,10 +241,15 @@ Android release build:
 
 ## 10. Push 状态
 
-待报告提交后执行 push 到当前 branch：
-
 - Branch: `develop`
 - Remote: `origin git@chicha-github:zyycjjj/ai-pos-app.git`
+- Push: PASS
+- Push range: `5b7110f..d51f96f develop -> develop`
+
+已推送 commits:
+
+- `69811ff74ee6890823ad4ea30065ee85101f46a2` `chore(app): track Android native preview sources`
+- `d51f96f` `docs(app): add Android source tracking report`
 
 ## 11. 最终状态
 
