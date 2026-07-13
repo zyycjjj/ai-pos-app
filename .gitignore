@@ -6,5 +6,16 @@ coverage/
 *.log
 .env
 .env.*
-android/
+android/local.properties
+android/.gradle/
+android/.idea/
+android/build/
+android/app/build/
+android/app/.cxx/
+android/key.properties
+android/keystore.properties
+*.apk
+*.aab
+*.jks
+*.keystore
 ios/
