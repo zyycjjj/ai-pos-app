@@ -1,10 +1,11 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Bluetooth, Monitor, Printer, Usb } from 'lucide-react-native';
 
 import { Screen } from '@/components/Screen';
 import { useI18n } from '@/i18n/useI18n';
 import type { SupportedLocale } from '@/i18n';
+import { printerModule } from '@/native/printer/PrinterModule';
 import { useAuthStore } from '@/stores/authStore';
 import type { StoreRole } from '@/stores/authStore';
 import { tokens } from '@/theme';
@@ -14,6 +15,21 @@ export function SettingsScreen() {
   const { activeStoreId, clearSession, role, stores, user } = useAuthStore();
   const activeStore = stores.find((store) => store.storeId === activeStoreId);
   const roleLabel = role ? t(getRoleLabelKey(role)) : '';
+  const [printerState, setPrinterState] = useState<'idle' | 'printing' | 'sent' | 'failed'>('idle');
+  const [printerMessage, setPrinterMessage] = useState(t('settings.printer.testReady'));
+
+  const printTestPage = async () => {
+    setPrinterState('printing');
+    setPrinterMessage(t('settings.printer.testPrinting'));
+    try {
+      const result = await printerModule.printTestReceipt();
+      setPrinterState('sent');
+      setPrinterMessage(t('settings.printer.testSuccess').replace('{connection}', result.connection.type || 'printer'));
+    } catch (error) {
+      setPrinterState('failed');
+      setPrinterMessage(error instanceof Error ? error.message : t('settings.printer.testFailed'));
+    }
+  };
 
   return (
     <Screen padded={false}>
@@ -66,9 +82,14 @@ export function SettingsScreen() {
             >
               <SettingRow label="Paper width" value="80mm ESC/POS" />
               <SettingRow label="Auto print" value="After Mark paid" />
-              <SettingRow label="Health" value="Ready for native module" />
-              <Pressable style={({ pressed }) => [styles.testButton, pressed ? styles.pressed : null]}>
-                <Text style={styles.testButtonText}>Print test page</Text>
+              <SettingRow label="Health" value={printerState === 'failed' ? t('settings.printer.needsAttention') : t('settings.printer.ready')} />
+              <Text style={[styles.printerMessage, printerState === 'failed' ? styles.printerMessageError : null]}>{printerMessage}</Text>
+              <Pressable
+                disabled={printerState === 'printing'}
+                onPress={printTestPage}
+                style={({ pressed }) => [styles.testButton, pressed ? styles.pressed : null, printerState === 'printing' ? styles.testButtonDisabled : null]}
+              >
+                <Text style={styles.testButtonText}>{printerState === 'printing' ? t('settings.printer.printing') : t('settings.printer.printTestPage')}</Text>
               </Pressable>
             </SettingPanel>
 
@@ -372,11 +393,23 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.colors.accent,
     marginTop: tokens.spacing.sm,
   },
+  testButtonDisabled: {
+    opacity: 0.72,
+  },
   testButtonText: {
     color: tokens.colors.inverse,
     fontSize: 14,
     lineHeight: 18,
     fontWeight: '800',
+  },
+  printerMessage: {
+    color: tokens.colors.muted,
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '600',
+  },
+  printerMessageError: {
+    color: tokens.colors.danger,
   },
   pressed: {
     opacity: 0.82,
