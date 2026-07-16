@@ -15,6 +15,8 @@ describe('checkout math', () => {
       adjustment: 0,
       adjustedSubtotal: 11.25,
       tax: 0.93,
+      serviceCharge: 0,
+      tip: 0,
       total: 12.18,
     });
   });
@@ -29,6 +31,8 @@ describe('checkout math', () => {
       adjustment: 0,
       adjustedSubtotal: 3.33,
       tax: 0.26,
+      serviceCharge: 0,
+      tip: 0,
       total: 3.59,
     });
   });
@@ -36,11 +40,13 @@ describe('checkout math', () => {
   it('calculates discount, fixed reduction, and price override totals', () => {
     const lines = [{ lineId: 'tea', productId: 'tea', name: 'Tea', quantity: 2, basePrice: 10, unitPrice: 10, modifiers: [] }];
 
-    assert.deepEqual(getCheckoutTotals(lines, 0, { type: 'discount', value: 90 }), {
+    assert.deepEqual(getCheckoutTotals(lines, 0, { type: 'discount', value: 10 }), {
       subtotal: 20,
       adjustment: 2,
       adjustedSubtotal: 18,
       tax: 0,
+      serviceCharge: 0,
+      tip: 0,
       total: 18,
     });
     assert.deepEqual(getCheckoutTotals(lines, 0, { type: 'fixed_reduction', value: 5 }), {
@@ -48,6 +54,8 @@ describe('checkout math', () => {
       adjustment: 5,
       adjustedSubtotal: 15,
       tax: 0,
+      serviceCharge: 0,
+      tip: 0,
       total: 15,
     });
     assert.deepEqual(getCheckoutTotals(lines, 0, { type: 'price_override', value: 12 }), {
@@ -55,7 +63,23 @@ describe('checkout math', () => {
       adjustment: 8,
       adjustedSubtotal: 12,
       tax: 0,
+      serviceCharge: 0,
+      tip: 0,
       total: 12,
+    });
+  });
+
+  it('calculates service charge and tip in the total', () => {
+    const lines = [{ lineId: 'tea', productId: 'tea', name: 'Tea', quantity: 1, basePrice: 20, unitPrice: 20, modifiers: [] }];
+
+    assert.deepEqual(getCheckoutTotals(lines, 0.1, { type: 'discount', value: 10 }, 0.05, 3), {
+      subtotal: 20,
+      adjustment: 2,
+      adjustedSubtotal: 18,
+      tax: 1.8,
+      serviceCharge: 0.9,
+      tip: 3,
+      total: 23.7,
     });
   });
 });

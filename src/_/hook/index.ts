@@ -12,6 +12,7 @@ export * from './product';
 export * from './product-modifier-group';
 export * from './product-modifier-option';
 export * from './order';
+export * from './business-day';
 export * from './order-payment';
 export * from './order-item';
 export * from './refund';

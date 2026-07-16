@@ -76,6 +76,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, businessDays: {
+                    name: "businessDays",
+                    type: "BusinessDay",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, cashMovements: {
                     name: "cashMovements",
                     type: "CashMovement",
@@ -233,6 +239,18 @@ const metadata: ModelMeta = {
                 }, closedShifts: {
                     name: "closedShifts",
                     type: "Shift",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'closedBy',
+                }, openedBusinessDays: {
+                    name: "openedBusinessDays",
+                    type: "BusinessDay",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'openedBy',
+                }, closedBusinessDays: {
+                    name: "closedBusinessDays",
+                    type: "BusinessDay",
                     isDataModel: true,
                     isArray: true,
                     backLink: 'closedBy',
@@ -660,6 +678,10 @@ const metadata: ModelMeta = {
                     name: "pickupNumber",
                     type: "String",
                     isOptional: true,
+                }, orderType: {
+                    name: "orderType",
+                    type: "OrderType",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, status: {
                     name: "status",
                     type: "OrderStatus",
@@ -691,8 +713,24 @@ const metadata: ModelMeta = {
                     name: "adjustmentValue",
                     type: "Decimal",
                     isOptional: true,
+                }, discountReason: {
+                    name: "discountReason",
+                    type: "String",
+                    isOptional: true,
+                }, taxRate: {
+                    name: "taxRate",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
                 }, tax: {
                     name: "tax",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, serviceChargeRate: {
+                    name: "serviceChargeRate",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, serviceCharge: {
+                    name: "serviceCharge",
                     type: "Decimal",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
                 }, tip: {
@@ -716,6 +754,14 @@ const metadata: ModelMeta = {
                     isOptional: true,
                 }, printedAt: {
                     name: "printedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, heldAt: {
+                    name: "heldAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, resumedAt: {
+                    name: "resumedAt",
                     type: "DateTime",
                     isOptional: true,
                 }, items: {
@@ -764,6 +810,104 @@ const metadata: ModelMeta = {
                 }, orderNumber: {
                     name: "orderNumber",
                     fields: ["orderNumber"]
+                },
+            },
+        },
+        businessDay: {
+            name: 'BusinessDay', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'businessDays',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, businessDate: {
+                    name: "businessDate",
+                    type: "DateTime",
+                }, status: {
+                    name: "status",
+                    type: "BusinessDayStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, openedAt: {
+                    name: "openedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, closedAt: {
+                    name: "closedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, openedByUserId: {
+                    name: "openedByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'openedBy',
+                }, openedBy: {
+                    name: "openedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'openedBusinessDays',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "openedByUserId" },
+                }, closedByUserId: {
+                    name: "closedByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'closedBy',
+                }, closedBy: {
+                    name: "closedBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'closedBusinessDays',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "closedByUserId" },
+                }, orderCount: {
+                    name: "orderCount",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, grossSales: {
+                    name: "grossSales",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, refundTotal: {
+                    name: "refundTotal",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, netSales: {
+                    name: "netSales",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, notes: {
+                    name: "notes",
+                    type: "String",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
                 },
             },
         },

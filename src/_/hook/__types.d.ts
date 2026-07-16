@@ -55,6 +55,11 @@ export type ProductModifierOption = $Result.DefaultSelection<Prisma.$ProductModi
  */
 export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
 /**
+ * Model BusinessDay
+ * 
+ */
+export type BusinessDay = $Result.DefaultSelection<Prisma.$BusinessDayPayload>
+/**
  * Model OrderPayment
  * 
  */
@@ -151,6 +156,7 @@ export type AiExecution = $Result.DefaultSelection<Prisma.$AiExecutionPayload>
 export namespace $Enums {
     export const OrderStatus: {
         OPEN: 'OPEN',
+        HELD: 'HELD',
         PAID: 'PAID',
         CANCELLED: 'CANCELLED',
         VOIDED: 'VOIDED',
@@ -159,6 +165,15 @@ export namespace $Enums {
     };
 
     export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+    export const OrderType: {
+        DINE_IN: 'DINE_IN',
+        TAKEAWAY: 'TAKEAWAY',
+        PICKUP: 'PICKUP'
+    };
+
+    export type OrderType = (typeof OrderType)[keyof typeof OrderType]
 
 
     export const PrintStatus: {
@@ -190,10 +205,20 @@ export namespace $Enums {
     export const OrderAuditAction: {
         CANCELLED: 'CANCELLED',
         VOIDED: 'VOIDED',
-        REFUNDED: 'REFUNDED'
+        REFUNDED: 'REFUNDED',
+        HELD: 'HELD',
+        RESUMED: 'RESUMED'
     };
 
     export type OrderAuditAction = (typeof OrderAuditAction)[keyof typeof OrderAuditAction]
+
+
+    export const BusinessDayStatus: {
+        OPEN: 'OPEN',
+        CLOSED: 'CLOSED'
+    };
+
+    export type BusinessDayStatus = (typeof BusinessDayStatus)[keyof typeof BusinessDayStatus]
 
 
     export const ShiftStatus: {
@@ -407,6 +432,10 @@ export type OrderStatus = $Enums.OrderStatus
 
 export const OrderStatus: typeof $Enums.OrderStatus
 
+export type OrderType = $Enums.OrderType
+
+export const OrderType: typeof $Enums.OrderType
+
 export type PrintStatus = $Enums.PrintStatus
 
 export const PrintStatus: typeof $Enums.PrintStatus
@@ -422,6 +451,10 @@ export const RefundStatus: typeof $Enums.RefundStatus
 export type OrderAuditAction = $Enums.OrderAuditAction
 
 export const OrderAuditAction: typeof $Enums.OrderAuditAction
+
+export type BusinessDayStatus = $Enums.BusinessDayStatus
+
+export const BusinessDayStatus: typeof $Enums.BusinessDayStatus
 
 export type ShiftStatus = $Enums.ShiftStatus
 
@@ -715,6 +748,16 @@ export class PrismaClient<
       * ```
       */
     get order(): Prisma.OrderDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.businessDay`: Exposes CRUD operations for the **BusinessDay** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more BusinessDays
+      * const businessDays = await prisma.businessDay.findMany()
+      * ```
+      */
+    get businessDay(): Prisma.BusinessDayDelegate<ExtArgs, ClientOptions>;
 
     /**
      * `prisma.orderPayment`: Exposes CRUD operations for the **OrderPayment** model.
@@ -1343,6 +1386,7 @@ export namespace Prisma {
         ProductModifierGroup: 'ProductModifierGroup',
         ProductModifierOption: 'ProductModifierOption',
         Order: 'Order',
+        BusinessDay: 'BusinessDay',
         OrderPayment: 'OrderPayment',
         OrderItem: 'OrderItem',
         Refund: 'Refund',
@@ -1379,7 +1423,7 @@ export namespace Prisma {
             omit: GlobalOmitOptions
         }
         meta: {
-            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "kitchenStation" | "kitchenTicket" | "kitchenTicketItem" | "printer" | "printerRoute" | "printJob" | "aiDraft" | "campaign" | "aiConversation" | "aiMessage" | "aiExecution"
+            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "businessDay" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "kitchenStation" | "kitchenTicket" | "kitchenTicketItem" | "printer" | "printerRoute" | "printJob" | "aiDraft" | "campaign" | "aiConversation" | "aiMessage" | "aiExecution"
             txIsolationLevel: Prisma.TransactionIsolationLevel
         }
         model: {
@@ -1908,6 +1952,72 @@ export namespace Prisma {
                     count: {
                         args: Prisma.OrderCountArgs<ExtArgs>
                         result: $Utils.Optional<OrderCountAggregateOutputType> | number
+                    }
+                }
+            }
+            BusinessDay: {
+                payload: Prisma.$BusinessDayPayload<ExtArgs>
+                fields: Prisma.BusinessDayFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.BusinessDayFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.BusinessDayFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.BusinessDayFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.BusinessDayFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    findMany: {
+                        args: Prisma.BusinessDayFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>[]
+                    }
+                    create: {
+                        args: Prisma.BusinessDayCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    createMany: {
+                        args: Prisma.BusinessDayCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.BusinessDayDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    update: {
+                        args: Prisma.BusinessDayUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.BusinessDayDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.BusinessDayUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.BusinessDayUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$BusinessDayPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.BusinessDayAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateBusinessDay>
+                    }
+                    groupBy: {
+                        args: Prisma.BusinessDayGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<BusinessDayGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.BusinessDayCountArgs<ExtArgs>
+                        result: $Utils.Optional<BusinessDayCountAggregateOutputType> | number
                     }
                 }
             }
@@ -3191,6 +3301,7 @@ export namespace Prisma {
         productModifierGroup?: ProductModifierGroupOmit
         productModifierOption?: ProductModifierOptionOmit
         order?: OrderOmit
+        businessDay?: BusinessDayOmit
         orderPayment?: OrderPaymentOmit
         orderItem?: OrderItemOmit
         refund?: RefundOmit
@@ -3310,6 +3421,7 @@ export namespace Prisma {
         refunds: number
         auditLogs: number
         shifts: number
+        businessDays: number
         cashMovements: number
         kitchenStations: number
         kitchenTickets: number
@@ -3332,6 +3444,7 @@ export namespace Prisma {
         refunds?: boolean | StoreCountOutputTypeCountRefundsArgs
         auditLogs?: boolean | StoreCountOutputTypeCountAuditLogsArgs
         shifts?: boolean | StoreCountOutputTypeCountShiftsArgs
+        businessDays?: boolean | StoreCountOutputTypeCountBusinessDaysArgs
         cashMovements?: boolean | StoreCountOutputTypeCountCashMovementsArgs
         kitchenStations?: boolean | StoreCountOutputTypeCountKitchenStationsArgs
         kitchenTickets?: boolean | StoreCountOutputTypeCountKitchenTicketsArgs
@@ -3404,6 +3517,13 @@ export namespace Prisma {
      */
     export type StoreCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: ShiftWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountBusinessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: BusinessDayWhereInput
     }
 
     /**
@@ -3504,6 +3624,8 @@ export namespace Prisma {
         shifts: number
         openedShifts: number
         closedShifts: number
+        openedBusinessDays: number
+        closedBusinessDays: number
         cashMovements: number
         createdKitchenTickets: number
         requestedPrintJobs: number
@@ -3520,6 +3642,8 @@ export namespace Prisma {
         shifts?: boolean | UserCountOutputTypeCountShiftsArgs
         openedShifts?: boolean | UserCountOutputTypeCountOpenedShiftsArgs
         closedShifts?: boolean | UserCountOutputTypeCountClosedShiftsArgs
+        openedBusinessDays?: boolean | UserCountOutputTypeCountOpenedBusinessDaysArgs
+        closedBusinessDays?: boolean | UserCountOutputTypeCountClosedBusinessDaysArgs
         cashMovements?: boolean | UserCountOutputTypeCountCashMovementsArgs
         createdKitchenTickets?: boolean | UserCountOutputTypeCountCreatedKitchenTicketsArgs
         requestedPrintJobs?: boolean | UserCountOutputTypeCountRequestedPrintJobsArgs
@@ -3592,6 +3716,20 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeCountClosedShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: ShiftWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountOpenedBusinessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: BusinessDayWhereInput
+    }
+
+    /**
+     * UserCountOutputType without action
+     */
+    export type UserCountOutputTypeCountClosedBusinessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: BusinessDayWhereInput
     }
 
     /**
@@ -4322,6 +4460,7 @@ export namespace Prisma {
         refunds?: boolean | Store$refundsArgs<ExtArgs>
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         shifts?: boolean | Store$shiftsArgs<ExtArgs>
+        businessDays?: boolean | Store$businessDaysArgs<ExtArgs>
         cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
         kitchenStations?: boolean | Store$kitchenStationsArgs<ExtArgs>
         kitchenTickets?: boolean | Store$kitchenTicketsArgs<ExtArgs>
@@ -4359,6 +4498,7 @@ export namespace Prisma {
         refunds?: boolean | Store$refundsArgs<ExtArgs>
         auditLogs?: boolean | Store$auditLogsArgs<ExtArgs>
         shifts?: boolean | Store$shiftsArgs<ExtArgs>
+        businessDays?: boolean | Store$businessDaysArgs<ExtArgs>
         cashMovements?: boolean | Store$cashMovementsArgs<ExtArgs>
         kitchenStations?: boolean | Store$kitchenStationsArgs<ExtArgs>
         kitchenTickets?: boolean | Store$kitchenTicketsArgs<ExtArgs>
@@ -4384,6 +4524,7 @@ export namespace Prisma {
             refunds: Prisma.$RefundPayload<ExtArgs>[]
             auditLogs: Prisma.$OrderAuditLogPayload<ExtArgs>[]
             shifts: Prisma.$ShiftPayload<ExtArgs>[]
+            businessDays: Prisma.$BusinessDayPayload<ExtArgs>[]
             cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
             kitchenStations: Prisma.$KitchenStationPayload<ExtArgs>[]
             kitchenTickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
@@ -4753,6 +4894,7 @@ export namespace Prisma {
         refunds<T extends Store$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Store$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         auditLogs<T extends Store$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Store$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         shifts<T extends Store$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, Store$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        businessDays<T extends Store$businessDaysArgs<ExtArgs> = {}>(args?: Subset<T, Store$businessDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         cashMovements<T extends Store$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Store$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         kitchenStations<T extends Store$kitchenStationsArgs<ExtArgs> = {}>(args?: Subset<T, Store$kitchenStationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenStationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         kitchenTickets<T extends Store$kitchenTicketsArgs<ExtArgs> = {}>(args?: Subset<T, Store$kitchenTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5313,6 +5455,30 @@ export namespace Prisma {
     }
 
     /**
+     * Store.businessDays
+     */
+    export type Store$businessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        where?: BusinessDayWhereInput
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        cursor?: BusinessDayWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
+    }
+
+    /**
      * Store.cashMovements
      */
     export type Store$cashMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5807,6 +5973,8 @@ export namespace Prisma {
         shifts?: boolean | User$shiftsArgs<ExtArgs>
         openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
         closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
+        openedBusinessDays?: boolean | User$openedBusinessDaysArgs<ExtArgs>
+        closedBusinessDays?: boolean | User$closedBusinessDaysArgs<ExtArgs>
         cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
         createdKitchenTickets?: boolean | User$createdKitchenTicketsArgs<ExtArgs>
         requestedPrintJobs?: boolean | User$requestedPrintJobsArgs<ExtArgs>
@@ -5837,6 +6005,8 @@ export namespace Prisma {
         shifts?: boolean | User$shiftsArgs<ExtArgs>
         openedShifts?: boolean | User$openedShiftsArgs<ExtArgs>
         closedShifts?: boolean | User$closedShiftsArgs<ExtArgs>
+        openedBusinessDays?: boolean | User$openedBusinessDaysArgs<ExtArgs>
+        closedBusinessDays?: boolean | User$closedBusinessDaysArgs<ExtArgs>
         cashMovements?: boolean | User$cashMovementsArgs<ExtArgs>
         createdKitchenTickets?: boolean | User$createdKitchenTicketsArgs<ExtArgs>
         requestedPrintJobs?: boolean | User$requestedPrintJobsArgs<ExtArgs>
@@ -5856,6 +6026,8 @@ export namespace Prisma {
             shifts: Prisma.$ShiftPayload<ExtArgs>[]
             openedShifts: Prisma.$ShiftPayload<ExtArgs>[]
             closedShifts: Prisma.$ShiftPayload<ExtArgs>[]
+            openedBusinessDays: Prisma.$BusinessDayPayload<ExtArgs>[]
+            closedBusinessDays: Prisma.$BusinessDayPayload<ExtArgs>[]
             cashMovements: Prisma.$CashMovementPayload<ExtArgs>[]
             createdKitchenTickets: Prisma.$KitchenTicketPayload<ExtArgs>[]
             requestedPrintJobs: Prisma.$PrintJobPayload<ExtArgs>[]
@@ -6218,6 +6390,8 @@ export namespace Prisma {
         shifts<T extends User$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         openedShifts<T extends User$openedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$openedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         closedShifts<T extends User$closedShiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$closedShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        openedBusinessDays<T extends User$openedBusinessDaysArgs<ExtArgs> = {}>(args?: Subset<T, User$openedBusinessDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        closedBusinessDays<T extends User$closedBusinessDaysArgs<ExtArgs> = {}>(args?: Subset<T, User$closedBusinessDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         cashMovements<T extends User$cashMovementsArgs<ExtArgs> = {}>(args?: Subset<T, User$cashMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         createdKitchenTickets<T extends User$createdKitchenTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdKitchenTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KitchenTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         requestedPrintJobs<T extends User$requestedPrintJobsArgs<ExtArgs> = {}>(args?: Subset<T, User$requestedPrintJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrintJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6791,6 +6965,54 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+    }
+
+    /**
+     * User.openedBusinessDays
+     */
+    export type User$openedBusinessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        where?: BusinessDayWhereInput
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        cursor?: BusinessDayWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
+    }
+
+    /**
+     * User.closedBusinessDays
+     */
+    export type User$closedBusinessDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        where?: BusinessDayWhereInput
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        cursor?: BusinessDayWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
     }
 
     /**
@@ -12193,7 +12415,10 @@ export namespace Prisma {
         subtotal: Decimal | null
         adjustment: Decimal | null
         adjustmentValue: Decimal | null
+        taxRate: Decimal | null
         tax: Decimal | null
+        serviceChargeRate: Decimal | null
+        serviceCharge: Decimal | null
         tip: Decimal | null
         total: Decimal | null
         cashReceived: Decimal | null
@@ -12204,7 +12429,10 @@ export namespace Prisma {
         subtotal: Decimal | null
         adjustment: Decimal | null
         adjustmentValue: Decimal | null
+        taxRate: Decimal | null
         tax: Decimal | null
+        serviceChargeRate: Decimal | null
+        serviceCharge: Decimal | null
         tip: Decimal | null
         total: Decimal | null
         cashReceived: Decimal | null
@@ -12216,6 +12444,7 @@ export namespace Prisma {
         storeId: string | null
         orderNumber: string | null
         pickupNumber: string | null
+        orderType: $Enums.OrderType | null
         status: $Enums.OrderStatus | null
         printStatus: $Enums.PrintStatus | null
         paymentMethod: $Enums.PaymentMethod | null
@@ -12224,13 +12453,19 @@ export namespace Prisma {
         adjustment: Decimal | null
         adjustmentType: string | null
         adjustmentValue: Decimal | null
+        discountReason: string | null
+        taxRate: Decimal | null
         tax: Decimal | null
+        serviceChargeRate: Decimal | null
+        serviceCharge: Decimal | null
         tip: Decimal | null
         total: Decimal | null
         cashReceived: Decimal | null
         changeDue: Decimal | null
         paidAt: Date | null
         printedAt: Date | null
+        heldAt: Date | null
+        resumedAt: Date | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -12240,6 +12475,7 @@ export namespace Prisma {
         storeId: string | null
         orderNumber: string | null
         pickupNumber: string | null
+        orderType: $Enums.OrderType | null
         status: $Enums.OrderStatus | null
         printStatus: $Enums.PrintStatus | null
         paymentMethod: $Enums.PaymentMethod | null
@@ -12248,13 +12484,19 @@ export namespace Prisma {
         adjustment: Decimal | null
         adjustmentType: string | null
         adjustmentValue: Decimal | null
+        discountReason: string | null
+        taxRate: Decimal | null
         tax: Decimal | null
+        serviceChargeRate: Decimal | null
+        serviceCharge: Decimal | null
         tip: Decimal | null
         total: Decimal | null
         cashReceived: Decimal | null
         changeDue: Decimal | null
         paidAt: Date | null
         printedAt: Date | null
+        heldAt: Date | null
+        resumedAt: Date | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -12264,6 +12506,7 @@ export namespace Prisma {
         storeId: number
         orderNumber: number
         pickupNumber: number
+        orderType: number
         status: number
         printStatus: number
         paymentMethod: number
@@ -12272,13 +12515,19 @@ export namespace Prisma {
         adjustment: number
         adjustmentType: number
         adjustmentValue: number
+        discountReason: number
+        taxRate: number
         tax: number
+        serviceChargeRate: number
+        serviceCharge: number
         tip: number
         total: number
         cashReceived: number
         changeDue: number
         paidAt: number
         printedAt: number
+        heldAt: number
+        resumedAt: number
         createdAt: number
         updatedAt: number
         _all: number
@@ -12289,7 +12538,10 @@ export namespace Prisma {
         subtotal?: true
         adjustment?: true
         adjustmentValue?: true
+        taxRate?: true
         tax?: true
+        serviceChargeRate?: true
+        serviceCharge?: true
         tip?: true
         total?: true
         cashReceived?: true
@@ -12300,7 +12552,10 @@ export namespace Prisma {
         subtotal?: true
         adjustment?: true
         adjustmentValue?: true
+        taxRate?: true
         tax?: true
+        serviceChargeRate?: true
+        serviceCharge?: true
         tip?: true
         total?: true
         cashReceived?: true
@@ -12312,6 +12567,7 @@ export namespace Prisma {
         storeId?: true
         orderNumber?: true
         pickupNumber?: true
+        orderType?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12320,13 +12576,19 @@ export namespace Prisma {
         adjustment?: true
         adjustmentType?: true
         adjustmentValue?: true
+        discountReason?: true
+        taxRate?: true
         tax?: true
+        serviceChargeRate?: true
+        serviceCharge?: true
         tip?: true
         total?: true
         cashReceived?: true
         changeDue?: true
         paidAt?: true
         printedAt?: true
+        heldAt?: true
+        resumedAt?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -12336,6 +12598,7 @@ export namespace Prisma {
         storeId?: true
         orderNumber?: true
         pickupNumber?: true
+        orderType?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12344,13 +12607,19 @@ export namespace Prisma {
         adjustment?: true
         adjustmentType?: true
         adjustmentValue?: true
+        discountReason?: true
+        taxRate?: true
         tax?: true
+        serviceChargeRate?: true
+        serviceCharge?: true
         tip?: true
         total?: true
         cashReceived?: true
         changeDue?: true
         paidAt?: true
         printedAt?: true
+        heldAt?: true
+        resumedAt?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -12360,6 +12629,7 @@ export namespace Prisma {
         storeId?: true
         orderNumber?: true
         pickupNumber?: true
+        orderType?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12368,13 +12638,19 @@ export namespace Prisma {
         adjustment?: true
         adjustmentType?: true
         adjustmentValue?: true
+        discountReason?: true
+        taxRate?: true
         tax?: true
+        serviceChargeRate?: true
+        serviceCharge?: true
         tip?: true
         total?: true
         cashReceived?: true
         changeDue?: true
         paidAt?: true
         printedAt?: true
+        heldAt?: true
+        resumedAt?: true
         createdAt?: true
         updatedAt?: true
         _all?: true
@@ -12471,6 +12747,7 @@ export namespace Prisma {
         storeId: string | null
         orderNumber: string
         pickupNumber: string | null
+        orderType: $Enums.OrderType
         status: $Enums.OrderStatus
         printStatus: $Enums.PrintStatus
         paymentMethod: $Enums.PaymentMethod | null
@@ -12479,13 +12756,19 @@ export namespace Prisma {
         adjustment: Decimal
         adjustmentType: string | null
         adjustmentValue: Decimal | null
+        discountReason: string | null
+        taxRate: Decimal
         tax: Decimal
+        serviceChargeRate: Decimal
+        serviceCharge: Decimal
         tip: Decimal
         total: Decimal
         cashReceived: Decimal | null
         changeDue: Decimal | null
         paidAt: Date | null
         printedAt: Date | null
+        heldAt: Date | null
+        resumedAt: Date | null
         createdAt: Date
         updatedAt: Date
         _count: OrderCountAggregateOutputType | null
@@ -12514,6 +12797,7 @@ export namespace Prisma {
         storeId?: boolean
         orderNumber?: boolean
         pickupNumber?: boolean
+        orderType?: boolean
         status?: boolean
         printStatus?: boolean
         paymentMethod?: boolean
@@ -12522,13 +12806,19 @@ export namespace Prisma {
         adjustment?: boolean
         adjustmentType?: boolean
         adjustmentValue?: boolean
+        discountReason?: boolean
+        taxRate?: boolean
         tax?: boolean
+        serviceChargeRate?: boolean
+        serviceCharge?: boolean
         tip?: boolean
         total?: boolean
         cashReceived?: boolean
         changeDue?: boolean
         paidAt?: boolean
         printedAt?: boolean
+        heldAt?: boolean
+        resumedAt?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         store?: boolean | Order$storeArgs<ExtArgs>
@@ -12547,6 +12837,7 @@ export namespace Prisma {
         storeId?: boolean
         orderNumber?: boolean
         pickupNumber?: boolean
+        orderType?: boolean
         status?: boolean
         printStatus?: boolean
         paymentMethod?: boolean
@@ -12555,18 +12846,24 @@ export namespace Prisma {
         adjustment?: boolean
         adjustmentType?: boolean
         adjustmentValue?: boolean
+        discountReason?: boolean
+        taxRate?: boolean
         tax?: boolean
+        serviceChargeRate?: boolean
+        serviceCharge?: boolean
         tip?: boolean
         total?: boolean
         cashReceived?: boolean
         changeDue?: boolean
         paidAt?: boolean
         printedAt?: boolean
+        heldAt?: boolean
+        resumedAt?: boolean
         createdAt?: boolean
         updatedAt?: boolean
     }
 
-    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "adjustmentType" | "adjustmentValue" | "tax" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "orderType" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "adjustmentType" | "adjustmentValue" | "discountReason" | "taxRate" | "tax" | "serviceChargeRate" | "serviceCharge" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "heldAt" | "resumedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
     export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | Order$storeArgs<ExtArgs>
         items?: boolean | Order$itemsArgs<ExtArgs>
@@ -12592,6 +12889,7 @@ export namespace Prisma {
             storeId: string | null
             orderNumber: string
             pickupNumber: string | null
+            orderType: $Enums.OrderType
             status: $Enums.OrderStatus
             printStatus: $Enums.PrintStatus
             paymentMethod: $Enums.PaymentMethod | null
@@ -12600,13 +12898,19 @@ export namespace Prisma {
             adjustment: Prisma.Decimal
             adjustmentType: string | null
             adjustmentValue: Prisma.Decimal | null
+            discountReason: string | null
+            taxRate: Prisma.Decimal
             tax: Prisma.Decimal
+            serviceChargeRate: Prisma.Decimal
+            serviceCharge: Prisma.Decimal
             tip: Prisma.Decimal
             total: Prisma.Decimal
             cashReceived: Prisma.Decimal | null
             changeDue: Prisma.Decimal | null
             paidAt: Date | null
             printedAt: Date | null
+            heldAt: Date | null
+            resumedAt: Date | null
             createdAt: Date
             updatedAt: Date
         }, ExtArgs["result"]["order"]>
@@ -12988,6 +13292,7 @@ export namespace Prisma {
         readonly storeId: FieldRef<"Order", 'String'>
         readonly orderNumber: FieldRef<"Order", 'String'>
         readonly pickupNumber: FieldRef<"Order", 'String'>
+        readonly orderType: FieldRef<"Order", 'OrderType'>
         readonly status: FieldRef<"Order", 'OrderStatus'>
         readonly printStatus: FieldRef<"Order", 'PrintStatus'>
         readonly paymentMethod: FieldRef<"Order", 'PaymentMethod'>
@@ -12996,13 +13301,19 @@ export namespace Prisma {
         readonly adjustment: FieldRef<"Order", 'Decimal'>
         readonly adjustmentType: FieldRef<"Order", 'String'>
         readonly adjustmentValue: FieldRef<"Order", 'Decimal'>
+        readonly discountReason: FieldRef<"Order", 'String'>
+        readonly taxRate: FieldRef<"Order", 'Decimal'>
         readonly tax: FieldRef<"Order", 'Decimal'>
+        readonly serviceChargeRate: FieldRef<"Order", 'Decimal'>
+        readonly serviceCharge: FieldRef<"Order", 'Decimal'>
         readonly tip: FieldRef<"Order", 'Decimal'>
         readonly total: FieldRef<"Order", 'Decimal'>
         readonly cashReceived: FieldRef<"Order", 'Decimal'>
         readonly changeDue: FieldRef<"Order", 'Decimal'>
         readonly paidAt: FieldRef<"Order", 'DateTime'>
         readonly printedAt: FieldRef<"Order", 'DateTime'>
+        readonly heldAt: FieldRef<"Order", 'DateTime'>
+        readonly resumedAt: FieldRef<"Order", 'DateTime'>
         readonly createdAt: FieldRef<"Order", 'DateTime'>
         readonly updatedAt: FieldRef<"Order", 'DateTime'>
     }
@@ -13502,6 +13813,1137 @@ export namespace Prisma {
          * Choose, which related nodes to fetch as well
          */
         include?: OrderInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model BusinessDay
+     */
+
+    export type AggregateBusinessDay = {
+        _count: BusinessDayCountAggregateOutputType | null
+        _avg: BusinessDayAvgAggregateOutputType | null
+        _sum: BusinessDaySumAggregateOutputType | null
+        _min: BusinessDayMinAggregateOutputType | null
+        _max: BusinessDayMaxAggregateOutputType | null
+    }
+
+    export type BusinessDayAvgAggregateOutputType = {
+        orderCount: number | null
+        grossSales: Decimal | null
+        refundTotal: Decimal | null
+        netSales: Decimal | null
+    }
+
+    export type BusinessDaySumAggregateOutputType = {
+        orderCount: number | null
+        grossSales: Decimal | null
+        refundTotal: Decimal | null
+        netSales: Decimal | null
+    }
+
+    export type BusinessDayMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        businessDate: Date | null
+        status: $Enums.BusinessDayStatus | null
+        openedAt: Date | null
+        closedAt: Date | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        orderCount: number | null
+        grossSales: Decimal | null
+        refundTotal: Decimal | null
+        netSales: Decimal | null
+        notes: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type BusinessDayMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        businessDate: Date | null
+        status: $Enums.BusinessDayStatus | null
+        openedAt: Date | null
+        closedAt: Date | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        orderCount: number | null
+        grossSales: Decimal | null
+        refundTotal: Decimal | null
+        netSales: Decimal | null
+        notes: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type BusinessDayCountAggregateOutputType = {
+        id: number
+        storeId: number
+        businessDate: number
+        status: number
+        openedAt: number
+        closedAt: number
+        openedByUserId: number
+        closedByUserId: number
+        orderCount: number
+        grossSales: number
+        refundTotal: number
+        netSales: number
+        notes: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type BusinessDayAvgAggregateInputType = {
+        orderCount?: true
+        grossSales?: true
+        refundTotal?: true
+        netSales?: true
+    }
+
+    export type BusinessDaySumAggregateInputType = {
+        orderCount?: true
+        grossSales?: true
+        refundTotal?: true
+        netSales?: true
+    }
+
+    export type BusinessDayMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        businessDate?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        orderCount?: true
+        grossSales?: true
+        refundTotal?: true
+        netSales?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type BusinessDayMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        businessDate?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        orderCount?: true
+        grossSales?: true
+        refundTotal?: true
+        netSales?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type BusinessDayCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        businessDate?: true
+        status?: true
+        openedAt?: true
+        closedAt?: true
+        openedByUserId?: true
+        closedByUserId?: true
+        orderCount?: true
+        grossSales?: true
+        refundTotal?: true
+        netSales?: true
+        notes?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type BusinessDayAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which BusinessDay to aggregate.
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of BusinessDays to fetch.
+         */
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: BusinessDayWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` BusinessDays from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` BusinessDays.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned BusinessDays
+        **/
+        _count?: true | BusinessDayCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: BusinessDayAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: BusinessDaySumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: BusinessDayMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: BusinessDayMaxAggregateInputType
+    }
+
+    export type GetBusinessDayAggregateType<T extends BusinessDayAggregateArgs> = {
+        [P in keyof T & keyof AggregateBusinessDay]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBusinessDay[P]>
+        : GetScalarType<T[P], AggregateBusinessDay[P]>
+    }
+
+
+
+
+    export type BusinessDayGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: BusinessDayWhereInput
+        orderBy?: BusinessDayOrderByWithAggregationInput | BusinessDayOrderByWithAggregationInput[]
+        by: BusinessDayScalarFieldEnum[] | BusinessDayScalarFieldEnum
+        having?: BusinessDayScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: BusinessDayCountAggregateInputType | true
+        _avg?: BusinessDayAvgAggregateInputType
+        _sum?: BusinessDaySumAggregateInputType
+        _min?: BusinessDayMinAggregateInputType
+        _max?: BusinessDayMaxAggregateInputType
+    }
+
+    export type BusinessDayGroupByOutputType = {
+        id: string
+        storeId: string
+        businessDate: Date
+        status: $Enums.BusinessDayStatus
+        openedAt: Date
+        closedAt: Date | null
+        openedByUserId: string | null
+        closedByUserId: string | null
+        orderCount: number
+        grossSales: Decimal
+        refundTotal: Decimal
+        netSales: Decimal
+        notes: string | null
+        createdAt: Date
+        updatedAt: Date
+        _count: BusinessDayCountAggregateOutputType | null
+        _avg: BusinessDayAvgAggregateOutputType | null
+        _sum: BusinessDaySumAggregateOutputType | null
+        _min: BusinessDayMinAggregateOutputType | null
+        _max: BusinessDayMaxAggregateOutputType | null
+    }
+
+    type GetBusinessDayGroupByPayload<T extends BusinessDayGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<BusinessDayGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof BusinessDayGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], BusinessDayGroupByOutputType[P]>
+                : GetScalarType<T[P], BusinessDayGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type BusinessDaySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        businessDate?: boolean
+        status?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
+        openedByUserId?: boolean
+        closedByUserId?: boolean
+        orderCount?: boolean
+        grossSales?: boolean
+        refundTotal?: boolean
+        netSales?: boolean
+        notes?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        openedBy?: boolean | BusinessDay$openedByArgs<ExtArgs>
+        closedBy?: boolean | BusinessDay$closedByArgs<ExtArgs>
+    }, ExtArgs["result"]["businessDay"]>
+
+
+
+    export type BusinessDaySelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        businessDate?: boolean
+        status?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
+        openedByUserId?: boolean
+        closedByUserId?: boolean
+        orderCount?: boolean
+        grossSales?: boolean
+        refundTotal?: boolean
+        netSales?: boolean
+        notes?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type BusinessDayOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "businessDate" | "status" | "openedAt" | "closedAt" | "openedByUserId" | "closedByUserId" | "orderCount" | "grossSales" | "refundTotal" | "netSales" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["businessDay"]>
+    export type BusinessDayInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        openedBy?: boolean | BusinessDay$openedByArgs<ExtArgs>
+        closedBy?: boolean | BusinessDay$closedByArgs<ExtArgs>
+    }
+
+    export type $BusinessDayPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "BusinessDay"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            openedBy: Prisma.$UserPayload<ExtArgs> | null
+            closedBy: Prisma.$UserPayload<ExtArgs> | null
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            businessDate: Date
+            status: $Enums.BusinessDayStatus
+            openedAt: Date
+            closedAt: Date | null
+            openedByUserId: string | null
+            closedByUserId: string | null
+            orderCount: number
+            grossSales: Prisma.Decimal
+            refundTotal: Prisma.Decimal
+            netSales: Prisma.Decimal
+            notes: string | null
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["businessDay"]>
+        composites: {}
+    }
+
+    type BusinessDayGetPayload<S extends boolean | null | undefined | BusinessDayDefaultArgs> = $Result.GetResult<Prisma.$BusinessDayPayload, S>
+
+    type BusinessDayCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<BusinessDayFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: BusinessDayCountAggregateInputType | true
+        }
+
+    export interface BusinessDayDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BusinessDay'], meta: { name: 'BusinessDay' } }
+        /**
+         * Find zero or one BusinessDay that matches the filter.
+         * @param {BusinessDayFindUniqueArgs} args - Arguments to find a BusinessDay
+         * @example
+         * // Get one BusinessDay
+         * const businessDay = await prisma.businessDay.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends BusinessDayFindUniqueArgs>(args: SelectSubset<T, BusinessDayFindUniqueArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one BusinessDay that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {BusinessDayFindUniqueOrThrowArgs} args - Arguments to find a BusinessDay
+         * @example
+         * // Get one BusinessDay
+         * const businessDay = await prisma.businessDay.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends BusinessDayFindUniqueOrThrowArgs>(args: SelectSubset<T, BusinessDayFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first BusinessDay that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayFindFirstArgs} args - Arguments to find a BusinessDay
+         * @example
+         * // Get one BusinessDay
+         * const businessDay = await prisma.businessDay.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends BusinessDayFindFirstArgs>(args?: SelectSubset<T, BusinessDayFindFirstArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first BusinessDay that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayFindFirstOrThrowArgs} args - Arguments to find a BusinessDay
+         * @example
+         * // Get one BusinessDay
+         * const businessDay = await prisma.businessDay.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends BusinessDayFindFirstOrThrowArgs>(args?: SelectSubset<T, BusinessDayFindFirstOrThrowArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more BusinessDays that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all BusinessDays
+         * const businessDays = await prisma.businessDay.findMany()
+         * 
+         * // Get first 10 BusinessDays
+         * const businessDays = await prisma.businessDay.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const businessDayWithIdOnly = await prisma.businessDay.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends BusinessDayFindManyArgs>(args?: SelectSubset<T, BusinessDayFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a BusinessDay.
+         * @param {BusinessDayCreateArgs} args - Arguments to create a BusinessDay.
+         * @example
+         * // Create one BusinessDay
+         * const BusinessDay = await prisma.businessDay.create({
+         *   data: {
+         *     // ... data to create a BusinessDay
+         *   }
+         * })
+         * 
+         */
+        create<T extends BusinessDayCreateArgs>(args: SelectSubset<T, BusinessDayCreateArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many BusinessDays.
+         * @param {BusinessDayCreateManyArgs} args - Arguments to create many BusinessDays.
+         * @example
+         * // Create many BusinessDays
+         * const businessDay = await prisma.businessDay.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends BusinessDayCreateManyArgs>(args?: SelectSubset<T, BusinessDayCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a BusinessDay.
+         * @param {BusinessDayDeleteArgs} args - Arguments to delete one BusinessDay.
+         * @example
+         * // Delete one BusinessDay
+         * const BusinessDay = await prisma.businessDay.delete({
+         *   where: {
+         *     // ... filter to delete one BusinessDay
+         *   }
+         * })
+         * 
+         */
+        delete<T extends BusinessDayDeleteArgs>(args: SelectSubset<T, BusinessDayDeleteArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one BusinessDay.
+         * @param {BusinessDayUpdateArgs} args - Arguments to update one BusinessDay.
+         * @example
+         * // Update one BusinessDay
+         * const businessDay = await prisma.businessDay.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends BusinessDayUpdateArgs>(args: SelectSubset<T, BusinessDayUpdateArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more BusinessDays.
+         * @param {BusinessDayDeleteManyArgs} args - Arguments to filter BusinessDays to delete.
+         * @example
+         * // Delete a few BusinessDays
+         * const { count } = await prisma.businessDay.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends BusinessDayDeleteManyArgs>(args?: SelectSubset<T, BusinessDayDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more BusinessDays.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many BusinessDays
+         * const businessDay = await prisma.businessDay.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends BusinessDayUpdateManyArgs>(args: SelectSubset<T, BusinessDayUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one BusinessDay.
+         * @param {BusinessDayUpsertArgs} args - Arguments to update or create a BusinessDay.
+         * @example
+         * // Update or create a BusinessDay
+         * const businessDay = await prisma.businessDay.upsert({
+         *   create: {
+         *     // ... data to create a BusinessDay
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the BusinessDay we want to update
+         *   }
+         * })
+         */
+        upsert<T extends BusinessDayUpsertArgs>(args: SelectSubset<T, BusinessDayUpsertArgs<ExtArgs>>): Prisma__BusinessDayClient<$Result.GetResult<Prisma.$BusinessDayPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of BusinessDays.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayCountArgs} args - Arguments to filter BusinessDays to count.
+         * @example
+         * // Count the number of BusinessDays
+         * const count = await prisma.businessDay.count({
+         *   where: {
+         *     // ... the filter for the BusinessDays we want to count
+         *   }
+         * })
+        **/
+        count<T extends BusinessDayCountArgs>(
+            args?: Subset<T, BusinessDayCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], BusinessDayCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a BusinessDay.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends BusinessDayAggregateArgs>(args: Subset<T, BusinessDayAggregateArgs>): Prisma.PrismaPromise<GetBusinessDayAggregateType<T>>
+
+        /**
+         * Group by BusinessDay.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {BusinessDayGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends BusinessDayGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: BusinessDayGroupByArgs['orderBy'] }
+            : { orderBy?: BusinessDayGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, BusinessDayGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBusinessDayGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the BusinessDay model
+         */
+        readonly fields: BusinessDayFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for BusinessDay.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__BusinessDayClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        openedBy<T extends BusinessDay$openedByArgs<ExtArgs> = {}>(args?: Subset<T, BusinessDay$openedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        closedBy<T extends BusinessDay$closedByArgs<ExtArgs> = {}>(args?: Subset<T, BusinessDay$closedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the BusinessDay model
+     */
+    interface BusinessDayFieldRefs {
+        readonly id: FieldRef<"BusinessDay", 'String'>
+        readonly storeId: FieldRef<"BusinessDay", 'String'>
+        readonly businessDate: FieldRef<"BusinessDay", 'DateTime'>
+        readonly status: FieldRef<"BusinessDay", 'BusinessDayStatus'>
+        readonly openedAt: FieldRef<"BusinessDay", 'DateTime'>
+        readonly closedAt: FieldRef<"BusinessDay", 'DateTime'>
+        readonly openedByUserId: FieldRef<"BusinessDay", 'String'>
+        readonly closedByUserId: FieldRef<"BusinessDay", 'String'>
+        readonly orderCount: FieldRef<"BusinessDay", 'Int'>
+        readonly grossSales: FieldRef<"BusinessDay", 'Decimal'>
+        readonly refundTotal: FieldRef<"BusinessDay", 'Decimal'>
+        readonly netSales: FieldRef<"BusinessDay", 'Decimal'>
+        readonly notes: FieldRef<"BusinessDay", 'String'>
+        readonly createdAt: FieldRef<"BusinessDay", 'DateTime'>
+        readonly updatedAt: FieldRef<"BusinessDay", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * BusinessDay findUnique
+     */
+    export type BusinessDayFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter, which BusinessDay to fetch.
+         */
+        where: BusinessDayWhereUniqueInput
+    }
+
+    /**
+     * BusinessDay findUniqueOrThrow
+     */
+    export type BusinessDayFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter, which BusinessDay to fetch.
+         */
+        where: BusinessDayWhereUniqueInput
+    }
+
+    /**
+     * BusinessDay findFirst
+     */
+    export type BusinessDayFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter, which BusinessDay to fetch.
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of BusinessDays to fetch.
+         */
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for BusinessDays.
+         */
+        cursor?: BusinessDayWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` BusinessDays from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` BusinessDays.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of BusinessDays.
+         */
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
+    }
+
+    /**
+     * BusinessDay findFirstOrThrow
+     */
+    export type BusinessDayFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter, which BusinessDay to fetch.
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of BusinessDays to fetch.
+         */
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for BusinessDays.
+         */
+        cursor?: BusinessDayWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` BusinessDays from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` BusinessDays.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of BusinessDays.
+         */
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
+    }
+
+    /**
+     * BusinessDay findMany
+     */
+    export type BusinessDayFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter, which BusinessDays to fetch.
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of BusinessDays to fetch.
+         */
+        orderBy?: BusinessDayOrderByWithRelationInput | BusinessDayOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing BusinessDays.
+         */
+        cursor?: BusinessDayWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` BusinessDays from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` BusinessDays.
+         */
+        skip?: number
+        distinct?: BusinessDayScalarFieldEnum | BusinessDayScalarFieldEnum[]
+    }
+
+    /**
+     * BusinessDay create
+     */
+    export type BusinessDayCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * The data needed to create a BusinessDay.
+         */
+        data: XOR<BusinessDayCreateInput, BusinessDayUncheckedCreateInput>
+    }
+
+    /**
+     * BusinessDay createMany
+     */
+    export type BusinessDayCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many BusinessDays.
+         */
+        data: BusinessDayCreateManyInput | BusinessDayCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * BusinessDay update
+     */
+    export type BusinessDayUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * The data needed to update a BusinessDay.
+         */
+        data: XOR<BusinessDayUpdateInput, BusinessDayUncheckedUpdateInput>
+        /**
+         * Choose, which BusinessDay to update.
+         */
+        where: BusinessDayWhereUniqueInput
+    }
+
+    /**
+     * BusinessDay updateMany
+     */
+    export type BusinessDayUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update BusinessDays.
+         */
+        data: XOR<BusinessDayUpdateManyMutationInput, BusinessDayUncheckedUpdateManyInput>
+        /**
+         * Filter which BusinessDays to update
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * Limit how many BusinessDays to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * BusinessDay upsert
+     */
+    export type BusinessDayUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * The filter to search for the BusinessDay to update in case it exists.
+         */
+        where: BusinessDayWhereUniqueInput
+        /**
+         * In case the BusinessDay found by the `where` argument doesn't exist, create a new BusinessDay with this data.
+         */
+        create: XOR<BusinessDayCreateInput, BusinessDayUncheckedCreateInput>
+        /**
+         * In case the BusinessDay was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<BusinessDayUpdateInput, BusinessDayUncheckedUpdateInput>
+    }
+
+    /**
+     * BusinessDay delete
+     */
+    export type BusinessDayDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
+        /**
+         * Filter which BusinessDay to delete.
+         */
+        where: BusinessDayWhereUniqueInput
+    }
+
+    /**
+     * BusinessDay deleteMany
+     */
+    export type BusinessDayDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which BusinessDays to delete
+         */
+        where?: BusinessDayWhereInput
+        /**
+         * Limit how many BusinessDays to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * BusinessDay.openedBy
+     */
+    export type BusinessDay$openedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * BusinessDay.closedBy
+     */
+    export type BusinessDay$closedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the User
+         */
+        select?: UserSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the User
+         */
+        omit?: UserOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: UserInclude<ExtArgs> | null
+        where?: UserWhereInput
+    }
+
+    /**
+     * BusinessDay without action
+     */
+    export type BusinessDayDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the BusinessDay
+         */
+        select?: BusinessDaySelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the BusinessDay
+         */
+        omit?: BusinessDayOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: BusinessDayInclude<ExtArgs> | null
     }
 
 
@@ -32909,6 +34351,7 @@ export namespace Prisma {
         storeId: 'storeId',
         orderNumber: 'orderNumber',
         pickupNumber: 'pickupNumber',
+        orderType: 'orderType',
         status: 'status',
         printStatus: 'printStatus',
         paymentMethod: 'paymentMethod',
@@ -32917,18 +34360,45 @@ export namespace Prisma {
         adjustment: 'adjustment',
         adjustmentType: 'adjustmentType',
         adjustmentValue: 'adjustmentValue',
+        discountReason: 'discountReason',
+        taxRate: 'taxRate',
         tax: 'tax',
+        serviceChargeRate: 'serviceChargeRate',
+        serviceCharge: 'serviceCharge',
         tip: 'tip',
         total: 'total',
         cashReceived: 'cashReceived',
         changeDue: 'changeDue',
         paidAt: 'paidAt',
         printedAt: 'printedAt',
+        heldAt: 'heldAt',
+        resumedAt: 'resumedAt',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt'
     };
 
     export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+    export const BusinessDayScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        businessDate: 'businessDate',
+        status: 'status',
+        openedAt: 'openedAt',
+        closedAt: 'closedAt',
+        openedByUserId: 'openedByUserId',
+        closedByUserId: 'closedByUserId',
+        orderCount: 'orderCount',
+        grossSales: 'grossSales',
+        refundTotal: 'refundTotal',
+        netSales: 'netSales',
+        notes: 'notes',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type BusinessDayScalarFieldEnum = (typeof BusinessDayScalarFieldEnum)[keyof typeof BusinessDayScalarFieldEnum]
 
 
     export const OrderPaymentScalarFieldEnum: {
@@ -33357,10 +34827,22 @@ export namespace Prisma {
         orderNumber: 'orderNumber',
         pickupNumber: 'pickupNumber',
         currency: 'currency',
-        adjustmentType: 'adjustmentType'
+        adjustmentType: 'adjustmentType',
+        discountReason: 'discountReason'
     };
 
     export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
+
+
+    export const BusinessDayOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        openedByUserId: 'openedByUserId',
+        closedByUserId: 'closedByUserId',
+        notes: 'notes'
+    };
+
+    export type BusinessDayOrderByRelevanceFieldEnum = (typeof BusinessDayOrderByRelevanceFieldEnum)[keyof typeof BusinessDayOrderByRelevanceFieldEnum]
 
 
     export const OrderPaymentOrderByRelevanceFieldEnum: {
@@ -33663,6 +35145,13 @@ export namespace Prisma {
 
 
     /**
+     * Reference to a field of type 'OrderType'
+     */
+    export type EnumOrderTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderType'>
+
+
+
+    /**
      * Reference to a field of type 'OrderStatus'
      */
     export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
@@ -33680,6 +35169,13 @@ export namespace Prisma {
      * Reference to a field of type 'PaymentMethod'
      */
     export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+
+
+
+    /**
+     * Reference to a field of type 'BusinessDayStatus'
+     */
+    export type EnumBusinessDayStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BusinessDayStatus'>
 
 
 
@@ -33866,6 +35362,7 @@ export namespace Prisma {
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
         shifts?: ShiftListRelationFilter
+        businessDays?: BusinessDayListRelationFilter
         cashMovements?: CashMovementListRelationFilter
         kitchenStations?: KitchenStationListRelationFilter
         kitchenTickets?: KitchenTicketListRelationFilter
@@ -33896,6 +35393,7 @@ export namespace Prisma {
         refunds?: RefundOrderByRelationAggregateInput
         auditLogs?: OrderAuditLogOrderByRelationAggregateInput
         shifts?: ShiftOrderByRelationAggregateInput
+        businessDays?: BusinessDayOrderByRelationAggregateInput
         cashMovements?: CashMovementOrderByRelationAggregateInput
         kitchenStations?: KitchenStationOrderByRelationAggregateInput
         kitchenTickets?: KitchenTicketOrderByRelationAggregateInput
@@ -33930,6 +35428,7 @@ export namespace Prisma {
         refunds?: RefundListRelationFilter
         auditLogs?: OrderAuditLogListRelationFilter
         shifts?: ShiftListRelationFilter
+        businessDays?: BusinessDayListRelationFilter
         cashMovements?: CashMovementListRelationFilter
         kitchenStations?: KitchenStationListRelationFilter
         kitchenTickets?: KitchenTicketListRelationFilter
@@ -33991,6 +35490,8 @@ export namespace Prisma {
         shifts?: ShiftListRelationFilter
         openedShifts?: ShiftListRelationFilter
         closedShifts?: ShiftListRelationFilter
+        openedBusinessDays?: BusinessDayListRelationFilter
+        closedBusinessDays?: BusinessDayListRelationFilter
         cashMovements?: CashMovementListRelationFilter
         createdKitchenTickets?: KitchenTicketListRelationFilter
         requestedPrintJobs?: PrintJobListRelationFilter
@@ -34014,6 +35515,8 @@ export namespace Prisma {
         shifts?: ShiftOrderByRelationAggregateInput
         openedShifts?: ShiftOrderByRelationAggregateInput
         closedShifts?: ShiftOrderByRelationAggregateInput
+        openedBusinessDays?: BusinessDayOrderByRelationAggregateInput
+        closedBusinessDays?: BusinessDayOrderByRelationAggregateInput
         cashMovements?: CashMovementOrderByRelationAggregateInput
         createdKitchenTickets?: KitchenTicketOrderByRelationAggregateInput
         requestedPrintJobs?: PrintJobOrderByRelationAggregateInput
@@ -34041,6 +35544,8 @@ export namespace Prisma {
         shifts?: ShiftListRelationFilter
         openedShifts?: ShiftListRelationFilter
         closedShifts?: ShiftListRelationFilter
+        openedBusinessDays?: BusinessDayListRelationFilter
+        closedBusinessDays?: BusinessDayListRelationFilter
         cashMovements?: CashMovementListRelationFilter
         createdKitchenTickets?: KitchenTicketListRelationFilter
         requestedPrintJobs?: PrintJobListRelationFilter
@@ -34506,6 +36011,7 @@ export namespace Prisma {
         storeId?: StringNullableFilter<"Order"> | string | null
         orderNumber?: StringFilter<"Order"> | string
         pickupNumber?: StringNullableFilter<"Order"> | string | null
+        orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -34514,13 +36020,19 @@ export namespace Prisma {
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+        discountReason?: StringNullableFilter<"Order"> | string | null
+        taxRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tax?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tip?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         total?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         cashReceived?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         changeDue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         paidAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
@@ -34536,6 +36048,7 @@ export namespace Prisma {
         storeId?: SortOrderInput | SortOrder
         orderNumber?: SortOrder
         pickupNumber?: SortOrderInput | SortOrder
+        orderType?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrderInput | SortOrder
@@ -34544,13 +36057,19 @@ export namespace Prisma {
         adjustment?: SortOrder
         adjustmentType?: SortOrderInput | SortOrder
         adjustmentValue?: SortOrderInput | SortOrder
+        discountReason?: SortOrderInput | SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrderInput | SortOrder
         changeDue?: SortOrderInput | SortOrder
         paidAt?: SortOrderInput | SortOrder
         printedAt?: SortOrderInput | SortOrder
+        heldAt?: SortOrderInput | SortOrder
+        resumedAt?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         store?: StoreOrderByWithRelationInput
@@ -34570,6 +36089,7 @@ export namespace Prisma {
         NOT?: OrderWhereInput | OrderWhereInput[]
         storeId?: StringNullableFilter<"Order"> | string | null
         pickupNumber?: StringNullableFilter<"Order"> | string | null
+        orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -34578,13 +36098,19 @@ export namespace Prisma {
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+        discountReason?: StringNullableFilter<"Order"> | string | null
+        taxRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tax?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tip?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         total?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         cashReceived?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         changeDue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         paidAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
@@ -34600,6 +36126,7 @@ export namespace Prisma {
         storeId?: SortOrderInput | SortOrder
         orderNumber?: SortOrder
         pickupNumber?: SortOrderInput | SortOrder
+        orderType?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrderInput | SortOrder
@@ -34608,13 +36135,19 @@ export namespace Prisma {
         adjustment?: SortOrder
         adjustmentType?: SortOrderInput | SortOrder
         adjustmentValue?: SortOrderInput | SortOrder
+        discountReason?: SortOrderInput | SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrderInput | SortOrder
         changeDue?: SortOrderInput | SortOrder
         paidAt?: SortOrderInput | SortOrder
         printedAt?: SortOrderInput | SortOrder
+        heldAt?: SortOrderInput | SortOrder
+        resumedAt?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         _count?: OrderCountOrderByAggregateInput
@@ -34632,6 +36165,7 @@ export namespace Prisma {
         storeId?: StringNullableWithAggregatesFilter<"Order"> | string | null
         orderNumber?: StringWithAggregatesFilter<"Order"> | string
         pickupNumber?: StringNullableWithAggregatesFilter<"Order"> | string | null
+        orderType?: EnumOrderTypeWithAggregatesFilter<"Order"> | $Enums.OrderType
         status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusWithAggregatesFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableWithAggregatesFilter<"Order"> | $Enums.PaymentMethod | null
@@ -34640,15 +36174,135 @@ export namespace Prisma {
         adjustment?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustmentType?: StringNullableWithAggregatesFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+        discountReason?: StringNullableWithAggregatesFilter<"Order"> | string | null
+        taxRate?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tax?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tip?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         total?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         cashReceived?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         changeDue?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         paidAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
         printedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+        heldAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+        resumedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
         createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    }
+
+    export type BusinessDayWhereInput = {
+        AND?: BusinessDayWhereInput | BusinessDayWhereInput[]
+        OR?: BusinessDayWhereInput[]
+        NOT?: BusinessDayWhereInput | BusinessDayWhereInput[]
+        id?: StringFilter<"BusinessDay"> | string
+        storeId?: StringFilter<"BusinessDay"> | string
+        businessDate?: DateTimeFilter<"BusinessDay"> | Date | string
+        status?: EnumBusinessDayStatusFilter<"BusinessDay"> | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        closedAt?: DateTimeNullableFilter<"BusinessDay"> | Date | string | null
+        openedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        closedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        orderCount?: IntFilter<"BusinessDay"> | number
+        grossSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        notes?: StringNullableFilter<"BusinessDay"> | string | null
+        createdAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        updatedAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        openedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        closedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }
+
+    export type BusinessDayOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        businessDate?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrderInput | SortOrder
+        openedByUserId?: SortOrderInput | SortOrder
+        closedByUserId?: SortOrderInput | SortOrder
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+        notes?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        openedBy?: UserOrderByWithRelationInput
+        closedBy?: UserOrderByWithRelationInput
+        _relevance?: BusinessDayOrderByRelevanceInput
+    }
+
+    export type BusinessDayWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        AND?: BusinessDayWhereInput | BusinessDayWhereInput[]
+        OR?: BusinessDayWhereInput[]
+        NOT?: BusinessDayWhereInput | BusinessDayWhereInput[]
+        storeId?: StringFilter<"BusinessDay"> | string
+        businessDate?: DateTimeFilter<"BusinessDay"> | Date | string
+        status?: EnumBusinessDayStatusFilter<"BusinessDay"> | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        closedAt?: DateTimeNullableFilter<"BusinessDay"> | Date | string | null
+        openedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        closedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        orderCount?: IntFilter<"BusinessDay"> | number
+        grossSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        notes?: StringNullableFilter<"BusinessDay"> | string | null
+        createdAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        updatedAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        openedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+        closedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    }, "id">
+
+    export type BusinessDayOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        businessDate?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrderInput | SortOrder
+        openedByUserId?: SortOrderInput | SortOrder
+        closedByUserId?: SortOrderInput | SortOrder
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+        notes?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: BusinessDayCountOrderByAggregateInput
+        _avg?: BusinessDayAvgOrderByAggregateInput
+        _max?: BusinessDayMaxOrderByAggregateInput
+        _min?: BusinessDayMinOrderByAggregateInput
+        _sum?: BusinessDaySumOrderByAggregateInput
+    }
+
+    export type BusinessDayScalarWhereWithAggregatesInput = {
+        AND?: BusinessDayScalarWhereWithAggregatesInput | BusinessDayScalarWhereWithAggregatesInput[]
+        OR?: BusinessDayScalarWhereWithAggregatesInput[]
+        NOT?: BusinessDayScalarWhereWithAggregatesInput | BusinessDayScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"BusinessDay"> | string
+        storeId?: StringWithAggregatesFilter<"BusinessDay"> | string
+        businessDate?: DateTimeWithAggregatesFilter<"BusinessDay"> | Date | string
+        status?: EnumBusinessDayStatusWithAggregatesFilter<"BusinessDay"> | $Enums.BusinessDayStatus
+        openedAt?: DateTimeWithAggregatesFilter<"BusinessDay"> | Date | string
+        closedAt?: DateTimeNullableWithAggregatesFilter<"BusinessDay"> | Date | string | null
+        openedByUserId?: StringNullableWithAggregatesFilter<"BusinessDay"> | string | null
+        closedByUserId?: StringNullableWithAggregatesFilter<"BusinessDay"> | string | null
+        orderCount?: IntWithAggregatesFilter<"BusinessDay"> | number
+        grossSales?: DecimalWithAggregatesFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalWithAggregatesFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalWithAggregatesFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        notes?: StringNullableWithAggregatesFilter<"BusinessDay"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"BusinessDay"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"BusinessDay"> | Date | string
     }
 
     export type OrderPaymentWhereInput = {
@@ -36426,6 +38080,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -36456,6 +38111,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -36486,6 +38142,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -36516,6 +38173,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -36579,6 +38237,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -36602,6 +38262,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -36625,6 +38287,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -36648,6 +38312,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -37130,6 +38796,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -37138,13 +38805,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -37160,6 +38833,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -37168,13 +38842,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -37188,6 +38868,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -37196,13 +38877,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -37218,6 +38905,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -37226,13 +38914,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -37247,6 +38941,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -37255,13 +38950,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -37270,6 +38971,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -37278,13 +38980,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -37294,6 +39002,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -37302,13 +39011,142 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayCreateInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutBusinessDaysInput
+        openedBy?: UserCreateNestedOneWithoutOpenedBusinessDaysInput
+        closedBy?: UserCreateNestedOneWithoutClosedBusinessDaysInput
+    }
+
+    export type BusinessDayUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutBusinessDaysNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedBusinessDaysNestedInput
+        closedBy?: UserUpdateOneWithoutClosedBusinessDaysNestedInput
+    }
+
+    export type BusinessDayUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayCreateManyInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -39253,6 +41091,12 @@ export namespace Prisma {
         none?: ShiftWhereInput
     }
 
+    export type BusinessDayListRelationFilter = {
+        every?: BusinessDayWhereInput
+        some?: BusinessDayWhereInput
+        none?: BusinessDayWhereInput
+    }
+
     export type CashMovementListRelationFilter = {
         every?: CashMovementWhereInput
         some?: CashMovementWhereInput
@@ -39355,6 +41199,10 @@ export namespace Prisma {
     }
 
     export type ShiftOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type BusinessDayOrderByRelationAggregateInput = {
         _count?: SortOrder
     }
 
@@ -39990,6 +41838,13 @@ export namespace Prisma {
         _max?: NestedEnumModifierOptionStatusFilter<$PrismaModel>
     }
 
+    export type EnumOrderTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderType | EnumOrderTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderType[]
+        notIn?: $Enums.OrderType[]
+        not?: NestedEnumOrderTypeFilter<$PrismaModel> | $Enums.OrderType
+    }
+
     export type EnumOrderStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
         in?: $Enums.OrderStatus[]
@@ -40054,6 +41909,7 @@ export namespace Prisma {
         storeId?: SortOrder
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
+        orderType?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -40062,13 +41918,19 @@ export namespace Prisma {
         adjustment?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
+        discountReason?: SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrder
         changeDue?: SortOrder
         paidAt?: SortOrder
         printedAt?: SortOrder
+        heldAt?: SortOrder
+        resumedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -40077,7 +41939,10 @@ export namespace Prisma {
         subtotal?: SortOrder
         adjustment?: SortOrder
         adjustmentValue?: SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrder
@@ -40089,6 +41954,7 @@ export namespace Prisma {
         storeId?: SortOrder
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
+        orderType?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -40097,13 +41963,19 @@ export namespace Prisma {
         adjustment?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
+        discountReason?: SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrder
         changeDue?: SortOrder
         paidAt?: SortOrder
         printedAt?: SortOrder
+        heldAt?: SortOrder
+        resumedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -40113,6 +41985,7 @@ export namespace Prisma {
         storeId?: SortOrder
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
+        orderType?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -40121,13 +41994,19 @@ export namespace Prisma {
         adjustment?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
+        discountReason?: SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrder
         changeDue?: SortOrder
         paidAt?: SortOrder
         printedAt?: SortOrder
+        heldAt?: SortOrder
+        resumedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -40136,11 +42015,24 @@ export namespace Prisma {
         subtotal?: SortOrder
         adjustment?: SortOrder
         adjustmentValue?: SortOrder
+        taxRate?: SortOrder
         tax?: SortOrder
+        serviceChargeRate?: SortOrder
+        serviceCharge?: SortOrder
         tip?: SortOrder
         total?: SortOrder
         cashReceived?: SortOrder
         changeDue?: SortOrder
+    }
+
+    export type EnumOrderTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderType | EnumOrderTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderType[]
+        notIn?: $Enums.OrderType[]
+        not?: NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumOrderTypeFilter<$PrismaModel>
+        _max?: NestedEnumOrderTypeFilter<$PrismaModel>
     }
 
     export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -40201,6 +42093,102 @@ export namespace Prisma {
         _count?: NestedIntNullableFilter<$PrismaModel>
         _min?: NestedDateTimeNullableFilter<$PrismaModel>
         _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    }
+
+    export type EnumBusinessDayStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.BusinessDayStatus | EnumBusinessDayStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.BusinessDayStatus[]
+        notIn?: $Enums.BusinessDayStatus[]
+        not?: NestedEnumBusinessDayStatusFilter<$PrismaModel> | $Enums.BusinessDayStatus
+    }
+
+    export type UserNullableScalarRelationFilter = {
+        is?: UserWhereInput | null
+        isNot?: UserWhereInput | null
+    }
+
+    export type BusinessDayOrderByRelevanceInput = {
+        fields: BusinessDayOrderByRelevanceFieldEnum | BusinessDayOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type BusinessDayCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        businessDate?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type BusinessDayAvgOrderByAggregateInput = {
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+    }
+
+    export type BusinessDayMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        businessDate?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type BusinessDayMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        businessDate?: SortOrder
+        status?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
+        openedByUserId?: SortOrder
+        closedByUserId?: SortOrder
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+        notes?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type BusinessDaySumOrderByAggregateInput = {
+        orderCount?: SortOrder
+        grossSales?: SortOrder
+        refundTotal?: SortOrder
+        netSales?: SortOrder
+    }
+
+    export type EnumBusinessDayStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.BusinessDayStatus | EnumBusinessDayStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.BusinessDayStatus[]
+        notIn?: $Enums.BusinessDayStatus[]
+        not?: NestedEnumBusinessDayStatusWithAggregatesFilter<$PrismaModel> | $Enums.BusinessDayStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumBusinessDayStatusFilter<$PrismaModel>
+        _max?: NestedEnumBusinessDayStatusFilter<$PrismaModel>
     }
 
     export type EnumPaymentMethodFilter<$PrismaModel = never> = {
@@ -40392,11 +42380,6 @@ export namespace Prisma {
         in?: $Enums.RefundStatus[]
         notIn?: $Enums.RefundStatus[]
         not?: NestedEnumRefundStatusFilter<$PrismaModel> | $Enums.RefundStatus
-    }
-
-    export type UserNullableScalarRelationFilter = {
-        is?: UserWhereInput | null
-        isNot?: UserWhereInput | null
     }
 
     export type RefundOrderByRelevanceInput = {
@@ -41904,6 +43887,13 @@ export namespace Prisma {
         connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
     }
 
+    export type BusinessDayCreateNestedManyWithoutStoreInput = {
+        create?: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput> | BusinessDayCreateWithoutStoreInput[] | BusinessDayUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutStoreInput | BusinessDayCreateOrConnectWithoutStoreInput[]
+        createMany?: BusinessDayCreateManyStoreInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+    }
+
     export type CashMovementCreateNestedManyWithoutStoreInput = {
         create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
@@ -42035,6 +44025,13 @@ export namespace Prisma {
         connectOrCreate?: ShiftCreateOrConnectWithoutStoreInput | ShiftCreateOrConnectWithoutStoreInput[]
         createMany?: ShiftCreateManyStoreInputEnvelope
         connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type BusinessDayUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput> | BusinessDayCreateWithoutStoreInput[] | BusinessDayUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutStoreInput | BusinessDayCreateOrConnectWithoutStoreInput[]
+        createMany?: BusinessDayCreateManyStoreInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
     }
 
     export type CashMovementUncheckedCreateNestedManyWithoutStoreInput = {
@@ -42233,6 +44230,20 @@ export namespace Prisma {
         update?: ShiftUpdateWithWhereUniqueWithoutStoreInput | ShiftUpdateWithWhereUniqueWithoutStoreInput[]
         updateMany?: ShiftUpdateManyWithWhereWithoutStoreInput | ShiftUpdateManyWithWhereWithoutStoreInput[]
         deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type BusinessDayUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput> | BusinessDayCreateWithoutStoreInput[] | BusinessDayUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutStoreInput | BusinessDayCreateOrConnectWithoutStoreInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutStoreInput | BusinessDayUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: BusinessDayCreateManyStoreInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutStoreInput | BusinessDayUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutStoreInput | BusinessDayUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
     }
 
     export type CashMovementUpdateManyWithoutStoreNestedInput = {
@@ -42501,6 +44512,20 @@ export namespace Prisma {
         deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
     }
 
+    export type BusinessDayUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput> | BusinessDayCreateWithoutStoreInput[] | BusinessDayUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutStoreInput | BusinessDayCreateOrConnectWithoutStoreInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutStoreInput | BusinessDayUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: BusinessDayCreateManyStoreInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutStoreInput | BusinessDayUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutStoreInput | BusinessDayUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
+    }
+
     export type CashMovementUncheckedUpdateManyWithoutStoreNestedInput = {
         create?: XOR<CashMovementCreateWithoutStoreInput, CashMovementUncheckedCreateWithoutStoreInput> | CashMovementCreateWithoutStoreInput[] | CashMovementUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: CashMovementCreateOrConnectWithoutStoreInput | CashMovementCreateOrConnectWithoutStoreInput[]
@@ -42725,6 +44750,20 @@ export namespace Prisma {
         connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
     }
 
+    export type BusinessDayCreateNestedManyWithoutOpenedByInput = {
+        create?: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput> | BusinessDayCreateWithoutOpenedByInput[] | BusinessDayUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutOpenedByInput | BusinessDayCreateOrConnectWithoutOpenedByInput[]
+        createMany?: BusinessDayCreateManyOpenedByInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+    }
+
+    export type BusinessDayCreateNestedManyWithoutClosedByInput = {
+        create?: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput> | BusinessDayCreateWithoutClosedByInput[] | BusinessDayUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutClosedByInput | BusinessDayCreateOrConnectWithoutClosedByInput[]
+        createMany?: BusinessDayCreateManyClosedByInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+    }
+
     export type CashMovementCreateNestedManyWithoutCreatedByInput = {
         create?: XOR<CashMovementCreateWithoutCreatedByInput, CashMovementUncheckedCreateWithoutCreatedByInput> | CashMovementCreateWithoutCreatedByInput[] | CashMovementUncheckedCreateWithoutCreatedByInput[]
         connectOrCreate?: CashMovementCreateOrConnectWithoutCreatedByInput | CashMovementCreateOrConnectWithoutCreatedByInput[]
@@ -42814,6 +44853,20 @@ export namespace Prisma {
         connectOrCreate?: ShiftCreateOrConnectWithoutClosedByInput | ShiftCreateOrConnectWithoutClosedByInput[]
         createMany?: ShiftCreateManyClosedByInputEnvelope
         connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    }
+
+    export type BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput = {
+        create?: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput> | BusinessDayCreateWithoutOpenedByInput[] | BusinessDayUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutOpenedByInput | BusinessDayCreateOrConnectWithoutOpenedByInput[]
+        createMany?: BusinessDayCreateManyOpenedByInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+    }
+
+    export type BusinessDayUncheckedCreateNestedManyWithoutClosedByInput = {
+        create?: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput> | BusinessDayCreateWithoutClosedByInput[] | BusinessDayUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutClosedByInput | BusinessDayCreateOrConnectWithoutClosedByInput[]
+        createMany?: BusinessDayCreateManyClosedByInputEnvelope
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
     }
 
     export type CashMovementUncheckedCreateNestedManyWithoutCreatedByInput = {
@@ -42961,6 +45014,34 @@ export namespace Prisma {
         update?: ShiftUpdateWithWhereUniqueWithoutClosedByInput | ShiftUpdateWithWhereUniqueWithoutClosedByInput[]
         updateMany?: ShiftUpdateManyWithWhereWithoutClosedByInput | ShiftUpdateManyWithWhereWithoutClosedByInput[]
         deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type BusinessDayUpdateManyWithoutOpenedByNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput> | BusinessDayCreateWithoutOpenedByInput[] | BusinessDayUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutOpenedByInput | BusinessDayCreateOrConnectWithoutOpenedByInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutOpenedByInput | BusinessDayUpsertWithWhereUniqueWithoutOpenedByInput[]
+        createMany?: BusinessDayCreateManyOpenedByInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutOpenedByInput | BusinessDayUpdateWithWhereUniqueWithoutOpenedByInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutOpenedByInput | BusinessDayUpdateManyWithWhereWithoutOpenedByInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
+    }
+
+    export type BusinessDayUpdateManyWithoutClosedByNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput> | BusinessDayCreateWithoutClosedByInput[] | BusinessDayUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutClosedByInput | BusinessDayCreateOrConnectWithoutClosedByInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutClosedByInput | BusinessDayUpsertWithWhereUniqueWithoutClosedByInput[]
+        createMany?: BusinessDayCreateManyClosedByInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutClosedByInput | BusinessDayUpdateWithWhereUniqueWithoutClosedByInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutClosedByInput | BusinessDayUpdateManyWithWhereWithoutClosedByInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
     }
 
     export type CashMovementUpdateManyWithoutCreatedByNestedInput = {
@@ -43143,6 +45224,34 @@ export namespace Prisma {
         update?: ShiftUpdateWithWhereUniqueWithoutClosedByInput | ShiftUpdateWithWhereUniqueWithoutClosedByInput[]
         updateMany?: ShiftUpdateManyWithWhereWithoutClosedByInput | ShiftUpdateManyWithWhereWithoutClosedByInput[]
         deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    }
+
+    export type BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput> | BusinessDayCreateWithoutOpenedByInput[] | BusinessDayUncheckedCreateWithoutOpenedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutOpenedByInput | BusinessDayCreateOrConnectWithoutOpenedByInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutOpenedByInput | BusinessDayUpsertWithWhereUniqueWithoutOpenedByInput[]
+        createMany?: BusinessDayCreateManyOpenedByInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutOpenedByInput | BusinessDayUpdateWithWhereUniqueWithoutOpenedByInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutOpenedByInput | BusinessDayUpdateManyWithWhereWithoutOpenedByInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
+    }
+
+    export type BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput = {
+        create?: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput> | BusinessDayCreateWithoutClosedByInput[] | BusinessDayUncheckedCreateWithoutClosedByInput[]
+        connectOrCreate?: BusinessDayCreateOrConnectWithoutClosedByInput | BusinessDayCreateOrConnectWithoutClosedByInput[]
+        upsert?: BusinessDayUpsertWithWhereUniqueWithoutClosedByInput | BusinessDayUpsertWithWhereUniqueWithoutClosedByInput[]
+        createMany?: BusinessDayCreateManyClosedByInputEnvelope
+        set?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        disconnect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        delete?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        connect?: BusinessDayWhereUniqueInput | BusinessDayWhereUniqueInput[]
+        update?: BusinessDayUpdateWithWhereUniqueWithoutClosedByInput | BusinessDayUpdateWithWhereUniqueWithoutClosedByInput[]
+        updateMany?: BusinessDayUpdateManyWithWhereWithoutClosedByInput | BusinessDayUpdateManyWithWhereWithoutClosedByInput[]
+        deleteMany?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
     }
 
     export type CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput = {
@@ -43625,6 +45734,10 @@ export namespace Prisma {
         connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
     }
 
+    export type EnumOrderTypeFieldUpdateOperationsInput = {
+        set?: $Enums.OrderType
+    }
+
     export type EnumOrderStatusFieldUpdateOperationsInput = {
         set?: $Enums.OrderStatus
     }
@@ -43797,6 +45910,56 @@ export namespace Prisma {
         update?: KitchenTicketUpdateWithWhereUniqueWithoutOrderInput | KitchenTicketUpdateWithWhereUniqueWithoutOrderInput[]
         updateMany?: KitchenTicketUpdateManyWithWhereWithoutOrderInput | KitchenTicketUpdateManyWithWhereWithoutOrderInput[]
         deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutBusinessDaysInput = {
+        create?: XOR<StoreCreateWithoutBusinessDaysInput, StoreUncheckedCreateWithoutBusinessDaysInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutBusinessDaysInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutOpenedBusinessDaysInput = {
+        create?: XOR<UserCreateWithoutOpenedBusinessDaysInput, UserUncheckedCreateWithoutOpenedBusinessDaysInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOpenedBusinessDaysInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type UserCreateNestedOneWithoutClosedBusinessDaysInput = {
+        create?: XOR<UserCreateWithoutClosedBusinessDaysInput, UserUncheckedCreateWithoutClosedBusinessDaysInput>
+        connectOrCreate?: UserCreateOrConnectWithoutClosedBusinessDaysInput
+        connect?: UserWhereUniqueInput
+    }
+
+    export type EnumBusinessDayStatusFieldUpdateOperationsInput = {
+        set?: $Enums.BusinessDayStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutBusinessDaysNestedInput = {
+        create?: XOR<StoreCreateWithoutBusinessDaysInput, StoreUncheckedCreateWithoutBusinessDaysInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutBusinessDaysInput
+        upsert?: StoreUpsertWithoutBusinessDaysInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutBusinessDaysInput, StoreUpdateWithoutBusinessDaysInput>, StoreUncheckedUpdateWithoutBusinessDaysInput>
+    }
+
+    export type UserUpdateOneWithoutOpenedBusinessDaysNestedInput = {
+        create?: XOR<UserCreateWithoutOpenedBusinessDaysInput, UserUncheckedCreateWithoutOpenedBusinessDaysInput>
+        connectOrCreate?: UserCreateOrConnectWithoutOpenedBusinessDaysInput
+        upsert?: UserUpsertWithoutOpenedBusinessDaysInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOpenedBusinessDaysInput, UserUpdateWithoutOpenedBusinessDaysInput>, UserUncheckedUpdateWithoutOpenedBusinessDaysInput>
+    }
+
+    export type UserUpdateOneWithoutClosedBusinessDaysNestedInput = {
+        create?: XOR<UserCreateWithoutClosedBusinessDaysInput, UserUncheckedCreateWithoutClosedBusinessDaysInput>
+        connectOrCreate?: UserCreateOrConnectWithoutClosedBusinessDaysInput
+        upsert?: UserUpsertWithoutClosedBusinessDaysInput
+        disconnect?: UserWhereInput | boolean
+        delete?: UserWhereInput | boolean
+        connect?: UserWhereUniqueInput
+        update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClosedBusinessDaysInput, UserUpdateWithoutClosedBusinessDaysInput>, UserUncheckedUpdateWithoutClosedBusinessDaysInput>
     }
 
     export type OrderCreateNestedOneWithoutPaymentsInput = {
@@ -45397,6 +47560,13 @@ export namespace Prisma {
         _max?: NestedEnumModifierOptionStatusFilter<$PrismaModel>
     }
 
+    export type NestedEnumOrderTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderType | EnumOrderTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderType[]
+        notIn?: $Enums.OrderType[]
+        not?: NestedEnumOrderTypeFilter<$PrismaModel> | $Enums.OrderType
+    }
+
     export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
         in?: $Enums.OrderStatus[]
@@ -45438,6 +47608,16 @@ export namespace Prisma {
         gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
         gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
         not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    }
+
+    export type NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.OrderType | EnumOrderTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.OrderType[]
+        notIn?: $Enums.OrderType[]
+        not?: NestedEnumOrderTypeWithAggregatesFilter<$PrismaModel> | $Enums.OrderType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumOrderTypeFilter<$PrismaModel>
+        _max?: NestedEnumOrderTypeFilter<$PrismaModel>
     }
 
     export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -45498,6 +47678,23 @@ export namespace Prisma {
         _count?: NestedIntNullableFilter<$PrismaModel>
         _min?: NestedDateTimeNullableFilter<$PrismaModel>
         _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    }
+
+    export type NestedEnumBusinessDayStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.BusinessDayStatus | EnumBusinessDayStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.BusinessDayStatus[]
+        notIn?: $Enums.BusinessDayStatus[]
+        not?: NestedEnumBusinessDayStatusFilter<$PrismaModel> | $Enums.BusinessDayStatus
+    }
+
+    export type NestedEnumBusinessDayStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.BusinessDayStatus | EnumBusinessDayStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.BusinessDayStatus[]
+        notIn?: $Enums.BusinessDayStatus[]
+        not?: NestedEnumBusinessDayStatusWithAggregatesFilter<$PrismaModel> | $Enums.BusinessDayStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumBusinessDayStatusFilter<$PrismaModel>
+        _max?: NestedEnumBusinessDayStatusFilter<$PrismaModel>
     }
 
     export type NestedEnumPaymentMethodFilter<$PrismaModel = never> = {
@@ -46071,6 +48268,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -46079,13 +48277,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -46099,6 +48303,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -46107,13 +48312,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -46252,6 +48463,50 @@ export namespace Prisma {
 
     export type ShiftCreateManyStoreInputEnvelope = {
         data: ShiftCreateManyStoreInput | ShiftCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type BusinessDayCreateWithoutStoreInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        openedBy?: UserCreateNestedOneWithoutOpenedBusinessDaysInput
+        closedBy?: UserCreateNestedOneWithoutClosedBusinessDaysInput
+    }
+
+    export type BusinessDayUncheckedCreateWithoutStoreInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayCreateOrConnectWithoutStoreInput = {
+        where: BusinessDayWhereUniqueInput
+        create: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput>
+    }
+
+    export type BusinessDayCreateManyStoreInputEnvelope = {
+        data: BusinessDayCreateManyStoreInput | BusinessDayCreateManyStoreInput[]
         skipDuplicates?: boolean
     }
 
@@ -46857,6 +49112,7 @@ export namespace Prisma {
         storeId?: StringNullableFilter<"Order"> | string | null
         orderNumber?: StringFilter<"Order"> | string
         pickupNumber?: StringNullableFilter<"Order"> | string | null
+        orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -46865,13 +49121,19 @@ export namespace Prisma {
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+        discountReason?: StringNullableFilter<"Order"> | string | null
+        taxRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tax?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         tip?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         total?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         cashReceived?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         changeDue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         paidAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
     }
@@ -46978,6 +49240,43 @@ export namespace Prisma {
         notes?: StringNullableFilter<"Shift"> | string | null
         createdAt?: DateTimeFilter<"Shift"> | Date | string
         updatedAt?: DateTimeFilter<"Shift"> | Date | string
+    }
+
+    export type BusinessDayUpsertWithWhereUniqueWithoutStoreInput = {
+        where: BusinessDayWhereUniqueInput
+        update: XOR<BusinessDayUpdateWithoutStoreInput, BusinessDayUncheckedUpdateWithoutStoreInput>
+        create: XOR<BusinessDayCreateWithoutStoreInput, BusinessDayUncheckedCreateWithoutStoreInput>
+    }
+
+    export type BusinessDayUpdateWithWhereUniqueWithoutStoreInput = {
+        where: BusinessDayWhereUniqueInput
+        data: XOR<BusinessDayUpdateWithoutStoreInput, BusinessDayUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type BusinessDayUpdateManyWithWhereWithoutStoreInput = {
+        where: BusinessDayScalarWhereInput
+        data: XOR<BusinessDayUpdateManyMutationInput, BusinessDayUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type BusinessDayScalarWhereInput = {
+        AND?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
+        OR?: BusinessDayScalarWhereInput[]
+        NOT?: BusinessDayScalarWhereInput | BusinessDayScalarWhereInput[]
+        id?: StringFilter<"BusinessDay"> | string
+        storeId?: StringFilter<"BusinessDay"> | string
+        businessDate?: DateTimeFilter<"BusinessDay"> | Date | string
+        status?: EnumBusinessDayStatusFilter<"BusinessDay"> | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        closedAt?: DateTimeNullableFilter<"BusinessDay"> | Date | string | null
+        openedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        closedByUserId?: StringNullableFilter<"BusinessDay"> | string | null
+        orderCount?: IntFilter<"BusinessDay"> | number
+        grossSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFilter<"BusinessDay"> | Decimal | DecimalJsLike | number | string
+        notes?: StringNullableFilter<"BusinessDay"> | string | null
+        createdAt?: DateTimeFilter<"BusinessDay"> | Date | string
+        updatedAt?: DateTimeFilter<"BusinessDay"> | Date | string
     }
 
     export type CashMovementUpsertWithWhereUniqueWithoutStoreInput = {
@@ -47710,6 +50009,94 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type BusinessDayCreateWithoutOpenedByInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutBusinessDaysInput
+        closedBy?: UserCreateNestedOneWithoutClosedBusinessDaysInput
+    }
+
+    export type BusinessDayUncheckedCreateWithoutOpenedByInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayCreateOrConnectWithoutOpenedByInput = {
+        where: BusinessDayWhereUniqueInput
+        create: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput>
+    }
+
+    export type BusinessDayCreateManyOpenedByInputEnvelope = {
+        data: BusinessDayCreateManyOpenedByInput | BusinessDayCreateManyOpenedByInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type BusinessDayCreateWithoutClosedByInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutBusinessDaysInput
+        openedBy?: UserCreateNestedOneWithoutOpenedBusinessDaysInput
+    }
+
+    export type BusinessDayUncheckedCreateWithoutClosedByInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayCreateOrConnectWithoutClosedByInput = {
+        where: BusinessDayWhereUniqueInput
+        create: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput>
+    }
+
+    export type BusinessDayCreateManyClosedByInputEnvelope = {
+        data: BusinessDayCreateManyClosedByInput | BusinessDayCreateManyClosedByInput[]
+        skipDuplicates?: boolean
+    }
+
     export type CashMovementCreateWithoutCreatedByInput = {
         id?: string
         type: $Enums.CashMovementType
@@ -48046,6 +50433,38 @@ export namespace Prisma {
         data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutClosedByInput>
     }
 
+    export type BusinessDayUpsertWithWhereUniqueWithoutOpenedByInput = {
+        where: BusinessDayWhereUniqueInput
+        update: XOR<BusinessDayUpdateWithoutOpenedByInput, BusinessDayUncheckedUpdateWithoutOpenedByInput>
+        create: XOR<BusinessDayCreateWithoutOpenedByInput, BusinessDayUncheckedCreateWithoutOpenedByInput>
+    }
+
+    export type BusinessDayUpdateWithWhereUniqueWithoutOpenedByInput = {
+        where: BusinessDayWhereUniqueInput
+        data: XOR<BusinessDayUpdateWithoutOpenedByInput, BusinessDayUncheckedUpdateWithoutOpenedByInput>
+    }
+
+    export type BusinessDayUpdateManyWithWhereWithoutOpenedByInput = {
+        where: BusinessDayScalarWhereInput
+        data: XOR<BusinessDayUpdateManyMutationInput, BusinessDayUncheckedUpdateManyWithoutOpenedByInput>
+    }
+
+    export type BusinessDayUpsertWithWhereUniqueWithoutClosedByInput = {
+        where: BusinessDayWhereUniqueInput
+        update: XOR<BusinessDayUpdateWithoutClosedByInput, BusinessDayUncheckedUpdateWithoutClosedByInput>
+        create: XOR<BusinessDayCreateWithoutClosedByInput, BusinessDayUncheckedCreateWithoutClosedByInput>
+    }
+
+    export type BusinessDayUpdateWithWhereUniqueWithoutClosedByInput = {
+        where: BusinessDayWhereUniqueInput
+        data: XOR<BusinessDayUpdateWithoutClosedByInput, BusinessDayUncheckedUpdateWithoutClosedByInput>
+    }
+
+    export type BusinessDayUpdateManyWithWhereWithoutClosedByInput = {
+        where: BusinessDayScalarWhereInput
+        data: XOR<BusinessDayUpdateManyMutationInput, BusinessDayUncheckedUpdateManyWithoutClosedByInput>
+    }
+
     export type CashMovementUpsertWithWhereUniqueWithoutCreatedByInput = {
         where: CashMovementWhereUniqueInput
         update: XOR<CashMovementUpdateWithoutCreatedByInput, CashMovementUncheckedUpdateWithoutCreatedByInput>
@@ -48141,6 +50560,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -48170,6 +50590,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -48204,6 +50625,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -48226,6 +50649,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -48264,6 +50689,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -48293,6 +50719,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -48333,6 +50760,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -48355,6 +50784,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -48377,6 +50808,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -48406,6 +50838,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -48528,6 +50961,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -48557,6 +50991,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -48641,6 +51076,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -48670,6 +51106,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -48851,6 +51288,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -48880,6 +51318,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -49262,6 +51701,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -49291,6 +51731,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -49522,6 +51963,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -49551,6 +51993,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -49658,10 +52101,371 @@ export namespace Prisma {
         data: XOR<KitchenTicketUpdateManyMutationInput, KitchenTicketUncheckedUpdateManyWithoutOrderInput>
     }
 
+    export type StoreCreateWithoutBusinessDaysInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
+        printers?: PrinterCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutBusinessDaysInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
+        printers?: PrinterUncheckedCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteUncheckedCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationUncheckedCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageUncheckedCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutBusinessDaysInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutBusinessDaysInput, StoreUncheckedCreateWithoutBusinessDaysInput>
+    }
+
+    export type UserCreateWithoutOpenedBusinessDaysInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
+        requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
+        aiConversations?: AiConversationCreateNestedManyWithoutUserInput
+        aiMessages?: AiMessageCreateNestedManyWithoutUserInput
+    }
+
+    export type UserUncheckedCreateWithoutOpenedBusinessDaysInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
+        requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
+        aiConversations?: AiConversationUncheckedCreateNestedManyWithoutUserInput
+        aiMessages?: AiMessageUncheckedCreateNestedManyWithoutUserInput
+    }
+
+    export type UserCreateOrConnectWithoutOpenedBusinessDaysInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutOpenedBusinessDaysInput, UserUncheckedCreateWithoutOpenedBusinessDaysInput>
+    }
+
+    export type UserCreateWithoutClosedBusinessDaysInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
+        requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
+        aiConversations?: AiConversationCreateNestedManyWithoutUserInput
+        aiMessages?: AiMessageCreateNestedManyWithoutUserInput
+    }
+
+    export type UserUncheckedCreateWithoutClosedBusinessDaysInput = {
+        id?: string
+        email: string
+        name?: string | null
+        passwordHash: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        stores?: StoreUserUncheckedCreateNestedManyWithoutUserInput
+        operatedRefunds?: RefundUncheckedCreateNestedManyWithoutOperatorInput
+        approvedRefunds?: RefundUncheckedCreateNestedManyWithoutApprovedByInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOperatorInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+        openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
+        createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
+        requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
+        aiConversations?: AiConversationUncheckedCreateNestedManyWithoutUserInput
+        aiMessages?: AiMessageUncheckedCreateNestedManyWithoutUserInput
+    }
+
+    export type UserCreateOrConnectWithoutClosedBusinessDaysInput = {
+        where: UserWhereUniqueInput
+        create: XOR<UserCreateWithoutClosedBusinessDaysInput, UserUncheckedCreateWithoutClosedBusinessDaysInput>
+    }
+
+    export type StoreUpsertWithoutBusinessDaysInput = {
+        update: XOR<StoreUpdateWithoutBusinessDaysInput, StoreUncheckedUpdateWithoutBusinessDaysInput>
+        create: XOR<StoreCreateWithoutBusinessDaysInput, StoreUncheckedCreateWithoutBusinessDaysInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutBusinessDaysInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutBusinessDaysInput, StoreUncheckedUpdateWithoutBusinessDaysInput>
+    }
+
+    export type StoreUpdateWithoutBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUncheckedUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUncheckedUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUncheckedUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUncheckedUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type UserUpsertWithoutOpenedBusinessDaysInput = {
+        update: XOR<UserUpdateWithoutOpenedBusinessDaysInput, UserUncheckedUpdateWithoutOpenedBusinessDaysInput>
+        create: XOR<UserCreateWithoutOpenedBusinessDaysInput, UserUncheckedCreateWithoutOpenedBusinessDaysInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutOpenedBusinessDaysInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutOpenedBusinessDaysInput, UserUncheckedUpdateWithoutOpenedBusinessDaysInput>
+    }
+
+    export type UserUpdateWithoutOpenedBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
+        requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
+        aiConversations?: AiConversationUpdateManyWithoutUserNestedInput
+        aiMessages?: AiMessageUpdateManyWithoutUserNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutOpenedBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
+        requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
+        aiConversations?: AiConversationUncheckedUpdateManyWithoutUserNestedInput
+        aiMessages?: AiMessageUncheckedUpdateManyWithoutUserNestedInput
+    }
+
+    export type UserUpsertWithoutClosedBusinessDaysInput = {
+        update: XOR<UserUpdateWithoutClosedBusinessDaysInput, UserUncheckedUpdateWithoutClosedBusinessDaysInput>
+        create: XOR<UserCreateWithoutClosedBusinessDaysInput, UserUncheckedCreateWithoutClosedBusinessDaysInput>
+        where?: UserWhereInput
+    }
+
+    export type UserUpdateToOneWithWhereWithoutClosedBusinessDaysInput = {
+        where?: UserWhereInput
+        data: XOR<UserUpdateWithoutClosedBusinessDaysInput, UserUncheckedUpdateWithoutClosedBusinessDaysInput>
+    }
+
+    export type UserUpdateWithoutClosedBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
+        requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
+        aiConversations?: AiConversationUpdateManyWithoutUserNestedInput
+        aiMessages?: AiMessageUpdateManyWithoutUserNestedInput
+    }
+
+    export type UserUncheckedUpdateWithoutClosedBusinessDaysInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        email?: StringFieldUpdateOperationsInput | string
+        name?: NullableStringFieldUpdateOperationsInput | string | null
+        passwordHash?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        stores?: StoreUserUncheckedUpdateManyWithoutUserNestedInput
+        operatedRefunds?: RefundUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedRefunds?: RefundUncheckedUpdateManyWithoutApprovedByNestedInput
+        operatedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOperatorNestedInput
+        approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+        openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+        createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
+        requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
+        aiConversations?: AiConversationUncheckedUpdateManyWithoutUserNestedInput
+        aiMessages?: AiMessageUncheckedUpdateManyWithoutUserNestedInput
+    }
+
     export type OrderCreateWithoutPaymentsInput = {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -49670,13 +52474,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -49691,6 +52501,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -49699,13 +52510,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -49734,6 +52551,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -49742,13 +52560,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -49763,6 +52587,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -49771,13 +52596,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -49790,6 +52621,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -49798,13 +52630,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -49819,6 +52657,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -49827,13 +52666,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
@@ -49965,6 +52810,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -49973,13 +52819,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -49994,6 +52846,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -50002,13 +52855,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
@@ -50121,6 +52980,7 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -50150,6 +53010,7 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -50173,6 +53034,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -50181,13 +53043,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -50202,6 +53070,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -50210,13 +53079,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -50245,6 +53120,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -50267,6 +53144,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -50294,6 +53173,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -50316,6 +53197,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -50380,6 +53263,7 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -50409,6 +53293,7 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -50438,6 +53323,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -50446,13 +53332,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -50467,6 +53359,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -50475,13 +53368,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -50516,6 +53415,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -50538,6 +53439,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -50571,6 +53474,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -50593,6 +53498,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -50779,6 +53686,7 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -50808,6 +53716,7 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -50831,6 +53740,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -50839,13 +53749,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -50860,6 +53776,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -50868,13 +53785,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -50903,6 +53826,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -50925,6 +53850,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -50952,6 +53879,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -50974,6 +53903,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -51012,6 +53943,7 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -51041,6 +53973,7 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -51070,6 +54003,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -51078,13 +54012,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -51099,6 +54039,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -51107,13 +54048,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -51148,6 +54095,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -51170,6 +54119,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -51203,6 +54154,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -51225,6 +54178,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -51247,6 +54202,7 @@ export namespace Prisma {
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -51276,6 +54232,7 @@ export namespace Prisma {
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -51310,6 +54267,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -51332,6 +54291,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -51359,6 +54320,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
         shifts?: ShiftCreateNestedManyWithoutUserInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -51381,6 +54344,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -51408,6 +54373,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogCreateNestedManyWithoutApprovedByInput
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -51430,6 +54397,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutApprovedByInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -51502,6 +54471,7 @@ export namespace Prisma {
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -51531,6 +54501,7 @@ export namespace Prisma {
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -51571,6 +54542,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -51593,6 +54566,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -51626,6 +54601,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -51648,6 +54625,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -51681,6 +54660,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUpdateManyWithoutApprovedByNestedInput
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -51703,6 +54684,8 @@ export namespace Prisma {
         approvedOrderAuditLogs?: OrderAuditLogUncheckedUpdateManyWithoutApprovedByNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -51742,6 +54725,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
@@ -51771,6 +54755,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
@@ -51846,6 +54831,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
         aiConversations?: AiConversationCreateNestedManyWithoutUserInput
@@ -51868,6 +54855,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
         aiConversations?: AiConversationUncheckedCreateNestedManyWithoutUserInput
@@ -51906,6 +54895,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
@@ -51935,6 +54925,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
@@ -52022,6 +55013,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
         aiConversations?: AiConversationUpdateManyWithoutUserNestedInput
@@ -52044,6 +55037,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
         aiConversations?: AiConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -52066,6 +55061,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
@@ -52095,6 +55091,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
@@ -52260,6 +55257,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
@@ -52289,6 +55287,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
@@ -52366,6 +55365,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
@@ -52395,6 +55395,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
@@ -52417,6 +55418,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52425,13 +55427,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
@@ -52446,6 +55454,7 @@ export namespace Prisma {
         storeId?: string | null
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52454,13 +55463,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
@@ -52523,6 +55538,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
         aiConversations?: AiConversationCreateNestedManyWithoutUserInput
@@ -52545,6 +55562,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
         aiConversations?: AiConversationUncheckedCreateNestedManyWithoutUserInput
@@ -52621,6 +55640,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
@@ -52650,6 +55670,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
@@ -52678,6 +55699,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52686,13 +55708,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
@@ -52707,6 +55735,7 @@ export namespace Prisma {
         storeId?: NullableStringFieldUpdateOperationsInput | string | null
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52715,13 +55744,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -52796,6 +55831,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
         aiConversations?: AiConversationUpdateManyWithoutUserNestedInput
@@ -52818,6 +55855,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
         aiConversations?: AiConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -52856,6 +55895,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -52885,6 +55925,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -53002,6 +56043,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -53031,6 +56073,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -53144,6 +56187,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -53173,6 +56217,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -53310,6 +56355,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -53339,6 +56385,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -53400,6 +56447,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -53429,6 +56477,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -53519,6 +56568,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -53548,6 +56598,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -53628,6 +56679,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -53657,6 +56709,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -53855,6 +56908,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         aiConversations?: AiConversationCreateNestedManyWithoutUserInput
@@ -53877,6 +56932,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         aiConversations?: AiConversationUncheckedCreateNestedManyWithoutUserInput
@@ -53915,6 +56972,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -53944,6 +57002,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -54114,6 +57173,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         aiConversations?: AiConversationUpdateManyWithoutUserNestedInput
@@ -54136,6 +57197,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         aiConversations?: AiConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -54158,6 +57221,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -54187,6 +57251,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -54232,6 +57297,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -54261,6 +57327,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -54290,6 +57357,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -54319,6 +57387,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -54364,6 +57433,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -54393,6 +57463,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -54422,6 +57493,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -54451,6 +57523,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -54485,6 +57558,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -54507,6 +57582,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -54627,6 +57704,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -54656,6 +57734,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -54696,6 +57775,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -54718,6 +57799,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -54801,6 +57884,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -54830,6 +57914,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -54864,6 +57949,8 @@ export namespace Prisma {
         shifts?: ShiftCreateNestedManyWithoutUserInput
         openedShifts?: ShiftCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobCreateNestedManyWithoutRequestedByInput
@@ -54886,6 +57973,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
         openedShifts?: ShiftUncheckedCreateNestedManyWithoutOpenedByInput
         closedShifts?: ShiftUncheckedCreateNestedManyWithoutClosedByInput
+        openedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutOpenedByInput
+        closedBusinessDays?: BusinessDayUncheckedCreateNestedManyWithoutClosedByInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutCreatedByInput
         createdKitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutCreatedByInput
         requestedPrintJobs?: PrintJobUncheckedCreateNestedManyWithoutRequestedByInput
@@ -55007,6 +58096,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -55036,6 +58126,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -55076,6 +58167,8 @@ export namespace Prisma {
         shifts?: ShiftUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUpdateManyWithoutRequestedByNestedInput
@@ -55098,6 +58191,8 @@ export namespace Prisma {
         shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
         openedShifts?: ShiftUncheckedUpdateManyWithoutOpenedByNestedInput
         closedShifts?: ShiftUncheckedUpdateManyWithoutClosedByNestedInput
+        openedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutOpenedByNestedInput
+        closedBusinessDays?: BusinessDayUncheckedUpdateManyWithoutClosedByNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutCreatedByNestedInput
         createdKitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutCreatedByNestedInput
         requestedPrintJobs?: PrintJobUncheckedUpdateManyWithoutRequestedByNestedInput
@@ -55136,6 +58231,7 @@ export namespace Prisma {
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
         shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
@@ -55165,6 +58261,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
         shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
         cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
         kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
         kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
@@ -55268,6 +58365,7 @@ export namespace Prisma {
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
@@ -55297,6 +58395,7 @@ export namespace Prisma {
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
         shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
         cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
         kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
         kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -55418,6 +58517,7 @@ export namespace Prisma {
         id?: string
         orderNumber: string
         pickupNumber?: string | null
+        orderType?: $Enums.OrderType
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -55426,13 +58526,19 @@ export namespace Prisma {
         adjustment?: Decimal | DecimalJsLike | number | string
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
         tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
         tip?: Decimal | DecimalJsLike | number | string
         total: Decimal | DecimalJsLike | number | string
         cashReceived?: Decimal | DecimalJsLike | number | string | null
         changeDue?: Decimal | DecimalJsLike | number | string | null
         paidAt?: Date | string | null
         printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -55476,6 +58582,23 @@ export namespace Prisma {
         variance?: Decimal | DecimalJsLike | number | string | null
         openedByUserId?: string | null
         closedByUserId?: string | null
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayCreateManyStoreInput = {
+        id?: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
         notes?: string | null
         createdAt?: Date | string
         updatedAt?: Date | string
@@ -55765,6 +58888,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -55773,13 +58897,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -55793,6 +58923,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -55801,13 +58932,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
@@ -55821,6 +58958,7 @@ export namespace Prisma {
         id?: StringFieldUpdateOperationsInput | string
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -55829,13 +58967,19 @@ export namespace Prisma {
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -55971,6 +59115,57 @@ export namespace Prisma {
         variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
         closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        openedBy?: UserUpdateOneWithoutOpenedBusinessDaysNestedInput
+        closedBy?: UserUpdateOneWithoutClosedBusinessDaysNestedInput
+    }
+
+    export type BusinessDayUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         notes?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56626,6 +59821,40 @@ export namespace Prisma {
         updatedAt?: Date | string
     }
 
+    export type BusinessDayCreateManyOpenedByInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        closedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type BusinessDayCreateManyClosedByInput = {
+        id?: string
+        storeId: string
+        businessDate: Date | string
+        status?: $Enums.BusinessDayStatus
+        openedAt?: Date | string
+        closedAt?: Date | string | null
+        openedByUserId?: string | null
+        orderCount?: number
+        grossSales?: Decimal | DecimalJsLike | number | string
+        refundTotal?: Decimal | DecimalJsLike | number | string
+        netSales?: Decimal | DecimalJsLike | number | string
+        notes?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
     export type CashMovementCreateManyCreatedByInput = {
         id?: string
         storeId: string
@@ -57047,6 +60276,108 @@ export namespace Prisma {
         actualCash?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         variance?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUpdateWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutBusinessDaysNestedInput
+        closedBy?: UserUpdateOneWithoutClosedBusinessDaysNestedInput
+    }
+
+    export type BusinessDayUncheckedUpdateWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUncheckedUpdateManyWithoutOpenedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUpdateWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutBusinessDaysNestedInput
+        openedBy?: UserUpdateOneWithoutOpenedBusinessDaysNestedInput
+    }
+
+    export type BusinessDayUncheckedUpdateWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        notes?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type BusinessDayUncheckedUpdateManyWithoutClosedByInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        businessDate?: DateTimeFieldUpdateOperationsInput | Date | string
+        status?: EnumBusinessDayStatusFieldUpdateOperationsInput | $Enums.BusinessDayStatus
+        openedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderCount?: IntFieldUpdateOperationsInput | number
+        grossSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        refundTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        netSales?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         notes?: NullableStringFieldUpdateOperationsInput | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

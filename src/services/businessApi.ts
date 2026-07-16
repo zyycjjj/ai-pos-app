@@ -41,21 +41,28 @@ export type CheckoutOrder = {
   id: string;
   orderNumber: string;
   pickupNumber: string | null;
-  status: 'OPEN' | 'PAID' | 'CANCELLED' | 'VOIDED' | 'PARTIALLY_REFUNDED' | 'REFUNDED';
+  orderType: 'DINE_IN' | 'TAKEAWAY' | 'PICKUP';
+  status: 'OPEN' | 'HELD' | 'PAID' | 'CANCELLED' | 'VOIDED' | 'PARTIALLY_REFUNDED' | 'REFUNDED';
   printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
   paymentMethod: 'CASH' | 'CARD' | 'MANUAL' | null;
   currency: string;
   subtotal: number;
   adjustment: number;
-  adjustmentType: 'discount' | 'fixed_reduction' | 'price_override' | null;
+  adjustmentType: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override' | null;
   adjustmentValue: number | null;
+  discountReason: string | null;
+  taxRate: number;
   tax: number;
+  serviceChargeRate: number;
+  serviceCharge: number;
   tip: number;
   total: number;
   cashReceived: number | null;
   changeDue: number | null;
   paidAt: string | null;
   printedAt: string | null;
+  heldAt: string | null;
+  resumedAt: string | null;
   createdAt: string;
   refundedTotal?: number;
   payments: CheckoutPaymentLine[];
@@ -87,7 +94,7 @@ export type CheckoutRefund = {
 
 export type CheckoutOrderAuditLog = {
   id: string;
-  action: 'CANCELLED' | 'VOIDED' | 'REFUNDED';
+  action: 'CANCELLED' | 'VOIDED' | 'REFUNDED' | 'HELD' | 'RESUMED';
   fromStatus: CheckoutOrder['status'] | null;
   toStatus: CheckoutOrder['status'] | null;
   amount: number | null;
@@ -475,9 +482,11 @@ export function useCreateCheckoutOrder() {
         quantity: number;
         modifiers?: Array<{ groupId: string; optionIds: string[] }>;
       }>;
+      orderType?: CheckoutOrder['orderType'];
       adjustment?: {
-        type: 'discount' | 'fixed_reduction' | 'price_override';
+        type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
         value: number;
+        reason?: string;
       };
       payments: Array<{
         method: 'CASH' | 'CARD' | 'MANUAL';
@@ -485,10 +494,75 @@ export function useCreateCheckoutOrder() {
         amountReceived?: number;
       }>;
       tax?: number;
+      taxRate?: number;
+      serviceChargeRate?: number;
+      serviceCharge?: number;
       tip?: number;
       currency?: string;
     }) => {
       const { data } = await apiClient.post<CheckoutOrder>('/api/checkout/orders', payload, { timeout: 30_000 });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useHoldCheckoutOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      items: Array<{
+        productId: string;
+        quantity: number;
+        modifiers?: Array<{ groupId: string; optionIds: string[] }>;
+      }>;
+      orderType?: CheckoutOrder['orderType'];
+      adjustment?: {
+        type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
+        value: number;
+        reason?: string;
+      };
+      taxRate?: number;
+      serviceChargeRate?: number;
+      tip?: number;
+      currency?: string;
+    }) => {
+      const { data } = await apiClient.post<CheckoutOrder>('/api/checkout/orders/hold', payload, { timeout: 30_000 });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
+export function useResumeCheckoutOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (orderId: string) => {
+      const { data } = await apiClient.patch<CheckoutOrder>(`/api/checkout/orders/${orderId}/resume`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
+export function usePayCheckoutOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      orderId: string;
+      payments: Array<{ method: 'CASH' | 'CARD' | 'MANUAL'; amount: number; amountReceived?: number }>;
+    }) => {
+      const { data } = await apiClient.post<CheckoutOrder>(`/api/checkout/orders/${payload.orderId}/pay`, { payments: payload.payments }, { timeout: 30_000 });
       return data;
     },
     onSuccess: () => {

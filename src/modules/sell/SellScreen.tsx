@@ -15,8 +15,12 @@ import {
   type CheckoutOrder,
   useCreateCheckoutOrder,
   useActiveShift,
+  useCheckoutOrders,
+  useHoldCheckoutOrder,
   useMarkOrderPrinted,
+  usePayCheckoutOrder,
   useReceipt,
+  useResumeCheckoutOrder,
   useTodaySummary,
 } from '@/services/businessApi';
 import { tokens } from '@/theme';
@@ -34,6 +38,7 @@ const ALL_CATEGORY = '__all__';
 type PrintFlowStatus = 'idle' | 'printing' | 'printed' | 'failed';
 type ModifierSelections = Record<string, string[]>;
 type PaymentMethod = 'CASH' | 'CARD' | 'MANUAL';
+type OrderType = 'DINE_IN' | 'TAKEAWAY' | 'PICKUP';
 type PaymentLineDraft = {
   id: string;
   method: PaymentMethod;
@@ -48,22 +53,30 @@ export function SellScreen() {
   const [search, setSearch] = useState('');
   const [completedOrder, setCompletedOrder] = useState<CheckoutOrder | null>(null);
   const [paymentVisible, setPaymentVisible] = useState(false);
+  const [payingHeldOrder, setPayingHeldOrder] = useState<CheckoutOrder | null>(null);
   const [paymentLines, setPaymentLines] = useState<PaymentLineDraft[]>([]);
   const [paymentValidationVisible, setPaymentValidationVisible] = useState(false);
   const [shiftRequiredVisible, setShiftRequiredVisible] = useState(false);
   const [paymentSubmitError, setPaymentSubmitError] = useState(false);
+  const [managerApprovalVisible, setManagerApprovalVisible] = useState(false);
   const [adjustmentVisible, setAdjustmentVisible] = useState(false);
   const [adjustmentType, setAdjustmentType] = useState<AdjustmentType>('discount');
   const [adjustmentValueText, setAdjustmentValueText] = useState('');
   const [adjustment, setAdjustment] = useState<OrderAdjustment | null>(null);
+  const [orderType, setOrderType] = useState<OrderType>('TAKEAWAY');
+  const [tipText, setTipText] = useState('');
   const [modifierProduct, setModifierProduct] = useState<ProductDto | null>(null);
   const [modifierSelections, setModifierSelections] = useState<ModifierSelections>({});
   const [modifierValidationVisible, setModifierValidationVisible] = useState(false);
   const [printStatus, setPrintStatus] = useState<PrintFlowStatus>('idle');
   const productsQuery = useActiveProducts();
+  const heldOrdersQuery = useCheckoutOrders('HELD');
   const summaryQuery = useTodaySummary();
   const activeShiftQuery = useActiveShift();
   const createOrder = useCreateCheckoutOrder();
+  const holdOrder = useHoldCheckoutOrder();
+  const resumeOrder = useResumeCheckoutOrder();
+  const payOrder = usePayCheckoutOrder();
   const markPrinted = useMarkOrderPrinted();
   const receiptQuery = useReceipt(completedOrder?.id);
   const { addLine, clear, lines, removeLine, setQuantity } = useCartStore();
@@ -89,13 +102,15 @@ export function SellScreen() {
       return matchesCategory && matchesSearch;
     });
   }, [menuLabel, products, search, selectedCategory]);
-  const { subtotal, adjustment: adjustmentAmount, tax, total } = getCheckoutTotals(lines, TAX_RATE, adjustment);
+  const tipAmount = Number(tipText) || 0;
+  const { subtotal, adjustment: adjustmentAmount, tax, serviceCharge, total } = getCheckoutTotals(lines, TAX_RATE, adjustment, 0, tipAmount);
+  const amountDue = payingHeldOrder?.total ?? total;
   const paymentLineTotal = roundMoney(paymentLines.reduce((sum, line) => sum + (Number(line.amountText) || 0), 0));
-  const remainingBalance = roundMoney(total - paymentLineTotal);
+  const remainingBalance = roundMoney(amountDue - paymentLineTotal);
   const paymentsBalanced = Math.abs(remainingBalance) < 0.01;
   const cashLinesReady = paymentLines.every((line) => line.method !== 'CASH' || (Number(line.amountReceivedText) || 0) >= (Number(line.amountText) || 0));
   const paymentReady = paymentLines.length > 0 && paymentsBalanced && cashLinesReady;
-  const isCheckingOut = createOrder.isPending;
+  const isCheckingOut = createOrder.isPending || payOrder.isPending;
   const printerReady = true;
   const modifierTotal = modifierProduct ? getModifierTotal(modifierProduct, modifierSelections) : 0;
   const modifierRequiredComplete = modifierProduct ? isModifierSelectionComplete(modifierProduct.modifierGroups, modifierSelections) : true;
@@ -129,6 +144,7 @@ export function SellScreen() {
     }
     setShiftRequiredVisible(false);
     setPaymentVisible(true);
+    setPayingHeldOrder(null);
     setPaymentValidationVisible(false);
     setPaymentSubmitError(false);
     setPaymentLines([createPaymentLine('CASH', total, Math.ceil(total))]);
@@ -145,19 +161,27 @@ export function SellScreen() {
 
     setPaymentSubmitError(false);
     try {
-      const paidOrder = await createOrder.mutateAsync({
-        items: lines.map((line) => ({
-          productId: line.productId,
-          quantity: line.quantity,
-          modifiers: toCheckoutModifierSelections(line.modifiers),
-        })),
-        adjustment: adjustment ?? undefined,
+      const paymentPayload = {
         payments: paymentLines.map((line) => ({
           method: line.method,
           amount: Number(line.amountText) || 0,
           amountReceived: line.method === 'CASH' ? Number(line.amountReceivedText) || 0 : undefined,
         })),
-        tax,
+      };
+      const paidOrder = payingHeldOrder
+        ? await payOrder.mutateAsync({ orderId: payingHeldOrder.id, payments: paymentPayload.payments })
+        : await createOrder.mutateAsync({
+        items: lines.map((line) => ({
+          productId: line.productId,
+          quantity: line.quantity,
+          modifiers: toCheckoutModifierSelections(line.modifiers),
+        })),
+        orderType,
+        adjustment: adjustment ?? undefined,
+        payments: paymentPayload.payments,
+        taxRate: TAX_RATE * 100,
+        serviceChargeRate: 0,
+        tip: tipAmount,
         currency: 'USD',
       });
       setCompletedOrder(paidOrder);
@@ -166,11 +190,52 @@ export function SellScreen() {
       setPaymentLines([]);
       setAdjustment(null);
       setAdjustmentValueText('');
+      setTipText('');
+      setPayingHeldOrder(null);
       setPrintStatus('idle');
       clear();
-    } catch {
-      setPaymentSubmitError(true);
+    } catch (error) {
+      if (isManagerApprovalError(error)) {
+        setManagerApprovalVisible(true);
+      } else {
+        setPaymentSubmitError(true);
+      }
     }
+  };
+
+  const holdCurrentOrder = async () => {
+    if (lines.length === 0) return;
+    setManagerApprovalVisible(false);
+    try {
+      await holdOrder.mutateAsync({
+        items: lines.map((line) => ({
+          productId: line.productId,
+          quantity: line.quantity,
+          modifiers: toCheckoutModifierSelections(line.modifiers),
+        })),
+        orderType,
+        adjustment: adjustment ?? undefined,
+        taxRate: TAX_RATE * 100,
+        serviceChargeRate: 0,
+        tip: tipAmount,
+        currency: 'USD',
+      });
+      clear();
+      setAdjustment(null);
+      setAdjustmentValueText('');
+      setTipText('');
+    } catch (error) {
+      if (isManagerApprovalError(error)) {
+        setManagerApprovalVisible(true);
+      }
+    }
+  };
+
+  const resumeHeldOrder = async (order: CheckoutOrder) => {
+    const resumed = await resumeOrder.mutateAsync(order.id);
+    setPayingHeldOrder(resumed);
+    setPaymentVisible(true);
+    setPaymentLines([createPaymentLine('CASH', resumed.total, Math.ceil(resumed.total))]);
   };
 
   const addPaymentLine = () => {
@@ -352,6 +417,12 @@ export function SellScreen() {
             </IconButton>
           </View>
 
+            <View style={styles.statusRow}>
+            {(['DINE_IN', 'TAKEAWAY', 'PICKUP'] as OrderType[]).map((type) => (
+              <PaymentMethodChip key={type} label={t(`orderType.${type}`)} selected={orderType === type} onPress={() => setOrderType(type)} />
+            ))}
+          </View>
+
           <View style={styles.statusRow}>
             <StatusPill
               label={t('sell.order.printer')}
@@ -414,6 +485,8 @@ export function SellScreen() {
             <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
             {adjustment ? <TotalRow label={t('payment.adjustment')} value={`-${money(adjustmentAmount)}`} /> : null}
             <TotalRow label={t('sell.order.tax')} value={money(tax)} />
+            <TotalRow label={t('payment.serviceCharge')} value={money(serviceCharge)} />
+            <TotalRow label={t('payment.tip')} value={money(tipAmount)} />
             <View style={styles.totalDivider} />
             <View style={styles.grandTotalRow}>
               <Text style={styles.totalLabel}>{t('sell.order.total')}</Text>
@@ -434,6 +507,23 @@ export function SellScreen() {
                 {adjustment ? formatAdjustmentLabel(adjustment, money) : t('payment.noAdjustment')}
               </Text>
             </Pressable>
+            <TextInput
+              keyboardType="numeric"
+              placeholder={t('payment.tipPlaceholder')}
+              placeholderTextColor={tokens.colors.subtle}
+              style={styles.cashInput}
+              value={tipText}
+              onChangeText={setTipText}
+            />
+            <AppButton
+              disabled={lines.length === 0 || holdOrder.isPending}
+              loading={holdOrder.isPending}
+              onPress={holdCurrentOrder}
+              style={styles.markPaidButton}
+              variant="secondary"
+            >
+              {t('sell.order.hold')}
+            </AppButton>
             <AppButton
               disabled={lines.length === 0 || isCheckingOut}
               loading={isCheckingOut}
@@ -443,6 +533,17 @@ export function SellScreen() {
               {t('sell.order.markPaid')}
             </AppButton>
             {shiftRequiredVisible ? <Text style={styles.modifierValidation}>{t('sell.shiftRequired')}</Text> : null}
+            {managerApprovalVisible ? <Text style={styles.modifierValidation}>{t('payment.managerApprovalRequired')}</Text> : null}
+            {(heldOrdersQuery.data ?? []).length > 0 ? (
+              <View style={styles.heldOrders}>
+                <Text style={styles.cashLabel}>{t('sell.order.heldOrders')}</Text>
+                {(heldOrdersQuery.data ?? []).slice(0, 3).map((order) => (
+                  <Pressable key={order.id} onPress={() => resumeHeldOrder(order)} style={styles.heldOrderButton}>
+                    <Text style={styles.removePaymentText}>{order.pickupNumber ? `#${order.pickupNumber}` : order.orderNumber} · {money(order.total)}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            ) : null}
           </View>
         </Surface>
       </View>
@@ -515,11 +616,13 @@ export function SellScreen() {
 
             <ScrollView style={styles.paymentModalScroll} contentContainerStyle={styles.paymentModalScrollContent} showsVerticalScrollIndicator>
               <View style={styles.paymentDueBlock}>
-                <Text style={styles.paymentDue}>{money(total)}</Text>
+                <Text style={styles.paymentDue}>{money(amountDue)}</Text>
                 <View style={styles.receiptRows}>
                   <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
                   {adjustment ? <TotalRow label={t('payment.adjustment')} value={`-${money(adjustmentAmount)}`} /> : null}
                   <TotalRow label={t('sell.order.tax')} value={money(tax)} />
+                  <TotalRow label={t('payment.serviceCharge')} value={money(serviceCharge)} />
+                  <TotalRow label={t('payment.tip')} value={money(tipAmount)} />
                 </View>
               </View>
 
@@ -589,6 +692,7 @@ export function SellScreen() {
                 <Text style={styles.modifierValidation}>{t(paymentsBalanced ? 'payment.validation.insufficient' : 'payment.validation.unbalanced')}</Text>
               ) : null}
               {paymentSubmitError ? <Text style={styles.modifierValidation}>{t('payment.validation.submitFailed')}</Text> : null}
+              {managerApprovalVisible ? <Text style={styles.modifierValidation}>{t('payment.managerApprovalRequired')}</Text> : null}
             </ScrollView>
 
             <View style={styles.modalActions}>
@@ -837,6 +941,12 @@ function printStatusLabel(status: PrintFlowStatus, t: (key: string) => string) {
     default:
       return t('sell.payment.status.notPrinted');
   }
+}
+
+function isManagerApprovalError(error: unknown) {
+  const candidate = error as { response?: { data?: { code?: string; message?: string | string[] } } };
+  const data = candidate.response?.data;
+  return data?.code === 'MANAGER_APPROVAL_REQUIRED' || String(data?.message ?? '').includes('Manager approval');
 }
 
 const styles = StyleSheet.create({
@@ -1252,6 +1362,18 @@ const styles = StyleSheet.create({
   removePaymentText: {
     ...tokens.typography.caption,
     color: tokens.colors.danger,
+  },
+  heldOrders: {
+    gap: tokens.spacing.xs,
+    marginTop: tokens.spacing.sm,
+  },
+  heldOrderButton: {
+    minHeight: 36,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    paddingHorizontal: tokens.spacing.sm,
   },
   cashLabel: {
     ...tokens.typography.label,
