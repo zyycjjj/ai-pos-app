@@ -65,6 +65,7 @@ export function SellScreen() {
   const [adjustment, setAdjustment] = useState<OrderAdjustment | null>(null);
   const [orderType, setOrderType] = useState<OrderType>('TAKEAWAY');
   const [tipText, setTipText] = useState('');
+  const [promoCode, setPromoCode] = useState('');
   const [modifierProduct, setModifierProduct] = useState<ProductDto | null>(null);
   const [modifierSelections, setModifierSelections] = useState<ModifierSelections>({});
   const [modifierValidationVisible, setModifierValidationVisible] = useState(false);
@@ -178,6 +179,7 @@ export function SellScreen() {
         })),
         orderType,
         adjustment: adjustment ?? undefined,
+        promoCode: promoCode.trim() || undefined,
         payments: paymentPayload.payments,
         taxRate: TAX_RATE * 100,
         serviceChargeRate: 0,
@@ -191,6 +193,7 @@ export function SellScreen() {
       setAdjustment(null);
       setAdjustmentValueText('');
       setTipText('');
+      setPromoCode('');
       setPayingHeldOrder(null);
       setPrintStatus('idle');
       clear();
@@ -215,6 +218,7 @@ export function SellScreen() {
         })),
         orderType,
         adjustment: adjustment ?? undefined,
+        promoCode: promoCode.trim() || undefined,
         taxRate: TAX_RATE * 100,
         serviceChargeRate: 0,
         tip: tipAmount,
@@ -224,6 +228,7 @@ export function SellScreen() {
       setAdjustment(null);
       setAdjustmentValueText('');
       setTipText('');
+      setPromoCode('');
     } catch (error) {
       if (isManagerApprovalError(error)) {
         setManagerApprovalVisible(true);
@@ -579,6 +584,10 @@ export function SellScreen() {
                 />
               ))}
               {completedOrder?.changeDue ? <TotalRow label={t('payment.changeDue')} value={money(completedOrder.changeDue)} /> : null}
+              {completedOrder?.promotionDiscountAmount ? <TotalRow label={t('payment.promotionDiscount')} value={`-${money(completedOrder.promotionDiscountAmount)}`} /> : null}
+              {completedOrder?.appliedPromotions?.map((promotion) => (
+                <TotalRow key={promotion.id} label={promotion.promoCode ? `${promotion.name} (${promotion.promoCode})` : promotion.name} value={`-${money(promotion.discountAmount)}`} />
+              ))}
               <TotalRow label={t('sell.payment.printer')} value={t('sell.payment.printerName')} />
               <TotalRow label={t('sell.payment.status')} value={printStatusLabel(printStatus, t)} />
             </View>
@@ -620,11 +629,21 @@ export function SellScreen() {
                 <View style={styles.receiptRows}>
                   <TotalRow label={t('sell.order.subtotal')} value={money(subtotal)} />
                   {adjustment ? <TotalRow label={t('payment.adjustment')} value={`-${money(adjustmentAmount)}`} /> : null}
+                  {promoCode.trim() ? <TotalRow label={t('payment.promoCode')} value={promoCode.trim().toUpperCase()} /> : null}
                   <TotalRow label={t('sell.order.tax')} value={money(tax)} />
                   <TotalRow label={t('payment.serviceCharge')} value={money(serviceCharge)} />
                   <TotalRow label={t('payment.tip')} value={money(tipAmount)} />
                 </View>
               </View>
+
+              <Text style={styles.cashLabel}>{t('payment.promoCode')}</Text>
+              <TextInput
+                autoCapitalize="characters"
+                placeholder={t('payment.promoCodePlaceholder')}
+                value={promoCode}
+                onChangeText={setPromoCode}
+                style={styles.cashInput}
+              />
 
               <View style={styles.paymentLines}>
                 {paymentLines.map((line, index) => {

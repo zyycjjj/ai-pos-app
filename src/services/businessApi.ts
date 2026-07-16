@@ -51,6 +51,10 @@ export type CheckoutOrder = {
   currency: string;
   subtotal: number;
   adjustment: number;
+  promotionDiscountAmount: number;
+  manualDiscountAmount: number;
+  totalDiscountAmount: number;
+  appliedPromotions: Array<{ id: string; name: string; type: string; promoCode: string | null; discountAmount: number }>;
   adjustmentType: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override' | null;
   adjustmentValue: number | null;
   discountReason: string | null;
@@ -601,6 +605,8 @@ export function useCreateCheckoutOrder() {
         value: number;
         reason?: string;
       };
+      promoCode?: string;
+      selectedPromotionIds?: string[];
       payments: Array<{
         method: 'CASH' | 'CARD' | 'MANUAL';
         amount: number;
@@ -639,6 +645,8 @@ export function useHoldCheckoutOrder() {
         value: number;
         reason?: string;
       };
+      promoCode?: string;
+      selectedPromotionIds?: string[];
       taxRate?: number;
       serviceChargeRate?: number;
       tip?: number;

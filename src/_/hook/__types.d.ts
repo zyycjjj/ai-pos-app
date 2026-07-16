@@ -383,10 +383,31 @@ export namespace $Enums {
         DRAFT: 'DRAFT',
         ACTIVE: 'ACTIVE',
         PAUSED: 'PAUSED',
-        ENDED: 'ENDED'
+        ENDED: 'ENDED',
+        ARCHIVED: 'ARCHIVED'
     };
 
     export type CampaignStatus = (typeof CampaignStatus)[keyof typeof CampaignStatus]
+
+
+    export const CampaignType: {
+        ORDER_DISCOUNT: 'ORDER_DISCOUNT',
+        THRESHOLD_DISCOUNT: 'THRESHOLD_DISCOUNT',
+        ITEM_DISCOUNT: 'ITEM_DISCOUNT',
+        PROMO_CODE: 'PROMO_CODE',
+        BUY_X_GET_Y: 'BUY_X_GET_Y'
+    };
+
+    export type CampaignType = (typeof CampaignType)[keyof typeof CampaignType]
+
+
+    export const PromotionStackingPolicy: {
+        BEST_ONLY: 'BEST_ONLY',
+        STACKABLE: 'STACKABLE',
+        EXCLUSIVE: 'EXCLUSIVE'
+    };
+
+    export type PromotionStackingPolicy = (typeof PromotionStackingPolicy)[keyof typeof PromotionStackingPolicy]
 
 
     export const CatalogStatus: {
@@ -545,6 +566,14 @@ export const StoreRole: typeof $Enums.StoreRole
 export type CampaignStatus = $Enums.CampaignStatus
 
 export const CampaignStatus: typeof $Enums.CampaignStatus
+
+export type CampaignType = $Enums.CampaignType
+
+export const CampaignType: typeof $Enums.CampaignType
+
+export type PromotionStackingPolicy = $Enums.PromotionStackingPolicy
+
+export const PromotionStackingPolicy: typeof $Enums.PromotionStackingPolicy
 
 export type CatalogStatus = $Enums.CatalogStatus
 
@@ -14831,6 +14860,9 @@ export namespace Prisma {
         guestCount: number | null
         subtotal: Decimal | null
         adjustment: Decimal | null
+        promotionDiscountAmount: Decimal | null
+        manualDiscountAmount: Decimal | null
+        totalDiscountAmount: Decimal | null
         adjustmentValue: Decimal | null
         taxRate: Decimal | null
         tax: Decimal | null
@@ -14846,6 +14878,9 @@ export namespace Prisma {
         guestCount: number | null
         subtotal: Decimal | null
         adjustment: Decimal | null
+        promotionDiscountAmount: Decimal | null
+        manualDiscountAmount: Decimal | null
+        totalDiscountAmount: Decimal | null
         adjustmentValue: Decimal | null
         taxRate: Decimal | null
         tax: Decimal | null
@@ -14871,6 +14906,9 @@ export namespace Prisma {
         currency: string | null
         subtotal: Decimal | null
         adjustment: Decimal | null
+        promotionDiscountAmount: Decimal | null
+        manualDiscountAmount: Decimal | null
+        totalDiscountAmount: Decimal | null
         adjustmentType: string | null
         adjustmentValue: Decimal | null
         discountReason: string | null
@@ -14906,6 +14944,9 @@ export namespace Prisma {
         currency: string | null
         subtotal: Decimal | null
         adjustment: Decimal | null
+        promotionDiscountAmount: Decimal | null
+        manualDiscountAmount: Decimal | null
+        totalDiscountAmount: Decimal | null
         adjustmentType: string | null
         adjustmentValue: Decimal | null
         discountReason: string | null
@@ -14941,6 +14982,10 @@ export namespace Prisma {
         currency: number
         subtotal: number
         adjustment: number
+        promotionDiscountAmount: number
+        manualDiscountAmount: number
+        totalDiscountAmount: number
+        appliedPromotions: number
         adjustmentType: number
         adjustmentValue: number
         discountReason: number
@@ -14968,6 +15013,9 @@ export namespace Prisma {
         guestCount?: true
         subtotal?: true
         adjustment?: true
+        promotionDiscountAmount?: true
+        manualDiscountAmount?: true
+        totalDiscountAmount?: true
         adjustmentValue?: true
         taxRate?: true
         tax?: true
@@ -14983,6 +15031,9 @@ export namespace Prisma {
         guestCount?: true
         subtotal?: true
         adjustment?: true
+        promotionDiscountAmount?: true
+        manualDiscountAmount?: true
+        totalDiscountAmount?: true
         adjustmentValue?: true
         taxRate?: true
         tax?: true
@@ -15008,6 +15059,9 @@ export namespace Prisma {
         currency?: true
         subtotal?: true
         adjustment?: true
+        promotionDiscountAmount?: true
+        manualDiscountAmount?: true
+        totalDiscountAmount?: true
         adjustmentType?: true
         adjustmentValue?: true
         discountReason?: true
@@ -15043,6 +15097,9 @@ export namespace Prisma {
         currency?: true
         subtotal?: true
         adjustment?: true
+        promotionDiscountAmount?: true
+        manualDiscountAmount?: true
+        totalDiscountAmount?: true
         adjustmentType?: true
         adjustmentValue?: true
         discountReason?: true
@@ -15078,6 +15135,10 @@ export namespace Prisma {
         currency?: true
         subtotal?: true
         adjustment?: true
+        promotionDiscountAmount?: true
+        manualDiscountAmount?: true
+        totalDiscountAmount?: true
+        appliedPromotions?: true
         adjustmentType?: true
         adjustmentValue?: true
         discountReason?: true
@@ -15200,6 +15261,10 @@ export namespace Prisma {
         currency: string
         subtotal: Decimal
         adjustment: Decimal
+        promotionDiscountAmount: Decimal
+        manualDiscountAmount: Decimal
+        totalDiscountAmount: Decimal
+        appliedPromotions: JsonValue | null
         adjustmentType: string | null
         adjustmentValue: Decimal | null
         discountReason: string | null
@@ -15254,6 +15319,10 @@ export namespace Prisma {
         currency?: boolean
         subtotal?: boolean
         adjustment?: boolean
+        promotionDiscountAmount?: boolean
+        manualDiscountAmount?: boolean
+        totalDiscountAmount?: boolean
+        appliedPromotions?: boolean
         adjustmentType?: boolean
         adjustmentValue?: boolean
         discountReason?: boolean
@@ -15300,6 +15369,10 @@ export namespace Prisma {
         currency?: boolean
         subtotal?: boolean
         adjustment?: boolean
+        promotionDiscountAmount?: boolean
+        manualDiscountAmount?: boolean
+        totalDiscountAmount?: boolean
+        appliedPromotions?: boolean
         adjustmentType?: boolean
         adjustmentValue?: boolean
         discountReason?: boolean
@@ -15321,7 +15394,7 @@ export namespace Prisma {
         updatedAt?: boolean
     }
 
-    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "orderType" | "tableId" | "guestCount" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "adjustmentType" | "adjustmentValue" | "discountReason" | "taxRate" | "tax" | "serviceChargeRate" | "serviceCharge" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "heldAt" | "resumedAt" | "openedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "orderType" | "tableId" | "guestCount" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "promotionDiscountAmount" | "manualDiscountAmount" | "totalDiscountAmount" | "appliedPromotions" | "adjustmentType" | "adjustmentValue" | "discountReason" | "taxRate" | "tax" | "serviceChargeRate" | "serviceCharge" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "heldAt" | "resumedAt" | "openedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
     export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | Order$storeArgs<ExtArgs>
         table?: boolean | Order$tableArgs<ExtArgs>
@@ -15360,6 +15433,10 @@ export namespace Prisma {
             currency: string
             subtotal: Prisma.Decimal
             adjustment: Prisma.Decimal
+            promotionDiscountAmount: Prisma.Decimal
+            manualDiscountAmount: Prisma.Decimal
+            totalDiscountAmount: Prisma.Decimal
+            appliedPromotions: Prisma.JsonValue | null
             adjustmentType: string | null
             adjustmentValue: Prisma.Decimal | null
             discountReason: string | null
@@ -15769,6 +15846,10 @@ export namespace Prisma {
         readonly currency: FieldRef<"Order", 'String'>
         readonly subtotal: FieldRef<"Order", 'Decimal'>
         readonly adjustment: FieldRef<"Order", 'Decimal'>
+        readonly promotionDiscountAmount: FieldRef<"Order", 'Decimal'>
+        readonly manualDiscountAmount: FieldRef<"Order", 'Decimal'>
+        readonly totalDiscountAmount: FieldRef<"Order", 'Decimal'>
+        readonly appliedPromotions: FieldRef<"Order", 'Json'>
         readonly adjustmentType: FieldRef<"Order", 'String'>
         readonly adjustmentValue: FieldRef<"Order", 'Decimal'>
         readonly discountReason: FieldRef<"Order", 'String'>
@@ -32518,10 +32599,20 @@ export namespace Prisma {
 
     export type CampaignAvgAggregateOutputType = {
         discountValue: number | null
+        thresholdAmount: Decimal | null
+        priority: number | null
+        usageLimit: number | null
+        usageCount: number | null
+        discountTotal: Decimal | null
     }
 
     export type CampaignSumAggregateOutputType = {
         discountValue: number | null
+        thresholdAmount: Decimal | null
+        priority: number | null
+        usageLimit: number | null
+        usageCount: number | null
+        discountTotal: Decimal | null
     }
 
     export type CampaignMinAggregateOutputType = {
@@ -32530,8 +32621,20 @@ export namespace Prisma {
         name: string | null
         goal: string | null
         status: $Enums.CampaignStatus | null
+        type: $Enums.CampaignType | null
+        stackingPolicy: $Enums.PromotionStackingPolicy | null
         discountType: string | null
         discountValue: number | null
+        thresholdAmount: Decimal | null
+        promoCode: string | null
+        productId: string | null
+        categoryName: string | null
+        startsAt: Date | null
+        endsAt: Date | null
+        priority: number | null
+        usageLimit: number | null
+        usageCount: number | null
+        discountTotal: Decimal | null
         timeWindow: string | null
         bannerCopy: string | null
         staffMessage: string | null
@@ -32546,8 +32649,20 @@ export namespace Prisma {
         name: string | null
         goal: string | null
         status: $Enums.CampaignStatus | null
+        type: $Enums.CampaignType | null
+        stackingPolicy: $Enums.PromotionStackingPolicy | null
         discountType: string | null
         discountValue: number | null
+        thresholdAmount: Decimal | null
+        promoCode: string | null
+        productId: string | null
+        categoryName: string | null
+        startsAt: Date | null
+        endsAt: Date | null
+        priority: number | null
+        usageLimit: number | null
+        usageCount: number | null
+        discountTotal: Decimal | null
         timeWindow: string | null
         bannerCopy: string | null
         staffMessage: string | null
@@ -32562,8 +32677,20 @@ export namespace Prisma {
         name: number
         goal: number
         status: number
+        type: number
+        stackingPolicy: number
         discountType: number
         discountValue: number
+        thresholdAmount: number
+        promoCode: number
+        productId: number
+        categoryName: number
+        startsAt: number
+        endsAt: number
+        priority: number
+        usageLimit: number
+        usageCount: number
+        discountTotal: number
         timeWindow: number
         bannerCopy: number
         staffMessage: number
@@ -32577,10 +32704,20 @@ export namespace Prisma {
 
     export type CampaignAvgAggregateInputType = {
         discountValue?: true
+        thresholdAmount?: true
+        priority?: true
+        usageLimit?: true
+        usageCount?: true
+        discountTotal?: true
     }
 
     export type CampaignSumAggregateInputType = {
         discountValue?: true
+        thresholdAmount?: true
+        priority?: true
+        usageLimit?: true
+        usageCount?: true
+        discountTotal?: true
     }
 
     export type CampaignMinAggregateInputType = {
@@ -32589,8 +32726,20 @@ export namespace Prisma {
         name?: true
         goal?: true
         status?: true
+        type?: true
+        stackingPolicy?: true
         discountType?: true
         discountValue?: true
+        thresholdAmount?: true
+        promoCode?: true
+        productId?: true
+        categoryName?: true
+        startsAt?: true
+        endsAt?: true
+        priority?: true
+        usageLimit?: true
+        usageCount?: true
+        discountTotal?: true
         timeWindow?: true
         bannerCopy?: true
         staffMessage?: true
@@ -32605,8 +32754,20 @@ export namespace Prisma {
         name?: true
         goal?: true
         status?: true
+        type?: true
+        stackingPolicy?: true
         discountType?: true
         discountValue?: true
+        thresholdAmount?: true
+        promoCode?: true
+        productId?: true
+        categoryName?: true
+        startsAt?: true
+        endsAt?: true
+        priority?: true
+        usageLimit?: true
+        usageCount?: true
+        discountTotal?: true
         timeWindow?: true
         bannerCopy?: true
         staffMessage?: true
@@ -32621,8 +32782,20 @@ export namespace Prisma {
         name?: true
         goal?: true
         status?: true
+        type?: true
+        stackingPolicy?: true
         discountType?: true
         discountValue?: true
+        thresholdAmount?: true
+        promoCode?: true
+        productId?: true
+        categoryName?: true
+        startsAt?: true
+        endsAt?: true
+        priority?: true
+        usageLimit?: true
+        usageCount?: true
+        discountTotal?: true
         timeWindow?: true
         bannerCopy?: true
         staffMessage?: true
@@ -32725,8 +32898,20 @@ export namespace Prisma {
         name: string
         goal: string | null
         status: $Enums.CampaignStatus
+        type: $Enums.CampaignType
+        stackingPolicy: $Enums.PromotionStackingPolicy
         discountType: string | null
         discountValue: number | null
+        thresholdAmount: Decimal | null
+        promoCode: string | null
+        productId: string | null
+        categoryName: string | null
+        startsAt: Date | null
+        endsAt: Date | null
+        priority: number
+        usageLimit: number | null
+        usageCount: number
+        discountTotal: Decimal
         timeWindow: string | null
         bannerCopy: string | null
         staffMessage: string | null
@@ -32761,8 +32946,20 @@ export namespace Prisma {
         name?: boolean
         goal?: boolean
         status?: boolean
+        type?: boolean
+        stackingPolicy?: boolean
         discountType?: boolean
         discountValue?: boolean
+        thresholdAmount?: boolean
+        promoCode?: boolean
+        productId?: boolean
+        categoryName?: boolean
+        startsAt?: boolean
+        endsAt?: boolean
+        priority?: boolean
+        usageLimit?: boolean
+        usageCount?: boolean
+        discountTotal?: boolean
         timeWindow?: boolean
         bannerCopy?: boolean
         staffMessage?: boolean
@@ -32781,8 +32978,20 @@ export namespace Prisma {
         name?: boolean
         goal?: boolean
         status?: boolean
+        type?: boolean
+        stackingPolicy?: boolean
         discountType?: boolean
         discountValue?: boolean
+        thresholdAmount?: boolean
+        promoCode?: boolean
+        productId?: boolean
+        categoryName?: boolean
+        startsAt?: boolean
+        endsAt?: boolean
+        priority?: boolean
+        usageLimit?: boolean
+        usageCount?: boolean
+        discountTotal?: boolean
         timeWindow?: boolean
         bannerCopy?: boolean
         staffMessage?: boolean
@@ -32792,7 +33001,7 @@ export namespace Prisma {
         updatedAt?: boolean
     }
 
-    export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "goal" | "status" | "discountType" | "discountValue" | "timeWindow" | "bannerCopy" | "staffMessage" | "structuredJson" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
+    export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "goal" | "status" | "type" | "stackingPolicy" | "discountType" | "discountValue" | "thresholdAmount" | "promoCode" | "productId" | "categoryName" | "startsAt" | "endsAt" | "priority" | "usageLimit" | "usageCount" | "discountTotal" | "timeWindow" | "bannerCopy" | "staffMessage" | "structuredJson" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
     export type CampaignInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | StoreDefaultArgs<ExtArgs>
     }
@@ -32808,8 +33017,20 @@ export namespace Prisma {
             name: string
             goal: string | null
             status: $Enums.CampaignStatus
+            type: $Enums.CampaignType
+            stackingPolicy: $Enums.PromotionStackingPolicy
             discountType: string | null
             discountValue: number | null
+            thresholdAmount: Prisma.Decimal | null
+            promoCode: string | null
+            productId: string | null
+            categoryName: string | null
+            startsAt: Date | null
+            endsAt: Date | null
+            priority: number
+            usageLimit: number | null
+            usageCount: number
+            discountTotal: Prisma.Decimal
             timeWindow: string | null
             bannerCopy: string | null
             staffMessage: string | null
@@ -33192,8 +33413,20 @@ export namespace Prisma {
         readonly name: FieldRef<"Campaign", 'String'>
         readonly goal: FieldRef<"Campaign", 'String'>
         readonly status: FieldRef<"Campaign", 'CampaignStatus'>
+        readonly type: FieldRef<"Campaign", 'CampaignType'>
+        readonly stackingPolicy: FieldRef<"Campaign", 'PromotionStackingPolicy'>
         readonly discountType: FieldRef<"Campaign", 'String'>
         readonly discountValue: FieldRef<"Campaign", 'Float'>
+        readonly thresholdAmount: FieldRef<"Campaign", 'Decimal'>
+        readonly promoCode: FieldRef<"Campaign", 'String'>
+        readonly productId: FieldRef<"Campaign", 'String'>
+        readonly categoryName: FieldRef<"Campaign", 'String'>
+        readonly startsAt: FieldRef<"Campaign", 'DateTime'>
+        readonly endsAt: FieldRef<"Campaign", 'DateTime'>
+        readonly priority: FieldRef<"Campaign", 'Int'>
+        readonly usageLimit: FieldRef<"Campaign", 'Int'>
+        readonly usageCount: FieldRef<"Campaign", 'Int'>
+        readonly discountTotal: FieldRef<"Campaign", 'Decimal'>
         readonly timeWindow: FieldRef<"Campaign", 'String'>
         readonly bannerCopy: FieldRef<"Campaign", 'String'>
         readonly staffMessage: FieldRef<"Campaign", 'String'>
@@ -36899,6 +37132,10 @@ export namespace Prisma {
         currency: 'currency',
         subtotal: 'subtotal',
         adjustment: 'adjustment',
+        promotionDiscountAmount: 'promotionDiscountAmount',
+        manualDiscountAmount: 'manualDiscountAmount',
+        totalDiscountAmount: 'totalDiscountAmount',
+        appliedPromotions: 'appliedPromotions',
         adjustmentType: 'adjustmentType',
         adjustmentValue: 'adjustmentValue',
         discountReason: 'discountReason',
@@ -37195,8 +37432,20 @@ export namespace Prisma {
         name: 'name',
         goal: 'goal',
         status: 'status',
+        type: 'type',
+        stackingPolicy: 'stackingPolicy',
         discountType: 'discountType',
         discountValue: 'discountValue',
+        thresholdAmount: 'thresholdAmount',
+        promoCode: 'promoCode',
+        productId: 'productId',
+        categoryName: 'categoryName',
+        startsAt: 'startsAt',
+        endsAt: 'endsAt',
+        priority: 'priority',
+        usageLimit: 'usageLimit',
+        usageCount: 'usageCount',
+        discountTotal: 'discountTotal',
         timeWindow: 'timeWindow',
         bannerCopy: 'bannerCopy',
         staffMessage: 'staffMessage',
@@ -37384,6 +37633,23 @@ export namespace Prisma {
     export type ProductModifierOptionOrderByRelevanceFieldEnum = (typeof ProductModifierOptionOrderByRelevanceFieldEnum)[keyof typeof ProductModifierOptionOrderByRelevanceFieldEnum]
 
 
+    export const JsonNullValueFilter: {
+        DbNull: typeof DbNull,
+        JsonNull: typeof JsonNull,
+        AnyNull: typeof AnyNull
+    };
+
+    export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+    export const QueryMode: {
+        default: 'default',
+        insensitive: 'insensitive'
+    };
+
+    export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
     export const OrderOrderByRelevanceFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -37415,23 +37681,6 @@ export namespace Prisma {
     };
 
     export type OrderPaymentOrderByRelevanceFieldEnum = (typeof OrderPaymentOrderByRelevanceFieldEnum)[keyof typeof OrderPaymentOrderByRelevanceFieldEnum]
-
-
-    export const JsonNullValueFilter: {
-        DbNull: typeof DbNull,
-        JsonNull: typeof JsonNull,
-        AnyNull: typeof AnyNull
-    };
-
-    export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-    export const QueryMode: {
-        default: 'default',
-        insensitive: 'insensitive'
-    };
-
-    export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
     export const OrderItemOrderByRelevanceFieldEnum: {
@@ -37594,6 +37843,9 @@ export namespace Prisma {
         name: 'name',
         goal: 'goal',
         discountType: 'discountType',
+        promoCode: 'promoCode',
+        productId: 'productId',
+        categoryName: 'categoryName',
         timeWindow: 'timeWindow',
         bannerCopy: 'bannerCopy',
         staffMessage: 'staffMessage',
@@ -37744,13 +37996,6 @@ export namespace Prisma {
 
 
     /**
-     * Reference to a field of type 'BusinessDayStatus'
-     */
-    export type EnumBusinessDayStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BusinessDayStatus'>
-
-
-
-    /**
      * Reference to a field of type 'Json'
      */
     export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -37761,6 +38006,13 @@ export namespace Prisma {
      * Reference to a field of type 'QueryMode'
      */
     export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+
+
+
+    /**
+     * Reference to a field of type 'BusinessDayStatus'
+     */
+    export type EnumBusinessDayStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BusinessDayStatus'>
 
 
 
@@ -37880,6 +38132,20 @@ export namespace Prisma {
      * Reference to a field of type 'CampaignStatus'
      */
     export type EnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignStatus'>
+
+
+
+    /**
+     * Reference to a field of type 'CampaignType'
+     */
+    export type EnumCampaignTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignType'>
+
+
+
+    /**
+     * Reference to a field of type 'PromotionStackingPolicy'
+     */
+    export type EnumPromotionStackingPolicyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromotionStackingPolicy'>
 
 
 
@@ -38762,6 +39028,10 @@ export namespace Prisma {
         currency?: StringFilter<"Order"> | string
         subtotal?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: JsonNullableFilter<"Order">
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         discountReason?: StringNullableFilter<"Order"> | string | null
@@ -38805,6 +39075,10 @@ export namespace Prisma {
         currency?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
+        appliedPromotions?: SortOrderInput | SortOrder
         adjustmentType?: SortOrderInput | SortOrder
         adjustmentValue?: SortOrderInput | SortOrder
         discountReason?: SortOrderInput | SortOrder
@@ -38852,6 +39126,10 @@ export namespace Prisma {
         currency?: StringFilter<"Order"> | string
         subtotal?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: JsonNullableFilter<"Order">
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         discountReason?: StringNullableFilter<"Order"> | string | null
@@ -38895,6 +39173,10 @@ export namespace Prisma {
         currency?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
+        appliedPromotions?: SortOrderInput | SortOrder
         adjustmentType?: SortOrderInput | SortOrder
         adjustmentValue?: SortOrderInput | SortOrder
         discountReason?: SortOrderInput | SortOrder
@@ -38938,6 +39220,10 @@ export namespace Prisma {
         currency?: StringWithAggregatesFilter<"Order"> | string
         subtotal?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: JsonNullableWithAggregatesFilter<"Order">
         adjustmentType?: StringNullableWithAggregatesFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         discountReason?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -40449,8 +40735,20 @@ export namespace Prisma {
         name?: StringFilter<"Campaign"> | string
         goal?: StringNullableFilter<"Campaign"> | string | null
         status?: EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFilter<"Campaign"> | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFilter<"Campaign"> | $Enums.PromotionStackingPolicy
         discountType?: StringNullableFilter<"Campaign"> | string | null
         discountValue?: FloatNullableFilter<"Campaign"> | number | null
+        thresholdAmount?: DecimalNullableFilter<"Campaign"> | Decimal | DecimalJsLike | number | string | null
+        promoCode?: StringNullableFilter<"Campaign"> | string | null
+        productId?: StringNullableFilter<"Campaign"> | string | null
+        categoryName?: StringNullableFilter<"Campaign"> | string | null
+        startsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        endsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        priority?: IntFilter<"Campaign"> | number
+        usageLimit?: IntNullableFilter<"Campaign"> | number | null
+        usageCount?: IntFilter<"Campaign"> | number
+        discountTotal?: DecimalFilter<"Campaign"> | Decimal | DecimalJsLike | number | string
         timeWindow?: StringNullableFilter<"Campaign"> | string | null
         bannerCopy?: StringNullableFilter<"Campaign"> | string | null
         staffMessage?: StringNullableFilter<"Campaign"> | string | null
@@ -40467,8 +40765,20 @@ export namespace Prisma {
         name?: SortOrder
         goal?: SortOrderInput | SortOrder
         status?: SortOrder
+        type?: SortOrder
+        stackingPolicy?: SortOrder
         discountType?: SortOrderInput | SortOrder
         discountValue?: SortOrderInput | SortOrder
+        thresholdAmount?: SortOrderInput | SortOrder
+        promoCode?: SortOrderInput | SortOrder
+        productId?: SortOrderInput | SortOrder
+        categoryName?: SortOrderInput | SortOrder
+        startsAt?: SortOrderInput | SortOrder
+        endsAt?: SortOrderInput | SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrderInput | SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
         timeWindow?: SortOrderInput | SortOrder
         bannerCopy?: SortOrderInput | SortOrder
         staffMessage?: SortOrderInput | SortOrder
@@ -40489,8 +40799,20 @@ export namespace Prisma {
         name?: StringFilter<"Campaign"> | string
         goal?: StringNullableFilter<"Campaign"> | string | null
         status?: EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFilter<"Campaign"> | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFilter<"Campaign"> | $Enums.PromotionStackingPolicy
         discountType?: StringNullableFilter<"Campaign"> | string | null
         discountValue?: FloatNullableFilter<"Campaign"> | number | null
+        thresholdAmount?: DecimalNullableFilter<"Campaign"> | Decimal | DecimalJsLike | number | string | null
+        promoCode?: StringNullableFilter<"Campaign"> | string | null
+        productId?: StringNullableFilter<"Campaign"> | string | null
+        categoryName?: StringNullableFilter<"Campaign"> | string | null
+        startsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        endsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        priority?: IntFilter<"Campaign"> | number
+        usageLimit?: IntNullableFilter<"Campaign"> | number | null
+        usageCount?: IntFilter<"Campaign"> | number
+        discountTotal?: DecimalFilter<"Campaign"> | Decimal | DecimalJsLike | number | string
         timeWindow?: StringNullableFilter<"Campaign"> | string | null
         bannerCopy?: StringNullableFilter<"Campaign"> | string | null
         staffMessage?: StringNullableFilter<"Campaign"> | string | null
@@ -40507,8 +40829,20 @@ export namespace Prisma {
         name?: SortOrder
         goal?: SortOrderInput | SortOrder
         status?: SortOrder
+        type?: SortOrder
+        stackingPolicy?: SortOrder
         discountType?: SortOrderInput | SortOrder
         discountValue?: SortOrderInput | SortOrder
+        thresholdAmount?: SortOrderInput | SortOrder
+        promoCode?: SortOrderInput | SortOrder
+        productId?: SortOrderInput | SortOrder
+        categoryName?: SortOrderInput | SortOrder
+        startsAt?: SortOrderInput | SortOrder
+        endsAt?: SortOrderInput | SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrderInput | SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
         timeWindow?: SortOrderInput | SortOrder
         bannerCopy?: SortOrderInput | SortOrder
         staffMessage?: SortOrderInput | SortOrder
@@ -40532,8 +40866,20 @@ export namespace Prisma {
         name?: StringWithAggregatesFilter<"Campaign"> | string
         goal?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
         status?: EnumCampaignStatusWithAggregatesFilter<"Campaign"> | $Enums.CampaignStatus
+        type?: EnumCampaignTypeWithAggregatesFilter<"Campaign"> | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyWithAggregatesFilter<"Campaign"> | $Enums.PromotionStackingPolicy
         discountType?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
         discountValue?: FloatNullableWithAggregatesFilter<"Campaign"> | number | null
+        thresholdAmount?: DecimalNullableWithAggregatesFilter<"Campaign"> | Decimal | DecimalJsLike | number | string | null
+        promoCode?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
+        productId?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
+        categoryName?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
+        startsAt?: DateTimeNullableWithAggregatesFilter<"Campaign"> | Date | string | null
+        endsAt?: DateTimeNullableWithAggregatesFilter<"Campaign"> | Date | string | null
+        priority?: IntWithAggregatesFilter<"Campaign"> | number
+        usageLimit?: IntNullableWithAggregatesFilter<"Campaign"> | number | null
+        usageCount?: IntWithAggregatesFilter<"Campaign"> | number
+        discountTotal?: DecimalWithAggregatesFilter<"Campaign"> | Decimal | DecimalJsLike | number | string
         timeWindow?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
         bannerCopy?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
         staffMessage?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
@@ -41745,6 +42091,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -41788,6 +42138,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -41827,6 +42181,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41870,6 +42228,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41911,6 +42273,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -41944,6 +42310,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41979,6 +42349,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43557,8 +43931,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -43575,8 +43961,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -43591,8 +43989,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43609,8 +44019,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43626,8 +44048,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -43642,8 +44076,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43659,8 +44105,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -45004,6 +45462,29 @@ export namespace Prisma {
         notIn?: $Enums.PaymentMethod[] | null
         not?: NestedEnumPaymentMethodNullableFilter<$PrismaModel> | $Enums.PaymentMethod | null
     }
+    export type JsonNullableFilter<$PrismaModel = never> =
+        | PatchUndefined<
+            Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+            Required<JsonNullableFilterBase<$PrismaModel>>
+        >
+        | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+    export type JsonNullableFilterBase<$PrismaModel = never> = {
+        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+        path?: string
+        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+        string_contains?: string | StringFieldRefInput<$PrismaModel>
+        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        lt?: InputJsonValue
+        lte?: InputJsonValue
+        gt?: InputJsonValue
+        gte?: InputJsonValue
+        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    }
 
     export type DecimalNullableFilter<$PrismaModel = never> = {
         equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
@@ -45062,6 +45543,10 @@ export namespace Prisma {
         currency?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
+        appliedPromotions?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
         discountReason?: SortOrder
@@ -45087,6 +45572,9 @@ export namespace Prisma {
         guestCount?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
         adjustmentValue?: SortOrder
         taxRate?: SortOrder
         tax?: SortOrder
@@ -45112,6 +45600,9 @@ export namespace Prisma {
         currency?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
         discountReason?: SortOrder
@@ -45147,6 +45638,9 @@ export namespace Prisma {
         currency?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
         adjustmentType?: SortOrder
         adjustmentValue?: SortOrder
         discountReason?: SortOrder
@@ -45172,6 +45666,9 @@ export namespace Prisma {
         guestCount?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
+        promotionDiscountAmount?: SortOrder
+        manualDiscountAmount?: SortOrder
+        totalDiscountAmount?: SortOrder
         adjustmentValue?: SortOrder
         taxRate?: SortOrder
         tax?: SortOrder
@@ -45237,6 +45734,32 @@ export namespace Prisma {
         _count?: NestedIntNullableFilter<$PrismaModel>
         _min?: NestedEnumPaymentMethodNullableFilter<$PrismaModel>
         _max?: NestedEnumPaymentMethodNullableFilter<$PrismaModel>
+    }
+    export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+        | PatchUndefined<
+            Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+            Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+        >
+        | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+    export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+        path?: string
+        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+        string_contains?: string | StringFieldRefInput<$PrismaModel>
+        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        lt?: InputJsonValue
+        lte?: InputJsonValue
+        gt?: InputJsonValue
+        gte?: InputJsonValue
+        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+        _count?: NestedIntNullableFilter<$PrismaModel>
+        _min?: NestedJsonNullableFilter<$PrismaModel>
+        _max?: NestedJsonNullableFilter<$PrismaModel>
     }
 
     export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -45434,29 +45957,6 @@ export namespace Prisma {
         _min?: NestedEnumPaymentMethodFilter<$PrismaModel>
         _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
     }
-    export type JsonNullableFilter<$PrismaModel = never> =
-        | PatchUndefined<
-            Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-            Required<JsonNullableFilterBase<$PrismaModel>>
-        >
-        | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-    export type JsonNullableFilterBase<$PrismaModel = never> = {
-        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-        path?: string
-        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-        string_contains?: string | StringFieldRefInput<$PrismaModel>
-        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        lt?: InputJsonValue
-        lte?: InputJsonValue
-        gt?: InputJsonValue
-        gte?: InputJsonValue
-        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    }
 
     export type RefundItemListRelationFilter = {
         every?: RefundItemWhereInput
@@ -45521,32 +46021,6 @@ export namespace Prisma {
         quantity?: SortOrder
         unitPrice?: SortOrder
         lineTotal?: SortOrder
-    }
-    export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
-        | PatchUndefined<
-            Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-            Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-        >
-        | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-    export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-        path?: string
-        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-        string_contains?: string | StringFieldRefInput<$PrismaModel>
-        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        lt?: InputJsonValue
-        lte?: InputJsonValue
-        gt?: InputJsonValue
-        gte?: InputJsonValue
-        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-        _count?: NestedIntNullableFilter<$PrismaModel>
-        _min?: NestedJsonNullableFilter<$PrismaModel>
-        _max?: NestedJsonNullableFilter<$PrismaModel>
     }
 
     export type EnumRefundStatusFilter<$PrismaModel = never> = {
@@ -46669,6 +47143,20 @@ export namespace Prisma {
         not?: NestedEnumCampaignStatusFilter<$PrismaModel> | $Enums.CampaignStatus
     }
 
+    export type EnumCampaignTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CampaignType | EnumCampaignTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CampaignType[]
+        notIn?: $Enums.CampaignType[]
+        not?: NestedEnumCampaignTypeFilter<$PrismaModel> | $Enums.CampaignType
+    }
+
+    export type EnumPromotionStackingPolicyFilter<$PrismaModel = never> = {
+        equals?: $Enums.PromotionStackingPolicy | EnumPromotionStackingPolicyFieldRefInput<$PrismaModel>
+        in?: $Enums.PromotionStackingPolicy[]
+        notIn?: $Enums.PromotionStackingPolicy[]
+        not?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel> | $Enums.PromotionStackingPolicy
+    }
+
     export type FloatNullableFilter<$PrismaModel = never> = {
         equals?: number | FloatFieldRefInput<$PrismaModel> | null
         in?: number[] | null
@@ -46692,8 +47180,20 @@ export namespace Prisma {
         name?: SortOrder
         goal?: SortOrder
         status?: SortOrder
+        type?: SortOrder
+        stackingPolicy?: SortOrder
         discountType?: SortOrder
         discountValue?: SortOrder
+        thresholdAmount?: SortOrder
+        promoCode?: SortOrder
+        productId?: SortOrder
+        categoryName?: SortOrder
+        startsAt?: SortOrder
+        endsAt?: SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
         timeWindow?: SortOrder
         bannerCopy?: SortOrder
         staffMessage?: SortOrder
@@ -46705,6 +47205,11 @@ export namespace Prisma {
 
     export type CampaignAvgOrderByAggregateInput = {
         discountValue?: SortOrder
+        thresholdAmount?: SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
     }
 
     export type CampaignMaxOrderByAggregateInput = {
@@ -46713,8 +47218,20 @@ export namespace Prisma {
         name?: SortOrder
         goal?: SortOrder
         status?: SortOrder
+        type?: SortOrder
+        stackingPolicy?: SortOrder
         discountType?: SortOrder
         discountValue?: SortOrder
+        thresholdAmount?: SortOrder
+        promoCode?: SortOrder
+        productId?: SortOrder
+        categoryName?: SortOrder
+        startsAt?: SortOrder
+        endsAt?: SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
         timeWindow?: SortOrder
         bannerCopy?: SortOrder
         staffMessage?: SortOrder
@@ -46729,8 +47246,20 @@ export namespace Prisma {
         name?: SortOrder
         goal?: SortOrder
         status?: SortOrder
+        type?: SortOrder
+        stackingPolicy?: SortOrder
         discountType?: SortOrder
         discountValue?: SortOrder
+        thresholdAmount?: SortOrder
+        promoCode?: SortOrder
+        productId?: SortOrder
+        categoryName?: SortOrder
+        startsAt?: SortOrder
+        endsAt?: SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
         timeWindow?: SortOrder
         bannerCopy?: SortOrder
         staffMessage?: SortOrder
@@ -46741,6 +47270,11 @@ export namespace Prisma {
 
     export type CampaignSumOrderByAggregateInput = {
         discountValue?: SortOrder
+        thresholdAmount?: SortOrder
+        priority?: SortOrder
+        usageLimit?: SortOrder
+        usageCount?: SortOrder
+        discountTotal?: SortOrder
     }
 
     export type EnumCampaignStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -46751,6 +47285,26 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumCampaignStatusFilter<$PrismaModel>
         _max?: NestedEnumCampaignStatusFilter<$PrismaModel>
+    }
+
+    export type EnumCampaignTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CampaignType | EnumCampaignTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CampaignType[]
+        notIn?: $Enums.CampaignType[]
+        not?: NestedEnumCampaignTypeWithAggregatesFilter<$PrismaModel> | $Enums.CampaignType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCampaignTypeFilter<$PrismaModel>
+        _max?: NestedEnumCampaignTypeFilter<$PrismaModel>
+    }
+
+    export type EnumPromotionStackingPolicyWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.PromotionStackingPolicy | EnumPromotionStackingPolicyFieldRefInput<$PrismaModel>
+        in?: $Enums.PromotionStackingPolicy[]
+        notIn?: $Enums.PromotionStackingPolicy[]
+        not?: NestedEnumPromotionStackingPolicyWithAggregatesFilter<$PrismaModel> | $Enums.PromotionStackingPolicy
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel>
+        _max?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel>
     }
 
     export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -50467,6 +51021,14 @@ export namespace Prisma {
         set?: $Enums.CampaignStatus
     }
 
+    export type EnumCampaignTypeFieldUpdateOperationsInput = {
+        set?: $Enums.CampaignType
+    }
+
+    export type EnumPromotionStackingPolicyFieldUpdateOperationsInput = {
+        set?: $Enums.PromotionStackingPolicy
+    }
+
     export type NullableFloatFieldUpdateOperationsInput = {
         set?: number | null
         increment?: number
@@ -51118,6 +51680,29 @@ export namespace Prisma {
         _min?: NestedEnumPaymentMethodNullableFilter<$PrismaModel>
         _max?: NestedEnumPaymentMethodNullableFilter<$PrismaModel>
     }
+    export type NestedJsonNullableFilter<$PrismaModel = never> =
+        | PatchUndefined<
+            Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+            Required<NestedJsonNullableFilterBase<$PrismaModel>>
+        >
+        | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+    export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+        path?: string
+        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+        string_contains?: string | StringFieldRefInput<$PrismaModel>
+        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+        lt?: InputJsonValue
+        lte?: InputJsonValue
+        gt?: InputJsonValue
+        gte?: InputJsonValue
+        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    }
 
     export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
         equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
@@ -51181,29 +51766,6 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumPaymentMethodFilter<$PrismaModel>
         _max?: NestedEnumPaymentMethodFilter<$PrismaModel>
-    }
-    export type NestedJsonNullableFilter<$PrismaModel = never> =
-        | PatchUndefined<
-            Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-            Required<NestedJsonNullableFilterBase<$PrismaModel>>
-        >
-        | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-    export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-        equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-        path?: string
-        mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-        string_contains?: string | StringFieldRefInput<$PrismaModel>
-        string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-        string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-        array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-        lt?: InputJsonValue
-        lte?: InputJsonValue
-        gt?: InputJsonValue
-        gte?: InputJsonValue
-        not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     }
 
     export type NestedEnumRefundStatusFilter<$PrismaModel = never> = {
@@ -51525,6 +52087,20 @@ export namespace Prisma {
         not?: NestedEnumCampaignStatusFilter<$PrismaModel> | $Enums.CampaignStatus
     }
 
+    export type NestedEnumCampaignTypeFilter<$PrismaModel = never> = {
+        equals?: $Enums.CampaignType | EnumCampaignTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CampaignType[]
+        notIn?: $Enums.CampaignType[]
+        not?: NestedEnumCampaignTypeFilter<$PrismaModel> | $Enums.CampaignType
+    }
+
+    export type NestedEnumPromotionStackingPolicyFilter<$PrismaModel = never> = {
+        equals?: $Enums.PromotionStackingPolicy | EnumPromotionStackingPolicyFieldRefInput<$PrismaModel>
+        in?: $Enums.PromotionStackingPolicy[]
+        notIn?: $Enums.PromotionStackingPolicy[]
+        not?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel> | $Enums.PromotionStackingPolicy
+    }
+
     export type NestedEnumCampaignStatusWithAggregatesFilter<$PrismaModel = never> = {
         equals?: $Enums.CampaignStatus | EnumCampaignStatusFieldRefInput<$PrismaModel>
         in?: $Enums.CampaignStatus[]
@@ -51533,6 +52109,26 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumCampaignStatusFilter<$PrismaModel>
         _max?: NestedEnumCampaignStatusFilter<$PrismaModel>
+    }
+
+    export type NestedEnumCampaignTypeWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.CampaignType | EnumCampaignTypeFieldRefInput<$PrismaModel>
+        in?: $Enums.CampaignType[]
+        notIn?: $Enums.CampaignType[]
+        not?: NestedEnumCampaignTypeWithAggregatesFilter<$PrismaModel> | $Enums.CampaignType
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumCampaignTypeFilter<$PrismaModel>
+        _max?: NestedEnumCampaignTypeFilter<$PrismaModel>
+    }
+
+    export type NestedEnumPromotionStackingPolicyWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.PromotionStackingPolicy | EnumPromotionStackingPolicyFieldRefInput<$PrismaModel>
+        in?: $Enums.PromotionStackingPolicy[]
+        notIn?: $Enums.PromotionStackingPolicy[]
+        not?: NestedEnumPromotionStackingPolicyWithAggregatesFilter<$PrismaModel> | $Enums.PromotionStackingPolicy
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel>
+        _max?: NestedEnumPromotionStackingPolicyFilter<$PrismaModel>
     }
 
     export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -51784,6 +52380,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -51825,6 +52425,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -52359,8 +52963,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -52375,8 +52991,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -52700,6 +53328,10 @@ export namespace Prisma {
         currency?: StringFilter<"Order"> | string
         subtotal?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: JsonNullableFilter<"Order">
         adjustmentType?: StringNullableFilter<"Order"> | string | null
         adjustmentValue?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
         discountReason?: StringNullableFilter<"Order"> | string | null
@@ -53163,8 +53795,20 @@ export namespace Prisma {
         name?: StringFilter<"Campaign"> | string
         goal?: StringNullableFilter<"Campaign"> | string | null
         status?: EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFilter<"Campaign"> | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFilter<"Campaign"> | $Enums.PromotionStackingPolicy
         discountType?: StringNullableFilter<"Campaign"> | string | null
         discountValue?: FloatNullableFilter<"Campaign"> | number | null
+        thresholdAmount?: DecimalNullableFilter<"Campaign"> | Decimal | DecimalJsLike | number | string | null
+        promoCode?: StringNullableFilter<"Campaign"> | string | null
+        productId?: StringNullableFilter<"Campaign"> | string | null
+        categoryName?: StringNullableFilter<"Campaign"> | string | null
+        startsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        endsAt?: DateTimeNullableFilter<"Campaign"> | Date | string | null
+        priority?: IntFilter<"Campaign"> | number
+        usageLimit?: IntNullableFilter<"Campaign"> | number | null
+        usageCount?: IntFilter<"Campaign"> | number
+        discountTotal?: DecimalFilter<"Campaign"> | Decimal | DecimalJsLike | number | string
         timeWindow?: StringNullableFilter<"Campaign"> | string | null
         bannerCopy?: StringNullableFilter<"Campaign"> | string | null
         staffMessage?: StringNullableFilter<"Campaign"> | string | null
@@ -54962,6 +55606,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -55004,6 +55652,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -55047,6 +55699,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -55088,6 +55744,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -55254,6 +55914,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55296,6 +55960,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56910,6 +57578,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -56952,6 +57624,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -57006,6 +57682,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57048,6 +57728,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57086,6 +57770,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -57128,6 +57816,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -57285,6 +57977,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57327,6 +58023,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57523,6 +58223,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -57565,6 +58269,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -57826,6 +58534,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57868,6 +58580,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58257,6 +58973,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -58299,6 +59019,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -58534,6 +59258,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58576,6 +59304,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59987,6 +60719,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -60029,6 +60765,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -60282,6 +61022,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60324,6 +61068,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63204,6 +63952,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -63407,8 +64159,20 @@ export namespace Prisma {
         name: string
         goal?: string | null
         status?: $Enums.CampaignStatus
+        type?: $Enums.CampaignType
+        stackingPolicy?: $Enums.PromotionStackingPolicy
         discountType?: string | null
         discountValue?: number | null
+        thresholdAmount?: Decimal | DecimalJsLike | number | string | null
+        promoCode?: string | null
+        productId?: string | null
+        categoryName?: string | null
+        startsAt?: Date | string | null
+        endsAt?: Date | string | null
+        priority?: number
+        usageLimit?: number | null
+        usageCount?: number
+        discountTotal?: Decimal | DecimalJsLike | number | string
         timeWindow?: string | null
         bannerCopy?: string | null
         staffMessage?: string | null
@@ -63645,6 +64409,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63686,6 +64454,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63726,6 +64498,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64301,8 +65077,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64317,8 +65105,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64333,8 +65133,20 @@ export namespace Prisma {
         name?: StringFieldUpdateOperationsInput | string
         goal?: NullableStringFieldUpdateOperationsInput | string | null
         status?: EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus
+        type?: EnumCampaignTypeFieldUpdateOperationsInput | $Enums.CampaignType
+        stackingPolicy?: EnumPromotionStackingPolicyFieldUpdateOperationsInput | $Enums.PromotionStackingPolicy
         discountType?: NullableStringFieldUpdateOperationsInput | string | null
         discountValue?: NullableFloatFieldUpdateOperationsInput | number | null
+        thresholdAmount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        promoCode?: NullableStringFieldUpdateOperationsInput | string | null
+        productId?: NullableStringFieldUpdateOperationsInput | string | null
+        categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+        startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        priority?: IntFieldUpdateOperationsInput | number
+        usageLimit?: NullableIntFieldUpdateOperationsInput | number | null
+        usageCount?: IntFieldUpdateOperationsInput | number
+        discountTotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         timeWindow?: NullableStringFieldUpdateOperationsInput | string | null
         bannerCopy?: NullableStringFieldUpdateOperationsInput | string | null
         staffMessage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65505,6 +66317,10 @@ export namespace Prisma {
         currency?: string
         subtotal: Decimal | DecimalJsLike | number | string
         adjustment?: Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: string | null
         adjustmentValue?: Decimal | DecimalJsLike | number | string | null
         discountReason?: string | null
@@ -65538,6 +66354,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65579,6 +66399,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65619,6 +66443,10 @@ export namespace Prisma {
         currency?: StringFieldUpdateOperationsInput | string
         subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
         adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        promotionDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        manualDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        totalDiscountAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        appliedPromotions?: NullableJsonNullValueInput | InputJsonValue
         adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
         adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
         discountReason?: NullableStringFieldUpdateOperationsInput | string | null

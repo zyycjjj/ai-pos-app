@@ -884,6 +884,22 @@ const metadata: ModelMeta = {
                     name: "adjustment",
                     type: "Decimal",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, promotionDiscountAmount: {
+                    name: "promotionDiscountAmount",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, manualDiscountAmount: {
+                    name: "manualDiscountAmount",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, totalDiscountAmount: {
+                    name: "totalDiscountAmount",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, appliedPromotions: {
+                    name: "appliedPromotions",
+                    type: "Json",
+                    isOptional: true,
                 }, adjustmentType: {
                     name: "adjustmentType",
                     type: "String",
@@ -2296,6 +2312,14 @@ const metadata: ModelMeta = {
                     name: "status",
                     type: "CampaignStatus",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, type: {
+                    name: "type",
+                    type: "CampaignType",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, stackingPolicy: {
+                    name: "stackingPolicy",
+                    type: "PromotionStackingPolicy",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, discountType: {
                     name: "discountType",
                     type: "String",
@@ -2304,6 +2328,46 @@ const metadata: ModelMeta = {
                     name: "discountValue",
                     type: "Float",
                     isOptional: true,
+                }, thresholdAmount: {
+                    name: "thresholdAmount",
+                    type: "Decimal",
+                    isOptional: true,
+                }, promoCode: {
+                    name: "promoCode",
+                    type: "String",
+                    isOptional: true,
+                }, productId: {
+                    name: "productId",
+                    type: "String",
+                    isOptional: true,
+                }, categoryName: {
+                    name: "categoryName",
+                    type: "String",
+                    isOptional: true,
+                }, startsAt: {
+                    name: "startsAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, endsAt: {
+                    name: "endsAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, priority: {
+                    name: "priority",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, usageLimit: {
+                    name: "usageLimit",
+                    type: "Int",
+                    isOptional: true,
+                }, usageCount: {
+                    name: "usageCount",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, discountTotal: {
+                    name: "discountTotal",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
                 }, timeWindow: {
                     name: "timeWindow",
                     type: "String",
