@@ -35,6 +35,16 @@ export type StoreUser = $Result.DefaultSelection<Prisma.$StoreUserPayload>
  */
 export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
 /**
+ * Model DiningArea
+ * 
+ */
+export type DiningArea = $Result.DefaultSelection<Prisma.$DiningAreaPayload>
+/**
+ * Model DiningTable
+ * 
+ */
+export type DiningTable = $Result.DefaultSelection<Prisma.$DiningTablePayload>
+/**
  * Model Product
  * 
  */
@@ -399,6 +409,17 @@ export namespace $Enums {
     export type ModifierOptionStatus = (typeof ModifierOptionStatus)[keyof typeof ModifierOptionStatus]
 
 
+    export const DiningTableStatus: {
+        AVAILABLE: 'AVAILABLE',
+        OCCUPIED: 'OCCUPIED',
+        DIRTY: 'DIRTY',
+        RESERVED: 'RESERVED',
+        INACTIVE: 'INACTIVE'
+    };
+
+    export type DiningTableStatus = (typeof DiningTableStatus)[keyof typeof DiningTableStatus]
+
+
     export const AiConversationStatus: {
         ACTIVE: 'ACTIVE',
         ARCHIVED: 'ARCHIVED'
@@ -531,6 +552,10 @@ export const ProductAvailabilityStatus: typeof $Enums.ProductAvailabilityStatus
 export type ModifierOptionStatus = $Enums.ModifierOptionStatus
 
 export const ModifierOptionStatus: typeof $Enums.ModifierOptionStatus
+
+export type DiningTableStatus = $Enums.DiningTableStatus
+
+export const DiningTableStatus: typeof $Enums.DiningTableStatus
 
 export type AiConversationStatus = $Enums.AiConversationStatus
 
@@ -708,6 +733,26 @@ export class PrismaClient<
       * ```
       */
     get category(): Prisma.CategoryDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.diningArea`: Exposes CRUD operations for the **DiningArea** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more DiningAreas
+      * const diningAreas = await prisma.diningArea.findMany()
+      * ```
+      */
+    get diningArea(): Prisma.DiningAreaDelegate<ExtArgs, ClientOptions>;
+
+    /**
+     * `prisma.diningTable`: Exposes CRUD operations for the **DiningTable** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more DiningTables
+      * const diningTables = await prisma.diningTable.findMany()
+      * ```
+      */
+    get diningTable(): Prisma.DiningTableDelegate<ExtArgs, ClientOptions>;
 
     /**
      * `prisma.product`: Exposes CRUD operations for the **Product** model.
@@ -1382,6 +1427,8 @@ export namespace Prisma {
         User: 'User',
         StoreUser: 'StoreUser',
         Category: 'Category',
+        DiningArea: 'DiningArea',
+        DiningTable: 'DiningTable',
         Product: 'Product',
         ProductModifierGroup: 'ProductModifierGroup',
         ProductModifierOption: 'ProductModifierOption',
@@ -1423,7 +1470,7 @@ export namespace Prisma {
             omit: GlobalOmitOptions
         }
         meta: {
-            modelProps: "store" | "user" | "storeUser" | "category" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "businessDay" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "kitchenStation" | "kitchenTicket" | "kitchenTicketItem" | "printer" | "printerRoute" | "printJob" | "aiDraft" | "campaign" | "aiConversation" | "aiMessage" | "aiExecution"
+            modelProps: "store" | "user" | "storeUser" | "category" | "diningArea" | "diningTable" | "product" | "productModifierGroup" | "productModifierOption" | "order" | "businessDay" | "orderPayment" | "orderItem" | "refund" | "refundItem" | "orderAuditLog" | "shift" | "cashMovement" | "kitchenStation" | "kitchenTicket" | "kitchenTicketItem" | "printer" | "printerRoute" | "printJob" | "aiDraft" | "campaign" | "aiConversation" | "aiMessage" | "aiExecution"
             txIsolationLevel: Prisma.TransactionIsolationLevel
         }
         model: {
@@ -1688,6 +1735,138 @@ export namespace Prisma {
                     count: {
                         args: Prisma.CategoryCountArgs<ExtArgs>
                         result: $Utils.Optional<CategoryCountAggregateOutputType> | number
+                    }
+                }
+            }
+            DiningArea: {
+                payload: Prisma.$DiningAreaPayload<ExtArgs>
+                fields: Prisma.DiningAreaFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.DiningAreaFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.DiningAreaFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    findFirst: {
+                        args: Prisma.DiningAreaFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.DiningAreaFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    findMany: {
+                        args: Prisma.DiningAreaFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>[]
+                    }
+                    create: {
+                        args: Prisma.DiningAreaCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    createMany: {
+                        args: Prisma.DiningAreaCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.DiningAreaDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    update: {
+                        args: Prisma.DiningAreaUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.DiningAreaDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.DiningAreaUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.DiningAreaUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningAreaPayload>
+                    }
+                    aggregate: {
+                        args: Prisma.DiningAreaAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateDiningArea>
+                    }
+                    groupBy: {
+                        args: Prisma.DiningAreaGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<DiningAreaGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.DiningAreaCountArgs<ExtArgs>
+                        result: $Utils.Optional<DiningAreaCountAggregateOutputType> | number
+                    }
+                }
+            }
+            DiningTable: {
+                payload: Prisma.$DiningTablePayload<ExtArgs>
+                fields: Prisma.DiningTableFieldRefs
+                operations: {
+                    findUnique: {
+                        args: Prisma.DiningTableFindUniqueArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload> | null
+                    }
+                    findUniqueOrThrow: {
+                        args: Prisma.DiningTableFindUniqueOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    findFirst: {
+                        args: Prisma.DiningTableFindFirstArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload> | null
+                    }
+                    findFirstOrThrow: {
+                        args: Prisma.DiningTableFindFirstOrThrowArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    findMany: {
+                        args: Prisma.DiningTableFindManyArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>[]
+                    }
+                    create: {
+                        args: Prisma.DiningTableCreateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    createMany: {
+                        args: Prisma.DiningTableCreateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    delete: {
+                        args: Prisma.DiningTableDeleteArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    update: {
+                        args: Prisma.DiningTableUpdateArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    deleteMany: {
+                        args: Prisma.DiningTableDeleteManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    updateMany: {
+                        args: Prisma.DiningTableUpdateManyArgs<ExtArgs>
+                        result: BatchPayload
+                    }
+                    upsert: {
+                        args: Prisma.DiningTableUpsertArgs<ExtArgs>
+                        result: $Utils.PayloadToResult<Prisma.$DiningTablePayload>
+                    }
+                    aggregate: {
+                        args: Prisma.DiningTableAggregateArgs<ExtArgs>
+                        result: $Utils.Optional<AggregateDiningTable>
+                    }
+                    groupBy: {
+                        args: Prisma.DiningTableGroupByArgs<ExtArgs>
+                        result: $Utils.Optional<DiningTableGroupByOutputType>[]
+                    }
+                    count: {
+                        args: Prisma.DiningTableCountArgs<ExtArgs>
+                        result: $Utils.Optional<DiningTableCountAggregateOutputType> | number
                     }
                 }
             }
@@ -3297,6 +3476,8 @@ export namespace Prisma {
         user?: UserOmit
         storeUser?: StoreUserOmit
         category?: CategoryOmit
+        diningArea?: DiningAreaOmit
+        diningTable?: DiningTableOmit
         product?: ProductOmit
         productModifierGroup?: ProductModifierGroupOmit
         productModifierOption?: ProductModifierOptionOmit
@@ -3416,6 +3597,8 @@ export namespace Prisma {
     export type StoreCountOutputType = {
         users: number
         categories: number
+        diningAreas: number
+        diningTables: number
         products: number
         orders: number
         refunds: number
@@ -3439,6 +3622,8 @@ export namespace Prisma {
     export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         users?: boolean | StoreCountOutputTypeCountUsersArgs
         categories?: boolean | StoreCountOutputTypeCountCategoriesArgs
+        diningAreas?: boolean | StoreCountOutputTypeCountDiningAreasArgs
+        diningTables?: boolean | StoreCountOutputTypeCountDiningTablesArgs
         products?: boolean | StoreCountOutputTypeCountProductsArgs
         orders?: boolean | StoreCountOutputTypeCountOrdersArgs
         refunds?: boolean | StoreCountOutputTypeCountRefundsArgs
@@ -3482,6 +3667,20 @@ export namespace Prisma {
      */
     export type StoreCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: CategoryWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountDiningAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: DiningAreaWhereInput
+    }
+
+    /**
+     * StoreCountOutputType without action
+     */
+    export type StoreCountOutputTypeCountDiningTablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: DiningTableWhereInput
     }
 
     /**
@@ -3796,6 +3995,68 @@ export namespace Prisma {
      */
     export type CategoryCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         where?: ProductWhereInput
+    }
+
+
+    /**
+     * Count Type DiningAreaCountOutputType
+     */
+
+    export type DiningAreaCountOutputType = {
+        tables: number
+    }
+
+    export type DiningAreaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        tables?: boolean | DiningAreaCountOutputTypeCountTablesArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * DiningAreaCountOutputType without action
+     */
+    export type DiningAreaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningAreaCountOutputType
+         */
+        select?: DiningAreaCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * DiningAreaCountOutputType without action
+     */
+    export type DiningAreaCountOutputTypeCountTablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: DiningTableWhereInput
+    }
+
+
+    /**
+     * Count Type DiningTableCountOutputType
+     */
+
+    export type DiningTableCountOutputType = {
+        orders: number
+    }
+
+    export type DiningTableCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        orders?: boolean | DiningTableCountOutputTypeCountOrdersArgs
+    }
+
+    // Custom InputTypes
+    /**
+     * DiningTableCountOutputType without action
+     */
+    export type DiningTableCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTableCountOutputType
+         */
+        select?: DiningTableCountOutputTypeSelect<ExtArgs> | null
+    }
+
+    /**
+     * DiningTableCountOutputType without action
+     */
+    export type DiningTableCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: OrderWhereInput
     }
 
 
@@ -4455,6 +4716,8 @@ export namespace Prisma {
         updatedAt?: boolean
         users?: boolean | Store$usersArgs<ExtArgs>
         categories?: boolean | Store$categoriesArgs<ExtArgs>
+        diningAreas?: boolean | Store$diningAreasArgs<ExtArgs>
+        diningTables?: boolean | Store$diningTablesArgs<ExtArgs>
         products?: boolean | Store$productsArgs<ExtArgs>
         orders?: boolean | Store$ordersArgs<ExtArgs>
         refunds?: boolean | Store$refundsArgs<ExtArgs>
@@ -4493,6 +4756,8 @@ export namespace Prisma {
     export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         users?: boolean | Store$usersArgs<ExtArgs>
         categories?: boolean | Store$categoriesArgs<ExtArgs>
+        diningAreas?: boolean | Store$diningAreasArgs<ExtArgs>
+        diningTables?: boolean | Store$diningTablesArgs<ExtArgs>
         products?: boolean | Store$productsArgs<ExtArgs>
         orders?: boolean | Store$ordersArgs<ExtArgs>
         refunds?: boolean | Store$refundsArgs<ExtArgs>
@@ -4519,6 +4784,8 @@ export namespace Prisma {
         objects: {
             users: Prisma.$StoreUserPayload<ExtArgs>[]
             categories: Prisma.$CategoryPayload<ExtArgs>[]
+            diningAreas: Prisma.$DiningAreaPayload<ExtArgs>[]
+            diningTables: Prisma.$DiningTablePayload<ExtArgs>[]
             products: Prisma.$ProductPayload<ExtArgs>[]
             orders: Prisma.$OrderPayload<ExtArgs>[]
             refunds: Prisma.$RefundPayload<ExtArgs>[]
@@ -4889,6 +5156,8 @@ export namespace Prisma {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         users<T extends Store$usersArgs<ExtArgs> = {}>(args?: Subset<T, Store$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StoreUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         categories<T extends Store$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, Store$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        diningAreas<T extends Store$diningAreasArgs<ExtArgs> = {}>(args?: Subset<T, Store$diningAreasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        diningTables<T extends Store$diningTablesArgs<ExtArgs> = {}>(args?: Subset<T, Store$diningTablesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         products<T extends Store$productsArgs<ExtArgs> = {}>(args?: Subset<T, Store$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         orders<T extends Store$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Store$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         refunds<T extends Store$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Store$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5332,6 +5601,54 @@ export namespace Prisma {
         take?: number
         skip?: number
         distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
+    }
+
+    /**
+     * Store.diningAreas
+     */
+    export type Store$diningAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        where?: DiningAreaWhereInput
+        orderBy?: DiningAreaOrderByWithRelationInput | DiningAreaOrderByWithRelationInput[]
+        cursor?: DiningAreaWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: DiningAreaScalarFieldEnum | DiningAreaScalarFieldEnum[]
+    }
+
+    /**
+     * Store.diningTables
+     */
+    export type Store$diningTablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        where?: DiningTableWhereInput
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        cursor?: DiningTableWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: DiningTableScalarFieldEnum | DiningTableScalarFieldEnum[]
     }
 
     /**
@@ -9159,6 +9476,2100 @@ export namespace Prisma {
 
 
     /**
+     * Model DiningArea
+     */
+
+    export type AggregateDiningArea = {
+        _count: DiningAreaCountAggregateOutputType | null
+        _avg: DiningAreaAvgAggregateOutputType | null
+        _sum: DiningAreaSumAggregateOutputType | null
+        _min: DiningAreaMinAggregateOutputType | null
+        _max: DiningAreaMaxAggregateOutputType | null
+    }
+
+    export type DiningAreaAvgAggregateOutputType = {
+        sortOrder: number | null
+    }
+
+    export type DiningAreaSumAggregateOutputType = {
+        sortOrder: number | null
+    }
+
+    export type DiningAreaMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        name: string | null
+        sortOrder: number | null
+        status: $Enums.CatalogStatus | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type DiningAreaMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        name: string | null
+        sortOrder: number | null
+        status: $Enums.CatalogStatus | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type DiningAreaCountAggregateOutputType = {
+        id: number
+        storeId: number
+        name: number
+        sortOrder: number
+        status: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type DiningAreaAvgAggregateInputType = {
+        sortOrder?: true
+    }
+
+    export type DiningAreaSumAggregateInputType = {
+        sortOrder?: true
+    }
+
+    export type DiningAreaMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        sortOrder?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type DiningAreaMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        sortOrder?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type DiningAreaCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        name?: true
+        sortOrder?: true
+        status?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type DiningAreaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which DiningArea to aggregate.
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningAreas to fetch.
+         */
+        orderBy?: DiningAreaOrderByWithRelationInput | DiningAreaOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: DiningAreaWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningAreas from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningAreas.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned DiningAreas
+        **/
+        _count?: true | DiningAreaCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: DiningAreaAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: DiningAreaSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: DiningAreaMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: DiningAreaMaxAggregateInputType
+    }
+
+    export type GetDiningAreaAggregateType<T extends DiningAreaAggregateArgs> = {
+        [P in keyof T & keyof AggregateDiningArea]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDiningArea[P]>
+        : GetScalarType<T[P], AggregateDiningArea[P]>
+    }
+
+
+
+
+    export type DiningAreaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: DiningAreaWhereInput
+        orderBy?: DiningAreaOrderByWithAggregationInput | DiningAreaOrderByWithAggregationInput[]
+        by: DiningAreaScalarFieldEnum[] | DiningAreaScalarFieldEnum
+        having?: DiningAreaScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: DiningAreaCountAggregateInputType | true
+        _avg?: DiningAreaAvgAggregateInputType
+        _sum?: DiningAreaSumAggregateInputType
+        _min?: DiningAreaMinAggregateInputType
+        _max?: DiningAreaMaxAggregateInputType
+    }
+
+    export type DiningAreaGroupByOutputType = {
+        id: string
+        storeId: string
+        name: string
+        sortOrder: number
+        status: $Enums.CatalogStatus
+        createdAt: Date
+        updatedAt: Date
+        _count: DiningAreaCountAggregateOutputType | null
+        _avg: DiningAreaAvgAggregateOutputType | null
+        _sum: DiningAreaSumAggregateOutputType | null
+        _min: DiningAreaMinAggregateOutputType | null
+        _max: DiningAreaMaxAggregateOutputType | null
+    }
+
+    type GetDiningAreaGroupByPayload<T extends DiningAreaGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<DiningAreaGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof DiningAreaGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], DiningAreaGroupByOutputType[P]>
+                : GetScalarType<T[P], DiningAreaGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type DiningAreaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        name?: boolean
+        sortOrder?: boolean
+        status?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        tables?: boolean | DiningArea$tablesArgs<ExtArgs>
+        _count?: boolean | DiningAreaCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["diningArea"]>
+
+
+
+    export type DiningAreaSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        name?: boolean
+        sortOrder?: boolean
+        status?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type DiningAreaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "name" | "sortOrder" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["diningArea"]>
+    export type DiningAreaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        tables?: boolean | DiningArea$tablesArgs<ExtArgs>
+        _count?: boolean | DiningAreaCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $DiningAreaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "DiningArea"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            tables: Prisma.$DiningTablePayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            name: string
+            sortOrder: number
+            status: $Enums.CatalogStatus
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["diningArea"]>
+        composites: {}
+    }
+
+    type DiningAreaGetPayload<S extends boolean | null | undefined | DiningAreaDefaultArgs> = $Result.GetResult<Prisma.$DiningAreaPayload, S>
+
+    type DiningAreaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<DiningAreaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: DiningAreaCountAggregateInputType | true
+        }
+
+    export interface DiningAreaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DiningArea'], meta: { name: 'DiningArea' } }
+        /**
+         * Find zero or one DiningArea that matches the filter.
+         * @param {DiningAreaFindUniqueArgs} args - Arguments to find a DiningArea
+         * @example
+         * // Get one DiningArea
+         * const diningArea = await prisma.diningArea.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends DiningAreaFindUniqueArgs>(args: SelectSubset<T, DiningAreaFindUniqueArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one DiningArea that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {DiningAreaFindUniqueOrThrowArgs} args - Arguments to find a DiningArea
+         * @example
+         * // Get one DiningArea
+         * const diningArea = await prisma.diningArea.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends DiningAreaFindUniqueOrThrowArgs>(args: SelectSubset<T, DiningAreaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first DiningArea that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaFindFirstArgs} args - Arguments to find a DiningArea
+         * @example
+         * // Get one DiningArea
+         * const diningArea = await prisma.diningArea.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends DiningAreaFindFirstArgs>(args?: SelectSubset<T, DiningAreaFindFirstArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first DiningArea that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaFindFirstOrThrowArgs} args - Arguments to find a DiningArea
+         * @example
+         * // Get one DiningArea
+         * const diningArea = await prisma.diningArea.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends DiningAreaFindFirstOrThrowArgs>(args?: SelectSubset<T, DiningAreaFindFirstOrThrowArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more DiningAreas that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all DiningAreas
+         * const diningAreas = await prisma.diningArea.findMany()
+         * 
+         * // Get first 10 DiningAreas
+         * const diningAreas = await prisma.diningArea.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const diningAreaWithIdOnly = await prisma.diningArea.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends DiningAreaFindManyArgs>(args?: SelectSubset<T, DiningAreaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a DiningArea.
+         * @param {DiningAreaCreateArgs} args - Arguments to create a DiningArea.
+         * @example
+         * // Create one DiningArea
+         * const DiningArea = await prisma.diningArea.create({
+         *   data: {
+         *     // ... data to create a DiningArea
+         *   }
+         * })
+         * 
+         */
+        create<T extends DiningAreaCreateArgs>(args: SelectSubset<T, DiningAreaCreateArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many DiningAreas.
+         * @param {DiningAreaCreateManyArgs} args - Arguments to create many DiningAreas.
+         * @example
+         * // Create many DiningAreas
+         * const diningArea = await prisma.diningArea.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends DiningAreaCreateManyArgs>(args?: SelectSubset<T, DiningAreaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a DiningArea.
+         * @param {DiningAreaDeleteArgs} args - Arguments to delete one DiningArea.
+         * @example
+         * // Delete one DiningArea
+         * const DiningArea = await prisma.diningArea.delete({
+         *   where: {
+         *     // ... filter to delete one DiningArea
+         *   }
+         * })
+         * 
+         */
+        delete<T extends DiningAreaDeleteArgs>(args: SelectSubset<T, DiningAreaDeleteArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one DiningArea.
+         * @param {DiningAreaUpdateArgs} args - Arguments to update one DiningArea.
+         * @example
+         * // Update one DiningArea
+         * const diningArea = await prisma.diningArea.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends DiningAreaUpdateArgs>(args: SelectSubset<T, DiningAreaUpdateArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more DiningAreas.
+         * @param {DiningAreaDeleteManyArgs} args - Arguments to filter DiningAreas to delete.
+         * @example
+         * // Delete a few DiningAreas
+         * const { count } = await prisma.diningArea.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends DiningAreaDeleteManyArgs>(args?: SelectSubset<T, DiningAreaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more DiningAreas.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many DiningAreas
+         * const diningArea = await prisma.diningArea.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends DiningAreaUpdateManyArgs>(args: SelectSubset<T, DiningAreaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one DiningArea.
+         * @param {DiningAreaUpsertArgs} args - Arguments to update or create a DiningArea.
+         * @example
+         * // Update or create a DiningArea
+         * const diningArea = await prisma.diningArea.upsert({
+         *   create: {
+         *     // ... data to create a DiningArea
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the DiningArea we want to update
+         *   }
+         * })
+         */
+        upsert<T extends DiningAreaUpsertArgs>(args: SelectSubset<T, DiningAreaUpsertArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of DiningAreas.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaCountArgs} args - Arguments to filter DiningAreas to count.
+         * @example
+         * // Count the number of DiningAreas
+         * const count = await prisma.diningArea.count({
+         *   where: {
+         *     // ... the filter for the DiningAreas we want to count
+         *   }
+         * })
+        **/
+        count<T extends DiningAreaCountArgs>(
+            args?: Subset<T, DiningAreaCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], DiningAreaCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a DiningArea.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends DiningAreaAggregateArgs>(args: Subset<T, DiningAreaAggregateArgs>): Prisma.PrismaPromise<GetDiningAreaAggregateType<T>>
+
+        /**
+         * Group by DiningArea.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningAreaGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends DiningAreaGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: DiningAreaGroupByArgs['orderBy'] }
+            : { orderBy?: DiningAreaGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, DiningAreaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDiningAreaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the DiningArea model
+         */
+        readonly fields: DiningAreaFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for DiningArea.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__DiningAreaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        tables<T extends DiningArea$tablesArgs<ExtArgs> = {}>(args?: Subset<T, DiningArea$tablesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the DiningArea model
+     */
+    interface DiningAreaFieldRefs {
+        readonly id: FieldRef<"DiningArea", 'String'>
+        readonly storeId: FieldRef<"DiningArea", 'String'>
+        readonly name: FieldRef<"DiningArea", 'String'>
+        readonly sortOrder: FieldRef<"DiningArea", 'Int'>
+        readonly status: FieldRef<"DiningArea", 'CatalogStatus'>
+        readonly createdAt: FieldRef<"DiningArea", 'DateTime'>
+        readonly updatedAt: FieldRef<"DiningArea", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * DiningArea findUnique
+     */
+    export type DiningAreaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningArea to fetch.
+         */
+        where: DiningAreaWhereUniqueInput
+    }
+
+    /**
+     * DiningArea findUniqueOrThrow
+     */
+    export type DiningAreaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningArea to fetch.
+         */
+        where: DiningAreaWhereUniqueInput
+    }
+
+    /**
+     * DiningArea findFirst
+     */
+    export type DiningAreaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningArea to fetch.
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningAreas to fetch.
+         */
+        orderBy?: DiningAreaOrderByWithRelationInput | DiningAreaOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for DiningAreas.
+         */
+        cursor?: DiningAreaWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningAreas from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningAreas.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of DiningAreas.
+         */
+        distinct?: DiningAreaScalarFieldEnum | DiningAreaScalarFieldEnum[]
+    }
+
+    /**
+     * DiningArea findFirstOrThrow
+     */
+    export type DiningAreaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningArea to fetch.
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningAreas to fetch.
+         */
+        orderBy?: DiningAreaOrderByWithRelationInput | DiningAreaOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for DiningAreas.
+         */
+        cursor?: DiningAreaWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningAreas from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningAreas.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of DiningAreas.
+         */
+        distinct?: DiningAreaScalarFieldEnum | DiningAreaScalarFieldEnum[]
+    }
+
+    /**
+     * DiningArea findMany
+     */
+    export type DiningAreaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningAreas to fetch.
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningAreas to fetch.
+         */
+        orderBy?: DiningAreaOrderByWithRelationInput | DiningAreaOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing DiningAreas.
+         */
+        cursor?: DiningAreaWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningAreas from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningAreas.
+         */
+        skip?: number
+        distinct?: DiningAreaScalarFieldEnum | DiningAreaScalarFieldEnum[]
+    }
+
+    /**
+     * DiningArea create
+     */
+    export type DiningAreaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * The data needed to create a DiningArea.
+         */
+        data: XOR<DiningAreaCreateInput, DiningAreaUncheckedCreateInput>
+    }
+
+    /**
+     * DiningArea createMany
+     */
+    export type DiningAreaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many DiningAreas.
+         */
+        data: DiningAreaCreateManyInput | DiningAreaCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * DiningArea update
+     */
+    export type DiningAreaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * The data needed to update a DiningArea.
+         */
+        data: XOR<DiningAreaUpdateInput, DiningAreaUncheckedUpdateInput>
+        /**
+         * Choose, which DiningArea to update.
+         */
+        where: DiningAreaWhereUniqueInput
+    }
+
+    /**
+     * DiningArea updateMany
+     */
+    export type DiningAreaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update DiningAreas.
+         */
+        data: XOR<DiningAreaUpdateManyMutationInput, DiningAreaUncheckedUpdateManyInput>
+        /**
+         * Filter which DiningAreas to update
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * Limit how many DiningAreas to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * DiningArea upsert
+     */
+    export type DiningAreaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * The filter to search for the DiningArea to update in case it exists.
+         */
+        where: DiningAreaWhereUniqueInput
+        /**
+         * In case the DiningArea found by the `where` argument doesn't exist, create a new DiningArea with this data.
+         */
+        create: XOR<DiningAreaCreateInput, DiningAreaUncheckedCreateInput>
+        /**
+         * In case the DiningArea was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<DiningAreaUpdateInput, DiningAreaUncheckedUpdateInput>
+    }
+
+    /**
+     * DiningArea delete
+     */
+    export type DiningAreaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+        /**
+         * Filter which DiningArea to delete.
+         */
+        where: DiningAreaWhereUniqueInput
+    }
+
+    /**
+     * DiningArea deleteMany
+     */
+    export type DiningAreaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which DiningAreas to delete
+         */
+        where?: DiningAreaWhereInput
+        /**
+         * Limit how many DiningAreas to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * DiningArea.tables
+     */
+    export type DiningArea$tablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        where?: DiningTableWhereInput
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        cursor?: DiningTableWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: DiningTableScalarFieldEnum | DiningTableScalarFieldEnum[]
+    }
+
+    /**
+     * DiningArea without action
+     */
+    export type DiningAreaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningArea
+         */
+        select?: DiningAreaSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningArea
+         */
+        omit?: DiningAreaOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningAreaInclude<ExtArgs> | null
+    }
+
+
+    /**
+     * Model DiningTable
+     */
+
+    export type AggregateDiningTable = {
+        _count: DiningTableCountAggregateOutputType | null
+        _avg: DiningTableAvgAggregateOutputType | null
+        _sum: DiningTableSumAggregateOutputType | null
+        _min: DiningTableMinAggregateOutputType | null
+        _max: DiningTableMaxAggregateOutputType | null
+    }
+
+    export type DiningTableAvgAggregateOutputType = {
+        seats: number | null
+        sortOrder: number | null
+    }
+
+    export type DiningTableSumAggregateOutputType = {
+        seats: number | null
+        sortOrder: number | null
+    }
+
+    export type DiningTableMinAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        areaId: string | null
+        name: string | null
+        seats: number | null
+        status: $Enums.DiningTableStatus | null
+        sortOrder: number | null
+        currentOrderId: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type DiningTableMaxAggregateOutputType = {
+        id: string | null
+        storeId: string | null
+        areaId: string | null
+        name: string | null
+        seats: number | null
+        status: $Enums.DiningTableStatus | null
+        sortOrder: number | null
+        currentOrderId: string | null
+        createdAt: Date | null
+        updatedAt: Date | null
+    }
+
+    export type DiningTableCountAggregateOutputType = {
+        id: number
+        storeId: number
+        areaId: number
+        name: number
+        seats: number
+        status: number
+        sortOrder: number
+        currentOrderId: number
+        createdAt: number
+        updatedAt: number
+        _all: number
+    }
+
+
+    export type DiningTableAvgAggregateInputType = {
+        seats?: true
+        sortOrder?: true
+    }
+
+    export type DiningTableSumAggregateInputType = {
+        seats?: true
+        sortOrder?: true
+    }
+
+    export type DiningTableMinAggregateInputType = {
+        id?: true
+        storeId?: true
+        areaId?: true
+        name?: true
+        seats?: true
+        status?: true
+        sortOrder?: true
+        currentOrderId?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type DiningTableMaxAggregateInputType = {
+        id?: true
+        storeId?: true
+        areaId?: true
+        name?: true
+        seats?: true
+        status?: true
+        sortOrder?: true
+        currentOrderId?: true
+        createdAt?: true
+        updatedAt?: true
+    }
+
+    export type DiningTableCountAggregateInputType = {
+        id?: true
+        storeId?: true
+        areaId?: true
+        name?: true
+        seats?: true
+        status?: true
+        sortOrder?: true
+        currentOrderId?: true
+        createdAt?: true
+        updatedAt?: true
+        _all?: true
+    }
+
+    export type DiningTableAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which DiningTable to aggregate.
+         */
+        where?: DiningTableWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningTables to fetch.
+         */
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the start position
+         */
+        cursor?: DiningTableWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningTables from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningTables.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Count returned DiningTables
+        **/
+        _count?: true | DiningTableCountAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to average
+        **/
+        _avg?: DiningTableAvgAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to sum
+        **/
+        _sum?: DiningTableSumAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the minimum value
+        **/
+        _min?: DiningTableMinAggregateInputType
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+         * 
+         * Select which fields to find the maximum value
+        **/
+        _max?: DiningTableMaxAggregateInputType
+    }
+
+    export type GetDiningTableAggregateType<T extends DiningTableAggregateArgs> = {
+        [P in keyof T & keyof AggregateDiningTable]: P extends '_count' | 'count'
+        ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDiningTable[P]>
+        : GetScalarType<T[P], AggregateDiningTable[P]>
+    }
+
+
+
+
+    export type DiningTableGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        where?: DiningTableWhereInput
+        orderBy?: DiningTableOrderByWithAggregationInput | DiningTableOrderByWithAggregationInput[]
+        by: DiningTableScalarFieldEnum[] | DiningTableScalarFieldEnum
+        having?: DiningTableScalarWhereWithAggregatesInput
+        take?: number
+        skip?: number
+        _count?: DiningTableCountAggregateInputType | true
+        _avg?: DiningTableAvgAggregateInputType
+        _sum?: DiningTableSumAggregateInputType
+        _min?: DiningTableMinAggregateInputType
+        _max?: DiningTableMaxAggregateInputType
+    }
+
+    export type DiningTableGroupByOutputType = {
+        id: string
+        storeId: string
+        areaId: string
+        name: string
+        seats: number
+        status: $Enums.DiningTableStatus
+        sortOrder: number
+        currentOrderId: string | null
+        createdAt: Date
+        updatedAt: Date
+        _count: DiningTableCountAggregateOutputType | null
+        _avg: DiningTableAvgAggregateOutputType | null
+        _sum: DiningTableSumAggregateOutputType | null
+        _min: DiningTableMinAggregateOutputType | null
+        _max: DiningTableMaxAggregateOutputType | null
+    }
+
+    type GetDiningTableGroupByPayload<T extends DiningTableGroupByArgs> = Prisma.PrismaPromise<
+        Array<
+            PickEnumerable<DiningTableGroupByOutputType, T['by']> &
+            {
+                [P in ((keyof T) & (keyof DiningTableGroupByOutputType))]: P extends '_count'
+                ? T[P] extends boolean
+                ? number
+                : GetScalarType<T[P], DiningTableGroupByOutputType[P]>
+                : GetScalarType<T[P], DiningTableGroupByOutputType[P]>
+            }
+        >
+    >
+
+
+    export type DiningTableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+        id?: boolean
+        storeId?: boolean
+        areaId?: boolean
+        name?: boolean
+        seats?: boolean
+        status?: boolean
+        sortOrder?: boolean
+        currentOrderId?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        area?: boolean | DiningAreaDefaultArgs<ExtArgs>
+        currentOrder?: boolean | DiningTable$currentOrderArgs<ExtArgs>
+        orders?: boolean | DiningTable$ordersArgs<ExtArgs>
+        _count?: boolean | DiningTableCountOutputTypeDefaultArgs<ExtArgs>
+    }, ExtArgs["result"]["diningTable"]>
+
+
+
+    export type DiningTableSelectScalar = {
+        id?: boolean
+        storeId?: boolean
+        areaId?: boolean
+        name?: boolean
+        seats?: boolean
+        status?: boolean
+        sortOrder?: boolean
+        currentOrderId?: boolean
+        createdAt?: boolean
+        updatedAt?: boolean
+    }
+
+    export type DiningTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "areaId" | "name" | "seats" | "status" | "sortOrder" | "currentOrderId" | "createdAt" | "updatedAt", ExtArgs["result"]["diningTable"]>
+    export type DiningTableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        store?: boolean | StoreDefaultArgs<ExtArgs>
+        area?: boolean | DiningAreaDefaultArgs<ExtArgs>
+        currentOrder?: boolean | DiningTable$currentOrderArgs<ExtArgs>
+        orders?: boolean | DiningTable$ordersArgs<ExtArgs>
+        _count?: boolean | DiningTableCountOutputTypeDefaultArgs<ExtArgs>
+    }
+
+    export type $DiningTablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        name: "DiningTable"
+        objects: {
+            store: Prisma.$StorePayload<ExtArgs>
+            area: Prisma.$DiningAreaPayload<ExtArgs>
+            currentOrder: Prisma.$OrderPayload<ExtArgs> | null
+            orders: Prisma.$OrderPayload<ExtArgs>[]
+        }
+        scalars: $Extensions.GetPayloadResult<{
+            id: string
+            storeId: string
+            areaId: string
+            name: string
+            seats: number
+            status: $Enums.DiningTableStatus
+            sortOrder: number
+            currentOrderId: string | null
+            createdAt: Date
+            updatedAt: Date
+        }, ExtArgs["result"]["diningTable"]>
+        composites: {}
+    }
+
+    type DiningTableGetPayload<S extends boolean | null | undefined | DiningTableDefaultArgs> = $Result.GetResult<Prisma.$DiningTablePayload, S>
+
+    type DiningTableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+        Omit<DiningTableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+            select?: DiningTableCountAggregateInputType | true
+        }
+
+    export interface DiningTableDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+        [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DiningTable'], meta: { name: 'DiningTable' } }
+        /**
+         * Find zero or one DiningTable that matches the filter.
+         * @param {DiningTableFindUniqueArgs} args - Arguments to find a DiningTable
+         * @example
+         * // Get one DiningTable
+         * const diningTable = await prisma.diningTable.findUnique({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUnique<T extends DiningTableFindUniqueArgs>(args: SelectSubset<T, DiningTableFindUniqueArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find one DiningTable that matches the filter or throw an error with `error.code='P2025'`
+         * if no matches were found.
+         * @param {DiningTableFindUniqueOrThrowArgs} args - Arguments to find a DiningTable
+         * @example
+         * // Get one DiningTable
+         * const diningTable = await prisma.diningTable.findUniqueOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findUniqueOrThrow<T extends DiningTableFindUniqueOrThrowArgs>(args: SelectSubset<T, DiningTableFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first DiningTable that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableFindFirstArgs} args - Arguments to find a DiningTable
+         * @example
+         * // Get one DiningTable
+         * const diningTable = await prisma.diningTable.findFirst({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirst<T extends DiningTableFindFirstArgs>(args?: SelectSubset<T, DiningTableFindFirstArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find the first DiningTable that matches the filter or
+         * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableFindFirstOrThrowArgs} args - Arguments to find a DiningTable
+         * @example
+         * // Get one DiningTable
+         * const diningTable = await prisma.diningTable.findFirstOrThrow({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         */
+        findFirstOrThrow<T extends DiningTableFindFirstOrThrowArgs>(args?: SelectSubset<T, DiningTableFindFirstOrThrowArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Find zero or more DiningTables that matches the filter.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableFindManyArgs} args - Arguments to filter and select certain fields only.
+         * @example
+         * // Get all DiningTables
+         * const diningTables = await prisma.diningTable.findMany()
+         * 
+         * // Get first 10 DiningTables
+         * const diningTables = await prisma.diningTable.findMany({ take: 10 })
+         * 
+         * // Only select the `id`
+         * const diningTableWithIdOnly = await prisma.diningTable.findMany({ select: { id: true } })
+         * 
+         */
+        findMany<T extends DiningTableFindManyArgs>(args?: SelectSubset<T, DiningTableFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+        /**
+         * Create a DiningTable.
+         * @param {DiningTableCreateArgs} args - Arguments to create a DiningTable.
+         * @example
+         * // Create one DiningTable
+         * const DiningTable = await prisma.diningTable.create({
+         *   data: {
+         *     // ... data to create a DiningTable
+         *   }
+         * })
+         * 
+         */
+        create<T extends DiningTableCreateArgs>(args: SelectSubset<T, DiningTableCreateArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Create many DiningTables.
+         * @param {DiningTableCreateManyArgs} args - Arguments to create many DiningTables.
+         * @example
+         * // Create many DiningTables
+         * const diningTable = await prisma.diningTable.createMany({
+         *   data: [
+         *     // ... provide data here
+         *   ]
+         * })
+         *     
+         */
+        createMany<T extends DiningTableCreateManyArgs>(args?: SelectSubset<T, DiningTableCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Delete a DiningTable.
+         * @param {DiningTableDeleteArgs} args - Arguments to delete one DiningTable.
+         * @example
+         * // Delete one DiningTable
+         * const DiningTable = await prisma.diningTable.delete({
+         *   where: {
+         *     // ... filter to delete one DiningTable
+         *   }
+         * })
+         * 
+         */
+        delete<T extends DiningTableDeleteArgs>(args: SelectSubset<T, DiningTableDeleteArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Update one DiningTable.
+         * @param {DiningTableUpdateArgs} args - Arguments to update one DiningTable.
+         * @example
+         * // Update one DiningTable
+         * const diningTable = await prisma.diningTable.update({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        update<T extends DiningTableUpdateArgs>(args: SelectSubset<T, DiningTableUpdateArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+        /**
+         * Delete zero or more DiningTables.
+         * @param {DiningTableDeleteManyArgs} args - Arguments to filter DiningTables to delete.
+         * @example
+         * // Delete a few DiningTables
+         * const { count } = await prisma.diningTable.deleteMany({
+         *   where: {
+         *     // ... provide filter here
+         *   }
+         * })
+         * 
+         */
+        deleteMany<T extends DiningTableDeleteManyArgs>(args?: SelectSubset<T, DiningTableDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Update zero or more DiningTables.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableUpdateManyArgs} args - Arguments to update one or more rows.
+         * @example
+         * // Update many DiningTables
+         * const diningTable = await prisma.diningTable.updateMany({
+         *   where: {
+         *     // ... provide filter here
+         *   },
+         *   data: {
+         *     // ... provide data here
+         *   }
+         * })
+         * 
+         */
+        updateMany<T extends DiningTableUpdateManyArgs>(args: SelectSubset<T, DiningTableUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+        /**
+         * Create or update one DiningTable.
+         * @param {DiningTableUpsertArgs} args - Arguments to update or create a DiningTable.
+         * @example
+         * // Update or create a DiningTable
+         * const diningTable = await prisma.diningTable.upsert({
+         *   create: {
+         *     // ... data to create a DiningTable
+         *   },
+         *   update: {
+         *     // ... in case it already exists, update
+         *   },
+         *   where: {
+         *     // ... the filter for the DiningTable we want to update
+         *   }
+         * })
+         */
+        upsert<T extends DiningTableUpsertArgs>(args: SelectSubset<T, DiningTableUpsertArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+        /**
+         * Count the number of DiningTables.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableCountArgs} args - Arguments to filter DiningTables to count.
+         * @example
+         * // Count the number of DiningTables
+         * const count = await prisma.diningTable.count({
+         *   where: {
+         *     // ... the filter for the DiningTables we want to count
+         *   }
+         * })
+        **/
+        count<T extends DiningTableCountArgs>(
+            args?: Subset<T, DiningTableCountArgs>,
+        ): Prisma.PrismaPromise<
+            T extends $Utils.Record<'select', any>
+            ? T['select'] extends true
+            ? number
+            : GetScalarType<T['select'], DiningTableCountAggregateOutputType>
+            : number
+        >
+
+        /**
+         * Allows you to perform aggregations operations on a DiningTable.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+         * @example
+         * // Ordered by age ascending
+         * // Where email contains prisma.io
+         * // Limited to the 10 users
+         * const aggregations = await prisma.user.aggregate({
+         *   _avg: {
+         *     age: true,
+         *   },
+         *   where: {
+         *     email: {
+         *       contains: "prisma.io",
+         *     },
+         *   },
+         *   orderBy: {
+         *     age: "asc",
+         *   },
+         *   take: 10,
+         * })
+        **/
+        aggregate<T extends DiningTableAggregateArgs>(args: Subset<T, DiningTableAggregateArgs>): Prisma.PrismaPromise<GetDiningTableAggregateType<T>>
+
+        /**
+         * Group by DiningTable.
+         * Note, that providing `undefined` is treated as the value not being there.
+         * Read more here: https://pris.ly/d/null-undefined
+         * @param {DiningTableGroupByArgs} args - Group by arguments.
+         * @example
+         * // Group by city, order by createdAt, get count
+         * const result = await prisma.user.groupBy({
+         *   by: ['city', 'createdAt'],
+         *   orderBy: {
+         *     createdAt: true
+         *   },
+         *   _count: {
+         *     _all: true
+         *   },
+         * })
+         * 
+        **/
+        groupBy<
+            T extends DiningTableGroupByArgs,
+            HasSelectOrTake extends Or<
+                Extends<'skip', Keys<T>>,
+                Extends<'take', Keys<T>>
+            >,
+            OrderByArg extends True extends HasSelectOrTake
+            ? { orderBy: DiningTableGroupByArgs['orderBy'] }
+            : { orderBy?: DiningTableGroupByArgs['orderBy'] },
+            OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+            ByFields extends MaybeTupleToUnion<T['by']>,
+            ByValid extends Has<ByFields, OrderFields>,
+            HavingFields extends GetHavingFields<T['having']>,
+            HavingValid extends Has<ByFields, HavingFields>,
+            ByEmpty extends T['by'] extends never[] ? True : False,
+            InputErrors extends ByEmpty extends True
+            ? `Error: "by" must not be empty.`
+            : HavingValid extends False
+            ? {
+                [P in HavingFields]: P extends ByFields
+                ? never
+                : P extends string
+                ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                : [
+                    Error,
+                    'Field ',
+                    P,
+                    ` in "having" needs to be provided in "by"`,
+                ]
+            }[HavingFields]
+            : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+            ? ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+            : 'Error: If you provide "skip", you also need to provide "orderBy"'
+            : ByValid extends True
+            ? {}
+            : {
+                [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        >(args: SubsetIntersection<T, DiningTableGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDiningTableGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+        /**
+         * Fields of the DiningTable model
+         */
+        readonly fields: DiningTableFieldRefs;
+    }
+
+    /**
+     * The delegate class that acts as a "Promise-like" for DiningTable.
+     * Why is this prefixed with `Prisma__`?
+     * Because we want to prevent naming conflicts as mentioned in
+     * https://github.com/prisma/prisma-client-js/issues/707
+     */
+    export interface Prisma__DiningTableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+        readonly [Symbol.toStringTag]: "PrismaPromise"
+        store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        area<T extends DiningAreaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DiningAreaDefaultArgs<ExtArgs>>): Prisma__DiningAreaClient<$Result.GetResult<Prisma.$DiningAreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+        currentOrder<T extends DiningTable$currentOrderArgs<ExtArgs> = {}>(args?: Subset<T, DiningTable$currentOrderArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        orders<T extends DiningTable$ordersArgs<ExtArgs> = {}>(args?: Subset<T, DiningTable$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+        /**
+         * Attaches callbacks for the resolution and/or rejection of the Promise.
+         * @param onfulfilled The callback to execute when the Promise is resolved.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of which ever callback is executed.
+         */
+        then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+        /**
+         * Attaches a callback for only the rejection of the Promise.
+         * @param onrejected The callback to execute when the Promise is rejected.
+         * @returns A Promise for the completion of the callback.
+         */
+        catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+        /**
+         * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+         * resolved value cannot be modified from the callback.
+         * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+         * @returns A Promise for the completion of the callback.
+         */
+        finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    }
+
+
+
+
+    /**
+     * Fields of the DiningTable model
+     */
+    interface DiningTableFieldRefs {
+        readonly id: FieldRef<"DiningTable", 'String'>
+        readonly storeId: FieldRef<"DiningTable", 'String'>
+        readonly areaId: FieldRef<"DiningTable", 'String'>
+        readonly name: FieldRef<"DiningTable", 'String'>
+        readonly seats: FieldRef<"DiningTable", 'Int'>
+        readonly status: FieldRef<"DiningTable", 'DiningTableStatus'>
+        readonly sortOrder: FieldRef<"DiningTable", 'Int'>
+        readonly currentOrderId: FieldRef<"DiningTable", 'String'>
+        readonly createdAt: FieldRef<"DiningTable", 'DateTime'>
+        readonly updatedAt: FieldRef<"DiningTable", 'DateTime'>
+    }
+
+
+    // Custom InputTypes
+    /**
+     * DiningTable findUnique
+     */
+    export type DiningTableFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningTable to fetch.
+         */
+        where: DiningTableWhereUniqueInput
+    }
+
+    /**
+     * DiningTable findUniqueOrThrow
+     */
+    export type DiningTableFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningTable to fetch.
+         */
+        where: DiningTableWhereUniqueInput
+    }
+
+    /**
+     * DiningTable findFirst
+     */
+    export type DiningTableFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningTable to fetch.
+         */
+        where?: DiningTableWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningTables to fetch.
+         */
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for DiningTables.
+         */
+        cursor?: DiningTableWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningTables from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningTables.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of DiningTables.
+         */
+        distinct?: DiningTableScalarFieldEnum | DiningTableScalarFieldEnum[]
+    }
+
+    /**
+     * DiningTable findFirstOrThrow
+     */
+    export type DiningTableFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningTable to fetch.
+         */
+        where?: DiningTableWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningTables to fetch.
+         */
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for searching for DiningTables.
+         */
+        cursor?: DiningTableWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningTables from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningTables.
+         */
+        skip?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+         * 
+         * Filter by unique combinations of DiningTables.
+         */
+        distinct?: DiningTableScalarFieldEnum | DiningTableScalarFieldEnum[]
+    }
+
+    /**
+     * DiningTable findMany
+     */
+    export type DiningTableFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter, which DiningTables to fetch.
+         */
+        where?: DiningTableWhereInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+         * 
+         * Determine the order of DiningTables to fetch.
+         */
+        orderBy?: DiningTableOrderByWithRelationInput | DiningTableOrderByWithRelationInput[]
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+         * 
+         * Sets the position for listing DiningTables.
+         */
+        cursor?: DiningTableWhereUniqueInput
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Take `±n` DiningTables from the position of the cursor.
+         */
+        take?: number
+        /**
+         * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+         * 
+         * Skip the first `n` DiningTables.
+         */
+        skip?: number
+        distinct?: DiningTableScalarFieldEnum | DiningTableScalarFieldEnum[]
+    }
+
+    /**
+     * DiningTable create
+     */
+    export type DiningTableCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * The data needed to create a DiningTable.
+         */
+        data: XOR<DiningTableCreateInput, DiningTableUncheckedCreateInput>
+    }
+
+    /**
+     * DiningTable createMany
+     */
+    export type DiningTableCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to create many DiningTables.
+         */
+        data: DiningTableCreateManyInput | DiningTableCreateManyInput[]
+        skipDuplicates?: boolean
+    }
+
+    /**
+     * DiningTable update
+     */
+    export type DiningTableUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * The data needed to update a DiningTable.
+         */
+        data: XOR<DiningTableUpdateInput, DiningTableUncheckedUpdateInput>
+        /**
+         * Choose, which DiningTable to update.
+         */
+        where: DiningTableWhereUniqueInput
+    }
+
+    /**
+     * DiningTable updateMany
+     */
+    export type DiningTableUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * The data used to update DiningTables.
+         */
+        data: XOR<DiningTableUpdateManyMutationInput, DiningTableUncheckedUpdateManyInput>
+        /**
+         * Filter which DiningTables to update
+         */
+        where?: DiningTableWhereInput
+        /**
+         * Limit how many DiningTables to update.
+         */
+        limit?: number
+    }
+
+    /**
+     * DiningTable upsert
+     */
+    export type DiningTableUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * The filter to search for the DiningTable to update in case it exists.
+         */
+        where: DiningTableWhereUniqueInput
+        /**
+         * In case the DiningTable found by the `where` argument doesn't exist, create a new DiningTable with this data.
+         */
+        create: XOR<DiningTableCreateInput, DiningTableUncheckedCreateInput>
+        /**
+         * In case the DiningTable was found with the provided `where` argument, update it with this data.
+         */
+        update: XOR<DiningTableUpdateInput, DiningTableUncheckedUpdateInput>
+    }
+
+    /**
+     * DiningTable delete
+     */
+    export type DiningTableDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        /**
+         * Filter which DiningTable to delete.
+         */
+        where: DiningTableWhereUniqueInput
+    }
+
+    /**
+     * DiningTable deleteMany
+     */
+    export type DiningTableDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Filter which DiningTables to delete
+         */
+        where?: DiningTableWhereInput
+        /**
+         * Limit how many DiningTables to delete.
+         */
+        limit?: number
+    }
+
+    /**
+     * DiningTable.currentOrder
+     */
+    export type DiningTable$currentOrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Order
+         */
+        select?: OrderSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Order
+         */
+        omit?: OrderOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderInclude<ExtArgs> | null
+        where?: OrderWhereInput
+    }
+
+    /**
+     * DiningTable.orders
+     */
+    export type DiningTable$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the Order
+         */
+        select?: OrderSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the Order
+         */
+        omit?: OrderOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: OrderInclude<ExtArgs> | null
+        where?: OrderWhereInput
+        orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+        cursor?: OrderWhereUniqueInput
+        take?: number
+        skip?: number
+        distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+    }
+
+    /**
+     * DiningTable without action
+     */
+    export type DiningTableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+    }
+
+
+    /**
      * Model Product
      */
 
@@ -12412,6 +14823,7 @@ export namespace Prisma {
     }
 
     export type OrderAvgAggregateOutputType = {
+        guestCount: number | null
         subtotal: Decimal | null
         adjustment: Decimal | null
         adjustmentValue: Decimal | null
@@ -12426,6 +14838,7 @@ export namespace Prisma {
     }
 
     export type OrderSumAggregateOutputType = {
+        guestCount: number | null
         subtotal: Decimal | null
         adjustment: Decimal | null
         adjustmentValue: Decimal | null
@@ -12445,6 +14858,8 @@ export namespace Prisma {
         orderNumber: string | null
         pickupNumber: string | null
         orderType: $Enums.OrderType | null
+        tableId: string | null
+        guestCount: number | null
         status: $Enums.OrderStatus | null
         printStatus: $Enums.PrintStatus | null
         paymentMethod: $Enums.PaymentMethod | null
@@ -12466,6 +14881,8 @@ export namespace Prisma {
         printedAt: Date | null
         heldAt: Date | null
         resumedAt: Date | null
+        openedAt: Date | null
+        closedAt: Date | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -12476,6 +14893,8 @@ export namespace Prisma {
         orderNumber: string | null
         pickupNumber: string | null
         orderType: $Enums.OrderType | null
+        tableId: string | null
+        guestCount: number | null
         status: $Enums.OrderStatus | null
         printStatus: $Enums.PrintStatus | null
         paymentMethod: $Enums.PaymentMethod | null
@@ -12497,6 +14916,8 @@ export namespace Prisma {
         printedAt: Date | null
         heldAt: Date | null
         resumedAt: Date | null
+        openedAt: Date | null
+        closedAt: Date | null
         createdAt: Date | null
         updatedAt: Date | null
     }
@@ -12507,6 +14928,8 @@ export namespace Prisma {
         orderNumber: number
         pickupNumber: number
         orderType: number
+        tableId: number
+        guestCount: number
         status: number
         printStatus: number
         paymentMethod: number
@@ -12528,6 +14951,8 @@ export namespace Prisma {
         printedAt: number
         heldAt: number
         resumedAt: number
+        openedAt: number
+        closedAt: number
         createdAt: number
         updatedAt: number
         _all: number
@@ -12535,6 +14960,7 @@ export namespace Prisma {
 
 
     export type OrderAvgAggregateInputType = {
+        guestCount?: true
         subtotal?: true
         adjustment?: true
         adjustmentValue?: true
@@ -12549,6 +14975,7 @@ export namespace Prisma {
     }
 
     export type OrderSumAggregateInputType = {
+        guestCount?: true
         subtotal?: true
         adjustment?: true
         adjustmentValue?: true
@@ -12568,6 +14995,8 @@ export namespace Prisma {
         orderNumber?: true
         pickupNumber?: true
         orderType?: true
+        tableId?: true
+        guestCount?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12589,6 +15018,8 @@ export namespace Prisma {
         printedAt?: true
         heldAt?: true
         resumedAt?: true
+        openedAt?: true
+        closedAt?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -12599,6 +15030,8 @@ export namespace Prisma {
         orderNumber?: true
         pickupNumber?: true
         orderType?: true
+        tableId?: true
+        guestCount?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12620,6 +15053,8 @@ export namespace Prisma {
         printedAt?: true
         heldAt?: true
         resumedAt?: true
+        openedAt?: true
+        closedAt?: true
         createdAt?: true
         updatedAt?: true
     }
@@ -12630,6 +15065,8 @@ export namespace Prisma {
         orderNumber?: true
         pickupNumber?: true
         orderType?: true
+        tableId?: true
+        guestCount?: true
         status?: true
         printStatus?: true
         paymentMethod?: true
@@ -12651,6 +15088,8 @@ export namespace Prisma {
         printedAt?: true
         heldAt?: true
         resumedAt?: true
+        openedAt?: true
+        closedAt?: true
         createdAt?: true
         updatedAt?: true
         _all?: true
@@ -12748,6 +15187,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber: string | null
         orderType: $Enums.OrderType
+        tableId: string | null
+        guestCount: number | null
         status: $Enums.OrderStatus
         printStatus: $Enums.PrintStatus
         paymentMethod: $Enums.PaymentMethod | null
@@ -12769,6 +15210,8 @@ export namespace Prisma {
         printedAt: Date | null
         heldAt: Date | null
         resumedAt: Date | null
+        openedAt: Date | null
+        closedAt: Date | null
         createdAt: Date
         updatedAt: Date
         _count: OrderCountAggregateOutputType | null
@@ -12798,6 +15241,8 @@ export namespace Prisma {
         orderNumber?: boolean
         pickupNumber?: boolean
         orderType?: boolean
+        tableId?: boolean
+        guestCount?: boolean
         status?: boolean
         printStatus?: boolean
         paymentMethod?: boolean
@@ -12819,9 +15264,13 @@ export namespace Prisma {
         printedAt?: boolean
         heldAt?: boolean
         resumedAt?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
         createdAt?: boolean
         updatedAt?: boolean
         store?: boolean | Order$storeArgs<ExtArgs>
+        table?: boolean | Order$tableArgs<ExtArgs>
+        currentForTable?: boolean | Order$currentForTableArgs<ExtArgs>
         items?: boolean | Order$itemsArgs<ExtArgs>
         payments?: boolean | Order$paymentsArgs<ExtArgs>
         refunds?: boolean | Order$refundsArgs<ExtArgs>
@@ -12838,6 +15287,8 @@ export namespace Prisma {
         orderNumber?: boolean
         pickupNumber?: boolean
         orderType?: boolean
+        tableId?: boolean
+        guestCount?: boolean
         status?: boolean
         printStatus?: boolean
         paymentMethod?: boolean
@@ -12859,13 +15310,17 @@ export namespace Prisma {
         printedAt?: boolean
         heldAt?: boolean
         resumedAt?: boolean
+        openedAt?: boolean
+        closedAt?: boolean
         createdAt?: boolean
         updatedAt?: boolean
     }
 
-    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "orderType" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "adjustmentType" | "adjustmentValue" | "discountReason" | "taxRate" | "tax" | "serviceChargeRate" | "serviceCharge" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "heldAt" | "resumedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+    export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "storeId" | "orderNumber" | "pickupNumber" | "orderType" | "tableId" | "guestCount" | "status" | "printStatus" | "paymentMethod" | "currency" | "subtotal" | "adjustment" | "adjustmentType" | "adjustmentValue" | "discountReason" | "taxRate" | "tax" | "serviceChargeRate" | "serviceCharge" | "tip" | "total" | "cashReceived" | "changeDue" | "paidAt" | "printedAt" | "heldAt" | "resumedAt" | "openedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
     export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
         store?: boolean | Order$storeArgs<ExtArgs>
+        table?: boolean | Order$tableArgs<ExtArgs>
+        currentForTable?: boolean | Order$currentForTableArgs<ExtArgs>
         items?: boolean | Order$itemsArgs<ExtArgs>
         payments?: boolean | Order$paymentsArgs<ExtArgs>
         refunds?: boolean | Order$refundsArgs<ExtArgs>
@@ -12878,6 +15333,8 @@ export namespace Prisma {
         name: "Order"
         objects: {
             store: Prisma.$StorePayload<ExtArgs> | null
+            table: Prisma.$DiningTablePayload<ExtArgs> | null
+            currentForTable: Prisma.$DiningTablePayload<ExtArgs> | null
             items: Prisma.$OrderItemPayload<ExtArgs>[]
             payments: Prisma.$OrderPaymentPayload<ExtArgs>[]
             refunds: Prisma.$RefundPayload<ExtArgs>[]
@@ -12890,6 +15347,8 @@ export namespace Prisma {
             orderNumber: string
             pickupNumber: string | null
             orderType: $Enums.OrderType
+            tableId: string | null
+            guestCount: number | null
             status: $Enums.OrderStatus
             printStatus: $Enums.PrintStatus
             paymentMethod: $Enums.PaymentMethod | null
@@ -12911,6 +15370,8 @@ export namespace Prisma {
             printedAt: Date | null
             heldAt: Date | null
             resumedAt: Date | null
+            openedAt: Date | null
+            closedAt: Date | null
             createdAt: Date
             updatedAt: Date
         }, ExtArgs["result"]["order"]>
@@ -13254,6 +15715,8 @@ export namespace Prisma {
     export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
         readonly [Symbol.toStringTag]: "PrismaPromise"
         store<T extends Order$storeArgs<ExtArgs> = {}>(args?: Subset<T, Order$storeArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        table<T extends Order$tableArgs<ExtArgs> = {}>(args?: Subset<T, Order$tableArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+        currentForTable<T extends Order$currentForTableArgs<ExtArgs> = {}>(args?: Subset<T, Order$currentForTableArgs<ExtArgs>>): Prisma__DiningTableClient<$Result.GetResult<Prisma.$DiningTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
         items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         payments<T extends Order$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
         refunds<T extends Order$refundsArgs<ExtArgs> = {}>(args?: Subset<T, Order$refundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -13293,6 +15756,8 @@ export namespace Prisma {
         readonly orderNumber: FieldRef<"Order", 'String'>
         readonly pickupNumber: FieldRef<"Order", 'String'>
         readonly orderType: FieldRef<"Order", 'OrderType'>
+        readonly tableId: FieldRef<"Order", 'String'>
+        readonly guestCount: FieldRef<"Order", 'Int'>
         readonly status: FieldRef<"Order", 'OrderStatus'>
         readonly printStatus: FieldRef<"Order", 'PrintStatus'>
         readonly paymentMethod: FieldRef<"Order", 'PaymentMethod'>
@@ -13314,6 +15779,8 @@ export namespace Prisma {
         readonly printedAt: FieldRef<"Order", 'DateTime'>
         readonly heldAt: FieldRef<"Order", 'DateTime'>
         readonly resumedAt: FieldRef<"Order", 'DateTime'>
+        readonly openedAt: FieldRef<"Order", 'DateTime'>
+        readonly closedAt: FieldRef<"Order", 'DateTime'>
         readonly createdAt: FieldRef<"Order", 'DateTime'>
         readonly updatedAt: FieldRef<"Order", 'DateTime'>
     }
@@ -13675,6 +16142,44 @@ export namespace Prisma {
          */
         include?: StoreInclude<ExtArgs> | null
         where?: StoreWhereInput
+    }
+
+    /**
+     * Order.table
+     */
+    export type Order$tableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        where?: DiningTableWhereInput
+    }
+
+    /**
+     * Order.currentForTable
+     */
+    export type Order$currentForTableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+        /**
+         * Select specific fields to fetch from the DiningTable
+         */
+        select?: DiningTableSelect<ExtArgs> | null
+        /**
+         * Omit specific fields from the DiningTable
+         */
+        omit?: DiningTableOmit<ExtArgs> | null
+        /**
+         * Choose, which related nodes to fetch as well
+         */
+        include?: DiningTableInclude<ExtArgs> | null
+        where?: DiningTableWhereInput
     }
 
     /**
@@ -34296,6 +36801,35 @@ export namespace Prisma {
     export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+    export const DiningAreaScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        name: 'name',
+        sortOrder: 'sortOrder',
+        status: 'status',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type DiningAreaScalarFieldEnum = (typeof DiningAreaScalarFieldEnum)[keyof typeof DiningAreaScalarFieldEnum]
+
+
+    export const DiningTableScalarFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        areaId: 'areaId',
+        name: 'name',
+        seats: 'seats',
+        status: 'status',
+        sortOrder: 'sortOrder',
+        currentOrderId: 'currentOrderId',
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
+    };
+
+    export type DiningTableScalarFieldEnum = (typeof DiningTableScalarFieldEnum)[keyof typeof DiningTableScalarFieldEnum]
+
+
     export const ProductScalarFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -34352,6 +36886,8 @@ export namespace Prisma {
         orderNumber: 'orderNumber',
         pickupNumber: 'pickupNumber',
         orderType: 'orderType',
+        tableId: 'tableId',
+        guestCount: 'guestCount',
         status: 'status',
         printStatus: 'printStatus',
         paymentMethod: 'paymentMethod',
@@ -34373,6 +36909,8 @@ export namespace Prisma {
         printedAt: 'printedAt',
         heldAt: 'heldAt',
         resumedAt: 'resumedAt',
+        openedAt: 'openedAt',
+        closedAt: 'closedAt',
         createdAt: 'createdAt',
         updatedAt: 'updatedAt'
     };
@@ -34789,6 +37327,26 @@ export namespace Prisma {
     export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
 
 
+    export const DiningAreaOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        name: 'name'
+    };
+
+    export type DiningAreaOrderByRelevanceFieldEnum = (typeof DiningAreaOrderByRelevanceFieldEnum)[keyof typeof DiningAreaOrderByRelevanceFieldEnum]
+
+
+    export const DiningTableOrderByRelevanceFieldEnum: {
+        id: 'id',
+        storeId: 'storeId',
+        areaId: 'areaId',
+        name: 'name',
+        currentOrderId: 'currentOrderId'
+    };
+
+    export type DiningTableOrderByRelevanceFieldEnum = (typeof DiningTableOrderByRelevanceFieldEnum)[keyof typeof DiningTableOrderByRelevanceFieldEnum]
+
+
     export const ProductOrderByRelevanceFieldEnum: {
         id: 'id',
         storeId: 'storeId',
@@ -34826,6 +37384,7 @@ export namespace Prisma {
         storeId: 'storeId',
         orderNumber: 'orderNumber',
         pickupNumber: 'pickupNumber',
+        tableId: 'tableId',
         currency: 'currency',
         adjustmentType: 'adjustmentType',
         discountReason: 'discountReason'
@@ -35124,6 +37683,13 @@ export namespace Prisma {
 
 
     /**
+     * Reference to a field of type 'DiningTableStatus'
+     */
+    export type EnumDiningTableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiningTableStatus'>
+
+
+
+    /**
      * Reference to a field of type 'Decimal'
      */
     export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -35357,6 +37923,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFilter<"Store"> | Date | string
         users?: StoreUserListRelationFilter
         categories?: CategoryListRelationFilter
+        diningAreas?: DiningAreaListRelationFilter
+        diningTables?: DiningTableListRelationFilter
         products?: ProductListRelationFilter
         orders?: OrderListRelationFilter
         refunds?: RefundListRelationFilter
@@ -35388,6 +37956,8 @@ export namespace Prisma {
         updatedAt?: SortOrder
         users?: StoreUserOrderByRelationAggregateInput
         categories?: CategoryOrderByRelationAggregateInput
+        diningAreas?: DiningAreaOrderByRelationAggregateInput
+        diningTables?: DiningTableOrderByRelationAggregateInput
         products?: ProductOrderByRelationAggregateInput
         orders?: OrderOrderByRelationAggregateInput
         refunds?: RefundOrderByRelationAggregateInput
@@ -35423,6 +37993,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFilter<"Store"> | Date | string
         users?: StoreUserListRelationFilter
         categories?: CategoryListRelationFilter
+        diningAreas?: DiningAreaListRelationFilter
+        diningTables?: DiningTableListRelationFilter
         products?: ProductListRelationFilter
         orders?: OrderListRelationFilter
         refunds?: RefundListRelationFilter
@@ -35729,6 +38301,171 @@ export namespace Prisma {
         updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
     }
 
+    export type DiningAreaWhereInput = {
+        AND?: DiningAreaWhereInput | DiningAreaWhereInput[]
+        OR?: DiningAreaWhereInput[]
+        NOT?: DiningAreaWhereInput | DiningAreaWhereInput[]
+        id?: StringFilter<"DiningArea"> | string
+        storeId?: StringFilter<"DiningArea"> | string
+        name?: StringFilter<"DiningArea"> | string
+        sortOrder?: IntFilter<"DiningArea"> | number
+        status?: EnumCatalogStatusFilter<"DiningArea"> | $Enums.CatalogStatus
+        createdAt?: DateTimeFilter<"DiningArea"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningArea"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        tables?: DiningTableListRelationFilter
+    }
+
+    export type DiningAreaOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        sortOrder?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        tables?: DiningTableOrderByRelationAggregateInput
+        _relevance?: DiningAreaOrderByRelevanceInput
+    }
+
+    export type DiningAreaWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        storeId_name?: DiningAreaStoreIdNameCompoundUniqueInput
+        AND?: DiningAreaWhereInput | DiningAreaWhereInput[]
+        OR?: DiningAreaWhereInput[]
+        NOT?: DiningAreaWhereInput | DiningAreaWhereInput[]
+        storeId?: StringFilter<"DiningArea"> | string
+        name?: StringFilter<"DiningArea"> | string
+        sortOrder?: IntFilter<"DiningArea"> | number
+        status?: EnumCatalogStatusFilter<"DiningArea"> | $Enums.CatalogStatus
+        createdAt?: DateTimeFilter<"DiningArea"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningArea"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        tables?: DiningTableListRelationFilter
+    }, "id" | "storeId_name">
+
+    export type DiningAreaOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        sortOrder?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: DiningAreaCountOrderByAggregateInput
+        _avg?: DiningAreaAvgOrderByAggregateInput
+        _max?: DiningAreaMaxOrderByAggregateInput
+        _min?: DiningAreaMinOrderByAggregateInput
+        _sum?: DiningAreaSumOrderByAggregateInput
+    }
+
+    export type DiningAreaScalarWhereWithAggregatesInput = {
+        AND?: DiningAreaScalarWhereWithAggregatesInput | DiningAreaScalarWhereWithAggregatesInput[]
+        OR?: DiningAreaScalarWhereWithAggregatesInput[]
+        NOT?: DiningAreaScalarWhereWithAggregatesInput | DiningAreaScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"DiningArea"> | string
+        storeId?: StringWithAggregatesFilter<"DiningArea"> | string
+        name?: StringWithAggregatesFilter<"DiningArea"> | string
+        sortOrder?: IntWithAggregatesFilter<"DiningArea"> | number
+        status?: EnumCatalogStatusWithAggregatesFilter<"DiningArea"> | $Enums.CatalogStatus
+        createdAt?: DateTimeWithAggregatesFilter<"DiningArea"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"DiningArea"> | Date | string
+    }
+
+    export type DiningTableWhereInput = {
+        AND?: DiningTableWhereInput | DiningTableWhereInput[]
+        OR?: DiningTableWhereInput[]
+        NOT?: DiningTableWhereInput | DiningTableWhereInput[]
+        id?: StringFilter<"DiningTable"> | string
+        storeId?: StringFilter<"DiningTable"> | string
+        areaId?: StringFilter<"DiningTable"> | string
+        name?: StringFilter<"DiningTable"> | string
+        seats?: IntFilter<"DiningTable"> | number
+        status?: EnumDiningTableStatusFilter<"DiningTable"> | $Enums.DiningTableStatus
+        sortOrder?: IntFilter<"DiningTable"> | number
+        currentOrderId?: StringNullableFilter<"DiningTable"> | string | null
+        createdAt?: DateTimeFilter<"DiningTable"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningTable"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        area?: XOR<DiningAreaScalarRelationFilter, DiningAreaWhereInput>
+        currentOrder?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
+        orders?: OrderListRelationFilter
+    }
+
+    export type DiningTableOrderByWithRelationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        areaId?: SortOrder
+        name?: SortOrder
+        seats?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        currentOrderId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        store?: StoreOrderByWithRelationInput
+        area?: DiningAreaOrderByWithRelationInput
+        currentOrder?: OrderOrderByWithRelationInput
+        orders?: OrderOrderByRelationAggregateInput
+        _relevance?: DiningTableOrderByRelevanceInput
+    }
+
+    export type DiningTableWhereUniqueInput = Prisma.AtLeast<{
+        id?: string
+        currentOrderId?: string
+        storeId_name?: DiningTableStoreIdNameCompoundUniqueInput
+        AND?: DiningTableWhereInput | DiningTableWhereInput[]
+        OR?: DiningTableWhereInput[]
+        NOT?: DiningTableWhereInput | DiningTableWhereInput[]
+        storeId?: StringFilter<"DiningTable"> | string
+        areaId?: StringFilter<"DiningTable"> | string
+        name?: StringFilter<"DiningTable"> | string
+        seats?: IntFilter<"DiningTable"> | number
+        status?: EnumDiningTableStatusFilter<"DiningTable"> | $Enums.DiningTableStatus
+        sortOrder?: IntFilter<"DiningTable"> | number
+        createdAt?: DateTimeFilter<"DiningTable"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningTable"> | Date | string
+        store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+        area?: XOR<DiningAreaScalarRelationFilter, DiningAreaWhereInput>
+        currentOrder?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
+        orders?: OrderListRelationFilter
+    }, "id" | "currentOrderId" | "storeId_name">
+
+    export type DiningTableOrderByWithAggregationInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        areaId?: SortOrder
+        name?: SortOrder
+        seats?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        currentOrderId?: SortOrderInput | SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+        _count?: DiningTableCountOrderByAggregateInput
+        _avg?: DiningTableAvgOrderByAggregateInput
+        _max?: DiningTableMaxOrderByAggregateInput
+        _min?: DiningTableMinOrderByAggregateInput
+        _sum?: DiningTableSumOrderByAggregateInput
+    }
+
+    export type DiningTableScalarWhereWithAggregatesInput = {
+        AND?: DiningTableScalarWhereWithAggregatesInput | DiningTableScalarWhereWithAggregatesInput[]
+        OR?: DiningTableScalarWhereWithAggregatesInput[]
+        NOT?: DiningTableScalarWhereWithAggregatesInput | DiningTableScalarWhereWithAggregatesInput[]
+        id?: StringWithAggregatesFilter<"DiningTable"> | string
+        storeId?: StringWithAggregatesFilter<"DiningTable"> | string
+        areaId?: StringWithAggregatesFilter<"DiningTable"> | string
+        name?: StringWithAggregatesFilter<"DiningTable"> | string
+        seats?: IntWithAggregatesFilter<"DiningTable"> | number
+        status?: EnumDiningTableStatusWithAggregatesFilter<"DiningTable"> | $Enums.DiningTableStatus
+        sortOrder?: IntWithAggregatesFilter<"DiningTable"> | number
+        currentOrderId?: StringNullableWithAggregatesFilter<"DiningTable"> | string | null
+        createdAt?: DateTimeWithAggregatesFilter<"DiningTable"> | Date | string
+        updatedAt?: DateTimeWithAggregatesFilter<"DiningTable"> | Date | string
+    }
+
     export type ProductWhereInput = {
         AND?: ProductWhereInput | ProductWhereInput[]
         OR?: ProductWhereInput[]
@@ -36012,6 +38749,8 @@ export namespace Prisma {
         orderNumber?: StringFilter<"Order"> | string
         pickupNumber?: StringNullableFilter<"Order"> | string | null
         orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
+        tableId?: StringNullableFilter<"Order"> | string | null
+        guestCount?: IntNullableFilter<"Order"> | number | null
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -36033,9 +38772,13 @@ export namespace Prisma {
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        openedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        closedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
+        table?: XOR<DiningTableNullableScalarRelationFilter, DiningTableWhereInput> | null
+        currentForTable?: XOR<DiningTableNullableScalarRelationFilter, DiningTableWhereInput> | null
         items?: OrderItemListRelationFilter
         payments?: OrderPaymentListRelationFilter
         refunds?: RefundListRelationFilter
@@ -36049,6 +38792,8 @@ export namespace Prisma {
         orderNumber?: SortOrder
         pickupNumber?: SortOrderInput | SortOrder
         orderType?: SortOrder
+        tableId?: SortOrderInput | SortOrder
+        guestCount?: SortOrderInput | SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrderInput | SortOrder
@@ -36070,9 +38815,13 @@ export namespace Prisma {
         printedAt?: SortOrderInput | SortOrder
         heldAt?: SortOrderInput | SortOrder
         resumedAt?: SortOrderInput | SortOrder
+        openedAt?: SortOrderInput | SortOrder
+        closedAt?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         store?: StoreOrderByWithRelationInput
+        table?: DiningTableOrderByWithRelationInput
+        currentForTable?: DiningTableOrderByWithRelationInput
         items?: OrderItemOrderByRelationAggregateInput
         payments?: OrderPaymentOrderByRelationAggregateInput
         refunds?: RefundOrderByRelationAggregateInput
@@ -36090,6 +38839,8 @@ export namespace Prisma {
         storeId?: StringNullableFilter<"Order"> | string | null
         pickupNumber?: StringNullableFilter<"Order"> | string | null
         orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
+        tableId?: StringNullableFilter<"Order"> | string | null
+        guestCount?: IntNullableFilter<"Order"> | number | null
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -36111,9 +38862,13 @@ export namespace Prisma {
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        openedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        closedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
         store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
+        table?: XOR<DiningTableNullableScalarRelationFilter, DiningTableWhereInput> | null
+        currentForTable?: XOR<DiningTableNullableScalarRelationFilter, DiningTableWhereInput> | null
         items?: OrderItemListRelationFilter
         payments?: OrderPaymentListRelationFilter
         refunds?: RefundListRelationFilter
@@ -36127,6 +38882,8 @@ export namespace Prisma {
         orderNumber?: SortOrder
         pickupNumber?: SortOrderInput | SortOrder
         orderType?: SortOrder
+        tableId?: SortOrderInput | SortOrder
+        guestCount?: SortOrderInput | SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrderInput | SortOrder
@@ -36148,6 +38905,8 @@ export namespace Prisma {
         printedAt?: SortOrderInput | SortOrder
         heldAt?: SortOrderInput | SortOrder
         resumedAt?: SortOrderInput | SortOrder
+        openedAt?: SortOrderInput | SortOrder
+        closedAt?: SortOrderInput | SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
         _count?: OrderCountOrderByAggregateInput
@@ -36166,6 +38925,8 @@ export namespace Prisma {
         orderNumber?: StringWithAggregatesFilter<"Order"> | string
         pickupNumber?: StringNullableWithAggregatesFilter<"Order"> | string | null
         orderType?: EnumOrderTypeWithAggregatesFilter<"Order"> | $Enums.OrderType
+        tableId?: StringNullableWithAggregatesFilter<"Order"> | string | null
+        guestCount?: IntNullableWithAggregatesFilter<"Order"> | number | null
         status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusWithAggregatesFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableWithAggregatesFilter<"Order"> | $Enums.PaymentMethod | null
@@ -36187,6 +38948,8 @@ export namespace Prisma {
         printedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
         heldAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
         resumedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+        openedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+        closedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
         createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
         updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     }
@@ -38075,6 +40838,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -38106,6 +40871,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -38137,6 +40904,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -38168,6 +40937,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -38498,6 +41269,171 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type DiningAreaCreateInput = {
+        id?: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningAreasInput
+        tables?: DiningTableCreateNestedManyWithoutAreaInput
+    }
+
+    export type DiningAreaUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        tables?: DiningTableUncheckedCreateNestedManyWithoutAreaInput
+    }
+
+    export type DiningAreaUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningAreasNestedInput
+        tables?: DiningTableUpdateManyWithoutAreaNestedInput
+    }
+
+    export type DiningAreaUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        tables?: DiningTableUncheckedUpdateManyWithoutAreaNestedInput
+    }
+
+    export type DiningAreaCreateManyInput = {
+        id?: string
+        storeId: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningAreaUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningAreaUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningTableCreateInput = {
+        id?: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningTablesInput
+        area: DiningAreaCreateNestedOneWithoutTablesInput
+        currentOrder?: OrderCreateNestedOneWithoutCurrentForTableInput
+        orders?: OrderCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableUncheckedCreateInput = {
+        id?: string
+        storeId: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        orders?: OrderUncheckedCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningTablesNestedInput
+        area?: DiningAreaUpdateOneRequiredWithoutTablesNestedInput
+        currentOrder?: OrderUpdateOneWithoutCurrentForTableNestedInput
+        orders?: OrderUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableCreateManyInput = {
+        id?: string
+        storeId: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningTableUpdateManyMutationInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningTableUncheckedUpdateManyInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type ProductCreateInput = {
         id?: string
         name: string
@@ -38797,6 +41733,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -38818,9 +41755,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
@@ -38834,6 +41775,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -38855,8 +41798,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
@@ -38869,6 +41815,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -38890,9 +41837,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
@@ -38906,6 +41857,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -38927,8 +41880,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
@@ -38942,6 +41898,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -38963,6 +41921,8 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -38972,6 +41932,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -38993,6 +41954,8 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -39003,6 +41966,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -39024,6 +41989,8 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -41061,6 +44028,18 @@ export namespace Prisma {
         none?: CategoryWhereInput
     }
 
+    export type DiningAreaListRelationFilter = {
+        every?: DiningAreaWhereInput
+        some?: DiningAreaWhereInput
+        none?: DiningAreaWhereInput
+    }
+
+    export type DiningTableListRelationFilter = {
+        every?: DiningTableWhereInput
+        some?: DiningTableWhereInput
+        none?: DiningTableWhereInput
+    }
+
     export type ProductListRelationFilter = {
         every?: ProductWhereInput
         some?: ProductWhereInput
@@ -41179,6 +44158,14 @@ export namespace Prisma {
     }
 
     export type CategoryOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type DiningAreaOrderByRelationAggregateInput = {
+        _count?: SortOrder
+    }
+
+    export type DiningTableOrderByRelationAggregateInput = {
         _count?: SortOrder
     }
 
@@ -41556,6 +44543,142 @@ export namespace Prisma {
         _max?: NestedIntFilter<$PrismaModel>
     }
 
+    export type DiningAreaOrderByRelevanceInput = {
+        fields: DiningAreaOrderByRelevanceFieldEnum | DiningAreaOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type DiningAreaStoreIdNameCompoundUniqueInput = {
+        storeId: string
+        name: string
+    }
+
+    export type DiningAreaCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        sortOrder?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningAreaAvgOrderByAggregateInput = {
+        sortOrder?: SortOrder
+    }
+
+    export type DiningAreaMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        sortOrder?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningAreaMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        name?: SortOrder
+        sortOrder?: SortOrder
+        status?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningAreaSumOrderByAggregateInput = {
+        sortOrder?: SortOrder
+    }
+
+    export type EnumDiningTableStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.DiningTableStatus | EnumDiningTableStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.DiningTableStatus[]
+        notIn?: $Enums.DiningTableStatus[]
+        not?: NestedEnumDiningTableStatusFilter<$PrismaModel> | $Enums.DiningTableStatus
+    }
+
+    export type DiningAreaScalarRelationFilter = {
+        is?: DiningAreaWhereInput
+        isNot?: DiningAreaWhereInput
+    }
+
+    export type OrderNullableScalarRelationFilter = {
+        is?: OrderWhereInput | null
+        isNot?: OrderWhereInput | null
+    }
+
+    export type DiningTableOrderByRelevanceInput = {
+        fields: DiningTableOrderByRelevanceFieldEnum | DiningTableOrderByRelevanceFieldEnum[]
+        sort: SortOrder
+        search: string
+    }
+
+    export type DiningTableStoreIdNameCompoundUniqueInput = {
+        storeId: string
+        name: string
+    }
+
+    export type DiningTableCountOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        areaId?: SortOrder
+        name?: SortOrder
+        seats?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        currentOrderId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningTableAvgOrderByAggregateInput = {
+        seats?: SortOrder
+        sortOrder?: SortOrder
+    }
+
+    export type DiningTableMaxOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        areaId?: SortOrder
+        name?: SortOrder
+        seats?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        currentOrderId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningTableMinOrderByAggregateInput = {
+        id?: SortOrder
+        storeId?: SortOrder
+        areaId?: SortOrder
+        name?: SortOrder
+        seats?: SortOrder
+        status?: SortOrder
+        sortOrder?: SortOrder
+        currentOrderId?: SortOrder
+        createdAt?: SortOrder
+        updatedAt?: SortOrder
+    }
+
+    export type DiningTableSumOrderByAggregateInput = {
+        seats?: SortOrder
+        sortOrder?: SortOrder
+    }
+
+    export type EnumDiningTableStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.DiningTableStatus | EnumDiningTableStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.DiningTableStatus[]
+        notIn?: $Enums.DiningTableStatus[]
+        not?: NestedEnumDiningTableStatusWithAggregatesFilter<$PrismaModel> | $Enums.DiningTableStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumDiningTableStatusFilter<$PrismaModel>
+        _max?: NestedEnumDiningTableStatusFilter<$PrismaModel>
+    }
+
     export type DecimalFilter<$PrismaModel = never> = {
         equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
         in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -41845,6 +44968,17 @@ export namespace Prisma {
         not?: NestedEnumOrderTypeFilter<$PrismaModel> | $Enums.OrderType
     }
 
+    export type IntNullableFilter<$PrismaModel = never> = {
+        equals?: number | IntFieldRefInput<$PrismaModel> | null
+        in?: number[] | null
+        notIn?: number[] | null
+        lt?: number | IntFieldRefInput<$PrismaModel>
+        lte?: number | IntFieldRefInput<$PrismaModel>
+        gt?: number | IntFieldRefInput<$PrismaModel>
+        gte?: number | IntFieldRefInput<$PrismaModel>
+        not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    }
+
     export type EnumOrderStatusFilter<$PrismaModel = never> = {
         equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
         in?: $Enums.OrderStatus[]
@@ -41888,6 +45022,11 @@ export namespace Prisma {
         not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
     }
 
+    export type DiningTableNullableScalarRelationFilter = {
+        is?: DiningTableWhereInput | null
+        isNot?: DiningTableWhereInput | null
+    }
+
     export type OrderPaymentListRelationFilter = {
         every?: OrderPaymentWhereInput
         some?: OrderPaymentWhereInput
@@ -41910,6 +45049,8 @@ export namespace Prisma {
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
         orderType?: SortOrder
+        tableId?: SortOrder
+        guestCount?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -41931,11 +45072,14 @@ export namespace Prisma {
         printedAt?: SortOrder
         heldAt?: SortOrder
         resumedAt?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
 
     export type OrderAvgOrderByAggregateInput = {
+        guestCount?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
         adjustmentValue?: SortOrder
@@ -41955,6 +45099,8 @@ export namespace Prisma {
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
         orderType?: SortOrder
+        tableId?: SortOrder
+        guestCount?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -41976,6 +45122,8 @@ export namespace Prisma {
         printedAt?: SortOrder
         heldAt?: SortOrder
         resumedAt?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
@@ -41986,6 +45134,8 @@ export namespace Prisma {
         orderNumber?: SortOrder
         pickupNumber?: SortOrder
         orderType?: SortOrder
+        tableId?: SortOrder
+        guestCount?: SortOrder
         status?: SortOrder
         printStatus?: SortOrder
         paymentMethod?: SortOrder
@@ -42007,11 +45157,14 @@ export namespace Prisma {
         printedAt?: SortOrder
         heldAt?: SortOrder
         resumedAt?: SortOrder
+        openedAt?: SortOrder
+        closedAt?: SortOrder
         createdAt?: SortOrder
         updatedAt?: SortOrder
     }
 
     export type OrderSumOrderByAggregateInput = {
+        guestCount?: SortOrder
         subtotal?: SortOrder
         adjustment?: SortOrder
         adjustmentValue?: SortOrder
@@ -42033,6 +45186,22 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumOrderTypeFilter<$PrismaModel>
         _max?: NestedEnumOrderTypeFilter<$PrismaModel>
+    }
+
+    export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: number | IntFieldRefInput<$PrismaModel> | null
+        in?: number[] | null
+        notIn?: number[] | null
+        lt?: number | IntFieldRefInput<$PrismaModel>
+        lte?: number | IntFieldRefInput<$PrismaModel>
+        gt?: number | IntFieldRefInput<$PrismaModel>
+        gte?: number | IntFieldRefInput<$PrismaModel>
+        not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+        _count?: NestedIntNullableFilter<$PrismaModel>
+        _avg?: NestedFloatNullableFilter<$PrismaModel>
+        _sum?: NestedIntNullableFilter<$PrismaModel>
+        _min?: NestedIntNullableFilter<$PrismaModel>
+        _max?: NestedIntNullableFilter<$PrismaModel>
     }
 
     export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -43029,17 +46198,6 @@ export namespace Prisma {
         not?: NestedEnumPrinterStatusFilter<$PrismaModel> | $Enums.PrinterStatus
     }
 
-    export type IntNullableFilter<$PrismaModel = never> = {
-        equals?: number | IntFieldRefInput<$PrismaModel> | null
-        in?: number[] | null
-        notIn?: number[] | null
-        lt?: number | IntFieldRefInput<$PrismaModel>
-        lte?: number | IntFieldRefInput<$PrismaModel>
-        gt?: number | IntFieldRefInput<$PrismaModel>
-        gte?: number | IntFieldRefInput<$PrismaModel>
-        not?: NestedIntNullableFilter<$PrismaModel> | number | null
-    }
-
     export type PrinterOrderByRelevanceInput = {
         fields: PrinterOrderByRelevanceFieldEnum | PrinterOrderByRelevanceFieldEnum[]
         sort: SortOrder
@@ -43146,22 +46304,6 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumPrinterStatusFilter<$PrismaModel>
         _max?: NestedEnumPrinterStatusFilter<$PrismaModel>
-    }
-
-    export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-        equals?: number | IntFieldRefInput<$PrismaModel> | null
-        in?: number[] | null
-        notIn?: number[] | null
-        lt?: number | IntFieldRefInput<$PrismaModel>
-        lte?: number | IntFieldRefInput<$PrismaModel>
-        gt?: number | IntFieldRefInput<$PrismaModel>
-        gte?: number | IntFieldRefInput<$PrismaModel>
-        not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-        _count?: NestedIntNullableFilter<$PrismaModel>
-        _avg?: NestedFloatNullableFilter<$PrismaModel>
-        _sum?: NestedIntNullableFilter<$PrismaModel>
-        _min?: NestedIntNullableFilter<$PrismaModel>
-        _max?: NestedIntNullableFilter<$PrismaModel>
     }
 
     export type EnumPrinterRouteTypeFilter<$PrismaModel = never> = {
@@ -43852,6 +46994,20 @@ export namespace Prisma {
         connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
     }
 
+    export type DiningAreaCreateNestedManyWithoutStoreInput = {
+        create?: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput> | DiningAreaCreateWithoutStoreInput[] | DiningAreaUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutStoreInput | DiningAreaCreateOrConnectWithoutStoreInput[]
+        createMany?: DiningAreaCreateManyStoreInputEnvelope
+        connect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+    }
+
+    export type DiningTableCreateNestedManyWithoutStoreInput = {
+        create?: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput> | DiningTableCreateWithoutStoreInput[] | DiningTableUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutStoreInput | DiningTableCreateOrConnectWithoutStoreInput[]
+        createMany?: DiningTableCreateManyStoreInputEnvelope
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+    }
+
     export type ProductCreateNestedManyWithoutStoreInput = {
         create?: XOR<ProductCreateWithoutStoreInput, ProductUncheckedCreateWithoutStoreInput> | ProductCreateWithoutStoreInput[] | ProductUncheckedCreateWithoutStoreInput[]
         connectOrCreate?: ProductCreateOrConnectWithoutStoreInput | ProductCreateOrConnectWithoutStoreInput[]
@@ -43990,6 +47146,20 @@ export namespace Prisma {
         connectOrCreate?: CategoryCreateOrConnectWithoutStoreInput | CategoryCreateOrConnectWithoutStoreInput[]
         createMany?: CategoryCreateManyStoreInputEnvelope
         connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    }
+
+    export type DiningAreaUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput> | DiningAreaCreateWithoutStoreInput[] | DiningAreaUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutStoreInput | DiningAreaCreateOrConnectWithoutStoreInput[]
+        createMany?: DiningAreaCreateManyStoreInputEnvelope
+        connect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+    }
+
+    export type DiningTableUncheckedCreateNestedManyWithoutStoreInput = {
+        create?: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput> | DiningTableCreateWithoutStoreInput[] | DiningTableUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutStoreInput | DiningTableCreateOrConnectWithoutStoreInput[]
+        createMany?: DiningTableCreateManyStoreInputEnvelope
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
     }
 
     export type ProductUncheckedCreateNestedManyWithoutStoreInput = {
@@ -44160,6 +47330,34 @@ export namespace Prisma {
         update?: CategoryUpdateWithWhereUniqueWithoutStoreInput | CategoryUpdateWithWhereUniqueWithoutStoreInput[]
         updateMany?: CategoryUpdateManyWithWhereWithoutStoreInput | CategoryUpdateManyWithWhereWithoutStoreInput[]
         deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    }
+
+    export type DiningAreaUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput> | DiningAreaCreateWithoutStoreInput[] | DiningAreaUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutStoreInput | DiningAreaCreateOrConnectWithoutStoreInput[]
+        upsert?: DiningAreaUpsertWithWhereUniqueWithoutStoreInput | DiningAreaUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: DiningAreaCreateManyStoreInputEnvelope
+        set?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        disconnect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        delete?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        connect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        update?: DiningAreaUpdateWithWhereUniqueWithoutStoreInput | DiningAreaUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: DiningAreaUpdateManyWithWhereWithoutStoreInput | DiningAreaUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: DiningAreaScalarWhereInput | DiningAreaScalarWhereInput[]
+    }
+
+    export type DiningTableUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput> | DiningTableCreateWithoutStoreInput[] | DiningTableUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutStoreInput | DiningTableCreateOrConnectWithoutStoreInput[]
+        upsert?: DiningTableUpsertWithWhereUniqueWithoutStoreInput | DiningTableUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: DiningTableCreateManyStoreInputEnvelope
+        set?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        disconnect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        delete?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        update?: DiningTableUpdateWithWhereUniqueWithoutStoreInput | DiningTableUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: DiningTableUpdateManyWithWhereWithoutStoreInput | DiningTableUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
     }
 
     export type ProductUpdateManyWithoutStoreNestedInput = {
@@ -44440,6 +47638,34 @@ export namespace Prisma {
         update?: CategoryUpdateWithWhereUniqueWithoutStoreInput | CategoryUpdateWithWhereUniqueWithoutStoreInput[]
         updateMany?: CategoryUpdateManyWithWhereWithoutStoreInput | CategoryUpdateManyWithWhereWithoutStoreInput[]
         deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    }
+
+    export type DiningAreaUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput> | DiningAreaCreateWithoutStoreInput[] | DiningAreaUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutStoreInput | DiningAreaCreateOrConnectWithoutStoreInput[]
+        upsert?: DiningAreaUpsertWithWhereUniqueWithoutStoreInput | DiningAreaUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: DiningAreaCreateManyStoreInputEnvelope
+        set?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        disconnect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        delete?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        connect?: DiningAreaWhereUniqueInput | DiningAreaWhereUniqueInput[]
+        update?: DiningAreaUpdateWithWhereUniqueWithoutStoreInput | DiningAreaUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: DiningAreaUpdateManyWithWhereWithoutStoreInput | DiningAreaUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: DiningAreaScalarWhereInput | DiningAreaScalarWhereInput[]
+    }
+
+    export type DiningTableUncheckedUpdateManyWithoutStoreNestedInput = {
+        create?: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput> | DiningTableCreateWithoutStoreInput[] | DiningTableUncheckedCreateWithoutStoreInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutStoreInput | DiningTableCreateOrConnectWithoutStoreInput[]
+        upsert?: DiningTableUpsertWithWhereUniqueWithoutStoreInput | DiningTableUpsertWithWhereUniqueWithoutStoreInput[]
+        createMany?: DiningTableCreateManyStoreInputEnvelope
+        set?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        disconnect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        delete?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        update?: DiningTableUpdateWithWhereUniqueWithoutStoreInput | DiningTableUpdateWithWhereUniqueWithoutStoreInput[]
+        updateMany?: DiningTableUpdateManyWithWhereWithoutStoreInput | DiningTableUpdateManyWithWhereWithoutStoreInput[]
+        deleteMany?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
     }
 
     export type ProductUncheckedUpdateManyWithoutStoreNestedInput = {
@@ -45440,6 +48666,152 @@ export namespace Prisma {
         deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
     }
 
+    export type StoreCreateNestedOneWithoutDiningAreasInput = {
+        create?: XOR<StoreCreateWithoutDiningAreasInput, StoreUncheckedCreateWithoutDiningAreasInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutDiningAreasInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type DiningTableCreateNestedManyWithoutAreaInput = {
+        create?: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput> | DiningTableCreateWithoutAreaInput[] | DiningTableUncheckedCreateWithoutAreaInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutAreaInput | DiningTableCreateOrConnectWithoutAreaInput[]
+        createMany?: DiningTableCreateManyAreaInputEnvelope
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+    }
+
+    export type DiningTableUncheckedCreateNestedManyWithoutAreaInput = {
+        create?: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput> | DiningTableCreateWithoutAreaInput[] | DiningTableUncheckedCreateWithoutAreaInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutAreaInput | DiningTableCreateOrConnectWithoutAreaInput[]
+        createMany?: DiningTableCreateManyAreaInputEnvelope
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+    }
+
+    export type StoreUpdateOneRequiredWithoutDiningAreasNestedInput = {
+        create?: XOR<StoreCreateWithoutDiningAreasInput, StoreUncheckedCreateWithoutDiningAreasInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutDiningAreasInput
+        upsert?: StoreUpsertWithoutDiningAreasInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutDiningAreasInput, StoreUpdateWithoutDiningAreasInput>, StoreUncheckedUpdateWithoutDiningAreasInput>
+    }
+
+    export type DiningTableUpdateManyWithoutAreaNestedInput = {
+        create?: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput> | DiningTableCreateWithoutAreaInput[] | DiningTableUncheckedCreateWithoutAreaInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutAreaInput | DiningTableCreateOrConnectWithoutAreaInput[]
+        upsert?: DiningTableUpsertWithWhereUniqueWithoutAreaInput | DiningTableUpsertWithWhereUniqueWithoutAreaInput[]
+        createMany?: DiningTableCreateManyAreaInputEnvelope
+        set?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        disconnect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        delete?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        update?: DiningTableUpdateWithWhereUniqueWithoutAreaInput | DiningTableUpdateWithWhereUniqueWithoutAreaInput[]
+        updateMany?: DiningTableUpdateManyWithWhereWithoutAreaInput | DiningTableUpdateManyWithWhereWithoutAreaInput[]
+        deleteMany?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
+    }
+
+    export type DiningTableUncheckedUpdateManyWithoutAreaNestedInput = {
+        create?: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput> | DiningTableCreateWithoutAreaInput[] | DiningTableUncheckedCreateWithoutAreaInput[]
+        connectOrCreate?: DiningTableCreateOrConnectWithoutAreaInput | DiningTableCreateOrConnectWithoutAreaInput[]
+        upsert?: DiningTableUpsertWithWhereUniqueWithoutAreaInput | DiningTableUpsertWithWhereUniqueWithoutAreaInput[]
+        createMany?: DiningTableCreateManyAreaInputEnvelope
+        set?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        disconnect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        delete?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        connect?: DiningTableWhereUniqueInput | DiningTableWhereUniqueInput[]
+        update?: DiningTableUpdateWithWhereUniqueWithoutAreaInput | DiningTableUpdateWithWhereUniqueWithoutAreaInput[]
+        updateMany?: DiningTableUpdateManyWithWhereWithoutAreaInput | DiningTableUpdateManyWithWhereWithoutAreaInput[]
+        deleteMany?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
+    }
+
+    export type StoreCreateNestedOneWithoutDiningTablesInput = {
+        create?: XOR<StoreCreateWithoutDiningTablesInput, StoreUncheckedCreateWithoutDiningTablesInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutDiningTablesInput
+        connect?: StoreWhereUniqueInput
+    }
+
+    export type DiningAreaCreateNestedOneWithoutTablesInput = {
+        create?: XOR<DiningAreaCreateWithoutTablesInput, DiningAreaUncheckedCreateWithoutTablesInput>
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutTablesInput
+        connect?: DiningAreaWhereUniqueInput
+    }
+
+    export type OrderCreateNestedOneWithoutCurrentForTableInput = {
+        create?: XOR<OrderCreateWithoutCurrentForTableInput, OrderUncheckedCreateWithoutCurrentForTableInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutCurrentForTableInput
+        connect?: OrderWhereUniqueInput
+    }
+
+    export type OrderCreateNestedManyWithoutTableInput = {
+        create?: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput> | OrderCreateWithoutTableInput[] | OrderUncheckedCreateWithoutTableInput[]
+        connectOrCreate?: OrderCreateOrConnectWithoutTableInput | OrderCreateOrConnectWithoutTableInput[]
+        createMany?: OrderCreateManyTableInputEnvelope
+        connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    }
+
+    export type OrderUncheckedCreateNestedManyWithoutTableInput = {
+        create?: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput> | OrderCreateWithoutTableInput[] | OrderUncheckedCreateWithoutTableInput[]
+        connectOrCreate?: OrderCreateOrConnectWithoutTableInput | OrderCreateOrConnectWithoutTableInput[]
+        createMany?: OrderCreateManyTableInputEnvelope
+        connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    }
+
+    export type EnumDiningTableStatusFieldUpdateOperationsInput = {
+        set?: $Enums.DiningTableStatus
+    }
+
+    export type StoreUpdateOneRequiredWithoutDiningTablesNestedInput = {
+        create?: XOR<StoreCreateWithoutDiningTablesInput, StoreUncheckedCreateWithoutDiningTablesInput>
+        connectOrCreate?: StoreCreateOrConnectWithoutDiningTablesInput
+        upsert?: StoreUpsertWithoutDiningTablesInput
+        connect?: StoreWhereUniqueInput
+        update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutDiningTablesInput, StoreUpdateWithoutDiningTablesInput>, StoreUncheckedUpdateWithoutDiningTablesInput>
+    }
+
+    export type DiningAreaUpdateOneRequiredWithoutTablesNestedInput = {
+        create?: XOR<DiningAreaCreateWithoutTablesInput, DiningAreaUncheckedCreateWithoutTablesInput>
+        connectOrCreate?: DiningAreaCreateOrConnectWithoutTablesInput
+        upsert?: DiningAreaUpsertWithoutTablesInput
+        connect?: DiningAreaWhereUniqueInput
+        update?: XOR<XOR<DiningAreaUpdateToOneWithWhereWithoutTablesInput, DiningAreaUpdateWithoutTablesInput>, DiningAreaUncheckedUpdateWithoutTablesInput>
+    }
+
+    export type OrderUpdateOneWithoutCurrentForTableNestedInput = {
+        create?: XOR<OrderCreateWithoutCurrentForTableInput, OrderUncheckedCreateWithoutCurrentForTableInput>
+        connectOrCreate?: OrderCreateOrConnectWithoutCurrentForTableInput
+        upsert?: OrderUpsertWithoutCurrentForTableInput
+        disconnect?: OrderWhereInput | boolean
+        delete?: OrderWhereInput | boolean
+        connect?: OrderWhereUniqueInput
+        update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutCurrentForTableInput, OrderUpdateWithoutCurrentForTableInput>, OrderUncheckedUpdateWithoutCurrentForTableInput>
+    }
+
+    export type OrderUpdateManyWithoutTableNestedInput = {
+        create?: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput> | OrderCreateWithoutTableInput[] | OrderUncheckedCreateWithoutTableInput[]
+        connectOrCreate?: OrderCreateOrConnectWithoutTableInput | OrderCreateOrConnectWithoutTableInput[]
+        upsert?: OrderUpsertWithWhereUniqueWithoutTableInput | OrderUpsertWithWhereUniqueWithoutTableInput[]
+        createMany?: OrderCreateManyTableInputEnvelope
+        set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        update?: OrderUpdateWithWhereUniqueWithoutTableInput | OrderUpdateWithWhereUniqueWithoutTableInput[]
+        updateMany?: OrderUpdateManyWithWhereWithoutTableInput | OrderUpdateManyWithWhereWithoutTableInput[]
+        deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    }
+
+    export type OrderUncheckedUpdateManyWithoutTableNestedInput = {
+        create?: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput> | OrderCreateWithoutTableInput[] | OrderUncheckedCreateWithoutTableInput[]
+        connectOrCreate?: OrderCreateOrConnectWithoutTableInput | OrderCreateOrConnectWithoutTableInput[]
+        upsert?: OrderUpsertWithWhereUniqueWithoutTableInput | OrderUpsertWithWhereUniqueWithoutTableInput[]
+        createMany?: OrderCreateManyTableInputEnvelope
+        set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+        update?: OrderUpdateWithWhereUniqueWithoutTableInput | OrderUpdateWithWhereUniqueWithoutTableInput[]
+        updateMany?: OrderUpdateManyWithWhereWithoutTableInput | OrderUpdateManyWithWhereWithoutTableInput[]
+        deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    }
+
     export type StoreCreateNestedOneWithoutProductsInput = {
         create?: XOR<StoreCreateWithoutProductsInput, StoreUncheckedCreateWithoutProductsInput>
         connectOrCreate?: StoreCreateOrConnectWithoutProductsInput
@@ -45664,6 +49036,18 @@ export namespace Prisma {
         connect?: StoreWhereUniqueInput
     }
 
+    export type DiningTableCreateNestedOneWithoutOrdersInput = {
+        create?: XOR<DiningTableCreateWithoutOrdersInput, DiningTableUncheckedCreateWithoutOrdersInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutOrdersInput
+        connect?: DiningTableWhereUniqueInput
+    }
+
+    export type DiningTableCreateNestedOneWithoutCurrentOrderInput = {
+        create?: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutCurrentOrderInput
+        connect?: DiningTableWhereUniqueInput
+    }
+
     export type OrderItemCreateNestedManyWithoutOrderInput = {
         create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
         connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -45697,6 +49081,12 @@ export namespace Prisma {
         connectOrCreate?: KitchenTicketCreateOrConnectWithoutOrderInput | KitchenTicketCreateOrConnectWithoutOrderInput[]
         createMany?: KitchenTicketCreateManyOrderInputEnvelope
         connect?: KitchenTicketWhereUniqueInput | KitchenTicketWhereUniqueInput[]
+    }
+
+    export type DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput = {
+        create?: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutCurrentOrderInput
+        connect?: DiningTableWhereUniqueInput
     }
 
     export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
@@ -45738,6 +49128,14 @@ export namespace Prisma {
         set?: $Enums.OrderType
     }
 
+    export type NullableIntFieldUpdateOperationsInput = {
+        set?: number | null
+        increment?: number
+        decrement?: number
+        multiply?: number
+        divide?: number
+    }
+
     export type EnumOrderStatusFieldUpdateOperationsInput = {
         set?: $Enums.OrderStatus
     }
@@ -45770,6 +49168,26 @@ export namespace Prisma {
         delete?: StoreWhereInput | boolean
         connect?: StoreWhereUniqueInput
         update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutOrdersInput, StoreUpdateWithoutOrdersInput>, StoreUncheckedUpdateWithoutOrdersInput>
+    }
+
+    export type DiningTableUpdateOneWithoutOrdersNestedInput = {
+        create?: XOR<DiningTableCreateWithoutOrdersInput, DiningTableUncheckedCreateWithoutOrdersInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutOrdersInput
+        upsert?: DiningTableUpsertWithoutOrdersInput
+        disconnect?: DiningTableWhereInput | boolean
+        delete?: DiningTableWhereInput | boolean
+        connect?: DiningTableWhereUniqueInput
+        update?: XOR<XOR<DiningTableUpdateToOneWithWhereWithoutOrdersInput, DiningTableUpdateWithoutOrdersInput>, DiningTableUncheckedUpdateWithoutOrdersInput>
+    }
+
+    export type DiningTableUpdateOneWithoutCurrentOrderNestedInput = {
+        create?: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutCurrentOrderInput
+        upsert?: DiningTableUpsertWithoutCurrentOrderInput
+        disconnect?: DiningTableWhereInput | boolean
+        delete?: DiningTableWhereInput | boolean
+        connect?: DiningTableWhereUniqueInput
+        update?: XOR<XOR<DiningTableUpdateToOneWithWhereWithoutCurrentOrderInput, DiningTableUpdateWithoutCurrentOrderInput>, DiningTableUncheckedUpdateWithoutCurrentOrderInput>
     }
 
     export type OrderItemUpdateManyWithoutOrderNestedInput = {
@@ -45840,6 +49258,16 @@ export namespace Prisma {
         update?: KitchenTicketUpdateWithWhereUniqueWithoutOrderInput | KitchenTicketUpdateWithWhereUniqueWithoutOrderInput[]
         updateMany?: KitchenTicketUpdateManyWithWhereWithoutOrderInput | KitchenTicketUpdateManyWithWhereWithoutOrderInput[]
         deleteMany?: KitchenTicketScalarWhereInput | KitchenTicketScalarWhereInput[]
+    }
+
+    export type DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput = {
+        create?: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
+        connectOrCreate?: DiningTableCreateOrConnectWithoutCurrentOrderInput
+        upsert?: DiningTableUpsertWithoutCurrentOrderInput
+        disconnect?: DiningTableWhereInput | boolean
+        delete?: DiningTableWhereInput | boolean
+        connect?: DiningTableWhereUniqueInput
+        update?: XOR<XOR<DiningTableUpdateToOneWithWhereWithoutCurrentOrderInput, DiningTableUpdateWithoutCurrentOrderInput>, DiningTableUncheckedUpdateWithoutCurrentOrderInput>
     }
 
     export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
@@ -46788,14 +50216,6 @@ export namespace Prisma {
         set?: $Enums.PrinterStatus
     }
 
-    export type NullableIntFieldUpdateOperationsInput = {
-        set?: number | null
-        increment?: number
-        decrement?: number
-        multiply?: number
-        divide?: number
-    }
-
     export type StoreUpdateOneRequiredWithoutPrintersNestedInput = {
         create?: XOR<StoreCreateWithoutPrintersInput, StoreUncheckedCreateWithoutPrintersInput>
         connectOrCreate?: StoreCreateOrConnectWithoutPrintersInput
@@ -47499,6 +50919,23 @@ export namespace Prisma {
         not?: NestedFloatFilter<$PrismaModel> | number
     }
 
+    export type NestedEnumDiningTableStatusFilter<$PrismaModel = never> = {
+        equals?: $Enums.DiningTableStatus | EnumDiningTableStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.DiningTableStatus[]
+        notIn?: $Enums.DiningTableStatus[]
+        not?: NestedEnumDiningTableStatusFilter<$PrismaModel> | $Enums.DiningTableStatus
+    }
+
+    export type NestedEnumDiningTableStatusWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: $Enums.DiningTableStatus | EnumDiningTableStatusFieldRefInput<$PrismaModel>
+        in?: $Enums.DiningTableStatus[]
+        notIn?: $Enums.DiningTableStatus[]
+        not?: NestedEnumDiningTableStatusWithAggregatesFilter<$PrismaModel> | $Enums.DiningTableStatus
+        _count?: NestedIntFilter<$PrismaModel>
+        _min?: NestedEnumDiningTableStatusFilter<$PrismaModel>
+        _max?: NestedEnumDiningTableStatusFilter<$PrismaModel>
+    }
+
     export type NestedDecimalFilter<$PrismaModel = never> = {
         equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
         in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -47618,6 +51055,33 @@ export namespace Prisma {
         _count?: NestedIntFilter<$PrismaModel>
         _min?: NestedEnumOrderTypeFilter<$PrismaModel>
         _max?: NestedEnumOrderTypeFilter<$PrismaModel>
+    }
+
+    export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+        equals?: number | IntFieldRefInput<$PrismaModel> | null
+        in?: number[] | null
+        notIn?: number[] | null
+        lt?: number | IntFieldRefInput<$PrismaModel>
+        lte?: number | IntFieldRefInput<$PrismaModel>
+        gt?: number | IntFieldRefInput<$PrismaModel>
+        gte?: number | IntFieldRefInput<$PrismaModel>
+        not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+        _count?: NestedIntNullableFilter<$PrismaModel>
+        _avg?: NestedFloatNullableFilter<$PrismaModel>
+        _sum?: NestedIntNullableFilter<$PrismaModel>
+        _min?: NestedIntNullableFilter<$PrismaModel>
+        _max?: NestedIntNullableFilter<$PrismaModel>
+    }
+
+    export type NestedFloatNullableFilter<$PrismaModel = never> = {
+        equals?: number | FloatFieldRefInput<$PrismaModel> | null
+        in?: number[] | null
+        notIn?: number[] | null
+        lt?: number | FloatFieldRefInput<$PrismaModel>
+        lte?: number | FloatFieldRefInput<$PrismaModel>
+        gt?: number | FloatFieldRefInput<$PrismaModel>
+        gte?: number | FloatFieldRefInput<$PrismaModel>
+        not?: NestedFloatNullableFilter<$PrismaModel> | number | null
     }
 
     export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -47924,33 +51388,6 @@ export namespace Prisma {
         _max?: NestedEnumPrinterStatusFilter<$PrismaModel>
     }
 
-    export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-        equals?: number | IntFieldRefInput<$PrismaModel> | null
-        in?: number[] | null
-        notIn?: number[] | null
-        lt?: number | IntFieldRefInput<$PrismaModel>
-        lte?: number | IntFieldRefInput<$PrismaModel>
-        gt?: number | IntFieldRefInput<$PrismaModel>
-        gte?: number | IntFieldRefInput<$PrismaModel>
-        not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-        _count?: NestedIntNullableFilter<$PrismaModel>
-        _avg?: NestedFloatNullableFilter<$PrismaModel>
-        _sum?: NestedIntNullableFilter<$PrismaModel>
-        _min?: NestedIntNullableFilter<$PrismaModel>
-        _max?: NestedIntNullableFilter<$PrismaModel>
-    }
-
-    export type NestedFloatNullableFilter<$PrismaModel = never> = {
-        equals?: number | FloatFieldRefInput<$PrismaModel> | null
-        in?: number[] | null
-        notIn?: number[] | null
-        lt?: number | FloatFieldRefInput<$PrismaModel>
-        lte?: number | FloatFieldRefInput<$PrismaModel>
-        gt?: number | FloatFieldRefInput<$PrismaModel>
-        gte?: number | FloatFieldRefInput<$PrismaModel>
-        not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-    }
-
     export type NestedEnumPrinterRouteTypeFilter<$PrismaModel = never> = {
         equals?: $Enums.PrinterRouteType | EnumPrinterRouteTypeFieldRefInput<$PrismaModel>
         in?: $Enums.PrinterRouteType[]
@@ -48220,6 +51657,72 @@ export namespace Prisma {
         skipDuplicates?: boolean
     }
 
+    export type DiningAreaCreateWithoutStoreInput = {
+        id?: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        tables?: DiningTableCreateNestedManyWithoutAreaInput
+    }
+
+    export type DiningAreaUncheckedCreateWithoutStoreInput = {
+        id?: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        tables?: DiningTableUncheckedCreateNestedManyWithoutAreaInput
+    }
+
+    export type DiningAreaCreateOrConnectWithoutStoreInput = {
+        where: DiningAreaWhereUniqueInput
+        create: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput>
+    }
+
+    export type DiningAreaCreateManyStoreInputEnvelope = {
+        data: DiningAreaCreateManyStoreInput | DiningAreaCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type DiningTableCreateWithoutStoreInput = {
+        id?: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        area: DiningAreaCreateNestedOneWithoutTablesInput
+        currentOrder?: OrderCreateNestedOneWithoutCurrentForTableInput
+        orders?: OrderCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableUncheckedCreateWithoutStoreInput = {
+        id?: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        orders?: OrderUncheckedCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableCreateOrConnectWithoutStoreInput = {
+        where: DiningTableWhereUniqueInput
+        create: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput>
+    }
+
+    export type DiningTableCreateManyStoreInputEnvelope = {
+        data: DiningTableCreateManyStoreInput | DiningTableCreateManyStoreInput[]
+        skipDuplicates?: boolean
+    }
+
     export type ProductCreateWithoutStoreInput = {
         id?: string
         name: string
@@ -48269,6 +51772,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -48290,8 +51794,12 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
@@ -48304,6 +51812,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -48325,8 +51835,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
@@ -49053,6 +52566,67 @@ export namespace Prisma {
         updatedAt?: DateTimeFilter<"Category"> | Date | string
     }
 
+    export type DiningAreaUpsertWithWhereUniqueWithoutStoreInput = {
+        where: DiningAreaWhereUniqueInput
+        update: XOR<DiningAreaUpdateWithoutStoreInput, DiningAreaUncheckedUpdateWithoutStoreInput>
+        create: XOR<DiningAreaCreateWithoutStoreInput, DiningAreaUncheckedCreateWithoutStoreInput>
+    }
+
+    export type DiningAreaUpdateWithWhereUniqueWithoutStoreInput = {
+        where: DiningAreaWhereUniqueInput
+        data: XOR<DiningAreaUpdateWithoutStoreInput, DiningAreaUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type DiningAreaUpdateManyWithWhereWithoutStoreInput = {
+        where: DiningAreaScalarWhereInput
+        data: XOR<DiningAreaUpdateManyMutationInput, DiningAreaUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type DiningAreaScalarWhereInput = {
+        AND?: DiningAreaScalarWhereInput | DiningAreaScalarWhereInput[]
+        OR?: DiningAreaScalarWhereInput[]
+        NOT?: DiningAreaScalarWhereInput | DiningAreaScalarWhereInput[]
+        id?: StringFilter<"DiningArea"> | string
+        storeId?: StringFilter<"DiningArea"> | string
+        name?: StringFilter<"DiningArea"> | string
+        sortOrder?: IntFilter<"DiningArea"> | number
+        status?: EnumCatalogStatusFilter<"DiningArea"> | $Enums.CatalogStatus
+        createdAt?: DateTimeFilter<"DiningArea"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningArea"> | Date | string
+    }
+
+    export type DiningTableUpsertWithWhereUniqueWithoutStoreInput = {
+        where: DiningTableWhereUniqueInput
+        update: XOR<DiningTableUpdateWithoutStoreInput, DiningTableUncheckedUpdateWithoutStoreInput>
+        create: XOR<DiningTableCreateWithoutStoreInput, DiningTableUncheckedCreateWithoutStoreInput>
+    }
+
+    export type DiningTableUpdateWithWhereUniqueWithoutStoreInput = {
+        where: DiningTableWhereUniqueInput
+        data: XOR<DiningTableUpdateWithoutStoreInput, DiningTableUncheckedUpdateWithoutStoreInput>
+    }
+
+    export type DiningTableUpdateManyWithWhereWithoutStoreInput = {
+        where: DiningTableScalarWhereInput
+        data: XOR<DiningTableUpdateManyMutationInput, DiningTableUncheckedUpdateManyWithoutStoreInput>
+    }
+
+    export type DiningTableScalarWhereInput = {
+        AND?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
+        OR?: DiningTableScalarWhereInput[]
+        NOT?: DiningTableScalarWhereInput | DiningTableScalarWhereInput[]
+        id?: StringFilter<"DiningTable"> | string
+        storeId?: StringFilter<"DiningTable"> | string
+        areaId?: StringFilter<"DiningTable"> | string
+        name?: StringFilter<"DiningTable"> | string
+        seats?: IntFilter<"DiningTable"> | number
+        status?: EnumDiningTableStatusFilter<"DiningTable"> | $Enums.DiningTableStatus
+        sortOrder?: IntFilter<"DiningTable"> | number
+        currentOrderId?: StringNullableFilter<"DiningTable"> | string | null
+        createdAt?: DateTimeFilter<"DiningTable"> | Date | string
+        updatedAt?: DateTimeFilter<"DiningTable"> | Date | string
+    }
+
     export type ProductUpsertWithWhereUniqueWithoutStoreInput = {
         where: ProductWhereUniqueInput
         update: XOR<ProductUpdateWithoutStoreInput, ProductUncheckedUpdateWithoutStoreInput>
@@ -49113,6 +52687,8 @@ export namespace Prisma {
         orderNumber?: StringFilter<"Order"> | string
         pickupNumber?: StringNullableFilter<"Order"> | string | null
         orderType?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
+        tableId?: StringNullableFilter<"Order"> | string | null
+        guestCount?: IntNullableFilter<"Order"> | number | null
         status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFilter<"Order"> | $Enums.PrintStatus
         paymentMethod?: EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
@@ -49134,6 +52710,8 @@ export namespace Prisma {
         printedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         heldAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         resumedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        openedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+        closedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
         createdAt?: DateTimeFilter<"Order"> | Date | string
         updatedAt?: DateTimeFilter<"Order"> | Date | string
     }
@@ -50555,6 +54133,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -50585,6 +54165,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -50684,6 +54266,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -50714,6 +54298,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -50803,6 +54389,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -50833,6 +54421,8 @@ export namespace Prisma {
         createdAt?: Date | string
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -50956,6 +54546,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -50986,6 +54578,8 @@ export namespace Prisma {
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -51061,6 +54655,684 @@ export namespace Prisma {
         data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyWithoutCategoryRefInput>
     }
 
+    export type StoreCreateWithoutDiningAreasInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
+        printers?: PrinterCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutDiningAreasInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
+        printers?: PrinterUncheckedCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteUncheckedCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationUncheckedCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageUncheckedCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutDiningAreasInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutDiningAreasInput, StoreUncheckedCreateWithoutDiningAreasInput>
+    }
+
+    export type DiningTableCreateWithoutAreaInput = {
+        id?: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningTablesInput
+        currentOrder?: OrderCreateNestedOneWithoutCurrentForTableInput
+        orders?: OrderCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableUncheckedCreateWithoutAreaInput = {
+        id?: string
+        storeId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        orders?: OrderUncheckedCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableCreateOrConnectWithoutAreaInput = {
+        where: DiningTableWhereUniqueInput
+        create: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput>
+    }
+
+    export type DiningTableCreateManyAreaInputEnvelope = {
+        data: DiningTableCreateManyAreaInput | DiningTableCreateManyAreaInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutDiningAreasInput = {
+        update: XOR<StoreUpdateWithoutDiningAreasInput, StoreUncheckedUpdateWithoutDiningAreasInput>
+        create: XOR<StoreCreateWithoutDiningAreasInput, StoreUncheckedCreateWithoutDiningAreasInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutDiningAreasInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutDiningAreasInput, StoreUncheckedUpdateWithoutDiningAreasInput>
+    }
+
+    export type StoreUpdateWithoutDiningAreasInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutDiningAreasInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUncheckedUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUncheckedUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUncheckedUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUncheckedUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type DiningTableUpsertWithWhereUniqueWithoutAreaInput = {
+        where: DiningTableWhereUniqueInput
+        update: XOR<DiningTableUpdateWithoutAreaInput, DiningTableUncheckedUpdateWithoutAreaInput>
+        create: XOR<DiningTableCreateWithoutAreaInput, DiningTableUncheckedCreateWithoutAreaInput>
+    }
+
+    export type DiningTableUpdateWithWhereUniqueWithoutAreaInput = {
+        where: DiningTableWhereUniqueInput
+        data: XOR<DiningTableUpdateWithoutAreaInput, DiningTableUncheckedUpdateWithoutAreaInput>
+    }
+
+    export type DiningTableUpdateManyWithWhereWithoutAreaInput = {
+        where: DiningTableScalarWhereInput
+        data: XOR<DiningTableUpdateManyMutationInput, DiningTableUncheckedUpdateManyWithoutAreaInput>
+    }
+
+    export type StoreCreateWithoutDiningTablesInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserCreateNestedManyWithoutStoreInput
+        categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        products?: ProductCreateNestedManyWithoutStoreInput
+        orders?: OrderCreateNestedManyWithoutStoreInput
+        refunds?: RefundCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
+        shifts?: ShiftCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemCreateNestedManyWithoutStoreInput
+        printers?: PrinterCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreUncheckedCreateWithoutDiningTablesInput = {
+        id?: string
+        name: string
+        code?: string | null
+        timezone?: string
+        currency?: string
+        active?: boolean
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
+        categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        products?: ProductUncheckedCreateNestedManyWithoutStoreInput
+        orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
+        shifts?: ShiftUncheckedCreateNestedManyWithoutStoreInput
+        businessDays?: BusinessDayUncheckedCreateNestedManyWithoutStoreInput
+        cashMovements?: CashMovementUncheckedCreateNestedManyWithoutStoreInput
+        kitchenStations?: KitchenStationUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutStoreInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedCreateNestedManyWithoutStoreInput
+        printers?: PrinterUncheckedCreateNestedManyWithoutStoreInput
+        printerRoutes?: PrinterRouteUncheckedCreateNestedManyWithoutStoreInput
+        printJobs?: PrintJobUncheckedCreateNestedManyWithoutStoreInput
+        aiDrafts?: AiDraftUncheckedCreateNestedManyWithoutStoreInput
+        campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+        aiConversations?: AiConversationUncheckedCreateNestedManyWithoutStoreInput
+        aiMessages?: AiMessageUncheckedCreateNestedManyWithoutStoreInput
+        aiExecutions?: AiExecutionUncheckedCreateNestedManyWithoutStoreInput
+    }
+
+    export type StoreCreateOrConnectWithoutDiningTablesInput = {
+        where: StoreWhereUniqueInput
+        create: XOR<StoreCreateWithoutDiningTablesInput, StoreUncheckedCreateWithoutDiningTablesInput>
+    }
+
+    export type DiningAreaCreateWithoutTablesInput = {
+        id?: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningAreasInput
+    }
+
+    export type DiningAreaUncheckedCreateWithoutTablesInput = {
+        id?: string
+        storeId: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningAreaCreateOrConnectWithoutTablesInput = {
+        where: DiningAreaWhereUniqueInput
+        create: XOR<DiningAreaCreateWithoutTablesInput, DiningAreaUncheckedCreateWithoutTablesInput>
+    }
+
+    export type OrderCreateWithoutCurrentForTableInput = {
+        id?: string
+        orderNumber: string
+        pickupNumber?: string | null
+        orderType?: $Enums.OrderType
+        guestCount?: number | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
+        tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        items?: OrderItemCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderUncheckedCreateWithoutCurrentForTableInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
+        tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderCreateOrConnectWithoutCurrentForTableInput = {
+        where: OrderWhereUniqueInput
+        create: XOR<OrderCreateWithoutCurrentForTableInput, OrderUncheckedCreateWithoutCurrentForTableInput>
+    }
+
+    export type OrderCreateWithoutTableInput = {
+        id?: string
+        orderNumber: string
+        pickupNumber?: string | null
+        orderType?: $Enums.OrderType
+        guestCount?: number | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
+        tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store?: StoreCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
+        items?: OrderItemCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentCreateNestedManyWithoutOrderInput
+        refunds?: RefundCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderUncheckedCreateWithoutTableInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        orderType?: $Enums.OrderType
+        guestCount?: number | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
+        tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
+        items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+        payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
+        refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
+        auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
+        kitchenTickets?: KitchenTicketUncheckedCreateNestedManyWithoutOrderInput
+    }
+
+    export type OrderCreateOrConnectWithoutTableInput = {
+        where: OrderWhereUniqueInput
+        create: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput>
+    }
+
+    export type OrderCreateManyTableInputEnvelope = {
+        data: OrderCreateManyTableInput | OrderCreateManyTableInput[]
+        skipDuplicates?: boolean
+    }
+
+    export type StoreUpsertWithoutDiningTablesInput = {
+        update: XOR<StoreUpdateWithoutDiningTablesInput, StoreUncheckedUpdateWithoutDiningTablesInput>
+        create: XOR<StoreCreateWithoutDiningTablesInput, StoreUncheckedCreateWithoutDiningTablesInput>
+        where?: StoreWhereInput
+    }
+
+    export type StoreUpdateToOneWithWhereWithoutDiningTablesInput = {
+        where?: StoreWhereInput
+        data: XOR<StoreUpdateWithoutDiningTablesInput, StoreUncheckedUpdateWithoutDiningTablesInput>
+    }
+
+    export type StoreUpdateWithoutDiningTablesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        products?: ProductUpdateManyWithoutStoreNestedInput
+        orders?: OrderUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUpdateManyWithoutStoreNestedInput
+    }
+
+    export type StoreUncheckedUpdateWithoutDiningTablesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        code?: NullableStringFieldUpdateOperationsInput | string | null
+        timezone?: StringFieldUpdateOperationsInput | string
+        currency?: StringFieldUpdateOperationsInput | string
+        active?: BoolFieldUpdateOperationsInput | boolean
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
+        categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
+        orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
+        shifts?: ShiftUncheckedUpdateManyWithoutStoreNestedInput
+        businessDays?: BusinessDayUncheckedUpdateManyWithoutStoreNestedInput
+        cashMovements?: CashMovementUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenStations?: KitchenStationUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutStoreNestedInput
+        kitchenTicketItems?: KitchenTicketItemUncheckedUpdateManyWithoutStoreNestedInput
+        printers?: PrinterUncheckedUpdateManyWithoutStoreNestedInput
+        printerRoutes?: PrinterRouteUncheckedUpdateManyWithoutStoreNestedInput
+        printJobs?: PrintJobUncheckedUpdateManyWithoutStoreNestedInput
+        aiDrafts?: AiDraftUncheckedUpdateManyWithoutStoreNestedInput
+        campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+        aiConversations?: AiConversationUncheckedUpdateManyWithoutStoreNestedInput
+        aiMessages?: AiMessageUncheckedUpdateManyWithoutStoreNestedInput
+        aiExecutions?: AiExecutionUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type DiningAreaUpsertWithoutTablesInput = {
+        update: XOR<DiningAreaUpdateWithoutTablesInput, DiningAreaUncheckedUpdateWithoutTablesInput>
+        create: XOR<DiningAreaCreateWithoutTablesInput, DiningAreaUncheckedCreateWithoutTablesInput>
+        where?: DiningAreaWhereInput
+    }
+
+    export type DiningAreaUpdateToOneWithWhereWithoutTablesInput = {
+        where?: DiningAreaWhereInput
+        data: XOR<DiningAreaUpdateWithoutTablesInput, DiningAreaUncheckedUpdateWithoutTablesInput>
+    }
+
+    export type DiningAreaUpdateWithoutTablesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningAreasNestedInput
+    }
+
+    export type DiningAreaUncheckedUpdateWithoutTablesInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderUpsertWithoutCurrentForTableInput = {
+        update: XOR<OrderUpdateWithoutCurrentForTableInput, OrderUncheckedUpdateWithoutCurrentForTableInput>
+        create: XOR<OrderCreateWithoutCurrentForTableInput, OrderUncheckedCreateWithoutCurrentForTableInput>
+        where?: OrderWhereInput
+    }
+
+    export type OrderUpdateToOneWithWhereWithoutCurrentForTableInput = {
+        where?: OrderWhereInput
+        data: XOR<OrderUpdateWithoutCurrentForTableInput, OrderUncheckedUpdateWithoutCurrentForTableInput>
+    }
+
+    export type OrderUpdateWithoutCurrentForTableInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        items?: OrderItemUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateWithoutCurrentForTableInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUpsertWithWhereUniqueWithoutTableInput = {
+        where: OrderWhereUniqueInput
+        update: XOR<OrderUpdateWithoutTableInput, OrderUncheckedUpdateWithoutTableInput>
+        create: XOR<OrderCreateWithoutTableInput, OrderUncheckedCreateWithoutTableInput>
+    }
+
+    export type OrderUpdateWithWhereUniqueWithoutTableInput = {
+        where: OrderWhereUniqueInput
+        data: XOR<OrderUpdateWithoutTableInput, OrderUncheckedUpdateWithoutTableInput>
+    }
+
+    export type OrderUpdateManyWithWhereWithoutTableInput = {
+        where: OrderScalarWhereInput
+        data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutTableInput>
+    }
+
     export type StoreCreateWithoutProductsInput = {
         id?: string
         name: string
@@ -51072,6 +55344,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
@@ -51102,6 +55376,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
@@ -51284,6 +55560,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
@@ -51314,6 +55592,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
@@ -51697,6 +55977,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
@@ -51727,6 +56009,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
@@ -51749,6 +56033,68 @@ export namespace Prisma {
     export type StoreCreateOrConnectWithoutOrdersInput = {
         where: StoreWhereUniqueInput
         create: XOR<StoreCreateWithoutOrdersInput, StoreUncheckedCreateWithoutOrdersInput>
+    }
+
+    export type DiningTableCreateWithoutOrdersInput = {
+        id?: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningTablesInput
+        area: DiningAreaCreateNestedOneWithoutTablesInput
+        currentOrder?: OrderCreateNestedOneWithoutCurrentForTableInput
+    }
+
+    export type DiningTableUncheckedCreateWithoutOrdersInput = {
+        id?: string
+        storeId: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningTableCreateOrConnectWithoutOrdersInput = {
+        where: DiningTableWhereUniqueInput
+        create: XOR<DiningTableCreateWithoutOrdersInput, DiningTableUncheckedCreateWithoutOrdersInput>
+    }
+
+    export type DiningTableCreateWithoutCurrentOrderInput = {
+        id?: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        store: StoreCreateNestedOneWithoutDiningTablesInput
+        area: DiningAreaCreateNestedOneWithoutTablesInput
+        orders?: OrderCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableUncheckedCreateWithoutCurrentOrderInput = {
+        id?: string
+        storeId: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        createdAt?: Date | string
+        updatedAt?: Date | string
+        orders?: OrderUncheckedCreateNestedManyWithoutTableInput
+    }
+
+    export type DiningTableCreateOrConnectWithoutCurrentOrderInput = {
+        where: DiningTableWhereUniqueInput
+        create: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
     }
 
     export type OrderItemCreateWithoutOrderInput = {
@@ -51959,6 +56305,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
@@ -51989,6 +56337,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
@@ -52006,6 +56356,80 @@ export namespace Prisma {
         aiConversations?: AiConversationUncheckedUpdateManyWithoutStoreNestedInput
         aiMessages?: AiMessageUncheckedUpdateManyWithoutStoreNestedInput
         aiExecutions?: AiExecutionUncheckedUpdateManyWithoutStoreNestedInput
+    }
+
+    export type DiningTableUpsertWithoutOrdersInput = {
+        update: XOR<DiningTableUpdateWithoutOrdersInput, DiningTableUncheckedUpdateWithoutOrdersInput>
+        create: XOR<DiningTableCreateWithoutOrdersInput, DiningTableUncheckedCreateWithoutOrdersInput>
+        where?: DiningTableWhereInput
+    }
+
+    export type DiningTableUpdateToOneWithWhereWithoutOrdersInput = {
+        where?: DiningTableWhereInput
+        data: XOR<DiningTableUpdateWithoutOrdersInput, DiningTableUncheckedUpdateWithoutOrdersInput>
+    }
+
+    export type DiningTableUpdateWithoutOrdersInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningTablesNestedInput
+        area?: DiningAreaUpdateOneRequiredWithoutTablesNestedInput
+        currentOrder?: OrderUpdateOneWithoutCurrentForTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateWithoutOrdersInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningTableUpsertWithoutCurrentOrderInput = {
+        update: XOR<DiningTableUpdateWithoutCurrentOrderInput, DiningTableUncheckedUpdateWithoutCurrentOrderInput>
+        create: XOR<DiningTableCreateWithoutCurrentOrderInput, DiningTableUncheckedCreateWithoutCurrentOrderInput>
+        where?: DiningTableWhereInput
+    }
+
+    export type DiningTableUpdateToOneWithWhereWithoutCurrentOrderInput = {
+        where?: DiningTableWhereInput
+        data: XOR<DiningTableUpdateWithoutCurrentOrderInput, DiningTableUncheckedUpdateWithoutCurrentOrderInput>
+    }
+
+    export type DiningTableUpdateWithoutCurrentOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningTablesNestedInput
+        area?: DiningAreaUpdateOneRequiredWithoutTablesNestedInput
+        orders?: OrderUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateWithoutCurrentOrderInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
     }
 
     export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -52112,6 +56536,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -52142,6 +56568,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -52294,6 +56722,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -52324,6 +56754,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -52466,6 +56898,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52487,9 +56920,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
@@ -52502,6 +56939,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52523,8 +56962,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
@@ -52552,6 +56994,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52573,9 +57016,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
@@ -52588,6 +57035,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52609,8 +57058,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
@@ -52622,6 +57074,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52643,9 +57096,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
@@ -52658,6 +57115,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -52679,8 +57138,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
@@ -52811,6 +57273,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52832,9 +57295,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
@@ -52847,6 +57314,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -52868,8 +57337,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
@@ -52976,6 +57448,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutStoreInput
@@ -53006,6 +57480,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutStoreInput
@@ -53035,6 +57511,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -53056,9 +57533,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogCreateNestedManyWithoutOrderInput
@@ -53071,6 +57552,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -53092,8 +57575,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         auditLogs?: OrderAuditLogUncheckedCreateNestedManyWithoutOrderInput
@@ -53259,6 +57745,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutStoreNestedInput
@@ -53289,6 +57777,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutStoreNestedInput
@@ -53324,6 +57814,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -53345,9 +57836,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
@@ -53360,6 +57855,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -53381,8 +57878,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
@@ -53682,6 +58182,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -53712,6 +58214,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -53741,6 +58245,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -53762,9 +58267,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
@@ -53777,6 +58286,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -53798,8 +58309,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
@@ -53939,6 +58453,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -53969,6 +58485,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -54004,6 +58522,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -54025,9 +58544,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
@@ -54040,6 +58563,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -54061,8 +58586,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
@@ -54198,6 +58726,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -54228,6 +58758,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -54467,6 +58999,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -54497,6 +59031,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -54720,6 +59256,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -54750,6 +59288,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -54890,6 +59430,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -54920,6 +59462,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -55056,6 +59600,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -55086,6 +59632,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -55252,6 +59800,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -55282,6 +59832,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -55360,6 +59912,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -55390,6 +59944,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -55419,6 +59975,7 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -55440,9 +59997,13 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
         store?: StoreCreateNestedOneWithoutOrdersInput
+        table?: DiningTableCreateNestedOneWithoutOrdersInput
+        currentForTable?: DiningTableCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentCreateNestedManyWithoutOrderInput
         refunds?: RefundCreateNestedManyWithoutOrderInput
@@ -55455,6 +60016,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -55476,8 +60039,11 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
+        currentForTable?: DiningTableUncheckedCreateNestedOneWithoutCurrentOrderInput
         items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
         payments?: OrderPaymentUncheckedCreateNestedManyWithoutOrderInput
         refunds?: RefundUncheckedCreateNestedManyWithoutOrderInput
@@ -55635,6 +60201,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -55665,6 +60233,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -55700,6 +60270,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -55721,9 +60292,13 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         store?: StoreUpdateOneWithoutOrdersNestedInput
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
@@ -55736,6 +60311,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -55757,8 +60334,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
@@ -55890,6 +60470,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -55920,6 +60502,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -56038,6 +60622,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -56068,6 +60654,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -56182,6 +60770,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -56212,6 +60802,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -56350,6 +60942,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -56380,6 +60974,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -56442,6 +61038,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -56472,6 +61070,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -56563,6 +61163,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -56593,6 +61195,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -56674,6 +61278,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -56704,6 +61310,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -56967,6 +61575,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -56997,6 +61607,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -57216,6 +61828,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -57246,6 +61860,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -57292,6 +61908,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -57322,6 +61940,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -57352,6 +61972,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -57382,6 +62004,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -57428,6 +62052,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -57458,6 +62084,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -57488,6 +62116,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -57518,6 +62148,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -57699,6 +62331,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -57729,6 +62363,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -57879,6 +62515,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -57909,6 +62547,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -58091,6 +62731,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -58121,6 +62763,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -58226,6 +62870,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserCreateNestedManyWithoutStoreInput
         categories?: CategoryCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableCreateNestedManyWithoutStoreInput
         products?: ProductCreateNestedManyWithoutStoreInput
         orders?: OrderCreateNestedManyWithoutStoreInput
         refunds?: RefundCreateNestedManyWithoutStoreInput
@@ -58256,6 +62902,8 @@ export namespace Prisma {
         updatedAt?: Date | string
         users?: StoreUserUncheckedCreateNestedManyWithoutStoreInput
         categories?: CategoryUncheckedCreateNestedManyWithoutStoreInput
+        diningAreas?: DiningAreaUncheckedCreateNestedManyWithoutStoreInput
+        diningTables?: DiningTableUncheckedCreateNestedManyWithoutStoreInput
         products?: ProductUncheckedCreateNestedManyWithoutStoreInput
         orders?: OrderUncheckedCreateNestedManyWithoutStoreInput
         refunds?: RefundUncheckedCreateNestedManyWithoutStoreInput
@@ -58360,6 +63008,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUpdateManyWithoutStoreNestedInput
         categories?: CategoryUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUpdateManyWithoutStoreNestedInput
         products?: ProductUpdateManyWithoutStoreNestedInput
         orders?: OrderUpdateManyWithoutStoreNestedInput
         refunds?: RefundUpdateManyWithoutStoreNestedInput
@@ -58390,6 +63040,8 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
         users?: StoreUserUncheckedUpdateManyWithoutStoreNestedInput
         categories?: CategoryUncheckedUpdateManyWithoutStoreNestedInput
+        diningAreas?: DiningAreaUncheckedUpdateManyWithoutStoreNestedInput
+        diningTables?: DiningTableUncheckedUpdateManyWithoutStoreNestedInput
         products?: ProductUncheckedUpdateManyWithoutStoreNestedInput
         orders?: OrderUncheckedUpdateManyWithoutStoreNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutStoreNestedInput
@@ -58498,6 +63150,27 @@ export namespace Prisma {
         updatedAt?: Date | string
     }
 
+    export type DiningAreaCreateManyStoreInput = {
+        id?: string
+        name: string
+        sortOrder?: number
+        status?: $Enums.CatalogStatus
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningTableCreateManyStoreInput = {
+        id?: string
+        areaId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
     export type ProductCreateManyStoreInput = {
         id?: string
         name: string
@@ -58518,6 +63191,8 @@ export namespace Prisma {
         orderNumber: string
         pickupNumber?: string | null
         orderType?: $Enums.OrderType
+        tableId?: string | null
+        guestCount?: number | null
         status?: $Enums.OrderStatus
         printStatus?: $Enums.PrintStatus
         paymentMethod?: $Enums.PaymentMethod | null
@@ -58539,6 +63214,8 @@ export namespace Prisma {
         printedAt?: Date | string | null
         heldAt?: Date | string | null
         resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
         createdAt?: Date | string
         updatedAt?: Date | string
     }
@@ -58835,6 +63512,73 @@ export namespace Prisma {
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
 
+    export type DiningAreaUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        tables?: DiningTableUpdateManyWithoutAreaNestedInput
+    }
+
+    export type DiningAreaUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        tables?: DiningTableUncheckedUpdateManyWithoutAreaNestedInput
+    }
+
+    export type DiningAreaUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        status?: EnumCatalogStatusFieldUpdateOperationsInput | $Enums.CatalogStatus
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningTableUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        area?: DiningAreaUpdateOneRequiredWithoutTablesNestedInput
+        currentOrder?: OrderUpdateOneWithoutCurrentForTableNestedInput
+        orders?: OrderUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateManyWithoutStoreInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        areaId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
     export type ProductUpdateWithoutStoreInput = {
         id?: StringFieldUpdateOperationsInput | string
         name?: StringFieldUpdateOperationsInput | string
@@ -58889,6 +63633,7 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -58910,8 +63655,12 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        table?: DiningTableUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
         refunds?: RefundUpdateManyWithoutOrderNestedInput
@@ -58924,6 +63673,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -58945,8 +63696,11 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
         items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
         payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
         refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
@@ -58959,6 +63713,8 @@ export namespace Prisma {
         orderNumber?: StringFieldUpdateOperationsInput | string
         pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
         orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        tableId?: NullableStringFieldUpdateOperationsInput | string | null
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
         status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
         printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
         paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
@@ -58980,6 +63736,8 @@ export namespace Prisma {
         printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }
@@ -60675,6 +65433,204 @@ export namespace Prisma {
         isActive?: BoolFieldUpdateOperationsInput | boolean
         availabilityStatus?: EnumProductAvailabilityStatusFieldUpdateOperationsInput | $Enums.ProductAvailabilityStatus
         kitchenStationId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type DiningTableCreateManyAreaInput = {
+        id?: string
+        storeId: string
+        name: string
+        seats?: number
+        status?: $Enums.DiningTableStatus
+        sortOrder?: number
+        currentOrderId?: string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type DiningTableUpdateWithoutAreaInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneRequiredWithoutDiningTablesNestedInput
+        currentOrder?: OrderUpdateOneWithoutCurrentForTableNestedInput
+        orders?: OrderUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateWithoutAreaInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        orders?: OrderUncheckedUpdateManyWithoutTableNestedInput
+    }
+
+    export type DiningTableUncheckedUpdateManyWithoutAreaInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: StringFieldUpdateOperationsInput | string
+        name?: StringFieldUpdateOperationsInput | string
+        seats?: IntFieldUpdateOperationsInput | number
+        status?: EnumDiningTableStatusFieldUpdateOperationsInput | $Enums.DiningTableStatus
+        sortOrder?: IntFieldUpdateOperationsInput | number
+        currentOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    }
+
+    export type OrderCreateManyTableInput = {
+        id?: string
+        storeId?: string | null
+        orderNumber: string
+        pickupNumber?: string | null
+        orderType?: $Enums.OrderType
+        guestCount?: number | null
+        status?: $Enums.OrderStatus
+        printStatus?: $Enums.PrintStatus
+        paymentMethod?: $Enums.PaymentMethod | null
+        currency?: string
+        subtotal: Decimal | DecimalJsLike | number | string
+        adjustment?: Decimal | DecimalJsLike | number | string
+        adjustmentType?: string | null
+        adjustmentValue?: Decimal | DecimalJsLike | number | string | null
+        discountReason?: string | null
+        taxRate?: Decimal | DecimalJsLike | number | string
+        tax?: Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: Decimal | DecimalJsLike | number | string
+        serviceCharge?: Decimal | DecimalJsLike | number | string
+        tip?: Decimal | DecimalJsLike | number | string
+        total: Decimal | DecimalJsLike | number | string
+        cashReceived?: Decimal | DecimalJsLike | number | string | null
+        changeDue?: Decimal | DecimalJsLike | number | string | null
+        paidAt?: Date | string | null
+        printedAt?: Date | string | null
+        heldAt?: Date | string | null
+        resumedAt?: Date | string | null
+        openedAt?: Date | string | null
+        closedAt?: Date | string | null
+        createdAt?: Date | string
+        updatedAt?: Date | string
+    }
+
+    export type OrderUpdateWithoutTableInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        store?: StoreUpdateOneWithoutOrdersNestedInput
+        currentForTable?: DiningTableUpdateOneWithoutCurrentOrderNestedInput
+        items?: OrderItemUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateWithoutTableInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+        currentForTable?: DiningTableUncheckedUpdateOneWithoutCurrentOrderNestedInput
+        items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+        payments?: OrderPaymentUncheckedUpdateManyWithoutOrderNestedInput
+        refunds?: RefundUncheckedUpdateManyWithoutOrderNestedInput
+        auditLogs?: OrderAuditLogUncheckedUpdateManyWithoutOrderNestedInput
+        kitchenTickets?: KitchenTicketUncheckedUpdateManyWithoutOrderNestedInput
+    }
+
+    export type OrderUncheckedUpdateManyWithoutTableInput = {
+        id?: StringFieldUpdateOperationsInput | string
+        storeId?: NullableStringFieldUpdateOperationsInput | string | null
+        orderNumber?: StringFieldUpdateOperationsInput | string
+        pickupNumber?: NullableStringFieldUpdateOperationsInput | string | null
+        orderType?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+        guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+        status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+        printStatus?: EnumPrintStatusFieldUpdateOperationsInput | $Enums.PrintStatus
+        paymentMethod?: NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
+        currency?: StringFieldUpdateOperationsInput | string
+        subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustment?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        adjustmentType?: NullableStringFieldUpdateOperationsInput | string | null
+        adjustmentValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        discountReason?: NullableStringFieldUpdateOperationsInput | string | null
+        taxRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tax?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceChargeRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        serviceCharge?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        tip?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+        cashReceived?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        changeDue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+        paidAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        printedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        heldAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        resumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        openedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+        closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
         createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
         updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     }

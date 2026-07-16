@@ -46,6 +46,18 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, diningAreas: {
+                    name: "diningAreas",
+                    type: "DiningArea",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, diningTables: {
+                    name: "diningTables",
+                    type: "DiningTable",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, products: {
                     name: "products",
                     type: "Product",
@@ -429,6 +441,149 @@ const metadata: ModelMeta = {
                 },
             },
         },
+        diningArea: {
+            name: 'DiningArea', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'diningAreas',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, sortOrder: {
+                    name: "sortOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, status: {
+                    name: "status",
+                    type: "CatalogStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, tables: {
+                    name: "tables",
+                    type: "DiningTable",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'area',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_name: {
+                    name: "storeId_name",
+                    fields: ["storeId", "name"]
+                },
+            },
+        },
+        diningTable: {
+            name: 'DiningTable', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'diningTables',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, areaId: {
+                    name: "areaId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'area',
+                }, area: {
+                    name: "area",
+                    type: "DiningArea",
+                    isDataModel: true,
+                    backLink: 'tables',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "areaId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, seats: {
+                    name: "seats",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 2 }] }],
+                }, status: {
+                    name: "status",
+                    type: "DiningTableStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, sortOrder: {
+                    name: "sortOrder",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, currentOrderId: {
+                    name: "currentOrderId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'currentOrder',
+                }, currentOrder: {
+                    name: "currentOrder",
+                    type: "Order",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'currentForTable',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "currentOrderId" },
+                }, orders: {
+                    name: "orders",
+                    type: "Order",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'table',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, currentOrderId: {
+                    name: "currentOrderId",
+                    fields: ["currentOrderId"]
+                }, storeId_name: {
+                    name: "storeId_name",
+                    fields: ["storeId", "name"]
+                },
+            },
+        },
         product: {
             name: 'Product', fields: {
                 id: {
@@ -682,6 +837,30 @@ const metadata: ModelMeta = {
                     name: "orderType",
                     type: "OrderType",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, tableId: {
+                    name: "tableId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'table',
+                }, table: {
+                    name: "table",
+                    type: "DiningTable",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'orders',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "tableId" },
+                }, currentForTable: {
+                    name: "currentForTable",
+                    type: "DiningTable",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'currentOrder',
+                }, guestCount: {
+                    name: "guestCount",
+                    type: "Int",
+                    isOptional: true,
                 }, status: {
                     name: "status",
                     type: "OrderStatus",
@@ -762,6 +941,14 @@ const metadata: ModelMeta = {
                     isOptional: true,
                 }, resumedAt: {
                     name: "resumedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, openedAt: {
+                    name: "openedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, closedAt: {
+                    name: "closedAt",
                     type: "DateTime",
                     isOptional: true,
                 }, items: {

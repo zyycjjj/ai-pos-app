@@ -42,6 +42,9 @@ export type CheckoutOrder = {
   orderNumber: string;
   pickupNumber: string | null;
   orderType: 'DINE_IN' | 'TAKEAWAY' | 'PICKUP';
+  tableId: string | null;
+  tableName: string | null;
+  guestCount: number | null;
   status: 'OPEN' | 'HELD' | 'PAID' | 'CANCELLED' | 'VOIDED' | 'PARTIALLY_REFUNDED' | 'REFUNDED';
   printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
   paymentMethod: 'CASH' | 'CARD' | 'MANUAL' | null;
@@ -71,6 +74,20 @@ export type CheckoutOrder = {
   kitchenTickets?: CheckoutKitchenTicket[];
   kitchenStatus?: KitchenTicketStatus | null;
   items: CheckoutOrderItem[];
+};
+
+export type DiningTableStatus = 'AVAILABLE' | 'OCCUPIED' | 'DIRTY' | 'RESERVED' | 'INACTIVE';
+
+export type DiningTable = {
+  id: string;
+  areaId: string;
+  areaName: string;
+  name: string;
+  seats: number;
+  status: DiningTableStatus;
+  sortOrder: number;
+  currentOrderId: string | null;
+  currentOrder: CheckoutOrder | null;
 };
 
 export type CheckoutRefund = {
@@ -469,6 +486,86 @@ export function useCheckoutOrders(status?: CheckoutOrder['status']) {
       return data;
     },
     refetchInterval: 3_000,
+  });
+}
+
+export function useDiningTables() {
+  return useQuery({
+    queryKey: ['tables'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<DiningTable[]>('/api/tables');
+      return data;
+    },
+    refetchInterval: 3_000,
+  });
+}
+
+export function useOpenTable() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; guestCount: number }) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/open`, { guestCount: payload.guestCount });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
+export function useAddTableItems() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      tableId: string;
+      items: Array<{ productId: string; quantity: number; modifiers?: Array<{ groupId: string; optionIds: string[] }> }>;
+    }) => {
+      const { tableId, ...body } = payload;
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${tableId}/items`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
+export function useCheckoutTable() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      tableId: string;
+      payments: Array<{ method: 'CASH' | 'CARD' | 'MANUAL'; amount: number; amountReceived?: number }>;
+      tip?: number;
+    }) => {
+      const { tableId, ...body } = payload;
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${tableId}/checkout`, body, { timeout: 30_000 });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+      void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useClearTable() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (tableId: string) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${tableId}/clear`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+    },
   });
 }
 

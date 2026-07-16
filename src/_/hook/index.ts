@@ -8,6 +8,8 @@ export * from './store';
 export * from './user';
 export * from './store-user';
 export * from './category';
+export * from './dining-area';
+export * from './dining-table';
 export * from './product';
 export * from './product-modifier-group';
 export * from './product-modifier-option';
