@@ -111,7 +111,7 @@ export type CheckoutRefund = {
 
 export type CheckoutOrderAuditLog = {
   id: string;
-  action: 'CANCELLED' | 'VOIDED' | 'REFUNDED' | 'HELD' | 'RESUMED';
+  action: 'CANCELLED' | 'VOIDED' | 'REFUNDED' | 'HELD' | 'RESUMED' | 'TABLE_OPENED' | 'TABLE_TRANSFERRED' | 'TABLE_MERGED' | 'BILL_SPLIT' | 'TABLE_CLEARED';
   fromStatus: CheckoutOrder['status'] | null;
   toStatus: CheckoutOrder['status'] | null;
   amount: number | null;
@@ -551,6 +551,22 @@ export function useCheckoutTable() {
       void queryClient.invalidateQueries({ queryKey: ['tables'] });
       void queryClient.invalidateQueries({ queryKey: ['checkout'] });
       void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useTransferTable() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; targetTableId: string }) => {
+      const { tableId, ...body } = payload;
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${tableId}/transfer`, body);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
     },
   });
 }

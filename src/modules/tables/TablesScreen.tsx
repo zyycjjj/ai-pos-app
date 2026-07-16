@@ -9,7 +9,7 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDiningTables, useOpenTable } from '@/services/businessApi';
+import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDiningTables, useOpenTable, useTransferTable } from '@/services/businessApi';
 import { tokens } from '@/theme';
 
 import { useActiveProducts } from '../products/useProducts';
@@ -24,7 +24,9 @@ export function TablesScreen() {
   const addItems = useAddTableItems();
   const checkoutTable = useCheckoutTable();
   const clearTable = useClearTable();
+  const transferTable = useTransferTable();
   const [guestCounts, setGuestCounts] = useState<Record<string, string>>({});
+  const [transferTargets, setTransferTargets] = useState<Record<string, string>>({});
   const [lastError, setLastError] = useState<string | null>(null);
 
   const tables = tablesQuery.data ?? [];
@@ -37,6 +39,7 @@ export function TablesScreen() {
     });
     return Array.from(groups.entries());
   }, [tables, t]);
+  const availableTransferTargets = tables.filter((table) => table.status === 'AVAILABLE' || table.status === 'RESERVED');
 
   const runAction = async (action: () => Promise<unknown>) => {
     setLastError(null);
@@ -71,8 +74,9 @@ export function TablesScreen() {
             <Text style={styles.areaTitle}>{areaName}</Text>
             <View style={styles.grid}>
               {areaTables.map((table) => {
-                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending;
+                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending || transferTable.isPending;
                 const currentTotal = table.currentOrder?.total ?? 0;
+                const selectedTransferTarget = transferTargets[table.id] ?? availableTransferTargets.find((target) => target.id !== table.id)?.id ?? '';
                 return (
                   <Surface key={table.id} padding="lg" style={styles.card}>
                     <View style={styles.cardHeader}>
@@ -87,6 +91,14 @@ export function TablesScreen() {
                       <View style={styles.orderMeta}>
                         <Text style={styles.orderNumber}>{table.currentOrder.orderNumber}</Text>
                         <Text style={styles.total}>{money(currentTotal)}</Text>
+                        <Text style={styles.muted}>{t('tables.guests')}: {table.currentOrder.guestCount ?? '-'}</Text>
+                        {table.currentOrder.items.map((item) => (
+                          <View key={item.id} style={styles.itemRow}>
+                            <Text style={styles.itemText}>{item.quantity} x {item.name}</Text>
+                            <Text style={styles.itemText}>{money(item.lineTotal)}</Text>
+                            {item.modifiers.length > 0 ? <Text style={styles.modifierText}>{item.modifiers.map((modifier) => modifier.optionName).join(', ')}</Text> : null}
+                          </View>
+                        ))}
                       </View>
                     ) : null}
 
@@ -121,6 +133,36 @@ export function TablesScreen() {
                         >
                           {t('tables.addItem')}
                         </AppButton>
+                        <View style={styles.transferBox}>
+                          <Text style={styles.muted}>{t('tables.transferTo')}</Text>
+                          <TextInput
+                            value={selectedTransferTarget}
+                            onChangeText={(value) => setTransferTargets((current) => ({ ...current, [table.id]: value }))}
+                            placeholder={t('tables.targetTableId')}
+                            style={styles.input}
+                          />
+                          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.targetChips}>
+                            {availableTransferTargets.filter((target) => target.id !== table.id).map((target) => (
+                              <AppButton
+                                key={target.id}
+                                variant={selectedTransferTarget === target.id ? 'primary' : 'secondary'}
+                                disabled={busy}
+                                onPress={() => setTransferTargets((current) => ({ ...current, [table.id]: target.id }))}
+                                style={styles.chipButton}
+                              >
+                                {target.name}
+                              </AppButton>
+                            ))}
+                          </ScrollView>
+                          <AppButton
+                            variant="secondary"
+                            disabled={busy || !selectedTransferTarget}
+                            loading={transferTable.isPending}
+                            onPress={() => runAction(() => transferTable.mutateAsync({ tableId: table.id, targetTableId: selectedTransferTarget }))}
+                          >
+                            {t('tables.transfer')}
+                          </AppButton>
+                        </View>
                         <AppButton
                           disabled={busy || !activeShiftQuery.data || currentTotal <= 0}
                           loading={checkoutTable.isPending}
@@ -229,6 +271,30 @@ const styles = StyleSheet.create({
   },
   actions: {
     gap: tokens.spacing.sm,
+  },
+  itemRow: {
+    borderTopColor: tokens.colors.line,
+    borderTopWidth: 1,
+    gap: tokens.spacing.xs,
+    paddingTop: tokens.spacing.sm,
+  },
+  itemText: {
+    ...tokens.typography.label,
+    color: tokens.colors.ink,
+  },
+  modifierText: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+  },
+  transferBox: {
+    gap: tokens.spacing.sm,
+  },
+  targetChips: {
+    gap: tokens.spacing.sm,
+  },
+  chipButton: {
+    minHeight: 42,
+    paddingHorizontal: tokens.spacing.md,
   },
   input: {
     ...tokens.typography.body,

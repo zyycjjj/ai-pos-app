@@ -217,7 +217,12 @@ export namespace $Enums {
         VOIDED: 'VOIDED',
         REFUNDED: 'REFUNDED',
         HELD: 'HELD',
-        RESUMED: 'RESUMED'
+        RESUMED: 'RESUMED',
+        TABLE_OPENED: 'TABLE_OPENED',
+        TABLE_TRANSFERRED: 'TABLE_TRANSFERRED',
+        TABLE_MERGED: 'TABLE_MERGED',
+        BILL_SPLIT: 'BILL_SPLIT',
+        TABLE_CLEARED: 'TABLE_CLEARED'
     };
 
     export type OrderAuditAction = (typeof OrderAuditAction)[keyof typeof OrderAuditAction]
