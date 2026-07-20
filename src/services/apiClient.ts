@@ -5,8 +5,11 @@ import { getApiBaseUrl } from '@/config/api';
 import { useAuthStore } from '@/stores/authStore';
 
 const apiBaseUrl = getApiBaseUrl(Platform.OS);
+const enableApiDebugLogs = process.env.NODE_ENV !== 'production';
 
-console.info('[AI-POS API] baseURL', apiBaseUrl);
+if (enableApiDebugLogs) {
+  console.info('[AI-POS API] baseURL', apiBaseUrl);
+}
 
 export const apiClient = axios.create({
   baseURL: apiBaseUrl,
@@ -26,7 +29,7 @@ apiClient.interceptors.request.use((config) => {
 
 apiClient.interceptors.response.use(
   (response) => {
-    if (response.config.url?.includes('/api/auth/login')) {
+    if (enableApiDebugLogs && response.config.url?.includes('/api/auth/login')) {
       console.info('[AI-POS API] login response', {
         url: `${response.config.baseURL ?? ''}${response.config.url ?? ''}`,
         status: response.status,
@@ -36,7 +39,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (axios.isAxiosError(error)) {
+    if (enableApiDebugLogs && axios.isAxiosError(error)) {
       console.warn('[AI-POS API] request failed', {
         url: `${error.config?.baseURL ?? ''}${error.config?.url ?? ''}`,
         method: error.config?.method,

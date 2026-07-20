@@ -57,6 +57,7 @@ type NativePrinterModule = {
 const nativePrinter = NativeModules.PrinterModule as NativePrinterModule | undefined;
 
 function requirePrinterModule(): NativePrinterModule {
+  // JS owns typed POS intents; the Android module owns vendor SDK calls so receipt flows never depend on printer-specific APIs in React code.
   if (Platform.OS !== 'android' || !nativePrinter) {
     throw new Error('Printer module is only available in the Android development build.');
   }

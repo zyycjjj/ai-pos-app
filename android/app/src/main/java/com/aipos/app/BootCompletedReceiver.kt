@@ -12,6 +12,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
       return
     }
 
+    // POS terminals are expected to return to the cashier workflow after reboot; failures are logged only and never block Android boot.
     Log.i(TAG, "Received $action; attempting to launch AI-POS.")
 
     try {

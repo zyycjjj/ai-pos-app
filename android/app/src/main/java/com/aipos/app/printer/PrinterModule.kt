@@ -113,6 +113,7 @@ class PrinterModule(private val reactContext: ReactApplicationContext) : ReactCo
 
   private fun runPrint(promise: Promise, block: (net.posprinter.POSPrinter) -> Unit) {
     runAsync(promise) {
+      // The native boundary owns vendor SDK connection recovery; JS only submits validated receipt payloads and receives a normalized result.
       if (!manager.isConnected()) {
         val result = manager.connectBuiltin()
         if (!result.connected) {
