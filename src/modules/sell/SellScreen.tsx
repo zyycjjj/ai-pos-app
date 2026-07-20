@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import type { ReactNode } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { CheckCircle2, Minus, Plus, Printer, RotateCcw, Search, Trash2, X } from 'lucide-react-native';
 
@@ -25,26 +24,31 @@ import {
 } from '@/services/businessApi';
 import { tokens } from '@/theme';
 import { useCartStore } from '@/stores/cartStore';
-import type { ProductModifierGroup, SelectedModifier } from '@/types/modifiers';
+import type { ProductModifierGroup } from '@/types/modifiers';
 
 import { getCheckoutTotals, type AdjustmentType, type OrderAdjustment } from './checkoutMath';
+import { CategoryChip, IconButton, PaymentMethodChip, TotalRow } from './components/SellPrimitives';
+import { useSellCheckout } from './hooks/useSellCheckout';
+import {
+  createPaymentLine,
+  formatAdjustmentLabel,
+  getModifierTotal,
+  getSelectedModifiers,
+  isManagerApprovalError,
+  isModifierSelectionComplete,
+  isProductSoldOut,
+  paymentMethodLabel,
+  printStatusLabel,
+  roundMoney,
+  toCheckoutModifierSelections,
+} from './sell.helpers';
+import type { ModifierSelections, OrderType, PaymentLineDraft, PrintFlowStatus } from './sell.types';
 import type { ProductDto } from '../products/products.service';
 import { useActiveProducts } from '../products/useProducts';
 import { printReceiptPayload } from '../receipts/receiptPrinter.service';
 
 const TAX_RATE = 0.08;
 const ALL_CATEGORY = '__all__';
-
-type PrintFlowStatus = 'idle' | 'printing' | 'printed' | 'failed';
-type ModifierSelections = Record<string, string[]>;
-type PaymentMethod = 'CASH' | 'CARD' | 'MANUAL';
-type OrderType = 'DINE_IN' | 'TAKEAWAY' | 'PICKUP';
-type PaymentLineDraft = {
-  id: string;
-  method: PaymentMethod;
-  amountText: string;
-  amountReceivedText: string;
-};
 
 export function SellScreen() {
   const money = useCurrency();
@@ -80,6 +84,7 @@ export function SellScreen() {
   const payOrder = usePayCheckoutOrder();
   const markPrinted = useMarkOrderPrinted();
   const receiptQuery = useReceipt(completedOrder?.id);
+  const sellCheckout = useSellCheckout();
   const { addLine, clear, lines, removeLine, setQuantity } = useCartStore();
 
   const products = productsQuery.data ?? [];
@@ -162,15 +167,9 @@ export function SellScreen() {
 
     setPaymentSubmitError(false);
     try {
-      const paymentPayload = {
-        payments: paymentLines.map((line) => ({
-          method: line.method,
-          amount: Number(line.amountText) || 0,
-          amountReceived: line.method === 'CASH' ? Number(line.amountReceivedText) || 0 : undefined,
-        })),
-      };
+      const payments = sellCheckout.buildPaymentPayload(paymentLines);
       const paidOrder = payingHeldOrder
-        ? await payOrder.mutateAsync({ orderId: payingHeldOrder.id, payments: paymentPayload.payments })
+        ? await payOrder.mutateAsync({ orderId: payingHeldOrder.id, payments })
         : await createOrder.mutateAsync({
         items: lines.map((line) => ({
           productId: line.productId,
@@ -180,7 +179,7 @@ export function SellScreen() {
         orderType,
         adjustment: adjustment ?? undefined,
         promoCode: promoCode.trim() || undefined,
-        payments: paymentPayload.payments,
+        payments,
         taxRate: TAX_RATE * 100,
         serviceChargeRate: 0,
         tip: tipAmount,
@@ -839,133 +838,6 @@ export function SellScreen() {
       </Modal>
     </AppScreen>
   );
-}
-
-function getModifierTotal(product: ProductDto, selections: ModifierSelections) {
-  const modifierDelta = getSelectedModifiers(product.modifierGroups, selections).reduce((sum, modifier) => sum + modifier.priceDelta, 0);
-  return Number((Number(product.price) + modifierDelta).toFixed(2));
-}
-
-function isModifierSelectionComplete(groups: ProductModifierGroup[], selections: ModifierSelections) {
-  return groups.every((group) => {
-    const count = (selections[group.id] ?? []).length;
-    return count >= (group.minSelect ?? (group.required ? 1 : 0)) && count <= (group.maxSelect ?? (group.multiSelect ? Number.MAX_SAFE_INTEGER : 1));
-  });
-}
-
-function isProductSoldOut(product: ProductDto) {
-  return product.availabilityStatus === 'SOLD_OUT';
-}
-
-function getSelectedModifiers(groups: ProductModifierGroup[], selections: ModifierSelections): SelectedModifier[] {
-  return groups.flatMap((group) => {
-    const optionIds = selections[group.id] ?? [];
-    return group.options
-      .filter((option) => optionIds.includes(option.id) && option.status !== 'SOLD_OUT')
-      .map((option) => ({
-        groupId: group.id,
-        groupName: group.name,
-        optionId: option.id,
-        optionName: option.name,
-        priceDelta: option.priceDelta,
-      }));
-  });
-}
-
-function toCheckoutModifierSelections(modifiers: SelectedModifier[]) {
-  const grouped = new Map<string, string[]>();
-  for (const modifier of modifiers) {
-    grouped.set(modifier.groupId, [...(grouped.get(modifier.groupId) ?? []), modifier.optionId]);
-  }
-  return Array.from(grouped, ([groupId, optionIds]) => ({ groupId, optionIds }));
-}
-
-function createPaymentLine(method: PaymentMethod, amount: number, amountReceived = amount): PaymentLineDraft {
-  return {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-    method,
-    amountText: String(roundMoney(amount)),
-    amountReceivedText: method === 'CASH' ? String(roundMoney(amountReceived)) : '',
-  };
-}
-
-function roundMoney(value: number) {
-  return Number(value.toFixed(2));
-}
-
-function CategoryChip({ label, selected, onPress }: { label: string; selected: boolean; onPress: () => void }) {
-  return (
-    <Pressable android_ripple={{ color: tokens.colors.accentMuted }} onPress={onPress} style={[styles.categoryChip, selected ? styles.categoryChipSelected : null]}>
-      <Text style={[styles.categoryText, selected ? styles.categoryTextSelected : null]}>{label}</Text>
-    </Pressable>
-  );
-}
-
-function PaymentMethodChip({ label, selected, onPress }: { label: string; selected: boolean; onPress: () => void }) {
-  return (
-    <Pressable android_ripple={{ color: tokens.colors.accentMuted }} onPress={onPress} style={[styles.paymentMethodChip, selected && styles.paymentMethodChipSelected]}>
-      <Text style={[styles.paymentMethodText, selected && styles.paymentMethodTextSelected]}>{label}</Text>
-    </Pressable>
-  );
-}
-
-function IconButton({ children, label, onPress }: { children: ReactNode; label: string; onPress: () => void }) {
-  return (
-    <Pressable accessibilityLabel={label} accessibilityRole="button" android_ripple={{ color: tokens.colors.surfaceMuted }} onPress={onPress} style={styles.iconButton}>
-      {children}
-    </Pressable>
-  );
-}
-
-function TotalRow({ label, value }: { label: string; value: string }) {
-  return (
-    <View style={styles.totalRow}>
-      <Text style={styles.totalRowLabel}>{label}</Text>
-      <Text style={styles.totalRowValue}>{value}</Text>
-    </View>
-  );
-}
-
-function paymentMethodLabel(method: PaymentMethod | null, t: (key: string) => string) {
-  switch (method) {
-    case 'CASH':
-      return t('payment.cash');
-    case 'CARD':
-      return t('payment.card');
-    case 'MANUAL':
-      return t('payment.manual');
-    default:
-      return '-';
-  }
-}
-
-function formatAdjustmentLabel(adjustment: OrderAdjustment, money: (value: number) => string) {
-  if (adjustment.type === 'discount') {
-    return `${adjustment.value}%`;
-  }
-  if (adjustment.type === 'fixed_reduction') {
-    return `-${money(adjustment.value)}`;
-  }
-  return money(adjustment.value);
-}
-
-function printStatusLabel(status: PrintFlowStatus, t: (key: string) => string) {
-  switch (status) {
-    case 'printing':
-      return t('sell.payment.status.printing');
-    case 'printed':
-      return t('sell.payment.status.printed');
-    case 'failed':
-      return t('sell.payment.status.failed');
-    default:
-      return t('sell.payment.status.notPrinted');
-  }
-}
-
-function isManagerApprovalError(error: unknown) {
-  const candidate = error as { response?: { data?: { code?: string; message?: string | string[] } } };
-  const data = candidate.response?.data;
-  return data?.code === 'MANAGER_APPROVAL_REQUIRED' || String(data?.message ?? '').includes('Manager approval');
 }
 
 const styles = StyleSheet.create({
