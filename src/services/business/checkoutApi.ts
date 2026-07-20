@@ -19,6 +19,9 @@ export function useCreateCheckoutOrder() {
         reason?: string;
       };
       promoCode?: string;
+      customerId?: string;
+      customerPhone?: string;
+      customerName?: string;
       selectedPromotionIds?: string[];
       payments: Array<{
         method: 'CASH' | 'CARD' | 'MANUAL';
@@ -59,6 +62,9 @@ export function useHoldCheckoutOrder() {
         reason?: string;
       };
       promoCode?: string;
+      customerId?: string;
+      customerPhone?: string;
+      customerName?: string;
       selectedPromotionIds?: string[];
       taxRate?: number;
       serviceChargeRate?: number;
@@ -95,8 +101,12 @@ export function usePayCheckoutOrder() {
     mutationFn: async (payload: {
       orderId: string;
       payments: Array<{ method: 'CASH' | 'CARD' | 'MANUAL'; amount: number; amountReceived?: number }>;
+      customerId?: string;
+      customerPhone?: string;
+      customerName?: string;
     }) => {
-      const { data } = await apiClient.post<CheckoutOrder>(`/api/checkout/orders/${payload.orderId}/pay`, { payments: payload.payments }, { timeout: 30_000 });
+      const { orderId, ...body } = payload;
+      const { data } = await apiClient.post<CheckoutOrder>(`/api/checkout/orders/${orderId}/pay`, body, { timeout: 30_000 });
       return data;
     },
     onSuccess: () => {

@@ -41,6 +41,11 @@ export type CheckoutOrder = {
   orderType: 'DINE_IN' | 'TAKEAWAY' | 'PICKUP';
   tableId: string | null;
   tableName: string | null;
+  customerId: string | null;
+  customerPhone: string | null;
+  customerName: string | null;
+  loyaltyPointsEarned: number;
+  loyaltyPointsBalanceAfter: number | null;
   guestCount: number | null;
   status: 'OPEN' | 'HELD' | 'PAID' | 'CANCELLED' | 'VOIDED' | 'PARTIALLY_REFUNDED' | 'REFUNDED';
   printStatus: 'NOT_PRINTED' | 'PRINTING' | 'PRINTED' | 'FAILED';
@@ -75,6 +80,22 @@ export type CheckoutOrder = {
   kitchenTickets?: CheckoutKitchenTicket[];
   kitchenStatus?: KitchenTicketStatus | null;
   items: CheckoutOrderItem[];
+};
+
+export type CustomerProfile = {
+  id: string;
+  phone: string;
+  normalizedPhone: string;
+  name: string | null;
+  note: string | null;
+  status: 'ACTIVE' | 'INACTIVE' | 'BLOCKED';
+  firstOrderAt: string | null;
+  lastOrderAt: string | null;
+  orderCount: number;
+  totalSpend: number;
+  pointsBalance: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type DiningTableStatus = 'AVAILABLE' | 'OCCUPIED' | 'DIRTY' | 'RESERVED' | 'INACTIVE';

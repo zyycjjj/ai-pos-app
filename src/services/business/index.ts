@@ -4,6 +4,7 @@ export * from './analyticsApi';
 export * from './shiftsApi';
 export * from './tablesApi';
 export * from './checkoutApi';
+export * from './customersApi';
 export * from './printersApi';
 export * from './aiApi';
 export * from './receiptsApi';

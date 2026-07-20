@@ -15,13 +15,16 @@ import {
   useCreateCheckoutOrder,
   useActiveShift,
   useCheckoutOrders,
+  useLookupCustomer,
   useHoldCheckoutOrder,
   useMarkOrderPrinted,
   usePayCheckoutOrder,
+  useQuickCreateCustomer,
   useReceipt,
   useResumeCheckoutOrder,
   useTodaySummary,
 } from '@/services/businessApi';
+import type { CustomerProfile } from '@/services/businessApi';
 import { tokens } from '@/theme';
 import { useCartStore } from '@/stores/cartStore';
 import type { ProductModifierGroup } from '@/types/modifiers';
@@ -70,6 +73,10 @@ export function SellScreen() {
   const [orderType, setOrderType] = useState<OrderType>('TAKEAWAY');
   const [tipText, setTipText] = useState('');
   const [promoCode, setPromoCode] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerProfile | null>(null);
+  const [customerLookupMessage, setCustomerLookupMessage] = useState('');
   const [modifierProduct, setModifierProduct] = useState<ProductDto | null>(null);
   const [modifierSelections, setModifierSelections] = useState<ModifierSelections>({});
   const [modifierValidationVisible, setModifierValidationVisible] = useState(false);
@@ -82,6 +89,8 @@ export function SellScreen() {
   const holdOrder = useHoldCheckoutOrder();
   const resumeOrder = useResumeCheckoutOrder();
   const payOrder = usePayCheckoutOrder();
+  const lookupCustomer = useLookupCustomer();
+  const quickCreateCustomer = useQuickCreateCustomer();
   const markPrinted = useMarkOrderPrinted();
   const receiptQuery = useReceipt(completedOrder?.id);
   const sellCheckout = useSellCheckout();
@@ -153,6 +162,7 @@ export function SellScreen() {
     setPayingHeldOrder(null);
     setPaymentValidationVisible(false);
     setPaymentSubmitError(false);
+    setCustomerLookupMessage('');
     setPaymentLines([createPaymentLine('CASH', total, Math.ceil(total))]);
   };
 
@@ -168,8 +178,13 @@ export function SellScreen() {
     setPaymentSubmitError(false);
     try {
       const payments = sellCheckout.buildPaymentPayload(paymentLines);
+      const customerPayload = selectedCustomer
+        ? { customerId: selectedCustomer.id }
+        : customerPhone.trim()
+          ? { customerPhone: customerPhone.trim(), customerName: customerName.trim() || undefined }
+          : {};
       const paidOrder = payingHeldOrder
-        ? await payOrder.mutateAsync({ orderId: payingHeldOrder.id, payments })
+        ? await payOrder.mutateAsync({ orderId: payingHeldOrder.id, payments, ...customerPayload })
         : await createOrder.mutateAsync({
         items: lines.map((line) => ({
           productId: line.productId,
@@ -179,6 +194,7 @@ export function SellScreen() {
         orderType,
         adjustment: adjustment ?? undefined,
         promoCode: promoCode.trim() || undefined,
+        ...customerPayload,
         payments,
         taxRate: TAX_RATE * 100,
         serviceChargeRate: 0,
@@ -193,6 +209,10 @@ export function SellScreen() {
       setAdjustmentValueText('');
       setTipText('');
       setPromoCode('');
+      setCustomerPhone('');
+      setCustomerName('');
+      setSelectedCustomer(null);
+      setCustomerLookupMessage('');
       setPayingHeldOrder(null);
       setPrintStatus('idle');
       clear();
@@ -228,6 +248,10 @@ export function SellScreen() {
       setAdjustmentValueText('');
       setTipText('');
       setPromoCode('');
+      setCustomerPhone('');
+      setCustomerName('');
+      setSelectedCustomer(null);
+      setCustomerLookupMessage('');
     } catch (error) {
       if (isManagerApprovalError(error)) {
         setManagerApprovalVisible(true);
@@ -238,8 +262,33 @@ export function SellScreen() {
   const resumeHeldOrder = async (order: CheckoutOrder) => {
     const resumed = await resumeOrder.mutateAsync(order.id);
     setPayingHeldOrder(resumed);
+    setCustomerPhone(resumed.customerPhone ?? '');
+    setCustomerName(resumed.customerName ?? '');
+    setSelectedCustomer(null);
+    setCustomerLookupMessage('');
     setPaymentVisible(true);
     setPaymentLines([createPaymentLine('CASH', resumed.total, Math.ceil(resumed.total))]);
+  };
+
+  const lookupOrCreateCustomer = async () => {
+    const phone = customerPhone.trim();
+    if (!phone) {
+      setSelectedCustomer(null);
+      setCustomerLookupMessage('');
+      return;
+    }
+    setCustomerLookupMessage('');
+    const existing = await lookupCustomer.mutateAsync(phone);
+    if (existing) {
+      setSelectedCustomer(existing);
+      setCustomerName(existing.name ?? customerName);
+      setCustomerLookupMessage(t('customer.found'));
+      return;
+    }
+    const created = await quickCreateCustomer.mutateAsync({ phone, name: customerName.trim() || undefined });
+    setSelectedCustomer(created);
+    setCustomerName(created.name ?? customerName);
+    setCustomerLookupMessage(t('customer.created'));
   };
 
   const addPaymentLine = () => {
@@ -643,6 +692,48 @@ export function SellScreen() {
                 onChangeText={setPromoCode}
                 style={styles.cashInput}
               />
+
+              <Text style={styles.cashLabel}>{t('customer.phone')}</Text>
+              <TextInput
+                keyboardType="phone-pad"
+                placeholder={t('customer.phonePlaceholder')}
+                placeholderTextColor={tokens.colors.subtle}
+                style={styles.cashInput}
+                value={customerPhone}
+                onChangeText={(value) => {
+                  setCustomerPhone(value);
+                  setSelectedCustomer(null);
+                  setCustomerLookupMessage('');
+                }}
+              />
+              <Text style={styles.cashLabel}>{t('customer.nameOptional')}</Text>
+              <TextInput
+                placeholder={t('customer.namePlaceholder')}
+                placeholderTextColor={tokens.colors.subtle}
+                style={styles.cashInput}
+                value={customerName}
+                onChangeText={setCustomerName}
+              />
+              <AppButton
+                disabled={!customerPhone.trim() || lookupCustomer.isPending || quickCreateCustomer.isPending}
+                loading={lookupCustomer.isPending || quickCreateCustomer.isPending}
+                onPress={lookupOrCreateCustomer}
+                variant="secondary"
+              >
+                {t('customer.lookupCreate')}
+              </AppButton>
+              {selectedCustomer ? (
+                <View style={styles.customerSummary}>
+                  <Text style={styles.customerSummaryTitle}>{selectedCustomer.name ?? selectedCustomer.phone}</Text>
+                  <Text style={styles.customerSummaryText}>
+                    {selectedCustomer.phone} · {t('customer.points')}: {selectedCustomer.pointsBalance} · {t('customer.orders')}: {selectedCustomer.orderCount}
+                  </Text>
+                  <Text style={styles.customerSummaryText}>
+                    {t('customer.lastOrder')}: {selectedCustomer.lastOrderAt ? new Date(selectedCustomer.lastOrderAt).toLocaleDateString() : '-'}
+                  </Text>
+                </View>
+              ) : null}
+              {customerLookupMessage ? <Text style={styles.customerLookupMessage}>{customerLookupMessage}</Text> : null}
 
               <View style={styles.paymentLines}>
                 {paymentLines.map((line, index) => {
@@ -1279,6 +1370,26 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.colors.surface,
     color: tokens.colors.ink,
     paddingHorizontal: tokens.spacing.lg,
+  },
+  customerSummary: {
+    gap: tokens.spacing.xs,
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.background,
+    padding: tokens.spacing.md,
+  },
+  customerSummaryTitle: {
+    ...tokens.typography.label,
+    color: tokens.colors.ink,
+  },
+  customerSummaryText: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+  },
+  customerLookupMessage: {
+    ...tokens.typography.caption,
+    color: tokens.colors.accent,
   },
   cashQuickRow: {
     flexDirection: 'row',
