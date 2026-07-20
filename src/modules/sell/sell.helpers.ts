@@ -97,3 +97,11 @@ export function isManagerApprovalError(error: unknown) {
   const data = candidate.response?.data;
   return data?.code === 'MANAGER_APPROVAL_REQUIRED' || String(data?.message ?? '').includes('Manager approval');
 }
+
+export function resolvePaymentErrorKey(error: unknown) {
+  const candidate = error as { response?: { data?: { code?: string } } };
+  if (candidate.response?.data?.code === 'PROMO_CODE_NOT_ELIGIBLE_FOR_CUSTOMER') {
+    return 'payment.validation.customerPromoNotEligible';
+  }
+  return 'payment.validation.submitFailed';
+}

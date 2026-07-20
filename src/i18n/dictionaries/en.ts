@@ -261,6 +261,7 @@ export const en = {
   'payment.paymentLine': 'Payment {count}',
   'payment.validation.unbalanced': 'Payment lines must equal the amount due.',
   'payment.validation.submitFailed': 'Payment could not be submitted. Check the connection and try again.',
+  'payment.validation.customerPromoNotEligible': 'This customer is not eligible for this promotion.',
   'payment.managerApprovalRequired': 'Manager approval is required for this discount.',
   'customer.phone': 'Customer phone',
   'customer.phonePlaceholder': 'Phone number',

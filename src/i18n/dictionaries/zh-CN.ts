@@ -263,6 +263,7 @@ export const zhCN = {
   'payment.paymentLine': '支付 {count}',
   'payment.validation.unbalanced': '支付金额合计必须等于应付金额。',
   'payment.validation.submitFailed': '支付提交失败，请检查连接后重试。',
+  'payment.validation.customerPromoNotEligible': '该顾客不符合此优惠活动',
   'payment.managerApprovalRequired': '该折扣需要店长或店主授权。',
   'customer.phone': '顾客手机号',
   'customer.phonePlaceholder': '输入手机号',

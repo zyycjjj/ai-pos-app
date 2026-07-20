@@ -42,6 +42,7 @@ import {
   isProductSoldOut,
   paymentMethodLabel,
   printStatusLabel,
+  resolvePaymentErrorKey,
   roundMoney,
   toCheckoutModifierSelections,
 } from './sell.helpers';
@@ -64,7 +65,7 @@ export function SellScreen() {
   const [paymentLines, setPaymentLines] = useState<PaymentLineDraft[]>([]);
   const [paymentValidationVisible, setPaymentValidationVisible] = useState(false);
   const [shiftRequiredVisible, setShiftRequiredVisible] = useState(false);
-  const [paymentSubmitError, setPaymentSubmitError] = useState(false);
+  const [paymentSubmitError, setPaymentSubmitError] = useState<string | null>(null);
   const [managerApprovalVisible, setManagerApprovalVisible] = useState(false);
   const [adjustmentVisible, setAdjustmentVisible] = useState(false);
   const [adjustmentType, setAdjustmentType] = useState<AdjustmentType>('discount');
@@ -161,7 +162,7 @@ export function SellScreen() {
     setPaymentVisible(true);
     setPayingHeldOrder(null);
     setPaymentValidationVisible(false);
-    setPaymentSubmitError(false);
+    setPaymentSubmitError(null);
     setCustomerLookupMessage('');
     setPaymentLines([createPaymentLine('CASH', total, Math.ceil(total))]);
   };
@@ -175,7 +176,7 @@ export function SellScreen() {
       return;
     }
 
-    setPaymentSubmitError(false);
+    setPaymentSubmitError(null);
     try {
       const payments = sellCheckout.buildPaymentPayload(paymentLines);
       const customerPayload = selectedCustomer
@@ -220,7 +221,7 @@ export function SellScreen() {
       if (isManagerApprovalError(error)) {
         setManagerApprovalVisible(true);
       } else {
-        setPaymentSubmitError(true);
+        setPaymentSubmitError(resolvePaymentErrorKey(error));
       }
     }
   };
@@ -298,7 +299,7 @@ export function SellScreen() {
 
   const updatePaymentLine = (id: string, patch: Partial<PaymentLineDraft>) => {
     setPaymentValidationVisible(false);
-    setPaymentSubmitError(false);
+    setPaymentSubmitError(null);
     setPaymentLines((current) => current.map((line) => (line.id === id ? { ...line, ...patch } : line)));
   };
 
@@ -800,7 +801,7 @@ export function SellScreen() {
               {paymentValidationVisible ? (
                 <Text style={styles.modifierValidation}>{t(paymentsBalanced ? 'payment.validation.insufficient' : 'payment.validation.unbalanced')}</Text>
               ) : null}
-              {paymentSubmitError ? <Text style={styles.modifierValidation}>{t('payment.validation.submitFailed')}</Text> : null}
+              {paymentSubmitError ? <Text style={styles.modifierValidation}>{t(paymentSubmitError)}</Text> : null}
               {managerApprovalVisible ? <Text style={styles.modifierValidation}>{t('payment.managerApprovalRequired')}</Text> : null}
             </ScrollView>
 
