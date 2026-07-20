@@ -13,6 +13,7 @@ import { useI18n } from '@/i18n/useI18n';
 import {
   type CheckoutOrder,
   useCreateCheckoutOrder,
+  useCheckoutPreview,
   useActiveShift,
   useCheckoutOrders,
   useLookupCustomer,
@@ -25,6 +26,7 @@ import {
   useTodaySummary,
 } from '@/services/businessApi';
 import type { CustomerProfile } from '@/services/businessApi';
+import type { PromotionPreview } from '@/services/businessApi';
 import { tokens } from '@/theme';
 import { useCartStore } from '@/stores/cartStore';
 import type { ProductModifierGroup } from '@/types/modifiers';
@@ -34,6 +36,7 @@ import { CategoryChip, IconButton, PaymentMethodChip, TotalRow } from './compone
 import { useSellCheckout } from './hooks/useSellCheckout';
 import {
   createPaymentLine,
+  createPromotionPreviewInputHash,
   formatAdjustmentLabel,
   getModifierTotal,
   getSelectedModifiers,
@@ -43,6 +46,7 @@ import {
   paymentMethodLabel,
   printStatusLabel,
   resolvePaymentErrorKey,
+  resolvePromotionPreviewReasonKey,
   roundMoney,
   toCheckoutModifierSelections,
 } from './sell.helpers';
@@ -74,6 +78,9 @@ export function SellScreen() {
   const [orderType, setOrderType] = useState<OrderType>('TAKEAWAY');
   const [tipText, setTipText] = useState('');
   const [promoCode, setPromoCode] = useState('');
+  const [previewResult, setPreviewResult] = useState<PromotionPreview | null>(null);
+  const [previewError, setPreviewError] = useState<string | null>(null);
+  const [lastPreviewInputHash, setLastPreviewInputHash] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerProfile | null>(null);
@@ -87,6 +94,7 @@ export function SellScreen() {
   const summaryQuery = useTodaySummary();
   const activeShiftQuery = useActiveShift();
   const createOrder = useCreateCheckoutOrder();
+  const previewPromotion = useCheckoutPreview();
   const holdOrder = useHoldCheckoutOrder();
   const resumeOrder = useResumeCheckoutOrder();
   const payOrder = usePayCheckoutOrder();
@@ -120,7 +128,17 @@ export function SellScreen() {
   }, [menuLabel, products, search, selectedCategory]);
   const tipAmount = Number(tipText) || 0;
   const { subtotal, adjustment: adjustmentAmount, tax, serviceCharge, total } = getCheckoutTotals(lines, TAX_RATE, adjustment, 0, tipAmount);
-  const amountDue = payingHeldOrder?.total ?? total;
+  const currentPreviewInputHash = createPromotionPreviewInputHash({
+    lineIds: lines.map((line) => `${line.lineId}:${line.quantity}:${line.unitPrice}:${line.modifiers.map((modifier) => modifier.optionId).join(',')}`),
+    promoCode,
+    customerId: selectedCustomer?.id,
+    customerPhone,
+    adjustment,
+    tipAmount,
+  });
+  const previewStale = Boolean(previewResult && currentPreviewInputHash !== lastPreviewInputHash);
+  const activePreview = previewResult && !previewStale ? previewResult : null;
+  const amountDue = payingHeldOrder?.total ?? activePreview?.total ?? total;
   const paymentLineTotal = roundMoney(paymentLines.reduce((sum, line) => sum + (Number(line.amountText) || 0), 0));
   const remainingBalance = roundMoney(amountDue - paymentLineTotal);
   const paymentsBalanced = Math.abs(remainingBalance) < 0.01;
@@ -163,8 +181,52 @@ export function SellScreen() {
     setPayingHeldOrder(null);
     setPaymentValidationVisible(false);
     setPaymentSubmitError(null);
+    clearPromotionPreview();
     setCustomerLookupMessage('');
     setPaymentLines([createPaymentLine('CASH', total, Math.ceil(total))]);
+  };
+
+  const clearPromotionPreview = () => {
+    setPreviewResult(null);
+    setPreviewError(null);
+    setLastPreviewInputHash('');
+  };
+
+  const applyPromotionPreview = async () => {
+    if (lines.length === 0 || payingHeldOrder) return;
+    setPreviewError(null);
+    const customerPayload = selectedCustomer
+      ? { customerId: selectedCustomer.id }
+      : customerPhone.trim()
+        ? { customerPhone: customerPhone.trim(), customerName: customerName.trim() || undefined }
+        : {};
+    const payload = {
+      items: lines.map((line) => ({
+        productId: line.productId,
+        quantity: line.quantity,
+        modifiers: toCheckoutModifierSelections(line.modifiers),
+      })),
+      orderType,
+      adjustment: adjustment ?? undefined,
+      promoCode: promoCode.trim() || undefined,
+      ...customerPayload,
+      taxRate: TAX_RATE * 100,
+      serviceChargeRate: 0,
+      tip: tipAmount,
+      currency: 'USD',
+    };
+    try {
+      const result = await previewPromotion.mutateAsync(payload);
+      const firstRejected = result.rejectedPromotions.find((promotion) => promotion.promoCode?.toUpperCase() === promoCode.trim().toUpperCase()) ?? result.rejectedPromotions[0];
+      setPreviewResult(result);
+      setLastPreviewInputHash(currentPreviewInputHash);
+      setPreviewError(firstRejected && result.appliedPromotions.length === 0 ? resolvePromotionPreviewReasonKey(firstRejected.reasonCode) : null);
+      setPaymentLines([createPaymentLine('CASH', result.total, Math.ceil(result.total))]);
+    } catch (error) {
+      setPreviewResult(null);
+      setLastPreviewInputHash('');
+      setPreviewError(resolvePaymentErrorKey(error));
+    }
   };
 
   const confirmPayment = async () => {
@@ -210,6 +272,7 @@ export function SellScreen() {
       setAdjustmentValueText('');
       setTipText('');
       setPromoCode('');
+      clearPromotionPreview();
       setCustomerPhone('');
       setCustomerName('');
       setSelectedCustomer(null);
@@ -249,6 +312,7 @@ export function SellScreen() {
       setAdjustmentValueText('');
       setTipText('');
       setPromoCode('');
+      clearPromotionPreview();
       setCustomerPhone('');
       setCustomerName('');
       setSelectedCustomer(null);
@@ -267,6 +331,7 @@ export function SellScreen() {
     setCustomerName(resumed.customerName ?? '');
     setSelectedCustomer(null);
     setCustomerLookupMessage('');
+    clearPromotionPreview();
     setPaymentVisible(true);
     setPaymentLines([createPaymentLine('CASH', resumed.total, Math.ceil(resumed.total))]);
   };
@@ -284,12 +349,14 @@ export function SellScreen() {
       setSelectedCustomer(existing);
       setCustomerName(existing.name ?? customerName);
       setCustomerLookupMessage(t('customer.found'));
+      clearPromotionPreview();
       return;
     }
     const created = await quickCreateCustomer.mutateAsync({ phone, name: customerName.trim() || undefined });
     setSelectedCustomer(created);
     setCustomerName(created.name ?? customerName);
     setCustomerLookupMessage(t('customer.created'));
+    clearPromotionPreview();
   };
 
   const addPaymentLine = () => {
@@ -690,9 +757,53 @@ export function SellScreen() {
                 autoCapitalize="characters"
                 placeholder={t('payment.promoCodePlaceholder')}
                 value={promoCode}
-                onChangeText={setPromoCode}
+                onChangeText={(value) => {
+                  setPromoCode(value);
+                  setPreviewError(null);
+                }}
                 style={styles.cashInput}
               />
+              <AppButton
+                disabled={lines.length === 0 || Boolean(payingHeldOrder) || previewPromotion.isPending}
+                loading={previewPromotion.isPending}
+                onPress={applyPromotionPreview}
+                variant="secondary"
+              >
+                {t('payment.preview.applyPromo')}
+              </AppButton>
+              {previewStale ? <Text style={styles.previewStale}>{t('payment.preview.stale')}</Text> : null}
+              {activePreview ? (
+                <View style={styles.previewCard}>
+                  <TotalRow label={t('payment.preview.promotionDiscount')} value={`-${money(activePreview.promotionDiscountAmount)}`} />
+                  <TotalRow label={t('payment.preview.estimatedTotal')} value={money(activePreview.total)} />
+                  {activePreview.appliedPromotions.map((promotion) => (
+                    <Text key={promotion.campaignId} style={styles.previewText}>
+                      {t('payment.preview.applied')}: {promotion.name} · -{money(promotion.discountAmount)}
+                    </Text>
+                  ))}
+                  {activePreview.eligiblePromotions.length > 0 ? (
+                    <View style={styles.previewList}>
+                      <Text style={styles.previewTitle}>{t('payment.preview.available')}</Text>
+                      {activePreview.eligiblePromotions.slice(0, 3).map((promotion) => (
+                        <Text key={promotion.campaignId} style={styles.previewText}>
+                          {promotion.name} · {money(promotion.estimatedDiscountAmount)}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : null}
+                  {activePreview.rejectedPromotions.length > 0 ? (
+                    <View style={styles.previewList}>
+                      <Text style={styles.previewTitle}>{t('payment.preview.rejected')}</Text>
+                      {activePreview.rejectedPromotions.slice(0, 2).map((promotion) => (
+                        <Text key={promotion.campaignId} style={styles.previewText}>
+                          {promotion.name}: {t(resolvePromotionPreviewReasonKey(promotion.reasonCode))}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : null}
+                </View>
+              ) : null}
+              {previewError ? <Text style={styles.modifierValidation}>{t(previewError)}</Text> : null}
 
               <Text style={styles.cashLabel}>{t('customer.phone')}</Text>
               <TextInput
@@ -705,6 +816,7 @@ export function SellScreen() {
                   setCustomerPhone(value);
                   setSelectedCustomer(null);
                   setCustomerLookupMessage('');
+                  setPreviewError(null);
                 }}
               />
               <Text style={styles.cashLabel}>{t('customer.nameOptional')}</Text>
@@ -1391,6 +1503,29 @@ const styles = StyleSheet.create({
   customerLookupMessage: {
     ...tokens.typography.caption,
     color: tokens.colors.accent,
+  },
+  previewCard: {
+    gap: tokens.spacing.sm,
+    borderWidth: 1,
+    borderColor: tokens.colors.line,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.background,
+    padding: tokens.spacing.md,
+  },
+  previewList: {
+    gap: tokens.spacing.xs,
+  },
+  previewTitle: {
+    ...tokens.typography.label,
+    color: tokens.colors.ink,
+  },
+  previewText: {
+    ...tokens.typography.caption,
+    color: tokens.colors.muted,
+  },
+  previewStale: {
+    ...tokens.typography.caption,
+    color: tokens.colors.warning,
   },
   cashQuickRow: {
     flexDirection: 'row',

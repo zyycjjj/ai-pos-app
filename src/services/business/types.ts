@@ -82,6 +82,51 @@ export type CheckoutOrder = {
   items: CheckoutOrderItem[];
 };
 
+export type PromotionPreview = {
+  currency: string;
+  orderType: CheckoutOrder['orderType'];
+  subtotal: number;
+  promotionDiscountAmount: number;
+  manualDiscountAmount: number;
+  totalDiscountAmount: number;
+  taxAmount: number;
+  serviceChargeAmount: number;
+  tipAmount: number;
+  total: number;
+  customer: Pick<CustomerProfile, 'id' | 'phone' | 'name' | 'pointsBalance' | 'orderCount' | 'totalSpend' | 'lastOrderAt'> | null;
+  customerLookup: { found: boolean; normalizedPhone?: string | null };
+  appliedPromotions: Array<{
+    id: string;
+    campaignId: string;
+    name: string;
+    campaignType: string;
+    promoCode: string | null;
+    customerEligibilityMode: 'ALL_CUSTOMERS' | 'CUSTOMER_ONLY' | 'SEGMENT_ONLY';
+    targetCustomerSegmentName: string | null;
+    discountAmount: number;
+  }>;
+  eligiblePromotions: Array<{
+    campaignId: string;
+    name: string;
+    campaignType: string;
+    promoCode: string | null;
+    customerEligibilityMode: 'ALL_CUSTOMERS' | 'CUSTOMER_ONLY' | 'SEGMENT_ONLY';
+    targetCustomerSegmentName: string | null;
+    estimatedDiscountAmount: number;
+    reason: string;
+  }>;
+  rejectedPromotions: Array<{
+    campaignId: string;
+    name: string;
+    campaignType: string;
+    promoCode: string | null;
+    customerEligibilityMode: 'ALL_CUSTOMERS' | 'CUSTOMER_ONLY' | 'SEGMENT_ONLY';
+    targetCustomerSegmentName: string | null;
+    reasonCode: string;
+    message: string;
+  }>;
+};
+
 export type CustomerProfile = {
   id: string;
   phone: string;

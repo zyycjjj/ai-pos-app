@@ -105,3 +105,33 @@ export function resolvePaymentErrorKey(error: unknown) {
   }
   return 'payment.validation.submitFailed';
 }
+
+export function resolvePromotionPreviewReasonKey(reasonCode?: string) {
+  if (reasonCode === 'CUSTOMER_REQUIRED') return 'payment.preview.customerRequired';
+  if (reasonCode === 'CUSTOMER_NOT_IN_SEGMENT' || reasonCode === 'PROMO_CODE_NOT_ELIGIBLE_FOR_CUSTOMER') {
+    return 'payment.validation.customerPromoNotEligible';
+  }
+  if (reasonCode === 'ORDER_THRESHOLD_NOT_MET') return 'payment.preview.thresholdNotMet';
+  if (reasonCode === 'PRODUCT_NOT_MATCHED') return 'payment.preview.productNotMatched';
+  if (reasonCode === 'USAGE_LIMIT_REACHED') return 'payment.preview.usageLimitReached';
+  if (reasonCode === 'PROMO_CODE_NOT_MATCHED') return 'payment.preview.codeNotMatched';
+  return 'payment.preview.notAvailable';
+}
+
+export function createPromotionPreviewInputHash(input: {
+  lineIds: string[];
+  promoCode: string;
+  customerId?: string | null;
+  customerPhone: string;
+  adjustment?: OrderAdjustment | null;
+  tipAmount: number;
+}) {
+  return JSON.stringify({
+    lineIds: input.lineIds,
+    promoCode: input.promoCode.trim().toUpperCase(),
+    customerId: input.customerId ?? null,
+    customerPhone: input.customerPhone.trim(),
+    adjustment: input.adjustment ?? null,
+    tipAmount: roundMoney(input.tipAmount),
+  });
+}

@@ -1,6 +1,31 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../apiClient';
-import type { CheckoutOrder, CheckoutRefund } from './types';
+import type { CheckoutOrder, CheckoutRefund, PromotionPreview } from './types';
+
+export type CheckoutPreviewPayload = {
+  items: Array<{
+    productId: string;
+    quantity: number;
+    modifiers?: Array<{ groupId: string; optionIds: string[] }>;
+  }>;
+  orderType?: CheckoutOrder['orderType'];
+  adjustment?: {
+    type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
+    value: number;
+    reason?: string;
+  };
+  promoCode?: string;
+  customerId?: string;
+  customerPhone?: string;
+  customerName?: string;
+  selectedPromotionIds?: string[];
+  tax?: number;
+  taxRate?: number;
+  serviceChargeRate?: number;
+  serviceCharge?: number;
+  tip?: number;
+  currency?: string;
+};
 
 export function useCreateCheckoutOrder() {
   const queryClient = useQueryClient();
@@ -41,6 +66,15 @@ export function useCreateCheckoutOrder() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['checkout'] });
       void queryClient.invalidateQueries({ queryKey: ['metrics', 'today'] });
+    },
+  });
+}
+
+export function useCheckoutPreview() {
+  return useMutation({
+    mutationFn: async (payload: CheckoutPreviewPayload) => {
+      const { data } = await apiClient.post<PromotionPreview>('/api/checkout/preview', payload, { timeout: 30_000 });
+      return data;
     },
   });
 }
