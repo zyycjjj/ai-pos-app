@@ -114,9 +114,9 @@ export const navigation = {
   railWidth: 344,
   railCollapsedWidth: 92,
   railItemHeight: 56,
-  contentPadding: 32,
-  workspaceGap: 20,
-  orderRailWidth: 380,
+  contentPadding: 28,
+  workspaceGap: 18,
+  orderRailWidth: 360,
   pageMaxWidth: 1366,
 } as const;
 
@@ -133,4 +133,3 @@ export type AppColorToken = keyof typeof colors;
 export type AppSpacingToken = keyof typeof spacing;
 export type AppRadiusToken = keyof typeof radius;
 export type AppShadowToken = keyof typeof shadow;
-

@@ -752,101 +752,105 @@ export function SellScreen() {
                 </View>
               </View>
 
-              <Text style={styles.cashLabel}>{t('payment.promoCode')}</Text>
-              <TextInput
-                autoCapitalize="characters"
-                placeholder={t('payment.promoCodePlaceholder')}
-                value={promoCode}
-                onChangeText={(value) => {
-                  setPromoCode(value);
-                  setPreviewError(null);
-                }}
-                style={styles.cashInput}
-              />
-              <AppButton
-                disabled={lines.length === 0 || Boolean(payingHeldOrder) || previewPromotion.isPending}
-                loading={previewPromotion.isPending}
-                onPress={applyPromotionPreview}
-                variant="secondary"
-              >
-                {t('payment.preview.applyPromo')}
-              </AppButton>
-              {previewStale ? <Text style={styles.previewStale}>{t('payment.preview.stale')}</Text> : null}
-              {activePreview ? (
-                <View style={styles.previewCard}>
-                  <TotalRow label={t('payment.preview.promotionDiscount')} value={`-${money(activePreview.promotionDiscountAmount)}`} />
-                  <TotalRow label={t('payment.preview.estimatedTotal')} value={money(activePreview.total)} />
-                  {activePreview.appliedPromotions.map((promotion) => (
-                    <Text key={promotion.campaignId} style={styles.previewText}>
-                      {t('payment.preview.applied')}: {promotion.name} · -{money(promotion.discountAmount)}
-                    </Text>
-                  ))}
-                  {activePreview.eligiblePromotions.length > 0 ? (
-                    <View style={styles.previewList}>
-                      <Text style={styles.previewTitle}>{t('payment.preview.available')}</Text>
-                      {activePreview.eligiblePromotions.slice(0, 3).map((promotion) => (
-                        <Text key={promotion.campaignId} style={styles.previewText}>
-                          {promotion.name} · {money(promotion.estimatedDiscountAmount)}
-                        </Text>
-                      ))}
-                    </View>
-                  ) : null}
-                  {activePreview.rejectedPromotions.length > 0 ? (
-                    <View style={styles.previewList}>
-                      <Text style={styles.previewTitle}>{t('payment.preview.rejected')}</Text>
-                      {activePreview.rejectedPromotions.slice(0, 2).map((promotion) => (
-                        <Text key={promotion.campaignId} style={styles.previewText}>
-                          {promotion.name}: {t(resolvePromotionPreviewReasonKey(promotion.reasonCode))}
-                        </Text>
-                      ))}
-                    </View>
-                  ) : null}
-                </View>
-              ) : null}
-              {previewError ? <Text style={styles.modifierValidation}>{t(previewError)}</Text> : null}
+              <View style={styles.paymentSection}>
+                <Text style={styles.cashLabel}>{t('payment.promoCode')}</Text>
+                <TextInput
+                  autoCapitalize="characters"
+                  placeholder={t('payment.promoCodePlaceholder')}
+                  value={promoCode}
+                  onChangeText={(value) => {
+                    setPromoCode(value);
+                    setPreviewError(null);
+                  }}
+                  style={styles.cashInput}
+                />
+                <AppButton
+                  disabled={lines.length === 0 || Boolean(payingHeldOrder) || previewPromotion.isPending}
+                  loading={previewPromotion.isPending}
+                  onPress={applyPromotionPreview}
+                  variant="secondary"
+                >
+                  {t('payment.preview.applyPromo')}
+                </AppButton>
+                {previewStale ? <Text style={styles.previewStale}>{t('payment.preview.stale')}</Text> : null}
+                {activePreview ? (
+                  <View style={styles.previewCard}>
+                    <TotalRow label={t('payment.preview.promotionDiscount')} value={`-${money(activePreview.promotionDiscountAmount)}`} />
+                    <TotalRow label={t('payment.preview.estimatedTotal')} value={money(activePreview.total)} />
+                    {activePreview.appliedPromotions.map((promotion) => (
+                      <Text key={promotion.campaignId} style={styles.previewText}>
+                        {t('payment.preview.applied')}: {promotion.name} · -{money(promotion.discountAmount)}
+                      </Text>
+                    ))}
+                    {activePreview.eligiblePromotions.length > 0 ? (
+                      <View style={styles.previewList}>
+                        <Text style={styles.previewTitle}>{t('payment.preview.available')}</Text>
+                        {activePreview.eligiblePromotions.slice(0, 3).map((promotion) => (
+                          <Text key={promotion.campaignId} style={styles.previewText}>
+                            {promotion.name} · {money(promotion.estimatedDiscountAmount)}
+                          </Text>
+                        ))}
+                      </View>
+                    ) : null}
+                    {activePreview.rejectedPromotions.length > 0 ? (
+                      <View style={styles.previewList}>
+                        <Text style={styles.previewTitle}>{t('payment.preview.rejected')}</Text>
+                        {activePreview.rejectedPromotions.slice(0, 2).map((promotion) => (
+                          <Text key={promotion.campaignId} style={styles.previewText}>
+                            {promotion.name}: {t(resolvePromotionPreviewReasonKey(promotion.reasonCode))}
+                          </Text>
+                        ))}
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
+                {previewError ? <Text style={styles.modifierValidation}>{t(previewError)}</Text> : null}
+              </View>
 
-              <Text style={styles.cashLabel}>{t('customer.phone')}</Text>
-              <TextInput
-                keyboardType="phone-pad"
-                placeholder={t('customer.phonePlaceholder')}
-                placeholderTextColor={tokens.colors.subtle}
-                style={styles.cashInput}
-                value={customerPhone}
-                onChangeText={(value) => {
-                  setCustomerPhone(value);
-                  setSelectedCustomer(null);
-                  setCustomerLookupMessage('');
-                  setPreviewError(null);
-                }}
-              />
-              <Text style={styles.cashLabel}>{t('customer.nameOptional')}</Text>
-              <TextInput
-                placeholder={t('customer.namePlaceholder')}
-                placeholderTextColor={tokens.colors.subtle}
-                style={styles.cashInput}
-                value={customerName}
-                onChangeText={setCustomerName}
-              />
-              <AppButton
-                disabled={!customerPhone.trim() || lookupCustomer.isPending || quickCreateCustomer.isPending}
-                loading={lookupCustomer.isPending || quickCreateCustomer.isPending}
-                onPress={lookupOrCreateCustomer}
-                variant="secondary"
-              >
-                {t('customer.lookupCreate')}
-              </AppButton>
-              {selectedCustomer ? (
-                <View style={styles.customerSummary}>
-                  <Text style={styles.customerSummaryTitle}>{selectedCustomer.name ?? selectedCustomer.phone}</Text>
-                  <Text style={styles.customerSummaryText}>
-                    {selectedCustomer.phone} · {t('customer.points')}: {selectedCustomer.pointsBalance} · {t('customer.orders')}: {selectedCustomer.orderCount}
-                  </Text>
-                  <Text style={styles.customerSummaryText}>
-                    {t('customer.lastOrder')}: {selectedCustomer.lastOrderAt ? new Date(selectedCustomer.lastOrderAt).toLocaleDateString() : '-'}
-                  </Text>
-                </View>
-              ) : null}
-              {customerLookupMessage ? <Text style={styles.customerLookupMessage}>{customerLookupMessage}</Text> : null}
+              <View style={styles.paymentSection}>
+                <Text style={styles.cashLabel}>{t('customer.phone')}</Text>
+                <TextInput
+                  keyboardType="phone-pad"
+                  placeholder={t('customer.phonePlaceholder')}
+                  placeholderTextColor={tokens.colors.subtle}
+                  style={styles.cashInput}
+                  value={customerPhone}
+                  onChangeText={(value) => {
+                    setCustomerPhone(value);
+                    setSelectedCustomer(null);
+                    setCustomerLookupMessage('');
+                    setPreviewError(null);
+                  }}
+                />
+                <Text style={styles.cashLabel}>{t('customer.nameOptional')}</Text>
+                <TextInput
+                  placeholder={t('customer.namePlaceholder')}
+                  placeholderTextColor={tokens.colors.subtle}
+                  style={styles.cashInput}
+                  value={customerName}
+                  onChangeText={setCustomerName}
+                />
+                <AppButton
+                  disabled={!customerPhone.trim() || lookupCustomer.isPending || quickCreateCustomer.isPending}
+                  loading={lookupCustomer.isPending || quickCreateCustomer.isPending}
+                  onPress={lookupOrCreateCustomer}
+                  variant="secondary"
+                >
+                  {t('customer.lookupCreate')}
+                </AppButton>
+                {selectedCustomer ? (
+                  <View style={styles.customerSummary}>
+                    <Text style={styles.customerSummaryTitle}>{selectedCustomer.name ?? selectedCustomer.phone}</Text>
+                    <Text style={styles.customerSummaryText}>
+                      {selectedCustomer.phone} · {t('customer.points')}: {selectedCustomer.pointsBalance} · {t('customer.orders')}: {selectedCustomer.orderCount}
+                    </Text>
+                    <Text style={styles.customerSummaryText}>
+                      {t('customer.lastOrder')}: {selectedCustomer.lastOrderAt ? new Date(selectedCustomer.lastOrderAt).toLocaleDateString() : '-'}
+                    </Text>
+                  </View>
+                ) : null}
+                {customerLookupMessage ? <Text style={styles.customerLookupMessage}>{customerLookupMessage}</Text> : null}
+              </View>
 
               <View style={styles.paymentLines}>
                 {paymentLines.map((line, index) => {
@@ -1126,12 +1130,12 @@ const styles = StyleSheet.create({
   productGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: tokens.spacing.sm,
+    gap: tokens.spacing.md,
     paddingBottom: tokens.spacing['2xl'],
   },
   productTile: {
-    width: 160,
-    minHeight: 148,
+    width: 154,
+    minHeight: 146,
     justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: tokens.colors.line,
@@ -1359,15 +1363,17 @@ const styles = StyleSheet.create({
   },
   paymentModal: {
     width: 540,
+    maxWidth: '100%',
   },
   checkoutPaymentModal: {
-    maxHeight: 680,
+    maxHeight: 640,
   },
   paymentModalScroll: {
     flexShrink: 1,
   },
   paymentModalScrollContent: {
-    paddingBottom: tokens.spacing.sm,
+    gap: tokens.spacing.md,
+    paddingBottom: tokens.spacing.md,
   },
   modifierModal: {
     width: 620,
@@ -1398,7 +1404,6 @@ const styles = StyleSheet.create({
   },
   paymentDueBlock: {
     gap: tokens.spacing.md,
-    marginTop: tokens.spacing.xl,
   },
   paymentDue: {
     ...tokens.typography.numericLarge,
@@ -1408,7 +1413,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: tokens.spacing.sm,
-    marginTop: tokens.spacing.xl,
+    marginTop: tokens.spacing.lg,
+  },
+  paymentSection: {
+    gap: tokens.spacing.sm,
   },
   paymentMethodChip: {
     minHeight: tokens.spacing.touchTargetMin,
