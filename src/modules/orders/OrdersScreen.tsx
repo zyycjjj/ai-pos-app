@@ -16,6 +16,7 @@ export function OrdersScreen() {
   const money = useCurrency();
   const [printingOrderId, setPrintingOrderId] = useState<string | null>(null);
   const [actionOrderId, setActionOrderId] = useState<string | null>(null);
+  const [printMessage, setPrintMessage] = useState<string | null>(null);
   const ordersQuery = useCheckoutOrders();
   const printOrderReceipt = usePrintOrderReceipt();
   const reprintOrderReceipt = useReprintOrderReceipt();
@@ -26,12 +27,12 @@ export function OrdersScreen() {
 
   const reprint = async (order: CheckoutOrder) => {
     setPrintingOrderId(order.id);
+    setPrintMessage(null);
     try {
-      if (order.printStatus === 'PRINTED') {
-        await reprintOrderReceipt.mutateAsync(order.id);
-      } else {
-        await printOrderReceipt.mutateAsync(order.id);
-      }
+      const job = order.printStatus === 'PRINTED' ? await reprintOrderReceipt.mutateAsync(order.id) : await printOrderReceipt.mutateAsync(order.id);
+      setPrintMessage(job.lastError ? job.lastError : `Print job ${job.status}.`);
+    } catch (error) {
+      setPrintMessage(error instanceof Error ? error.message : 'Print failed.');
     } finally {
       setPrintingOrderId(null);
     }
@@ -79,6 +80,12 @@ export function OrdersScreen() {
           <Text style={[tokens.typography.numeric, { color: tokens.colors.ink, marginTop: tokens.spacing.xs }]}>{paidOrdersCount}</Text>
         </Surface>
       </View>
+
+      {printMessage ? (
+        <Surface variant="muted" padding="md" style={styles.printFeedback}>
+          <Text style={styles.printFeedbackText}>{printMessage}</Text>
+        </Surface>
+      ) : null}
 
       {/* Orders List */}
       {orders.length === 0 ? (
@@ -367,6 +374,13 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.colors.background,
     paddingHorizontal: tokens.spacing.lg,
     paddingVertical: tokens.spacing.md,
+  },
+  printFeedback: {
+    marginBottom: tokens.spacing.lg,
+  },
+  printFeedbackText: {
+    ...tokens.typography.body,
+    color: tokens.colors.ink,
   },
   actionRow: {
     flexDirection: 'row',

@@ -20,7 +20,7 @@ export type CheckoutPaymentLine = {
   changeDue: number | null;
 };
 
-export type KitchenTicketStatus = 'NEW' | 'PREPARING' | 'READY' | 'COMPLETED' | 'CANCELLED';
+export type KitchenTicketStatus = 'NEW' | 'PREPARING' | 'IN_PROGRESS' | 'READY' | 'COMPLETED' | 'CANCELLED';
 
 export type CheckoutKitchenTicket = {
   id: string;
@@ -32,6 +32,50 @@ export type CheckoutKitchenTicket = {
   readyAt: string | null;
   completedAt: string | null;
   cancelledAt: string | null;
+};
+
+export type KitchenTicket = {
+  id: string;
+  ticketNumber: string;
+  status: KitchenTicketStatus;
+  station: {
+    id: string;
+    name: string;
+    code: string;
+    status: 'ACTIVE' | 'INACTIVE';
+    sortOrder: number;
+    isDefault: boolean;
+  };
+  order: {
+    id: string;
+    orderNumber: string;
+    pickupNumber: string | null;
+    status: CheckoutOrder['status'];
+    total: number;
+    createdAt: string;
+  };
+  items: Array<{
+    id: string;
+    orderItemId: string;
+    productId: string;
+    productName: string;
+    quantity: number;
+    modifiers: SelectedModifier[];
+    notes: string | null;
+    status: KitchenTicketStatus;
+  }>;
+  startedAt: string | null;
+  readyAt: string | null;
+  completedAt: string | null;
+  cancelledAt: string | null;
+  cancelReason: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type KitchenStation = KitchenTicket['station'] & {
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type CheckoutOrder = {

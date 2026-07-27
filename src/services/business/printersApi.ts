@@ -1,6 +1,58 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../apiClient';
 import type { PrintJob } from './types';
+
+export type PosPrinter = NonNullable<PrintJob['printer']> & {
+  host?: string | null;
+  port?: number | null;
+  paperWidth?: number;
+};
+
+export function usePosPrinters() {
+  return useQuery({
+    queryKey: ['printers'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<PosPrinter[]>('/api/print/printers');
+      return data;
+    },
+  });
+}
+
+export function useCreateLanPrinter() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: { name: string; code: string; host: string; port: number; type?: 'RECEIPT' | 'KITCHEN' | 'MULTI_PURPOSE' }) => {
+      const { data } = await apiClient.post<PosPrinter>('/api/print/printers', {
+        name: payload.name,
+        code: payload.code,
+        type: payload.type ?? 'RECEIPT',
+        connectionType: 'LAN',
+        host: payload.host,
+        port: payload.port,
+        paperWidth: 80,
+        autoCut: true,
+        cashDrawerPulse: false,
+      });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['printers'] });
+    },
+  });
+}
+
+export function useTestPosPrinter() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (printerId: string) => {
+      const { data } = await apiClient.post<PrintJob>(`/api/print/printers/${printerId}/test`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
 
 export function usePrintOrderReceipt() {
   const queryClient = useQueryClient();

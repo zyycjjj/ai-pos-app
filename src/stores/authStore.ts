@@ -1,7 +1,7 @@
 import { createMMKV } from 'react-native-mmkv';
 import { create } from 'zustand';
 
-export type StoreRole = 'OWNER' | 'MANAGER' | 'CASHIER' | 'STAFF';
+export type StoreRole = 'OWNER' | 'MANAGER' | 'CASHIER' | 'KITCHEN' | 'STAFF';
 
 export type AuthUser = {
   id: string;

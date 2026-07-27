@@ -16,6 +16,7 @@ import {
   useCheckoutPreview,
   useActiveShift,
   useCheckoutOrders,
+  useDiningTables,
   useLookupCustomer,
   useHoldCheckoutOrder,
   useMarkOrderPrinted,
@@ -76,6 +77,7 @@ export function SellScreen() {
   const [adjustmentValueText, setAdjustmentValueText] = useState('');
   const [adjustment, setAdjustment] = useState<OrderAdjustment | null>(null);
   const [orderType, setOrderType] = useState<OrderType>('TAKEAWAY');
+  const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
   const [tipText, setTipText] = useState('');
   const [promoCode, setPromoCode] = useState('');
   const [previewResult, setPreviewResult] = useState<PromotionPreview | null>(null);
@@ -91,6 +93,7 @@ export function SellScreen() {
   const [printStatus, setPrintStatus] = useState<PrintFlowStatus>('idle');
   const productsQuery = useActiveProducts();
   const heldOrdersQuery = useCheckoutOrders('HELD');
+  const tablesQuery = useDiningTables();
   const summaryQuery = useTodaySummary();
   const activeShiftQuery = useActiveShift();
   const createOrder = useCreateCheckoutOrder();
@@ -106,6 +109,7 @@ export function SellScreen() {
   const { addLine, clear, lines, removeLine, setQuantity } = useCartStore();
 
   const products = productsQuery.data ?? [];
+  const availableTables = (tablesQuery.data ?? []).filter((table) => table.status === 'AVAILABLE' || table.status === 'RESERVED');
   const menuLabel = t('sell.category.menu');
   const categories = useMemo(() => {
     const values = products.map((product) => product.category ?? menuLabel);
@@ -148,6 +152,7 @@ export function SellScreen() {
   const printerReady = true;
   const modifierTotal = modifierProduct ? getModifierTotal(modifierProduct, modifierSelections) : 0;
   const modifierRequiredComplete = modifierProduct ? isModifierSelectionComplete(modifierProduct.modifierGroups, modifierSelections) : true;
+  const dineInTableRequired = orderType === 'DINE_IN' && !selectedTableId;
 
   const addProductToCart = (product: ProductDto) => {
     if (isProductSoldOut(product)) {
@@ -170,6 +175,9 @@ export function SellScreen() {
 
   const openPayment = () => {
     if (lines.length === 0) {
+      return;
+    }
+    if (dineInTableRequired) {
       return;
     }
     if (!activeShiftQuery.data) {
@@ -207,6 +215,7 @@ export function SellScreen() {
         modifiers: toCheckoutModifierSelections(line.modifiers),
       })),
       orderType,
+      tableId: orderType === 'DINE_IN' ? selectedTableId ?? undefined : undefined,
       adjustment: adjustment ?? undefined,
       promoCode: promoCode.trim() || undefined,
       ...customerPayload,
@@ -255,6 +264,7 @@ export function SellScreen() {
           modifiers: toCheckoutModifierSelections(line.modifiers),
         })),
         orderType,
+        tableId: orderType === 'DINE_IN' ? selectedTableId ?? undefined : undefined,
         adjustment: adjustment ?? undefined,
         promoCode: promoCode.trim() || undefined,
         ...customerPayload,
@@ -278,6 +288,7 @@ export function SellScreen() {
       setSelectedCustomer(null);
       setCustomerLookupMessage('');
       setPayingHeldOrder(null);
+      setSelectedTableId(null);
       setPrintStatus('idle');
       clear();
     } catch (error) {
@@ -291,6 +302,7 @@ export function SellScreen() {
 
   const holdCurrentOrder = async () => {
     if (lines.length === 0) return;
+    if (dineInTableRequired) return;
     setManagerApprovalVisible(false);
     try {
       await holdOrder.mutateAsync({
@@ -300,6 +312,7 @@ export function SellScreen() {
           modifiers: toCheckoutModifierSelections(line.modifiers),
         })),
         orderType,
+        tableId: orderType === 'DINE_IN' ? selectedTableId ?? undefined : undefined,
         adjustment: adjustment ?? undefined,
         promoCode: promoCode.trim() || undefined,
         taxRate: TAX_RATE * 100,
@@ -317,6 +330,7 @@ export function SellScreen() {
       setCustomerName('');
       setSelectedCustomer(null);
       setCustomerLookupMessage('');
+      setSelectedTableId(null);
     } catch (error) {
       if (isManagerApprovalError(error)) {
         setManagerApprovalVisible(true);
@@ -540,9 +554,30 @@ export function SellScreen() {
 
             <View style={styles.statusRow}>
             {(['DINE_IN', 'TAKEAWAY', 'PICKUP'] as OrderType[]).map((type) => (
-              <PaymentMethodChip key={type} label={t(`orderType.${type}`)} selected={orderType === type} onPress={() => setOrderType(type)} />
+              <PaymentMethodChip
+                key={type}
+                label={t(`orderType.${type}`)}
+                selected={orderType === type}
+                onPress={() => {
+                  setOrderType(type);
+                  if (type !== 'DINE_IN') setSelectedTableId(null);
+                }}
+              />
             ))}
           </View>
+
+          {orderType === 'DINE_IN' ? (
+            <View style={styles.tableSelector}>
+              <Text style={styles.cashLabel}>Table</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tableChips}>
+                {availableTables.map((table) => (
+                  <PaymentMethodChip key={table.id} label={table.name} selected={selectedTableId === table.id} onPress={() => setSelectedTableId(table.id)} />
+                ))}
+              </ScrollView>
+              {availableTables.length === 0 ? <Text style={styles.modifierValidation}>No available tables.</Text> : null}
+              {lines.length > 0 && !selectedTableId ? <Text style={styles.modifierValidation}>Select a table before dine-in checkout.</Text> : null}
+            </View>
+          ) : null}
 
           <View style={styles.statusRow}>
             <StatusPill
@@ -637,7 +672,7 @@ export function SellScreen() {
               onChangeText={setTipText}
             />
             <AppButton
-              disabled={lines.length === 0 || holdOrder.isPending}
+              disabled={lines.length === 0 || holdOrder.isPending || dineInTableRequired}
               loading={holdOrder.isPending}
               onPress={holdCurrentOrder}
               style={styles.markPaidButton}
@@ -646,7 +681,7 @@ export function SellScreen() {
               {t('sell.order.hold')}
             </AppButton>
             <AppButton
-              disabled={lines.length === 0 || isCheckingOut}
+              disabled={lines.length === 0 || isCheckingOut || dineInTableRequired}
               loading={isCheckingOut}
               onPress={openPayment}
               style={styles.markPaidButton}
@@ -1208,6 +1243,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: tokens.spacing.sm,
     marginTop: tokens.spacing.lg,
+  },
+  tableSelector: {
+    gap: tokens.spacing.sm,
+    marginTop: tokens.spacing.md,
+  },
+  tableChips: {
+    gap: tokens.spacing.sm,
   },
   divider: {
     height: 1,

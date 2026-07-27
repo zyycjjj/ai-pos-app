@@ -34,6 +34,10 @@ const metadata: ModelMeta = {
                     name: "active",
                     type: "Boolean",
                     attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, kitchenPrintMode: {
+                    name: "kitchenPrintMode",
+                    type: "KitchenPrintMode",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
                 }, users: {
                     name: "users",
                     type: "StoreUser",
@@ -166,6 +170,30 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'store',
+                }, customers: {
+                    name: "customers",
+                    type: "Customer",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, customerSegments: {
+                    name: "customerSegments",
+                    type: "CustomerSegment",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, customerSegmentMembers: {
+                    name: "customerSegmentMembers",
+                    type: "CustomerSegmentMember",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
+                }, loyaltyPointLedgers: {
+                    name: "loyaltyPointLedgers",
+                    type: "LoyaltyPointLedger",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'store',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -284,6 +312,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'requestedBy',
+                }, createdLoyaltyPointLedgers: {
+                    name: "createdLoyaltyPointLedgers",
+                    type: "LoyaltyPointLedger",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'createdBy',
                 }, aiConversations: {
                     name: "aiConversations",
                     type: "AiConversation",
@@ -857,6 +891,36 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isOptional: true,
                     backLink: 'currentOrder',
+                }, customerId: {
+                    name: "customerId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'customer',
+                }, customer: {
+                    name: "customer",
+                    type: "Customer",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'orders',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "customerId" },
+                }, customerPhoneSnapshot: {
+                    name: "customerPhoneSnapshot",
+                    type: "String",
+                    isOptional: true,
+                }, customerNameSnapshot: {
+                    name: "customerNameSnapshot",
+                    type: "String",
+                    isOptional: true,
+                }, loyaltyPointsEarned: {
+                    name: "loyaltyPointsEarned",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, loyaltyPointsBalanceAfter: {
+                    name: "loyaltyPointsBalanceAfter",
+                    type: "Int",
+                    isOptional: true,
                 }, guestCount: {
                     name: "guestCount",
                     type: "Int",
@@ -997,6 +1061,12 @@ const metadata: ModelMeta = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'order',
+                }, loyaltyPointLedgers: {
+                    name: "loyaltyPointLedgers",
+                    type: "LoyaltyPointLedger",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'order',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -1013,6 +1083,322 @@ const metadata: ModelMeta = {
                 }, orderNumber: {
                     name: "orderNumber",
                     fields: ["orderNumber"]
+                },
+            },
+        },
+        customer: {
+            name: 'Customer', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'customers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, phone: {
+                    name: "phone",
+                    type: "String",
+                }, normalizedPhone: {
+                    name: "normalizedPhone",
+                    type: "String",
+                }, name: {
+                    name: "name",
+                    type: "String",
+                    isOptional: true,
+                }, note: {
+                    name: "note",
+                    type: "String",
+                    isOptional: true,
+                }, tags: {
+                    name: "tags",
+                    type: "Json",
+                    isOptional: true,
+                }, status: {
+                    name: "status",
+                    type: "CustomerStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, firstOrderAt: {
+                    name: "firstOrderAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, lastOrderAt: {
+                    name: "lastOrderAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, orderCount: {
+                    name: "orderCount",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, totalSpend: {
+                    name: "totalSpend",
+                    type: "Decimal",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, pointsBalance: {
+                    name: "pointsBalance",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, orders: {
+                    name: "orders",
+                    type: "Order",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'customer',
+                }, segmentMemberships: {
+                    name: "segmentMemberships",
+                    type: "CustomerSegmentMember",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'customer',
+                }, pointLedgers: {
+                    name: "pointLedgers",
+                    type: "LoyaltyPointLedger",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'customer',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, storeId_normalizedPhone: {
+                    name: "storeId_normalizedPhone",
+                    fields: ["storeId", "normalizedPhone"]
+                },
+            },
+        },
+        loyaltyPointLedger: {
+            name: 'LoyaltyPointLedger', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'loyaltyPointLedgers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, customerId: {
+                    name: "customerId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'customer',
+                }, customer: {
+                    name: "customer",
+                    type: "Customer",
+                    isDataModel: true,
+                    backLink: 'pointLedgers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "customerId" },
+                }, orderId: {
+                    name: "orderId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'order',
+                }, order: {
+                    name: "order",
+                    type: "Order",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'loyaltyPointLedgers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "orderId" },
+                }, type: {
+                    name: "type",
+                    type: "LoyaltyPointLedgerType",
+                }, points: {
+                    name: "points",
+                    type: "Int",
+                }, balanceAfter: {
+                    name: "balanceAfter",
+                    type: "Int",
+                }, reason: {
+                    name: "reason",
+                    type: "String",
+                }, createdByUserId: {
+                    name: "createdByUserId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'createdBy',
+                }, createdBy: {
+                    name: "createdBy",
+                    type: "User",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'createdLoyaltyPointLedgers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "createdByUserId" },
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        customerSegment: {
+            name: 'CustomerSegment', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'customerSegments',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, description: {
+                    name: "description",
+                    type: "String",
+                    isOptional: true,
+                }, status: {
+                    name: "status",
+                    type: "CustomerSegmentStatus",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, type: {
+                    name: "type",
+                    type: "CustomerSegmentType",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, ruleJson: {
+                    name: "ruleJson",
+                    type: "Json",
+                }, lastEvaluatedAt: {
+                    name: "lastEvaluatedAt",
+                    type: "DateTime",
+                    isOptional: true,
+                }, memberCount: {
+                    name: "memberCount",
+                    type: "Int",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 0 }] }],
+                }, members: {
+                    name: "members",
+                    type: "CustomerSegmentMember",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'segment',
+                }, campaigns: {
+                    name: "campaigns",
+                    type: "Campaign",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'targetCustomerSegment',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        customerSegmentMember: {
+            name: 'CustomerSegmentMember', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, storeId: {
+                    name: "storeId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'store',
+                }, store: {
+                    name: "store",
+                    type: "Store",
+                    isDataModel: true,
+                    backLink: 'customerSegmentMembers',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "storeId" },
+                }, segmentId: {
+                    name: "segmentId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'segment',
+                }, segment: {
+                    name: "segment",
+                    type: "CustomerSegment",
+                    isDataModel: true,
+                    backLink: 'members',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "segmentId" },
+                }, customerId: {
+                    name: "customerId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'customer',
+                }, customer: {
+                    name: "customer",
+                    type: "Customer",
+                    isDataModel: true,
+                    backLink: 'segmentMemberships',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "customerId" },
+                }, matchedAt: {
+                    name: "matchedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, ruleSnapshot: {
+                    name: "ruleSnapshot",
+                    type: "Json",
+                    isOptional: true,
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, segmentId_customerId: {
+                    name: "segmentId_customerId",
+                    fields: ["segmentId", "customerId"]
                 },
             },
         },
@@ -1845,9 +2231,6 @@ const metadata: ModelMeta = {
                 }, ticketNumber: {
                     name: "ticketNumber",
                     fields: ["ticketNumber"]
-                }, storeId_orderId_stationId: {
-                    name: "storeId_orderId_stationId",
-                    fields: ["storeId", "orderId", "stationId"]
                 },
             },
         },
@@ -2344,6 +2727,24 @@ const metadata: ModelMeta = {
                     name: "categoryName",
                     type: "String",
                     isOptional: true,
+                }, customerEligibilityMode: {
+                    name: "customerEligibilityMode",
+                    type: "CustomerEligibilityMode",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, targetCustomerSegmentId: {
+                    name: "targetCustomerSegmentId",
+                    type: "String",
+                    isOptional: true,
+                    isForeignKey: true,
+                    relationField: 'targetCustomerSegment',
+                }, targetCustomerSegment: {
+                    name: "targetCustomerSegment",
+                    type: "CustomerSegment",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'campaigns',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "targetCustomerSegmentId" },
                 }, startsAt: {
                     name: "startsAt",
                     type: "DateTime",

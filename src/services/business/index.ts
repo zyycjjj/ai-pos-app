@@ -6,6 +6,7 @@ export * from './tablesApi';
 export * from './checkoutApi';
 export * from './customersApi';
 export * from './printersApi';
+export * from './kitchenApi';
 export * from './aiApi';
 export * from './receiptsApi';
 export * from './productsApi';

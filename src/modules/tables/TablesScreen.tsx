@@ -9,7 +9,7 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDiningTables, useOpenTable, useTransferTable } from '@/services/businessApi';
+import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDeleteTableOrderItem, useDiningTables, useOpenTable, useTransferTable, useUpdateTableOrderItem } from '@/services/businessApi';
 import { tokens } from '@/theme';
 
 import { useActiveProducts } from '../products/useProducts';
@@ -25,12 +25,15 @@ export function TablesScreen() {
   const checkoutTable = useCheckoutTable();
   const clearTable = useClearTable();
   const transferTable = useTransferTable();
+  const updateOrderItem = useUpdateTableOrderItem();
+  const deleteOrderItem = useDeleteTableOrderItem();
   const [guestCounts, setGuestCounts] = useState<Record<string, string>>({});
   const [transferTargets, setTransferTargets] = useState<Record<string, string>>({});
+  const [orderingTableId, setOrderingTableId] = useState<string | null>(null);
   const [lastError, setLastError] = useState<string | null>(null);
 
   const tables = tablesQuery.data ?? [];
-  const simpleProduct = (productsQuery.data ?? []).find((product) => !product.modifierGroups.some((group) => group.required));
+  const orderableProducts = (productsQuery.data ?? []).filter((product) => product.isActive && product.availabilityStatus !== 'SOLD_OUT');
   const groupedTables = useMemo(() => {
     const groups = new Map<string, DiningTable[]>();
     tables.forEach((table) => {
@@ -74,7 +77,7 @@ export function TablesScreen() {
             <Text style={styles.areaTitle}>{areaName}</Text>
             <View style={styles.grid}>
               {areaTables.map((table) => {
-                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending || transferTable.isPending;
+                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending || transferTable.isPending || updateOrderItem.isPending || deleteOrderItem.isPending;
                 const currentTotal = table.currentOrder?.total ?? 0;
                 const selectedTransferTarget = transferTargets[table.id] ?? availableTransferTargets.find((target) => target.id !== table.id)?.id ?? '';
                 return (
@@ -94,9 +97,37 @@ export function TablesScreen() {
                         <Text style={styles.muted}>{t('tables.guests')}: {table.currentOrder.guestCount ?? '-'}</Text>
                         {table.currentOrder.items.map((item) => (
                           <View key={item.id} style={styles.itemRow}>
-                            <Text style={styles.itemText}>{item.quantity} x {item.name}</Text>
-                            <Text style={styles.itemText}>{money(item.lineTotal)}</Text>
+                            <View style={styles.itemLineTop}>
+                              <Text style={styles.itemText}>{item.quantity} x {item.name}</Text>
+                              <Text style={styles.itemText}>{money(item.lineTotal)}</Text>
+                            </View>
                             {item.modifiers.length > 0 ? <Text style={styles.modifierText}>{item.modifiers.map((modifier) => modifier.optionName).join(', ')}</Text> : null}
+                            <View style={styles.itemEditRow}>
+                              <AppButton
+                                variant="secondary"
+                                disabled={busy || item.quantity <= 1}
+                                onPress={() => runAction(() => updateOrderItem.mutateAsync({ tableId: table.id, itemId: item.id, quantity: item.quantity - 1 }))}
+                                style={styles.smallButton}
+                              >
+                                -
+                              </AppButton>
+                              <AppButton
+                                variant="secondary"
+                                disabled={busy}
+                                onPress={() => runAction(() => updateOrderItem.mutateAsync({ tableId: table.id, itemId: item.id, quantity: item.quantity + 1 }))}
+                                style={styles.smallButton}
+                              >
+                                +
+                              </AppButton>
+                              <AppButton
+                                variant="secondary"
+                                disabled={busy}
+                                onPress={() => runAction(() => deleteOrderItem.mutateAsync({ tableId: table.id, itemId: item.id }))}
+                                style={styles.smallButton}
+                              >
+                                Del
+                              </AppButton>
+                            </View>
                           </View>
                         ))}
                       </View>
@@ -126,13 +157,34 @@ export function TablesScreen() {
                       <View style={styles.actions}>
                         <AppButton
                           variant="secondary"
-                          disabled={busy || !simpleProduct}
+                          disabled={busy}
                           loading={addItems.isPending}
                           icon={<Sparkles color={tokens.colors.ink} size={18} />}
-                          onPress={() => simpleProduct ? runAction(() => addItems.mutateAsync({ tableId: table.id, items: [{ productId: simpleProduct.id, quantity: 1 }] })) : undefined}
+                          onPress={() => setOrderingTableId((current) => (current === table.id ? null : table.id))}
                         >
                           {t('tables.addItem')}
                         </AppButton>
+                        {orderingTableId === table.id ? (
+                          <View style={styles.productPicker}>
+                            <Text style={styles.muted}>Select item</Text>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.productChips}>
+                              {orderableProducts.map((product) => {
+                                const requiresModifier = product.modifierGroups.some((group) => group.required);
+                                return (
+                                  <AppButton
+                                    key={product.id}
+                                    variant="secondary"
+                                    disabled={busy || requiresModifier}
+                                    onPress={() => runAction(() => addItems.mutateAsync({ tableId: table.id, items: [{ productId: product.id, quantity: 1 }] }))}
+                                    style={styles.productChip}
+                                  >
+                                    {product.name}
+                                  </AppButton>
+                                );
+                              })}
+                            </ScrollView>
+                          </View>
+                        ) : null}
                         <View style={styles.transferBox}>
                           <Text style={styles.muted}>{t('tables.transferTo')}</Text>
                           <TextInput
@@ -278,6 +330,12 @@ const styles = StyleSheet.create({
     gap: tokens.spacing.xs,
     paddingTop: tokens.spacing.sm,
   },
+  itemLineTop: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: tokens.spacing.sm,
+  },
   itemText: {
     ...tokens.typography.label,
     color: tokens.colors.ink,
@@ -288,6 +346,25 @@ const styles = StyleSheet.create({
   },
   transferBox: {
     gap: tokens.spacing.sm,
+  },
+  itemEditRow: {
+    flexDirection: 'row',
+    gap: tokens.spacing.xs,
+  },
+  smallButton: {
+    minHeight: 34,
+    minWidth: 48,
+    paddingHorizontal: tokens.spacing.sm,
+  },
+  productPicker: {
+    gap: tokens.spacing.sm,
+  },
+  productChips: {
+    gap: tokens.spacing.sm,
+  },
+  productChip: {
+    minHeight: 42,
+    paddingHorizontal: tokens.spacing.md,
   },
   targetChips: {
     gap: tokens.spacing.sm,

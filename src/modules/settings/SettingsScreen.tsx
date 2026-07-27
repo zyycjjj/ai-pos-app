@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState, type ReactNode } from 'react';
 import { Bluetooth, Monitor, Printer, Usb } from 'lucide-react-native';
 
@@ -6,6 +6,7 @@ import { Screen } from '@/components/Screen';
 import { useI18n } from '@/i18n/useI18n';
 import type { SupportedLocale } from '@/i18n';
 import { printerModule } from '@/native/printer/PrinterModule';
+import { useCreateLanPrinter, usePosPrinters, useTestPosPrinter } from '@/services/businessApi';
 import { useAuthStore } from '@/stores/authStore';
 import type { StoreRole } from '@/stores/authStore';
 import { tokens } from '@/theme';
@@ -17,6 +18,14 @@ export function SettingsScreen() {
   const roleLabel = role ? t(getRoleLabelKey(role)) : '';
   const [printerState, setPrinterState] = useState<'idle' | 'printing' | 'sent' | 'failed'>('idle');
   const [printerMessage, setPrinterMessage] = useState(t('settings.printer.testReady'));
+  const [lanHost, setLanHost] = useState('');
+  const [lanPort, setLanPort] = useState('9100');
+  const [lanMessage, setLanMessage] = useState('Ready to add a LAN printer.');
+  const printersQuery = usePosPrinters();
+  const createLanPrinter = useCreateLanPrinter();
+  const testPosPrinter = useTestPosPrinter();
+  const lanPrinters = (printersQuery.data ?? []).filter((printer) => printer.connectionType === 'LAN');
+  const selectedLanPrinter = lanPrinters[0];
 
   const printTestPage = async () => {
     setPrinterState('printing');
@@ -28,6 +37,39 @@ export function SettingsScreen() {
     } catch (error) {
       setPrinterState('failed');
       setPrinterMessage(error instanceof Error ? error.message : t('settings.printer.testFailed'));
+    }
+  };
+
+  const saveLanPrinter = async () => {
+    const host = lanHost.trim();
+    const port = Number(lanPort);
+    if (!host || !Number.isInteger(port) || port < 1 || port > 65535) {
+      setLanMessage('Enter a valid printer IP and port.');
+      return;
+    }
+    try {
+      const printer = await createLanPrinter.mutateAsync({
+        name: `LAN Printer ${host}`,
+        code: `LAN-${host.replace(/[^0-9A-Za-z]/g, '-')}`.slice(0, 24),
+        host,
+        port,
+      });
+      setLanMessage(`Saved ${printer.name}.`);
+    } catch (error) {
+      setLanMessage(error instanceof Error ? error.message : 'LAN printer save failed.');
+    }
+  };
+
+  const testLanPrinter = async () => {
+    if (!selectedLanPrinter) {
+      setLanMessage('Save a LAN printer before test print.');
+      return;
+    }
+    try {
+      const job = await testPosPrinter.mutateAsync(selectedLanPrinter.id);
+      setLanMessage(job.status === 'FAILED' && job.lastError ? job.lastError : `Test print job ${job.status}.`);
+    } catch (error) {
+      setLanMessage(error instanceof Error ? error.message : 'LAN test print failed.');
     }
   };
 
@@ -107,10 +149,42 @@ export function SettingsScreen() {
               <SettingRow label="SDK path" value="POSConnect Bluetooth" />
             </SettingPanel>
 
-            <SettingPanel icon={<Usb color={tokens.colors.muted} size={22} />} label="External printer" status="Optional" title="USB / Ethernet printer">
-              <SettingRow label="USB" value="Pending device test" />
-              <SettingRow label="Ethernet" value="IP + port later" />
-              <SettingRow label="Serial" value="Supported by SDK" />
+            <SettingPanel icon={<Usb color={tokens.colors.muted} size={22} />} label="LAN printer" status={selectedLanPrinter ? 'Configured' : 'Setup'} title="IP / port test print">
+              <SettingRow label="Current" value={selectedLanPrinter?.address ?? 'Not configured'} />
+              <TextInput
+                autoCapitalize="none"
+                keyboardType="numbers-and-punctuation"
+                placeholder="Printer IP"
+                placeholderTextColor={tokens.colors.subtle}
+                style={styles.input}
+                value={lanHost}
+                onChangeText={setLanHost}
+              />
+              <TextInput
+                keyboardType="number-pad"
+                placeholder="Port"
+                placeholderTextColor={tokens.colors.subtle}
+                style={styles.input}
+                value={lanPort}
+                onChangeText={setLanPort}
+              />
+              <Text style={[styles.printerMessage, lanMessage.includes('failed') || lanMessage.includes('valid') ? styles.printerMessageError : null]}>{lanMessage}</Text>
+              <View style={styles.buttonRow}>
+                <Pressable
+                  disabled={createLanPrinter.isPending}
+                  onPress={saveLanPrinter}
+                  style={({ pressed }) => [styles.testButton, styles.flexButton, pressed ? styles.pressed : null, createLanPrinter.isPending ? styles.testButtonDisabled : null]}
+                >
+                  <Text style={styles.testButtonText}>{createLanPrinter.isPending ? 'Saving...' : 'Save LAN printer'}</Text>
+                </Pressable>
+                <Pressable
+                  disabled={testPosPrinter.isPending}
+                  onPress={testLanPrinter}
+                  style={({ pressed }) => [styles.testButtonSecondary, styles.flexButton, pressed ? styles.pressed : null, testPosPrinter.isPending ? styles.testButtonDisabled : null]}
+                >
+                  <Text style={styles.testButtonSecondaryText}>{testPosPrinter.isPending ? 'Testing...' : 'Test print'}</Text>
+                </Pressable>
+              </View>
             </SettingPanel>
           </View>
         </View>
@@ -124,6 +198,7 @@ function getRoleLabelKey(role: StoreRole) {
     OWNER: 'auth.role.owner',
     MANAGER: 'auth.role.manager',
     CASHIER: 'auth.role.cashier',
+    KITCHEN: 'auth.role.kitchen',
     STAFF: 'auth.role.staff',
   } as const;
   return keyByRole[role];
@@ -393,6 +468,16 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.colors.accent,
     marginTop: tokens.spacing.sm,
   },
+  testButtonSecondary: {
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: tokens.radius.md,
+    borderWidth: 1,
+    borderColor: tokens.colors.lineStrong,
+    backgroundColor: tokens.colors.surface,
+    marginTop: tokens.spacing.sm,
+  },
   testButtonDisabled: {
     opacity: 0.72,
   },
@@ -401,6 +486,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     fontWeight: '800',
+  },
+  testButtonSecondaryText: {
+    color: tokens.colors.ink,
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: '800',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    gap: tokens.spacing.sm,
+  },
+  flexButton: {
+    flex: 1,
+  },
+  input: {
+    minHeight: 44,
+    borderWidth: 1,
+    borderColor: tokens.colors.lineStrong,
+    borderRadius: tokens.radius.md,
+    backgroundColor: tokens.colors.surfaceElevated,
+    color: tokens.colors.ink,
+    paddingHorizontal: tokens.spacing.md,
+    fontSize: 14,
+    fontWeight: '700',
   },
   printerMessage: {
     color: tokens.colors.muted,

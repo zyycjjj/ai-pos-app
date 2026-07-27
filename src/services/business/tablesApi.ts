@@ -60,6 +60,36 @@ export function useAddTableItems() {
   });
 }
 
+export function useUpdateTableOrderItem() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; itemId: string; quantity: number }) => {
+      const { data } = await apiClient.patch<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}`, { quantity: payload.quantity });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
+export function useDeleteTableOrderItem() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; itemId: string }) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}/delete`);
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['checkout'] });
+    },
+  });
+}
+
 export function useCheckoutTable() {
   const queryClient = useQueryClient();
 

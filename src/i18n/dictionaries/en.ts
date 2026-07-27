@@ -4,6 +4,7 @@ export const en = {
   'nav.products': 'Products',
   'nav.orders': 'Orders',
   'nav.tables': 'Tables',
+  'nav.kitchen': 'Kitchen',
   'nav.display': 'Display',
   'nav.shift': 'Shift',
   'nav.settings': 'Settings',
@@ -19,6 +20,7 @@ export const en = {
   'auth.role.owner': 'Owner',
   'auth.role.manager': 'Manager',
   'auth.role.cashier': 'Cashier',
+  'auth.role.kitchen': 'Kitchen Staff',
   'auth.role.staff': 'Staff',
 
   'sell.eyebrow': 'Counter terminal',

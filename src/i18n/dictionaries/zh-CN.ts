@@ -6,6 +6,7 @@ export const zhCN = {
   'nav.products': '商品',
   'nav.orders': '订单',
   'nav.tables': '桌台',
+  'nav.kitchen': '后厨',
   'nav.display': '客显',
   'nav.shift': '班次',
   'nav.settings': '设置',
@@ -21,6 +22,7 @@ export const zhCN = {
   'auth.role.owner': '店主',
   'auth.role.manager': '店长',
   'auth.role.cashier': '收银员',
+  'auth.role.kitchen': '后厨',
   'auth.role.staff': '员工',
 
   'sell.eyebrow': '柜台终端',

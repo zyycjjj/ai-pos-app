@@ -328,7 +328,7 @@ export function useSuspenseCountOrder<TArgs extends Prisma.OrderCountArgs, TQuer
 }
 import type { OrderType, OrderStatus, PrintStatus, PaymentMethod } from './__types';
 
-export function useCheckOrder<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; orderNumber?: string; pickupNumber?: string; orderType?: OrderType; tableId?: string; guestCount?: number; status?: OrderStatus; printStatus?: PrintStatus; paymentMethod?: PaymentMethod; currency?: string; adjustmentType?: string; discountReason?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckOrder<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; orderNumber?: string; pickupNumber?: string; orderType?: OrderType; tableId?: string; customerId?: string; customerPhoneSnapshot?: string; customerNameSnapshot?: string; loyaltyPointsEarned?: number; loyaltyPointsBalanceAfter?: number; guestCount?: number; status?: OrderStatus; printStatus?: PrintStatus; paymentMethod?: PaymentMethod; currency?: string; adjustmentType?: string; discountReason?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Order', `${endpoint}/order/check`, args, options, fetch);
 }

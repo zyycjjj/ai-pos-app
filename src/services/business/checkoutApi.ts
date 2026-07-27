@@ -9,6 +9,7 @@ export type CheckoutPreviewPayload = {
     modifiers?: Array<{ groupId: string; optionIds: string[] }>;
   }>;
   orderType?: CheckoutOrder['orderType'];
+  tableId?: string;
   adjustment?: {
     type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
     value: number;
@@ -38,6 +39,7 @@ export function useCreateCheckoutOrder() {
         modifiers?: Array<{ groupId: string; optionIds: string[] }>;
       }>;
       orderType?: CheckoutOrder['orderType'];
+      tableId?: string;
       adjustment?: {
         type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
         value: number;
@@ -90,6 +92,7 @@ export function useHoldCheckoutOrder() {
         modifiers?: Array<{ groupId: string; optionIds: string[] }>;
       }>;
       orderType?: CheckoutOrder['orderType'];
+      tableId?: string;
       adjustment?: {
         type: 'discount' | 'percentage_discount' | 'fixed_reduction' | 'price_override';
         value: number;

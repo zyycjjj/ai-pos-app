@@ -326,8 +326,9 @@ export function useSuspenseCountStore<TArgs extends Prisma.StoreCountArgs, TQuer
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Store', `${endpoint}/store/count`, args, options, fetch);
 }
+import type { KitchenPrintMode } from './__types';
 
-export function useCheckStore<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; code?: string; timezone?: string; currency?: string; active?: boolean }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckStore<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; code?: string; timezone?: string; currency?: string; active?: boolean; kitchenPrintMode?: KitchenPrintMode }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Store', `${endpoint}/store/check`, args, options, fetch);
 }

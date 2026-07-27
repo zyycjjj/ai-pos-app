@@ -326,9 +326,9 @@ export function useSuspenseCountCampaign<TArgs extends Prisma.CampaignCountArgs,
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Campaign', `${endpoint}/campaign/count`, args, options, fetch);
 }
-import type { CampaignStatus, CampaignType, PromotionStackingPolicy } from './__types';
+import type { CampaignStatus, CampaignType, PromotionStackingPolicy, CustomerEligibilityMode } from './__types';
 
-export function useCheckCampaign<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; goal?: string; status?: CampaignStatus; type?: CampaignType; stackingPolicy?: PromotionStackingPolicy; discountType?: string; promoCode?: string; productId?: string; categoryName?: string; priority?: number; usageLimit?: number; usageCount?: number; timeWindow?: string; bannerCopy?: string; staffMessage?: string; createdById?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckCampaign<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; storeId?: string; name?: string; goal?: string; status?: CampaignStatus; type?: CampaignType; stackingPolicy?: PromotionStackingPolicy; discountType?: string; promoCode?: string; productId?: string; categoryName?: string; customerEligibilityMode?: CustomerEligibilityMode; targetCustomerSegmentId?: string; priority?: number; usageLimit?: number; usageCount?: number; timeWindow?: string; bannerCopy?: string; staffMessage?: string; createdById?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Campaign', `${endpoint}/campaign/check`, args, options, fetch);
 }
