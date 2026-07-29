@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../apiClient';
-import type { KitchenStation, KitchenTicket, KitchenTicketStatus, PrintJob } from './types';
+import type { KitchenStation, KitchenTicket, KitchenTicketPreview, KitchenTicketStatus, PrintJob } from './types';
 
 export function useKitchenStations() {
   return useQuery({
@@ -20,6 +20,17 @@ export function useKitchenTickets(filters: { stationId?: string; status?: Kitche
       return data;
     },
     refetchInterval: 3_000,
+  });
+}
+
+export function useKitchenTicketHistory(filters: { stationId?: string; status?: KitchenTicketStatus | ''; take?: number } = {}) {
+  return useQuery({
+    queryKey: ['kitchen', 'tickets', 'history', filters],
+    queryFn: async () => {
+      const { data } = await apiClient.get<KitchenTicket[]>('/api/kitchen/tickets/history', { params: filters });
+      return data;
+    },
+    refetchInterval: 10_000,
   });
 }
 
@@ -68,6 +79,15 @@ export function useReprintKitchenTicket() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['print-jobs'] });
+    },
+  });
+}
+
+export function usePreviewKitchenTicket() {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await apiClient.get<KitchenTicketPreview>(`/api/kitchen/tickets/${id}/preview`);
+      return data;
     },
   });
 }

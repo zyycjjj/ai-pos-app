@@ -12,6 +12,7 @@ export type CheckoutOrderItem = {
   addedAt: string;
   createdAt: string;
   kitchenStatus: KitchenTicketStatus | null;
+  urgent?: boolean;
   refundedQuantity?: number;
   modifiers: SelectedModifier[];
 };
@@ -36,6 +37,9 @@ export type CheckoutKitchenTicket = {
   readyAt: string | null;
   completedAt: string | null;
   cancelledAt: string | null;
+  urgent: boolean;
+  rushReason: string | null;
+  rushedAt: string | null;
 };
 
 export type KitchenTicket = {
@@ -49,6 +53,8 @@ export type KitchenTicket = {
     status: 'ACTIVE' | 'INACTIVE';
     sortOrder: number;
     isDefault: boolean;
+    warningMinutes: number;
+    overdueMinutes: number;
   };
   order: {
     id: string;
@@ -57,6 +63,7 @@ export type KitchenTicket = {
     status: CheckoutOrder['status'];
     total: number;
     createdAt: string;
+    table: { id: string; name: string } | null;
   };
   items: Array<{
     id: string;
@@ -73,8 +80,24 @@ export type KitchenTicket = {
   completedAt: string | null;
   cancelledAt: string | null;
   cancelReason: string | null;
+  urgent: boolean;
+  rushReason: string | null;
+  rushedAt: string | null;
+  waitMinutes: number;
+  cookMinutes: number | null;
+  slaStatus: 'NORMAL' | 'WARNING' | 'OVERDUE';
   createdAt: string;
   updatedAt: string;
+};
+
+export type KitchenTicketPreview = {
+  ticketId: string;
+  mode: 'ORDER_TICKET' | 'ITEM_TICKET';
+  stationName: string;
+  tableName: string | null;
+  orderNo: string;
+  items: Array<{ id: string; name: string; quantity: number; modifiers: string[]; note: string | null }>;
+  textPreview: string;
 };
 
 export type KitchenStation = KitchenTicket['station'] & {

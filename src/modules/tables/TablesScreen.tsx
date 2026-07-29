@@ -9,7 +9,7 @@ import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
-import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDeleteTableOrderItem, useDiningTables, useOpenTable, useTransferTable, useUpdateTableOrderItem } from '@/services/businessApi';
+import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, useClearTable, useDeleteTableOrderItem, useDiningTables, useOpenTable, useRushTableOrderItem, useTransferTable, useUnrushTableOrderItem, useUpdateTableOrderItem } from '@/services/businessApi';
 import { tokens } from '@/theme';
 
 import { useActiveProducts } from '../products/useProducts';
@@ -32,6 +32,8 @@ export function TablesScreen() {
   const transferTable = useTransferTable();
   const updateOrderItem = useUpdateTableOrderItem();
   const deleteOrderItem = useDeleteTableOrderItem();
+  const rushOrderItem = useRushTableOrderItem();
+  const unrushOrderItem = useUnrushTableOrderItem();
   const [guestCounts, setGuestCounts] = useState<Record<string, string>>({});
   const [transferTargets, setTransferTargets] = useState<Record<string, string>>({});
   const [orderingTableId, setOrderingTableId] = useState<string | null>(null);
@@ -91,7 +93,7 @@ export function TablesScreen() {
             <Text style={styles.areaTitle}>{areaName}</Text>
             <View style={styles.grid}>
               {areaTables.map((table) => {
-                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending || transferTable.isPending || updateOrderItem.isPending || deleteOrderItem.isPending;
+                const busy = openTable.isPending || addItems.isPending || checkoutTable.isPending || clearTable.isPending || transferTable.isPending || updateOrderItem.isPending || deleteOrderItem.isPending || rushOrderItem.isPending || unrushOrderItem.isPending;
                 const currentTotal = table.currentOrder?.total ?? 0;
                 const selectedTransferTarget = transferTargets[table.id] ?? availableTransferTargets.find((target) => target.id !== table.id)?.id ?? '';
                 return (
@@ -138,6 +140,20 @@ export function TablesScreen() {
                                 style={styles.smallButton}
                               >
                                 +
+                              </AppButton>
+                              <AppButton
+                                variant="secondary"
+                                disabled={busy}
+                                onPress={() =>
+                                  runAction(() =>
+                                    item.urgent
+                                      ? unrushOrderItem.mutateAsync({ tableId: table.id, itemId: item.id, reason: t('tables.unrushReason') })
+                                      : rushOrderItem.mutateAsync({ tableId: table.id, itemId: item.id, reason: t('tables.rushReason') }),
+                                  )
+                                }
+                                style={styles.smallButton}
+                              >
+                                {item.urgent ? t('tables.unrush') : t('tables.rush')}
                               </AppButton>
                               <AppButton
                                 variant="secondary"

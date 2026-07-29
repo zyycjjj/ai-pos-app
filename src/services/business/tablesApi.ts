@@ -90,6 +90,36 @@ export function useDeleteTableOrderItem() {
   });
 }
 
+export function useRushTableOrderItem() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; itemId: string; reason?: string }) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}/rush`, { reason: payload.reason });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['kitchen'] });
+    },
+  });
+}
+
+export function useUnrushTableOrderItem() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (payload: { tableId: string; itemId: string; reason?: string }) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}/unrush`, { reason: payload.reason });
+      return data;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['tables'] });
+      void queryClient.invalidateQueries({ queryKey: ['kitchen'] });
+    },
+  });
+}
+
 export function useCheckoutTable() {
   const queryClient = useQueryClient();
 
