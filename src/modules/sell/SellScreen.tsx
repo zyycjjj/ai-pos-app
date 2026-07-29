@@ -5,6 +5,7 @@ import { CheckCircle2, Minus, Plus, Printer, RotateCcw, Search, Trash2, X } from
 import { AppButton } from '@/components/AppButton';
 import { AppScreen } from '@/components/AppScreen';
 import { EmptyState } from '@/components/EmptyState';
+import { ManagerApprovalModal, type ManagerApprovalPayload } from '@/components/ManagerApprovalModal';
 import { MetricCard } from '@/components/MetricCard';
 import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
@@ -238,7 +239,7 @@ export function SellScreen() {
     }
   };
 
-  const confirmPayment = async () => {
+  const confirmPayment = async (managerApproval?: ManagerApprovalPayload) => {
     if (lines.length === 0) {
       return;
     }
@@ -273,6 +274,7 @@ export function SellScreen() {
         serviceChargeRate: 0,
         tip: tipAmount,
         currency: 'USD',
+        managerApproval,
       });
       setCompletedOrder(paidOrder);
       setPaymentVisible(false);
@@ -960,7 +962,7 @@ export function SellScreen() {
               <AppButton variant="secondary" onPress={addPaymentLine} style={styles.modalActionButton}>
                 {t('payment.addPayment')}
               </AppButton>
-              <AppButton disabled={isCheckingOut || !paymentReady} loading={isCheckingOut} onPress={confirmPayment} style={styles.modalActionButton}>
+              <AppButton disabled={isCheckingOut || !paymentReady} loading={isCheckingOut} onPress={() => void confirmPayment()} style={styles.modalActionButton}>
                 {t('payment.confirm')}
               </AppButton>
             </View>
@@ -1015,6 +1017,18 @@ export function SellScreen() {
           </Surface>
         </View>
       </Modal>
+
+      <ManagerApprovalModal
+        visible={managerApprovalVisible}
+        title="Manager approval"
+        message={t('payment.managerApprovalRequired')}
+        loading={createOrder.isPending}
+        onCancel={() => setManagerApprovalVisible(false)}
+        onSubmit={(approval) => {
+          setManagerApprovalVisible(false);
+          void confirmPayment(approval);
+        }}
+      />
 
       <Modal animationType="fade" transparent visible={Boolean(modifierProduct)} onRequestClose={() => setModifierProduct(null)}>
         <View style={styles.modalBackdrop}>

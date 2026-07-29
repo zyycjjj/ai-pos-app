@@ -5,6 +5,7 @@ import { Banknote, DoorOpen, LogOut, Minus, Plus, Printer } from 'lucide-react-n
 import { AppButton } from '@/components/AppButton';
 import { AppScreen } from '@/components/AppScreen';
 import { EmptyState } from '@/components/EmptyState';
+import { ManagerApprovalModal, type ManagerApprovalPayload } from '@/components/ManagerApprovalModal';
 import { MetricCard } from '@/components/MetricCard';
 import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
@@ -12,6 +13,7 @@ import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
 import { type Shift, useActiveShift, useCashIn, useCashOut, useCloseShift, useOpenShift, usePrintShiftSummary, useShifts } from '@/services/businessApi';
 import { tokens } from '@/theme';
+import { isManagerApprovalError } from '@/modules/sell/sell.helpers';
 
 type CashAction = 'cashIn' | 'cashOut';
 
@@ -34,6 +36,7 @@ export function ShiftScreen() {
   const [actualCashText, setActualCashText] = useState('');
   const [closeNotes, setCloseNotes] = useState('');
   const [errorVisible, setErrorVisible] = useState(false);
+  const [pendingCashOut, setPendingCashOut] = useState<{ shiftId: string; amount: number; reason: string } | null>(null);
 
   const activeShift = activeShiftQuery.data ?? null;
   const recentShifts = shiftsQuery.data ?? [];
@@ -51,20 +54,29 @@ export function ShiftScreen() {
     await openShift.mutateAsync({ openingCash, notes: openNotes.trim() || undefined });
   };
 
-  const submitMovement = async () => {
+  const submitMovement = async (managerApproval?: ManagerApprovalPayload) => {
     if (!activeShift || !movementReady) {
       setErrorVisible(true);
       return;
     }
     setErrorVisible(false);
-    const payload = { shiftId: activeShift.id, amount: Number(movementAmountText), reason: movementReason.trim() };
-    if (cashAction === 'cashIn') {
-      await cashIn.mutateAsync(payload);
-    } else {
-      await cashOut.mutateAsync(payload);
+    const payload = pendingCashOut ?? { shiftId: activeShift.id, amount: Number(movementAmountText), reason: movementReason.trim() };
+    try {
+      if (cashAction === 'cashIn' && !pendingCashOut) {
+        await cashIn.mutateAsync(payload);
+      } else {
+        await cashOut.mutateAsync({ ...payload, managerApproval });
+      }
+      setPendingCashOut(null);
+      setMovementAmountText('');
+      setMovementReason('');
+    } catch (error) {
+      if (isManagerApprovalError(error)) {
+        setPendingCashOut(payload);
+      } else {
+        setErrorVisible(true);
+      }
     }
-    setMovementAmountText('');
-    setMovementReason('');
   };
 
   const submitCloseShift = async () => {
@@ -129,7 +141,7 @@ export function ShiftScreen() {
                 </View>
                 <TextInput style={styles.input} keyboardType="decimal-pad" placeholder={t('shifts.fields.amount')} value={movementAmountText} onChangeText={setMovementAmountText} />
                 <TextInput style={styles.input} placeholder={t('shifts.fields.reason')} value={movementReason} onChangeText={setMovementReason} />
-                <AppButton loading={cashIn.isPending || cashOut.isPending} disabled={!movementReady} onPress={submitMovement}>
+                <AppButton loading={cashIn.isPending || cashOut.isPending} disabled={!movementReady} onPress={() => void submitMovement()}>
                   {t('shifts.cashMovement.submit')}
                 </AppButton>
               </Surface>
@@ -203,6 +215,14 @@ export function ShiftScreen() {
           )}
         </Surface>
       </ScrollView>
+      <ManagerApprovalModal
+        visible={Boolean(pendingCashOut)}
+        title="Manager approval"
+        message={t('shifts.cashMovement.cashOut')}
+        loading={cashOut.isPending}
+        onCancel={() => setPendingCashOut(null)}
+        onSubmit={(approval) => void submitMovement(approval)}
+      />
     </AppScreen>
   );
 }

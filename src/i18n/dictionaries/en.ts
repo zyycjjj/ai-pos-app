@@ -21,6 +21,7 @@ export const en = {
   'auth.role.manager': 'Manager',
   'auth.role.cashier': 'Cashier',
   'auth.role.kitchen': 'Kitchen Staff',
+  'auth.role.waiter': 'Waiter',
   'auth.role.staff': 'Staff',
 
   'sell.eyebrow': 'Counter terminal',

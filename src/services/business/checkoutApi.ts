@@ -2,6 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../apiClient';
 import type { CheckoutOrder, CheckoutRefund, PromotionPreview } from './types';
 
+export type ManagerApprovalPayload = {
+  managerUserId: string;
+  pin: string;
+  reason: string;
+};
+
 export type CheckoutPreviewPayload = {
   items: Array<{
     productId: string;
@@ -61,6 +67,7 @@ export function useCreateCheckoutOrder() {
       serviceCharge?: number;
       tip?: number;
       currency?: string;
+      managerApproval?: ManagerApprovalPayload;
     }) => {
       const { data } = await apiClient.post<CheckoutOrder>('/api/checkout/orders', payload, { timeout: 30_000 });
       return data;
@@ -202,10 +209,11 @@ export function useVoidOrder() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: { orderId: string; reason: string; approvedById?: string }) => {
+    mutationFn: async (payload: { orderId: string; reason: string; approvedById?: string; managerApproval?: ManagerApprovalPayload }) => {
       const { data } = await apiClient.patch<CheckoutOrder>(`/api/checkout/orders/${payload.orderId}/void`, {
         reason: payload.reason,
         approvedById: payload.approvedById,
+        managerApproval: payload.managerApproval,
       });
       return data;
     },
@@ -228,6 +236,7 @@ export function useRefundOrder() {
       amount?: number;
       items?: Array<{ orderItemId: string; quantity: number }>;
       approvedById?: string;
+      managerApproval?: ManagerApprovalPayload;
     }) => {
       const { orderId, ...body } = payload;
       const { data } = await apiClient.post<CheckoutRefund>(`/api/checkout/orders/${orderId}/refunds`, body);

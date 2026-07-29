@@ -4,18 +4,23 @@ import { Ban, Printer, RotateCcw } from 'lucide-react-native';
 
 import { AppScreen } from '@/components/AppScreen';
 import { EmptyState } from '@/components/EmptyState';
+import { ManagerApprovalModal, type ManagerApprovalPayload } from '@/components/ManagerApprovalModal';
 import { StatusPill } from '@/components/StatusPill';
 import { Surface } from '@/components/Surface';
 import { useCurrency } from '@/hooks/useCurrency';
 import { useI18n } from '@/i18n/useI18n';
 import { type CheckoutOrder, useCheckoutOrders, usePrintOrderReceipt, usePrintRefundReceipt, useRefundOrder, useReprintOrderReceipt, useVoidOrder } from '@/services/businessApi';
 import { tokens } from '@/theme';
+import { isManagerApprovalError } from '@/modules/sell/sell.helpers';
+
+type PendingManagerAction = { type: 'refund' | 'void'; order: CheckoutOrder } | null;
 
 export function OrdersScreen() {
   const { t } = useI18n();
   const money = useCurrency();
   const [printingOrderId, setPrintingOrderId] = useState<string | null>(null);
   const [actionOrderId, setActionOrderId] = useState<string | null>(null);
+  const [pendingApproval, setPendingApproval] = useState<PendingManagerAction>(null);
   const [printMessage, setPrintMessage] = useState<string | null>(null);
   const ordersQuery = useCheckoutOrders();
   const printOrderReceipt = usePrintOrderReceipt();
@@ -38,7 +43,7 @@ export function OrdersScreen() {
     }
   };
 
-  const refund = async (order: CheckoutOrder) => {
+  const refund = async (order: CheckoutOrder, managerApproval?: ManagerApprovalPayload) => {
     setActionOrderId(order.id);
     try {
       const refundRecord = await refundOrder.mutateAsync({
@@ -46,20 +51,32 @@ export function OrdersScreen() {
         idempotencyKey: `pos-full-refund-${order.id}-${Date.now()}`,
         reason: t('orders.refund.defaultReason'),
         method: order.paymentMethod ?? 'MANUAL',
+        managerApproval,
       });
       await printRefundReceipt.mutateAsync(refundRecord.id);
+      setPendingApproval(null);
+    } catch (error) {
+      if (isManagerApprovalError(error)) {
+        setPendingApproval({ type: 'refund', order });
+      }
     } finally {
       setActionOrderId(null);
     }
   };
 
-  const voidPaidOrder = async (order: CheckoutOrder) => {
+  const voidPaidOrder = async (order: CheckoutOrder, managerApproval?: ManagerApprovalPayload) => {
     setActionOrderId(order.id);
     try {
       await voidOrder.mutateAsync({
         orderId: order.id,
         reason: t('orders.void.defaultReason'),
+        managerApproval,
       });
+      setPendingApproval(null);
+    } catch (error) {
+      if (isManagerApprovalError(error)) {
+        setPendingApproval({ type: 'void', order });
+      }
     } finally {
       setActionOrderId(null);
     }
@@ -109,6 +126,21 @@ export function OrdersScreen() {
           ))}
         </ScrollView>
       )}
+      <ManagerApprovalModal
+        visible={Boolean(pendingApproval)}
+        title="Manager approval"
+        message={pendingApproval?.type === 'refund' ? t('orders.actions.refund') : t('orders.actions.void')}
+        loading={refundOrder.isPending || voidOrder.isPending}
+        onCancel={() => setPendingApproval(null)}
+        onSubmit={(approval) => {
+          if (!pendingApproval) return;
+          if (pendingApproval.type === 'refund') {
+            void refund(pendingApproval.order, approval);
+          } else {
+            void voidPaidOrder(pendingApproval.order, approval);
+          }
+        }}
+      />
     </AppScreen>
   );
 }

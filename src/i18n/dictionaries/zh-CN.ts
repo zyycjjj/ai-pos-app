@@ -23,6 +23,7 @@ export const zhCN = {
   'auth.role.manager': '店长',
   'auth.role.cashier': '收银员',
   'auth.role.kitchen': '后厨',
+  'auth.role.waiter': '服务员',
   'auth.role.staff': '员工',
 
   'sell.eyebrow': '柜台终端',

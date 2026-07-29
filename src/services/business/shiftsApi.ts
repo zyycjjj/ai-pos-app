@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../apiClient';
+import type { ManagerApprovalPayload } from './checkoutApi';
 import type { Shift } from './types';
 
 export function useActiveShift() {
@@ -55,7 +56,7 @@ export function useCashOut() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: { shiftId: string; amount: number; reason: string }) => {
+    mutationFn: async (payload: { shiftId: string; amount: number; reason: string; managerApproval?: ManagerApprovalPayload }) => {
       const { shiftId, ...body } = payload;
       const { data } = await apiClient.post<Shift>(`/api/shifts/${shiftId}/cash-out`, body);
       return data;

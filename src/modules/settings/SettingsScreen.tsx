@@ -199,6 +199,7 @@ function getRoleLabelKey(role: StoreRole) {
     MANAGER: 'auth.role.manager',
     CASHIER: 'auth.role.cashier',
     KITCHEN: 'auth.role.kitchen',
+    WAITER: 'auth.role.waiter',
     STAFF: 'auth.role.staff',
   } as const;
   return keyByRole[role];

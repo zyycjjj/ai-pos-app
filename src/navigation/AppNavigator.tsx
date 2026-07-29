@@ -44,15 +44,22 @@ export function AppNavigator() {
         tabBarPosition: 'left',
       }}
     >
-      {role !== 'KITCHEN' ? <Tab.Screen name="Sell" component={SellScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="Orders" component={OrdersScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="Products" component={ProductsScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="Tables" component={TablesScreen} /> : null}
-      {(role === 'OWNER' || role === 'MANAGER' || role === 'KITCHEN' || role === 'STAFF') ? <Tab.Screen name="Kitchen" component={KitchenScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="Display" component={CustomerDisplayScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="Shift" component={ShiftScreen} /> : null}
-      {role !== 'KITCHEN' ? <Tab.Screen name="AI" component={AiCreateScreen} /> : null}
+      {canAccess(role, 'Sell') ? <Tab.Screen name="Sell" component={SellScreen} /> : null}
+      {canAccess(role, 'Orders') ? <Tab.Screen name="Orders" component={OrdersScreen} /> : null}
+      {canAccess(role, 'Products') ? <Tab.Screen name="Products" component={ProductsScreen} /> : null}
+      {canAccess(role, 'Tables') ? <Tab.Screen name="Tables" component={TablesScreen} /> : null}
+      {canAccess(role, 'Kitchen') ? <Tab.Screen name="Kitchen" component={KitchenScreen} /> : null}
+      {canAccess(role, 'Display') ? <Tab.Screen name="Display" component={CustomerDisplayScreen} /> : null}
+      {canAccess(role, 'Shift') ? <Tab.Screen name="Shift" component={ShiftScreen} /> : null}
+      {canAccess(role, 'AI') ? <Tab.Screen name="AI" component={AiCreateScreen} /> : null}
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
+}
+
+function canAccess(role: ReturnType<typeof useAuthStore.getState>['role'], screen: keyof RootTabParamList) {
+  if (role === 'KITCHEN') return screen === 'Kitchen' || screen === 'Settings';
+  if (role === 'WAITER') return screen === 'Tables' || screen === 'Settings';
+  if (role === 'CASHIER') return ['Sell', 'Tables', 'Orders', 'Shift', 'Settings'].includes(screen);
+  return true;
 }
