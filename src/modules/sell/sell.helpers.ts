@@ -24,7 +24,7 @@ export function getSelectedModifiers(groups: ProductModifierGroup[], selections:
   return groups.flatMap((group) => {
     const optionIds = selections[group.id] ?? [];
     return group.options
-      .filter((option) => optionIds.includes(option.id) && option.status !== 'SOLD_OUT')
+      .filter((option) => optionIds.includes(option.id) && option.status !== 'SOLD_OUT' && option.status !== 'INACTIVE')
       .map((option) => ({
         groupId: group.id,
         groupName: group.name,

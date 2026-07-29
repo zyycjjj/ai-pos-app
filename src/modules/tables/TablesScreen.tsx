@@ -13,6 +13,11 @@ import { type DiningTable, useActiveShift, useAddTableItems, useCheckoutTable, u
 import { tokens } from '@/theme';
 
 import { useActiveProducts } from '../products/useProducts';
+import type { ProductDto } from '../products/products.service';
+import { ModifierPickerModal } from '../sell/components/ModifierPickerModal';
+import { toCheckoutModifierSelections } from '../sell/sell.helpers';
+
+const DELETE_REASONS = ['tables.deleteReason.mistake', 'tables.deleteReason.customerCancelled', 'tables.deleteReason.duplicate', 'tables.deleteReason.other'];
 
 export function TablesScreen() {
   const { t } = useI18n();
@@ -30,6 +35,8 @@ export function TablesScreen() {
   const [guestCounts, setGuestCounts] = useState<Record<string, string>>({});
   const [transferTargets, setTransferTargets] = useState<Record<string, string>>({});
   const [orderingTableId, setOrderingTableId] = useState<string | null>(null);
+  const [modifierTarget, setModifierTarget] = useState<{ tableId: string; product: ProductDto } | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ tableId: string; itemId: string } | null>(null);
   const [lastError, setLastError] = useState<string | null>(null);
 
   const tables = tablesQuery.data ?? [];
@@ -51,6 +58,13 @@ export function TablesScreen() {
     } catch (error) {
       setLastError(error instanceof Error ? error.message : t('tables.error.generic'));
     }
+  };
+  const addProductToTable = (tableId: string, product: ProductDto) => {
+    if (product.modifierGroups.length > 0) {
+      setModifierTarget({ tableId, product });
+      return;
+    }
+    void runAction(() => addItems.mutateAsync({ tableId, items: [{ productId: product.id, quantity: 1 }] }));
   };
 
   return (
@@ -102,6 +116,12 @@ export function TablesScreen() {
                               <Text style={styles.itemText}>{money(item.lineTotal)}</Text>
                             </View>
                             {item.modifiers.length > 0 ? <Text style={styles.modifierText}>{item.modifiers.map((modifier) => modifier.optionName).join(', ')}</Text> : null}
+                            <Text style={styles.modifierText}>
+                              {t('tables.itemStatus')}: {formatItemStatus(t, item.kitchenStatus)}
+                              {' · '}
+                              {t('tables.addedAt')}: {item.addedAt ? new Date(item.addedAt).toLocaleTimeString() : '-'}
+                            </Text>
+                            {item.note ? <Text style={styles.modifierText}>{t('tables.itemNote')}: {item.note}</Text> : null}
                             <View style={styles.itemEditRow}>
                               <AppButton
                                 variant="secondary"
@@ -122,12 +142,36 @@ export function TablesScreen() {
                               <AppButton
                                 variant="secondary"
                                 disabled={busy}
-                                onPress={() => runAction(() => deleteOrderItem.mutateAsync({ tableId: table.id, itemId: item.id }))}
+                                onPress={() => setDeleteTarget((current) => (current?.itemId === item.id ? null : { tableId: table.id, itemId: item.id }))}
                                 style={styles.smallButton}
                               >
-                                Del
+                                {t('tables.deleteItem')}
                               </AppButton>
                             </View>
+                            {deleteTarget?.itemId === item.id ? (
+                              <View style={styles.reasonBox}>
+                                <Text style={styles.muted}>{t('tables.deleteReason.title')}</Text>
+                                <View style={styles.reasonChips}>
+                                  {DELETE_REASONS.map((reasonKey) => (
+                                    <AppButton
+                                      key={reasonKey}
+                                      variant="secondary"
+                                      disabled={busy}
+                                      onPress={() =>
+                                        runAction(async () => {
+                                          await deleteOrderItem.mutateAsync({ tableId: table.id, itemId: item.id, reason: t(reasonKey) });
+                                          setDeleteTarget(null);
+                                        })
+                                      }
+                                      style={styles.reasonChip}
+                                    >
+                                      {t(reasonKey)}
+                                    </AppButton>
+                                  ))}
+                                </View>
+                                <Text style={styles.modifierText}>{t('tables.deleteReason.preparedHint')}</Text>
+                              </View>
+                            ) : null}
                           </View>
                         ))}
                       </View>
@@ -166,22 +210,13 @@ export function TablesScreen() {
                         </AppButton>
                         {orderingTableId === table.id ? (
                           <View style={styles.productPicker}>
-                            <Text style={styles.muted}>Select item</Text>
+                            <Text style={styles.muted}>{t('tables.selectItem')}</Text>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.productChips}>
-                              {orderableProducts.map((product) => {
-                                const requiresModifier = product.modifierGroups.some((group) => group.required);
-                                return (
-                                  <AppButton
-                                    key={product.id}
-                                    variant="secondary"
-                                    disabled={busy || requiresModifier}
-                                    onPress={() => runAction(() => addItems.mutateAsync({ tableId: table.id, items: [{ productId: product.id, quantity: 1 }] }))}
-                                    style={styles.productChip}
-                                  >
-                                    {product.name}
-                                  </AppButton>
-                                );
-                              })}
+                              {orderableProducts.map((product) => (
+                                <AppButton key={product.id} variant="secondary" disabled={busy} onPress={() => addProductToTable(table.id, product)} style={styles.productChip}>
+                                  {product.name}
+                                </AppButton>
+                              ))}
                             </ScrollView>
                           </View>
                         ) : null}
@@ -238,12 +273,32 @@ export function TablesScreen() {
           </View>
         ))}
       </ScrollView>
+      <ModifierPickerModal
+        includeNote
+        product={modifierTarget?.product ?? null}
+        visible={Boolean(modifierTarget)}
+        onClose={() => setModifierTarget(null)}
+        onConfirm={({ product, modifiers, note }) => {
+          if (!modifierTarget) return;
+          void runAction(async () => {
+            await addItems.mutateAsync({
+              tableId: modifierTarget.tableId,
+              items: [{ productId: product.id, quantity: 1, modifiers: toCheckoutModifierSelections(modifiers), note }],
+            });
+            setModifierTarget(null);
+          });
+        }}
+      />
     </AppScreen>
   );
 }
 
 function formatTableStatus(t: (key: string) => string, status: DiningTable['status']) {
   return t(`tables.status.${status}`);
+}
+
+function formatItemStatus(t: (key: string) => string, status?: string | null) {
+  return t(`tables.itemStatus.${status ?? 'NEW'}`);
 }
 
 const styles = StyleSheet.create({
@@ -350,6 +405,18 @@ const styles = StyleSheet.create({
   itemEditRow: {
     flexDirection: 'row',
     gap: tokens.spacing.xs,
+  },
+  reasonBox: {
+    gap: tokens.spacing.xs,
+  },
+  reasonChips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: tokens.spacing.xs,
+  },
+  reasonChip: {
+    minHeight: 34,
+    paddingHorizontal: tokens.spacing.sm,
   },
   smallButton: {
     minHeight: 34,

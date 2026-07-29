@@ -8,6 +8,10 @@ export type CheckoutOrderItem = {
   quantity: number;
   unitPrice: number;
   lineTotal: number;
+  note: string | null;
+  addedAt: string;
+  createdAt: string;
+  kitchenStatus: KitchenTicketStatus | null;
   refundedQuantity?: number;
   modifiers: SelectedModifier[];
 };

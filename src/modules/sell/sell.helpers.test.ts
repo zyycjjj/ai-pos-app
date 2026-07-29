@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { createPromotionPreviewInputHash, resolvePromotionPreviewReasonKey } from './sell.helpers';
+import { getModifierTotal, getSelectedModifiers, isModifierSelectionComplete, createPromotionPreviewInputHash, resolvePromotionPreviewReasonKey } from './sell.helpers';
 
 describe('promotion preview sell helpers', () => {
   it('maps customer-targeted preview reasons to cashier-facing copy keys', () => {
@@ -24,5 +24,47 @@ describe('promotion preview sell helpers', () => {
     });
 
     assert.notEqual(base, changed);
+  });
+});
+
+describe('modifier sell helpers', () => {
+  const groups = [
+    {
+      id: 'size',
+      name: 'Size',
+      required: true,
+      multiSelect: false,
+      minSelect: 1,
+      maxSelect: 1,
+      displayOrder: 1,
+      options: [
+        { id: 'small', name: 'Small', priceDelta: 0, status: 'ACTIVE' as const, displayOrder: 1 },
+        { id: 'large', name: 'Large', priceDelta: 2, status: 'ACTIVE' as const, displayOrder: 2 },
+      ],
+    },
+    {
+      id: 'topping',
+      name: 'Topping',
+      required: false,
+      multiSelect: true,
+      minSelect: 0,
+      maxSelect: 2,
+      displayOrder: 2,
+      options: [
+        { id: 'egg', name: 'Egg', priceDelta: 1, status: 'ACTIVE' as const, displayOrder: 1 },
+      ],
+    },
+  ];
+  const product = { id: 'p1', name: 'Noodle', category: null, price: 10, currency: 'USD', isActive: true, availabilityStatus: 'AVAILABLE' as const, modifierGroups: groups };
+
+  it('requires mandatory groups before adding modifier products', () => {
+    assert.equal(isModifierSelectionComplete(groups, {}), false);
+    assert.equal(isModifierSelectionComplete(groups, { size: ['large'] }), true);
+  });
+
+  it('keeps modifier snapshots and price deltas stable', () => {
+    const selections = { size: ['large'], topping: ['egg'] };
+    assert.equal(getModifierTotal(product, selections), 13);
+    assert.deepEqual(getSelectedModifiers(groups, selections).map((modifier) => modifier.optionName), ['Large', 'Egg']);
   });
 });

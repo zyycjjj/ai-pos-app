@@ -47,7 +47,7 @@ export function useAddTableItems() {
   return useMutation({
     mutationFn: async (payload: {
       tableId: string;
-      items: Array<{ productId: string; quantity: number; modifiers?: Array<{ groupId: string; optionIds: string[] }> }>;
+      items: Array<{ productId: string; quantity: number; modifiers?: Array<{ groupId: string; optionIds: string[] }>; note?: string }>;
     }) => {
       const { tableId, ...body } = payload;
       const { data } = await apiClient.post<DiningTable>(`/api/tables/${tableId}/items`, body);
@@ -79,8 +79,8 @@ export function useDeleteTableOrderItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: { tableId: string; itemId: string }) => {
-      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}/delete`);
+    mutationFn: async (payload: { tableId: string; itemId: string; reason?: string }) => {
+      const { data } = await apiClient.post<DiningTable>(`/api/tables/${payload.tableId}/items/${payload.itemId}/delete`, { reason: payload.reason });
       return data;
     },
     onSuccess: () => {
